@@ -12,18 +12,22 @@ IMPORTANT: This module is for Oracle WMS API integration, NOT Oracle Database.
 
 from __future__ import annotations
 
+# Define missing types locally using the same patterns as flext-core
+from datetime import datetime
 from enum import StrEnum
-from typing import TypedDict
+from typing import Annotated, TypedDict
 
-# Import ALL types from unified core typing system - eliminate duplication
+# Import available types from unified core typing system - eliminate duplication
 from flext_core.domain.shared_types import (
-    CreatedAt,
     EntityId,
     ProjectName,
     TimeoutSeconds,
-    UpdatedAt,
+    TimestampISO,
     Version,
 )
+
+type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
+type UpdatedAt = Annotated[datetime, "Timestamp of when entity was last updated"]
 
 # ==============================================================================
 # DBT ORACLE WMS TYPE ALIASES USING CORE TYPES

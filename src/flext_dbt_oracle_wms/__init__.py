@@ -1,85 +1,116 @@
-"""FLEXT DBT Oracle WMS Package - Oracle WMS data transformation with DBT.
+"""FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations with simplified imports.
 
-This package provides comprehensive DBT integration for Oracle WMS (Warehouse
-Management System)
-data transformation using flext-core standards and modern Python 3.13 type system.
-
-IMPORTANT: This package is for Oracle WMS API integration, NOT Oracle Database.
-
-Copyright (c) 2025 FLEXT Contributors
+Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
+
+Version 0.7.0 - DBT Oracle WMS with simplified public API:
+- All common imports available from root: from flext_dbt_oracle_wms import DBTOracleWMSModel
+- Built on flext-core foundation for robust Oracle WMS transformations
+- Deprecation warnings for internal imports
 """
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms.config.types import (
-    # Core DBT Oracle WMS configuration types
-    DBTOracleWMSConfiguration,
-    FlextDBTOracleWMSConfig,
-)
-from flext_dbt_oracle_wms.constants import (
-    # Oracle WMS DBT constants
-    DBTOracleWMSDefaults,
-    DBTOracleWMSDocumentationTypes,
-    DBTOracleWMSEntityTypes,
-    DBTOracleWMSMacroTypes,
-    DBTOracleWMSMaterializations,
-    DBTOracleWMSTestTypes,
-)
-from flext_dbt_oracle_wms.domain.types import (
-    # Domain objects
-    DBTOracleWMSAnalysis,
-    DBTOracleWMSAnalysisConfiguration,
-    DBTOracleWMSCompilation,
-    DBTOracleWMSCompilationConfiguration,
-    DBTOracleWMSDocumentation,
-    DBTOracleWMSDocumentationConfiguration,
-    DBTOracleWMSExecution,
-    DBTOracleWMSExecutionConfiguration,
-    DBTOracleWMSMacro,
-    DBTOracleWMSMacroConfiguration,
-    DBTOracleWMSModel,
-    # Configuration TypedDicts
-    DBTOracleWMSModelConfiguration,
-    DBTOracleWMSProject,
-    DBTOracleWMSProjectConfiguration,
-    DBTOracleWMSSnapshot,
-    DBTOracleWMSSnapshotConfiguration,
-    DBTOracleWMSSource,
-    DBTOracleWMSSourceConfiguration,
-    DBTOracleWMSTest,
-    DBTOracleWMSTestConfiguration,
-)
+import contextlib
+import importlib.metadata
+import warnings
 
-__version__ = "2.0.0"
+# Import from flext-core for foundational patterns
+# Re-export commonly used imports from flext-core
+# Foundation patterns - ALWAYS from flext-core
+from flext_core import (
+    BaseConfig,
+    BaseConfig as WMSBaseConfig,  # Configuration base
+    DomainBaseModel,
+    DomainBaseModel as BaseModel,  # Base for WMS models
+    DomainError as WMSError,  # WMS-specific errors
+    ValidationError as ValidationError,  # Validation errors
+)
+from flext_core.domain.shared_types import ServiceResult
+
+try:
+    __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
+except importlib.metadata.PackageNotFoundError:
+    __version__ = "0.7.0"
+
+__version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
+
+
+class FlextDbtOracleWmsDeprecationWarning(DeprecationWarning):
+    """Custom deprecation warning for FLEXT DBT ORACLE WMS import changes."""
+
+
+def _show_deprecation_warning(old_import: str, new_import: str) -> None:
+    """Show deprecation warning for import paths."""
+    message_parts = [
+        f"⚠️  DEPRECATED IMPORT: {old_import}",
+        f"✅ USE INSTEAD: {new_import}",
+        "🔗 This will be removed in version 1.0.0",
+        "📖 See FLEXT DBT ORACLE WMS docs for migration guide",
+    ]
+    warnings.warn(
+        "\n".join(message_parts),
+        FlextDbtOracleWmsDeprecationWarning,
+        stacklevel=3,
+    )
+
+
+# ================================
+# SIMPLIFIED PUBLIC API EXPORTS
+# ================================
+
+# DBT Oracle WMS Configuration exports - simplified imports
+with contextlib.suppress(ImportError):
+    from flext_dbt_oracle_wms.config.types import (
+        DBTOracleWMSConfiguration,
+        FlextDBTOracleWMSConfig,
+    )
+
+# DBT Oracle WMS Domain exports - simplified imports
+with contextlib.suppress(ImportError):
+    from flext_dbt_oracle_wms.domain.types import (
+        DBTOracleWMSAnalysis,
+        DBTOracleWMSExecution,
+        DBTOracleWMSModel,
+        DBTOracleWMSProject,
+    )
+
+# DBT Oracle WMS Constants exports - simplified imports
+with contextlib.suppress(ImportError):
+    from flext_dbt_oracle_wms.constants import (
+        DBTOracleWMSDefaults,
+        DBTOracleWMSEntityTypes,
+        DBTOracleWMSMaterializations,
+    )
+
+# ================================
+# PUBLIC API EXPORTS
+# ================================
 
 __all__ = [
-    "DBTOracleWMSAnalysis",
-    "DBTOracleWMSAnalysisConfiguration",
-    "DBTOracleWMSCompilation",
-    "DBTOracleWMSCompilationConfiguration",
-    "DBTOracleWMSConfiguration",
-    "DBTOracleWMSDefaults",
-    "DBTOracleWMSDocumentation",
-    "DBTOracleWMSDocumentationConfiguration",
-    "DBTOracleWMSDocumentationTypes",
-    "DBTOracleWMSEntityTypes",
-    "DBTOracleWMSExecution",
-    "DBTOracleWMSExecutionConfiguration",
-    "DBTOracleWMSMacro",
-    "DBTOracleWMSMacroConfiguration",
-    "DBTOracleWMSMacroTypes",
-    "DBTOracleWMSMaterializations",
-    "DBTOracleWMSModel",
-    "DBTOracleWMSModelConfiguration",
-    "DBTOracleWMSProject",
-    "DBTOracleWMSProjectConfiguration",
-    "DBTOracleWMSSnapshot",
-    "DBTOracleWMSSnapshotConfiguration",
-    "DBTOracleWMSSource",
-    "DBTOracleWMSSourceConfiguration",
-    "DBTOracleWMSTest",
-    "DBTOracleWMSTestConfiguration",
-    "DBTOracleWMSTestTypes",
-    "FlextDBTOracleWMSConfig",
+    "BaseModel",  # from flext_dbt_oracle_wms import BaseModel
+    # DBT Oracle WMS Analysis (simplified access)
+    "DBTOracleWMSAnalysis",  # from flext_dbt_oracle_wms import DBTOracleWMSAnalysis
+    # DBT Oracle WMS Configuration (simplified access)
+    "DBTOracleWMSConfiguration",  # from flext_dbt_oracle_wms import DBTOracleWMSConfiguration
+    # DBT Oracle WMS Constants (simplified access)
+    "DBTOracleWMSDefaults",  # from flext_dbt_oracle_wms import DBTOracleWMSDefaults
+    "DBTOracleWMSEntityTypes",  # from flext_dbt_oracle_wms import DBTOracleWMSEntityTypes
+    # DBT Oracle WMS Execution (simplified access)
+    "DBTOracleWMSExecution",  # from flext_dbt_oracle_wms import DBTOracleWMSExecution
+    "DBTOracleWMSMaterializations",  # from flext_dbt_oracle_wms import DBTOracleWMSMaterializations
+    # DBT Oracle WMS Models (simplified access)
+    "DBTOracleWMSModel",  # from flext_dbt_oracle_wms import DBTOracleWMSModel
+    "DBTOracleWMSProject",  # from flext_dbt_oracle_wms import DBTOracleWMSProject
+    "FlextDBTOracleWMSConfig",  # from flext_dbt_oracle_wms import FlextDBTOracleWMSConfig
+    # Deprecation utilities
+    "FlextDbtOracleWmsDeprecationWarning",
+    "ServiceResult",  # from flext_dbt_oracle_wms import ServiceResult
+    "ValidationError",  # from flext_dbt_oracle_wms import ValidationError
+    # Core Patterns (from flext-core)
+    "WMSBaseConfig",  # from flext_dbt_oracle_wms import WMSBaseConfig
+    "WMSError",  # from flext_dbt_oracle_wms import WMSError
+    # Version
+    "__version__",
+    "__version_info__",
 ]
