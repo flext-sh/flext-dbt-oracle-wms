@@ -14,19 +14,32 @@ from __future__ import annotations
 import contextlib
 import importlib.metadata
 import warnings
+from typing import Any, Optional
 
-# Import from flext-core for foundational patterns
-# Re-export commonly used imports from flext-core
-# Foundation patterns - ALWAYS from flext-core
-from flext_core import (
-    BaseConfig,
-    BaseConfig as WMSBaseConfig,  # Configuration base
-    DomainBaseModel,
-    DomainBaseModel as BaseModel,  # Base for WMS models
-    DomainError as WMSError,  # WMS-specific errors
-    ValidationError as ValidationError,  # Validation errors
-)
-from flext_core.domain.shared_types import ServiceResult
+# Simple type definitions for dbt Oracle WMS project
+from pydantic import BaseModel
+
+
+# Base classes for configuration
+class WMSBaseConfig(BaseModel):
+    """Base configuration for WMS operations."""
+
+
+class WMSError(Exception):
+    """Base exception for WMS-specific errors."""
+
+
+class ValidationError(ValueError):
+    """Validation error for WMS data."""
+
+
+class ServiceResult:
+    """Simple service result wrapper."""
+
+    def __init__(self, success: bool = True, data: Any = None, error: str | None = None) -> None:
+        self.success = success
+        self.data = data
+        self.error = error
 
 try:
     __version__ = importlib.metadata.version("flext-dbt-oracle-wms")

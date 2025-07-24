@@ -17,14 +17,12 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Annotated, TypedDict
 
-# Import available types from unified core typing system - eliminate duplication
-from flext_core.domain.shared_types import (
-    EntityId,
-    ProjectName,
-    TimeoutSeconds,
-    TimestampISO,
-    Version,
-)
+# Simple type aliases for dbt Oracle WMS
+EntityId = str
+ProjectName = str
+TimeoutSeconds = int
+TimestampISO = str
+Version = str
 
 type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
 type UpdatedAt = Annotated[datetime, "Timestamp of when entity was last updated"]

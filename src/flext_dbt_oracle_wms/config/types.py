@@ -16,13 +16,11 @@ from typing import TYPE_CHECKING, Any, Literal, TypedDict
 # Import from unified core typing system - eliminate duplication
 from pydantic import BaseModel, Field
 
-if TYPE_CHECKING:
-    from flext_core.domain.shared_types import (
-        NonEmptyStr,
-        PositiveInt,
-        ProjectName,
-        Version,
-    )
+# Simple type aliases for dbt Oracle WMS
+NonEmptyStr = str
+PositiveInt = int
+ProjectName = str
+Version = str
 
 
 # DBT Oracle WMS Configuration using unified core types
