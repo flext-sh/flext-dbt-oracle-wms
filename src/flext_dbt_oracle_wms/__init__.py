@@ -1,12 +1,12 @@
-"""FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations with simplified imports.
+"""FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using flext-meltano.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 
-Version 0.7.0 - DBT Oracle WMS with simplified public API:
-- All common imports available from root: from flext_dbt_oracle_wms import DBTOracleWMSModel
+Version 0.7.0 - DBT Oracle WMS plugin using flext-meltano architecture:
+- Uses flext-meltano for DBT integration and orchestration
 - Built on flext-core foundation for robust Oracle WMS transformations
-- Deprecation warnings for internal imports
+- Follows FLEXT architecture where DBT components are centralized in flext-meltano
 """
 
 from __future__ import annotations
@@ -15,6 +15,15 @@ import contextlib
 import importlib.metadata
 import warnings
 from typing import Any, Optional
+
+# Import from flext-meltano for DBT integration
+# MIGRATED: Singer SDK imports centralized via flext-meltano
+from flext_meltano.dbt import (
+    FlextMeltanoDbtManager,
+    FlextMeltanoDbtProject,
+    FlextMeltanoDbtRunner,
+)
+from flext_meltano.orchestration.dbt import FlextOracleWMSDbtOrchestrator
 
 # Simple type definitions for dbt Oracle WMS project
 from pydantic import BaseModel
@@ -33,13 +42,19 @@ class ValidationError(ValueError):
     """Validation error for WMS data."""
 
 
-class ServiceResult:
+class FlextResult:
     """Simple service result wrapper."""
 
-    def __init__(self, success: bool = True, data: Any = None, error: str | None = None) -> None:
+    def __init__(
+        self,
+        success: bool = True,
+        data: Any = None,
+        error: str | None = None,
+    ) -> None:
         self.success = success
         self.data = data
         self.error = error
+
 
 try:
     __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
@@ -118,7 +133,9 @@ __all__ = [
     "FlextDBTOracleWMSConfig",  # from flext_dbt_oracle_wms import FlextDBTOracleWMSConfig
     # Deprecation utilities
     "FlextDbtOracleWmsDeprecationWarning",
-    "ServiceResult",  # from flext_dbt_oracle_wms import ServiceResult
+    # Consolidated Orchestrator (from flext-meltano)
+    "FlextOracleWMSDbtOrchestrator",  # DBT orchestration for Oracle WMS
+    "FlextResult",  # from flext_dbt_oracle_wms import FlextResult
     "ValidationError",  # from flext_dbt_oracle_wms import ValidationError
     # Core Patterns (from flext-core)
     "WMSBaseConfig",  # from flext_dbt_oracle_wms import WMSBaseConfig

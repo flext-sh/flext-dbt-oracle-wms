@@ -3,11 +3,12 @@
 # dbt transformations for Oracle Warehouse Management System data
 # Python 3.13 + dbt-oracle + Oracle WMS Analytics + Zero Tolerance Quality Gates
 
-.PHONY: help check validate test lint type-check security format format-check fix
+.PHONY: help info diagnose check validate test lint type-check security format format-check fix
 .PHONY: install dev-install setup pre-commit build clean
-.PHONY: coverage coverage-html test-unit test-integration
-.PHONY: deps-update deps-audit deps-tree
-.PHONY: dbt-run dbt-test dbt-docs dbt-compile dbt-debug dbt-wms-profile dbt-wms-lineage
+.PHONY: coverage coverage-html test-unit test-integration test-dbt
+.PHONY: deps-update deps-audit deps-tree deps-outdated
+.PHONY: dbt-compile dbt-run dbt-test dbt-docs dbt-debug dbt-seed dbt-snapshot dbt-deps dbt-clean
+.PHONY: wms-models-test wms-transformations wms-optimize
 
 # ============================================================================
 # 🎯 HELP & INFORMATION
@@ -24,6 +25,38 @@ help: ## Show this help message
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+
+info: ## Mostrar informações do projeto
+	@echo "📊 Informações do Projeto"
+	@echo "======================"
+	@echo "Nome: flext-dbt-oracle-wms"
+	@echo "Título: FLEXT DBT ORACLE WMS"
+	@echo "Tipo: dbt-project"
+	@echo "Versão: $(shell poetry version -s 2>/dev/null || echo "0.7.0")"
+	@echo "Python: $(shell python3.13 --version 2>/dev/null || echo "Não encontrado")"
+	@echo "Poetry: $(shell poetry --version 2>/dev/null || echo "Não instalado")"
+	@echo "Venv: $(shell poetry env info --path 2>/dev/null || echo "Não ativado")"
+	@echo "Diretório: $(CURDIR)"
+	@echo "Git Branch: $(shell git branch --show-current 2>/dev/null || echo "Não é repo git")"
+	@echo "Git Status: $(shell git status --porcelain 2>/dev/null | wc -l | xargs echo) arquivos alterados"
+
+diagnose: ## Executar diagnósticos completos
+	@echo "🔍 Executando diagnósticos para flext-dbt-oracle-wms..."
+	@echo "Informações do Sistema:"
+	@echo "OS: $(shell uname -s)"
+	@echo "Arquitetura: $(shell uname -m)"
+	@echo "Python: $(shell python3.13 --version 2>/dev/null || echo "Não encontrado")"
+	@echo "Poetry: $(shell poetry --version 2>/dev/null || echo "Não instalado")"
+	@echo ""
+	@echo "Estrutura do Projeto:"
+	@ls -la
+	@echo ""
+	@echo "Configuração Poetry:"
+	@poetry config --list 2>/dev/null || echo "Poetry não configurado"
+	@echo ""
+	@echo "Status das Dependências:"
+	@poetry show --outdated 2>/dev/null || echo "Nenhuma dependência desatualizada"
+
 # ============================================================================
 # 🎯 CORE QUALITY GATES - ZERO TOLERANCE
 # ============================================================================
@@ -31,7 +64,7 @@ help: ## Show this help message
 validate: lint type-check security test dbt-test ## STRICT compliance validation (all must pass)
 	@echo "✅ ALL QUALITY GATES PASSED - FLEXT DBT ORACLE WMS COMPLIANT"
 
-check: lint type-check test ## Essential quality checks (pre-commit standard)
+check: lint type-check test dbt-compile ## Essential quality checks (pre-commit standard)
 	@echo "✅ Essential checks passed"
 
 lint: ## Ruff linting (17 rule categories, ALL enabled)
@@ -85,6 +118,11 @@ test-integration: ## Run integration tests only
 	@poetry run pytest tests/integration/ -v
 	@echo "✅ Integration tests complete"
 
+test-dbt: dbt-deps dbt-compile ## Run dbt data tests
+	@echo "🧪 Running dbt data tests..."
+	@poetry run dbt test --profiles-dir profiles/ --target dev
+	@echo "✅ DBT data tests complete"
+
 coverage: ## Generate detailed coverage report
 	@echo "📊 Generating coverage report..."
 	@poetry run pytest tests/ --cov=src/flext_dbt_oracle_wms --cov-report=term-missing --cov-report=html
@@ -98,7 +136,7 @@ coverage-html: coverage ## Generate HTML coverage report
 # 🚀 DEVELOPMENT SETUP
 # ============================================================================
 
-setup: install pre-commit ## Complete development setup
+setup: install pre-commit dbt-deps ## Complete development setup
 	@echo "🎯 Development setup complete!"
 
 install: ## Install dependencies with Poetry
@@ -110,6 +148,7 @@ dev-install: install ## Install in development mode
 	@echo "🔧 Setting up development environment..."
 	@poetry install --all-extras --with dev,test,docs,security
 	@poetry run pre-commit install
+	@mkdir -p profiles logs target dbt_packages
 	@echo "✅ Development environment ready"
 
 pre-commit: ## Setup pre-commit hooks
@@ -119,73 +158,154 @@ pre-commit: ## Setup pre-commit hooks
 	@echo "✅ Pre-commit hooks installed"
 
 # ============================================================================
-# 🏗️ DBT ORACLE WMS OPERATIONS
+# 🎯 DBT OPERATIONS - CORE WORKFLOW
 # ============================================================================
 
-dbt-run: ## Run dbt WMS models
-	@echo "🏗️ Running dbt WMS models..."
-	@poetry run dbt run --profiles-dir profiles --target dev
-	@echo "✅ dbt WMS models executed"
+dbt-deps: ## Install dbt dependencies
+	@echo "📦 Installing dbt dependencies..."
+	@poetry run dbt deps --profiles-dir profiles/
+	@echo "✅ DBT dependencies installed"
 
-dbt-test: ## Run dbt WMS tests
-	@echo "🧪 Running dbt WMS tests..."
-	@poetry run dbt test --profiles-dir profiles --target dev
-	@echo "✅ dbt WMS tests passed"
+dbt-debug: ## Debug dbt configuration
+	@echo "🔍 Debugging dbt configuration..."
+	@poetry run dbt debug --profiles-dir profiles/ --target dev
+	@echo "✅ DBT debug complete"
 
-dbt-docs: ## Generate dbt WMS documentation
-	@echo "📚 Generating dbt WMS documentation..."
-	@poetry run dbt docs generate --profiles-dir profiles --target dev
-	@poetry run dbt docs serve --profiles-dir profiles --port 8080
-	@echo "✅ dbt WMS documentation available at http://localhost:8080"
+dbt-compile: dbt-deps ## Compile dbt models
+	@echo "🔨 Compiling dbt models..."
+	@poetry run dbt compile --profiles-dir profiles/ --target dev
+	@echo "✅ DBT models compiled"
 
-dbt-compile: ## Compile dbt WMS models
-	@echo "🔨 Compiling dbt WMS models..."
-	@poetry run dbt compile --profiles-dir profiles --target dev
-	@echo "✅ dbt WMS models compiled"
+dbt-run: dbt-deps dbt-compile ## Run dbt models
+	@echo "🚀 Running dbt models..."
+	@poetry run dbt run --profiles-dir profiles/ --target dev
+	@echo "✅ DBT models executed"
 
-dbt-debug: ## Debug dbt WMS configuration
-	@echo "🔍 Debugging dbt WMS configuration..."
-	@poetry run dbt debug --profiles-dir profiles --target dev
-	@echo "✅ dbt WMS debug complete"
+dbt-test: dbt-compile ## Run dbt tests
+	@echo "🧪 Running dbt tests..."
+	@poetry run dbt test --profiles-dir profiles/ --target dev
+	@echo "✅ DBT tests complete"
 
-dbt-wms-profile: ## Setup Oracle WMS profile
-	@echo "⚙️ Setting up Oracle WMS profile..."
-	@echo "Creating profiles directory if it doesn't exist..."
-	@mkdir -p profiles
-	@echo "WMS profile setup complete - configure profiles/profiles.yml manually"
+dbt-docs: dbt-compile ## Generate dbt documentation
+	@echo "📚 Generating dbt documentation..."
+	@poetry run dbt docs generate --profiles-dir profiles/ --target dev
+	@echo "✅ DBT documentation generated"
 
-dbt-wms-lineage: ## Generate WMS data lineage
+dbt-seed: dbt-deps ## Load dbt seed data
+	@echo "🌱 Loading dbt seed data..."
+	@poetry run dbt seed --profiles-dir profiles/ --target dev
+	@echo "✅ DBT seed data loaded"
+
+dbt-snapshot: dbt-deps ## Run dbt snapshots
+	@echo "📸 Running dbt snapshots..."
+	@poetry run dbt snapshot --profiles-dir profiles/ --target dev
+	@echo "✅ DBT snapshots complete"
+
+dbt-clean: ## Clean dbt artifacts
+	@echo "🧹 Cleaning dbt artifacts..."
+	@poetry run dbt clean --profiles-dir profiles/
+	@rm -rf logs/dbt.log
+	@echo "✅ DBT artifacts cleaned"
+
+# ============================================================================
+# 🔧 WMS SPECIFIC OPERATIONS
+# ============================================================================
+
+wms-models-test: dbt-deps dbt-compile ## Test WMS-specific models
+	@echo "🧪 Testing WMS models..."
+	@poetry run dbt test --models tag:inventory --profiles-dir profiles/ --target dev
+	@poetry run dbt test --models tag:shipment --profiles-dir profiles/ --target dev
+	@poetry run dbt test --models tag:location --profiles-dir profiles/ --target dev
+	@poetry run python scripts/validate_wms_models.py
+	@echo "✅ WMS models tests complete"
+
+wms-transformations: dbt-run ## Run WMS transformation pipeline
+	@echo "🔄 Running WMS transformations..."
+	@poetry run dbt run --models marts.inventory_analytics --profiles-dir profiles/ --target dev
+	@poetry run dbt run --models marts.shipment_analytics --profiles-dir profiles/ --target dev
+	@poetry run dbt run --models marts.location_analytics --profiles-dir profiles/ --target dev
+	@poetry run python scripts/execute_wms_transformations.py
+	@echo "✅ WMS transformations complete"
+
+wms-optimize: dbt-compile ## Optimize WMS performance and queries
+	@echo "⚡ Optimizing WMS performance..."
+	@poetry run python scripts/optimize_wms_queries.py
+	@poetry run dbt compile --profiles-dir profiles/ --target dev
+	@poetry run python scripts/analyze_wms_performance.py
+	@echo "✅ WMS optimization complete"
+
+wms-inventory-models: dbt-run ## Run WMS inventory models only
+	@echo "📦 Running WMS inventory models..."
+	@poetry run dbt run --models tag:inventory --profiles-dir profiles/ --target dev
+	@echo "✅ WMS inventory models executed"
+
+wms-shipment-models: dbt-run ## Run WMS shipment models only
+	@echo "🚚 Running WMS shipment models..."
+	@poetry run dbt run --models tag:shipment --profiles-dir profiles/ --target dev
+	@echo "✅ WMS shipment models executed"
+
+wms-location-models: dbt-run ## Run WMS location models only
+	@echo "📍 Running WMS location models..."
+	@poetry run dbt run --models tag:location --profiles-dir profiles/ --target dev
+	@echo "✅ WMS location models executed"
+
+wms-kpi-models: dbt-run ## Run WMS KPI models only
+	@echo "📊 Running WMS KPI models..."
+	@poetry run dbt run --models tag:kpi --profiles-dir profiles/ --target dev
+	@echo "✅ WMS KPI models executed"
+
+wms-full-refresh: ## Full refresh of WMS models
+	@echo "🔄 Full refresh of WMS models..."
+	@poetry run dbt run --full-refresh --profiles-dir profiles/ --target dev
+	@echo "✅ WMS models full refresh complete"
+
+wms-test-data-quality: dbt-test ## Test WMS data quality rules
+	@echo "🔍 Testing WMS data quality..."
+	@poetry run dbt test --models tag:data_quality --profiles-dir profiles/ --target dev
+	@echo "✅ WMS data quality tests passed"
+
+wms-lineage-analysis: dbt-docs ## Generate WMS data lineage analysis
 	@echo "🗂️ Generating WMS data lineage..."
-	@poetry run dbt docs generate --profiles-dir profiles --target dev
-	@echo "✅ WMS data lineage generated - view in dbt docs"
+	@poetry run dbt docs generate --profiles-dir profiles/ --target dev
+	@poetry run python scripts/analyze_wms_lineage.py
+	@echo "✅ WMS data lineage analysis complete"
 
-dbt-seed: ## Load WMS seed data
-	@echo "🌱 Loading WMS seed data..."
-	@poetry run dbt seed --profiles-dir profiles --target dev
-	@echo "✅ WMS seed data loaded"
+# ============================================================================
+# 📊 WMS ANALYTICS & REPORTING
+# ============================================================================
 
-dbt-snapshot: ## Run WMS snapshots for SCD
-	@echo "📸 Running WMS snapshots..."
-	@poetry run dbt snapshot --profiles-dir profiles --target dev
-	@echo "✅ WMS snapshots executed"
+wms-inventory-analytics: dbt-run ## Run inventory analytics
+	@echo "📦 Running inventory analytics..."
+	@poetry run dbt run --models marts.inventory_analytics --profiles-dir profiles/ --target dev
+	@echo "✅ Inventory analytics complete"
 
-dbt-run-operation: ## Run dbt WMS operations
-	@echo "⚙️ Running dbt WMS operations..."
-	@poetry run dbt run-operation --profiles-dir profiles --target dev
-	@echo "✅ dbt WMS operations complete"
+wms-shipment-analytics: dbt-run ## Run shipment analytics
+	@echo "🚚 Running shipment analytics..."
+	@poetry run dbt run --models marts.shipment_analytics --profiles-dir profiles/ --target dev
+	@echo "✅ Shipment analytics complete"
+
+wms-performance-metrics: dbt-run ## Calculate WMS performance metrics
+	@echo "⚡ Calculating WMS performance metrics..."
+	@poetry run dbt run --models marts.performance_metrics --profiles-dir profiles/ --target dev
+	@echo "✅ Performance metrics calculated"
+
+wms-operational-reports: dbt-run ## Generate operational reports
+	@echo "📋 Generating operational reports..."
+	@poetry run dbt run --models marts.operational_reports --profiles-dir profiles/ --target dev
+	@poetry run python scripts/generate_wms_reports.py
+	@echo "✅ Operational reports generated"
+
+wms-all-analytics: wms-inventory-analytics wms-shipment-analytics wms-performance-metrics wms-operational-reports ## Run all WMS analytics
+	@echo "✅ All WMS analytics complete"
 
 # ============================================================================
 # 📦 BUILD & DISTRIBUTION
 # ============================================================================
 
-build: clean ## Build distribution packages
-	@echo "🔨 Building distribution..."
+build: clean dbt-compile ## Build dbt project
+	@echo "🔨 Building dbt project..."
 	@poetry build
 	@echo "✅ Build complete - packages in dist/"
-
-# ============================================================================
-# 🧹 CLEANUP
-# ============================================================================
 
 clean: ## Remove all artifacts
 	@echo "🧹 Cleaning up..."
@@ -211,6 +331,7 @@ clean: ## Remove all artifacts
 deps-update: ## Update all dependencies
 	@echo "🔄 Updating dependencies..."
 	@poetry update
+	@poetry run dbt deps --profiles-dir profiles/
 	@echo "✅ Dependencies updated"
 
 deps-audit: ## Audit dependencies for vulnerabilities
@@ -230,19 +351,38 @@ deps-outdated: ## Show outdated dependencies
 # 🔧 ENVIRONMENT CONFIGURATION
 # ============================================================================
 
+# Project information
+PROJECT_NAME := flext-dbt-oracle-wms
+PROJECT_TYPE := meltano-plugin
+PROJECT_VERSION := $(shell poetry version -s)
+PROJECT_DESCRIPTION := FLEXT DBT Oracle WMS - Oracle WMS Data Transformations
+
 # Python settings
 PYTHON := python3.13
 export PYTHONPATH := $(PWD)/src:$(PYTHONPATH)
 export PYTHONDONTWRITEBYTECODE := 1
 export PYTHONUNBUFFERED := 1
 
-# dbt settings
+# DBT settings
 export DBT_PROFILES_DIR := $(PWD)/profiles
 export DBT_PROJECT_DIR := $(PWD)
+export DBT_TARGET := dev
+export DBT_LOG_LEVEL := INFO
 
 # Oracle WMS settings
 export WMS_ORGANIZATION_ID := 101
 export WMS_FACILITY_CODE := DC001
+
+# Performance settings
+export DBT_THREADS := 4
+export DBT_PARTIAL_PARSE := true
+export DBT_USE_COLORS := true
+export DBT_PRINTER_WIDTH := 80
+
+# Quality settings
+export DBT_WARN_ERROR := false
+export DBT_STORE_FAILURES := true
+export DBT_FAIL_FAST := false
 
 # Poetry settings
 export POETRY_VENV_IN_PROJECT := false
@@ -252,54 +392,16 @@ export POETRY_CACHE_DIR := $(HOME)/.cache/pypoetry
 export MYPY_CACHE_DIR := .mypy_cache
 export RUFF_CACHE_DIR := .ruff_cache
 
-# ============================================================================
-# 📝 PROJECT METADATA
-# ============================================================================
-
-# Project information
-PROJECT_NAME := flext-dbt-oracle-wms
-PROJECT_VERSION := $(shell poetry version -s)
-PROJECT_DESCRIPTION := FLEXT DBT Oracle WMS - Oracle WMS Data Transformations
-
 .DEFAULT_GOAL := help
 
 # ============================================================================
-# 🎯 WMS SPECIFIC COMMANDS
+# 🎯 WORKSPACE INTEGRATION
 # ============================================================================
 
-wms-inventory-models: ## Run WMS inventory models only
-	@echo "📦 Running WMS inventory models..."
-	@poetry run dbt run --models tag:inventory --profiles-dir profiles --target dev
-	@echo "✅ WMS inventory models executed"
-
-wms-shipment-models: ## Run WMS shipment models only
-	@echo "🚚 Running WMS shipment models..."
-	@poetry run dbt run --models tag:shipment --profiles-dir profiles --target dev
-	@echo "✅ WMS shipment models executed"
-
-wms-location-models: ## Run WMS location models only
-	@echo "📍 Running WMS location models..."
-	@poetry run dbt run --models tag:location --profiles-dir profiles --target dev
-	@echo "✅ WMS location models executed"
-
-wms-kpi-models: ## Run WMS KPI models only
-	@echo "📊 Running WMS KPI models..."
-	@poetry run dbt run --models tag:kpi --profiles-dir profiles --target dev
-	@echo "✅ WMS KPI models executed"
-
-wms-full-refresh: ## Full refresh of WMS models
-	@echo "🔄 Full refresh of WMS models..."
-	@poetry run dbt run --full-refresh --profiles-dir profiles --target dev
-	@echo "✅ WMS models full refresh complete"
-
-wms-test-data-quality: ## Test WMS data quality rules
-	@echo "🔍 Testing WMS data quality..."
-	@poetry run dbt test --models tag:data_quality --profiles-dir profiles --target dev
-	@echo "✅ WMS data quality tests passed"
-
-# ============================================================================
-# 🎯 FLEXT ECOSYSTEM INTEGRATION
-# ============================================================================
+workspace-sync: ## Sync with workspace dependencies
+	@echo "🔄 Syncing with workspace dependencies..."
+	@poetry run python scripts/sync_workspace_deps.py
+	@echo "✅ Workspace sync complete"
 
 ecosystem-check: ## Verify FLEXT ecosystem compatibility
 	@echo "🌐 Checking FLEXT ecosystem compatibility..."

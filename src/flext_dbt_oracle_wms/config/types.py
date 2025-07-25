@@ -11,7 +11,7 @@ IMPORTANT: This module is for Oracle WMS API integration, NOT Oracle Database.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Literal, TypedDict
+from typing import Any, Literal, TypedDict
 
 # Import from unified core typing system - eliminate duplication
 from pydantic import BaseModel, Field
