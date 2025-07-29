@@ -23,10 +23,14 @@ from flext_meltano.dbt import (
     FlextMeltanoDbtProject,
     FlextMeltanoDbtRunner,
 )
-from flext_meltano.orchestration.dbt import FlextOracleWMSDbtOrchestrator
 
 # Simple type definitions for dbt Oracle WMS project
 from pydantic import BaseModel
+
+
+# Create local orchestrator implementation - the orchestration.dbt module doesn't exist
+class FlextOracleWMSDbtOrchestrator:
+    """Oracle WMS DBT orchestrator placeholder."""
 
 
 # Base classes for configuration
