@@ -221,7 +221,9 @@ class FlextDbtOracleWmsModelError(FlextDbtOracleWmsError):
             context["model_type"] = model_type
 
         super().__init__(
-            f"Oracle WMS DBT model: {message}", model_name=model_name, **context,
+            f"Oracle WMS DBT model: {message}",
+            model_name=model_name,
+            **context,
         )
 
 
@@ -241,7 +243,9 @@ class FlextDbtOracleWmsTestError(FlextDbtOracleWmsError):
             context["test_name"] = test_name
 
         super().__init__(
-            f"Oracle WMS DBT test: {message}", model_name=model_name, **context,
+            f"Oracle WMS DBT test: {message}",
+            model_name=model_name,
+            **context,
         )
 
 
