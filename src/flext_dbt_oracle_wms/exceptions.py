@@ -220,7 +220,9 @@ class FlextDbtOracleWmsModelError(FlextDbtOracleWmsError):
         if model_type is not None:
             context["model_type"] = model_type
 
-        super().__init__(f"Oracle WMS DBT model: {message}", model_name=model_name, **context)
+        super().__init__(
+            f"Oracle WMS DBT model: {message}", model_name=model_name, **context,
+        )
 
 
 class FlextDbtOracleWmsTestError(FlextDbtOracleWmsError):
@@ -238,7 +240,9 @@ class FlextDbtOracleWmsTestError(FlextDbtOracleWmsError):
         if test_name is not None:
             context["test_name"] = test_name
 
-        super().__init__(f"Oracle WMS DBT test: {message}", model_name=model_name, **context)
+        super().__init__(
+            f"Oracle WMS DBT test: {message}", model_name=model_name, **context,
+        )
 
 
 __all__ = [

@@ -7,6 +7,7 @@ This guide gets you up and running with FLEXT DBT Oracle WMS quickly. For detail
 ## 🚀 Prerequisites Check
 
 Ensure you have:
+
 - ✅ **Python 3.13+** installed (`python --version`)
 - ✅ **Poetry** installed (`poetry --version`)
 - ✅ **Oracle database** access
@@ -98,7 +99,7 @@ dbt test --select stg_wms__allocation
 
 ```sql
 -- Query your first model
-SELECT 
+SELECT
     allocation_id,
     company_code,
     facility_code,
@@ -133,7 +134,8 @@ dbt docs serve --port 8080
 # Open: http://localhost:8080
 ```
 
-### Key Views to Check:
+### Key Views to Check
+
 1. **Data Lineage** - See model dependencies
 2. **Column Details** - Review data types and descriptions
 3. **Model Performance** - Check execution times
@@ -174,12 +176,14 @@ dbt run --select marts.metrics
 ## 🚨 Quick Troubleshooting
 
 ### Connection Issues
+
 ```bash
 # Test Oracle connection directly
 sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_HOST:$ORACLE_PORT/$ORACLE_SERVICE
 ```
 
 ### Model Compilation Issues
+
 ```bash
 # Check compiled SQL
 dbt compile --select stg_wms__allocation
@@ -189,6 +193,7 @@ ls target/compiled/flext_dbt_oracle_wms/models/staging/
 ```
 
 ### Data Issues
+
 ```bash
 # Check source data
 dbt source freshness
@@ -200,16 +205,19 @@ dbt test --select stg_wms__allocation
 ## 🎯 Next Steps
 
 ### Immediate Actions (Next 30 minutes)
+
 1. **Explore Models** - Check [Model Reference](../models/reference.md)
 2. **Review Data Quality** - Run `dbt test` and investigate failures
 3. **Check Performance** - Monitor model execution times
 
 ### This Week
+
 1. **Configure Environments** - Setup staging and production profiles
 2. **Customize Models** - Modify models for your specific WMS configuration
 3. **Setup Monitoring** - Configure data quality alerts
 
 ### This Month
+
 1. **Build Custom Analytics** - Create business-specific marts
 2. **Integrate BI Tools** - Connect Tableau/Power BI
 3. **Setup CI/CD** - Automate deployment pipeline
@@ -217,11 +225,13 @@ dbt test --select stg_wms__allocation
 ## 📚 Key Resources
 
 ### Essential Documentation
+
 - **[Model Reference](../models/reference.md)** - Complete model documentation
 - **[Setup Guide](setup.md)** - Detailed installation instructions
 - **[Oracle WMS Integration](../integration/oracle-wms.md)** - WMS-specific guidance
 
 ### Common Commands
+
 ```bash
 # Development workflow
 dbt run --select staging        # Build staging layer
@@ -235,6 +245,7 @@ dbt test --target prod         # Validate production data
 ```
 
 ### Configuration Files
+
 - **`dbt_project.yml`** - Project configuration
 - **`profiles.yml`** - Database connections
 - **`.env`** - Environment variables
@@ -250,15 +261,17 @@ After completing this guide, you should have:
 - ✅ **Documentation generated** and accessible
 - ✅ **Understanding of** the model structure
 
-## 🆘 Getting Stuck?
+## 🆘 Getting Stuck
 
 ### Common Issues
+
 1. **Oracle Client not found** - Install Oracle Instant Client
 2. **Connection timeout** - Check Oracle host/port/service
 3. **Permission denied** - Verify Oracle user permissions
 4. **Model compilation error** - Check table/column names in Oracle
 
 ### Get Help
+
 - **Check Logs** - `logs/dbt.log` for detailed errors
 - **Debug Mode** - `dbt debug` for connection issues
 - **Compile Check** - `dbt compile` for SQL issues

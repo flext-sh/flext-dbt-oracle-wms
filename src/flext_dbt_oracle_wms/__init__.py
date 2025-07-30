@@ -3,7 +3,7 @@
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 
-Version 0.7.0 - DBT Oracle WMS plugin using flext-meltano architecture:
+Version 0.9.0 - DBT Oracle WMS plugin using flext-meltano architecture:
 - Uses flext-meltano for DBT integration and orchestration
 - Built on flext-core foundation for robust Oracle WMS transformations
 - Follows FLEXT architecture where DBT components are centralized in flext-meltano
@@ -48,10 +48,11 @@ class WMSError(Exception):
 class ValidationError(ValueError):
     """Validation error for WMS data."""
 
+
 try:
     __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
 except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.7.0"
+    __version__ = "0.9.0"
 
 __version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 

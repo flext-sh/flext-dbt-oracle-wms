@@ -11,6 +11,7 @@ This guide establishes development standards and best practices for creating and
 FLEXT DBT Oracle WMS follows **Clean Architecture** principles adapted for data transformations:
 
 #### **Layer Separation**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Business Intelligence                │
@@ -46,6 +47,7 @@ FLEXT DBT Oracle WMS follows **Clean Architecture** principles adapted for data 
 ```
 
 #### **Dependency Rule**
+
 - **Inward Dependencies Only**: Higher layers can depend on lower layers, never the reverse
 - **Abstraction Increases Inward**: More abstract/business-focused as you move inward
 - **Stable Dependencies**: Lower layers are more stable than higher layers
@@ -53,6 +55,7 @@ FLEXT DBT Oracle WMS follows **Clean Architecture** principles adapted for data 
 ### Domain-Driven Design (DDD)
 
 #### **Bounded Contexts**
+
 ```
 WMS Analytics Domain
 ├── Allocation Context     # Pick/pack operations
@@ -63,7 +66,9 @@ WMS Analytics Domain
 ```
 
 #### **Ubiquitous Language**
+
 Use WMS-specific business terms consistently:
+
 - **Allocation** (not "assignment" or "reservation")
 - **Wave** (not "batch" or "group")
 - **Pick Location** (not "source location")
@@ -88,7 +93,7 @@ models/
 │   │   ├── opr_wms__allocation_summary.sql
 │   │   ├── opr_wms__inventory_positions.sql
 │   │   └── schema.yml
-│   ├── analytical/            # Historical analysis models  
+│   ├── analytical/            # Historical analysis models
 │   │   ├── ana_wms__inventory_analysis.sql
 │   │   ├── ana_wms__order_fulfillment.sql
 │   │   └── schema.yml
@@ -109,6 +114,7 @@ models/
 ### File Naming Conventions
 
 #### **Model Names**
+
 ```sql
 -- Pattern: {layer}_{source}__{entity}[__{purpose}]
 
@@ -128,6 +134,7 @@ met_wms__kpi_dashboard.sql        -- Metrics for dashboards
 ```
 
 #### **File Organization Rules**
+
 - **One model per file** - Each `.sql` file contains exactly one model
 - **Consistent prefixes** - Use standard layer prefixes (`stg_`, `int_`, `opr_`, `ana_`, `met_`)
 - **Descriptive names** - Model names should clearly indicate purpose
@@ -138,8 +145,9 @@ met_wms__kpi_dashboard.sql        -- Metrics for dashboards
 ### Model Configuration
 
 #### **Standard Configuration Template**
+
 ```sql
-{{ 
+{{
   config(
     materialized='table',                    -- table, view, or incremental
     tags=['marts', 'operational', 'wms'],   -- for selective runs
@@ -147,58 +155,60 @@ met_wms__kpi_dashboard.sql        -- Metrics for dashboards
     alias='allocation_summary',             -- table name override
     pre_hook='{{ create_audit_log() }}',    -- pre-execution hooks
     post_hook='{{ update_model_stats() }}', -- post-execution hooks
-    
+
     -- Performance optimizations
     partition_by='business_date',           -- Oracle partitioning
     cluster_by=['company_code', 'facility_code'], -- Oracle clustering
-    
+
     -- Data quality
     on_schema_change='fail',                -- Fail on schema changes
     full_refresh=false,                     -- Prevent accidental full refresh
-    
+
     -- Documentation
     description='Operational allocation summary for real-time dashboards'
-  ) 
+  )
 }}
 ```
 
 #### **Materialization Strategy**
+
 ```yaml
 # dbt_project.yml model configurations
 models:
   flext_dbt_oracle_wms:
     staging:
-      +materialized: view        # Real-time, minimal transformation
+      +materialized: view # Real-time, minimal transformation
       +schema: wms_staging
-      
+
     intermediate:
-      +materialized: view        # Internal logic, not persisted
+      +materialized: view # Internal logic, not persisted
       +schema: wms_intermediate
-      
+
     marts:
       operational:
-        +materialized: table     # Performance for real-time dashboards
+        +materialized: table # Performance for real-time dashboards
         +schema: wms_operational
-        
+
       analytical:
-        +materialized: table     # Complex historical analysis
+        +materialized: table # Complex historical analysis
         +schema: wms_analytical
-        
+
       metrics:
-        +materialized: view      # Always current, computed from marts
+        +materialized: view # Always current, computed from marts
         +schema: wms_metrics
 ```
 
 ### SQL Code Standards
 
 #### **Model Structure Template**
+
 ```sql
-{{ 
+{{
   config(
     materialized='table',
     tags=['operational', 'allocation', 'wms'],
     schema='wms_operational'
-  ) 
+  )
 }}
 
 -- Dependencies and CTEs
@@ -207,7 +217,7 @@ WITH allocation_base AS (
 ),
 
 allocation_metrics AS (
-  SELECT 
+  SELECT
     wave_id,
     facility_code,
     COUNT(*) as total_allocations,
@@ -220,23 +230,23 @@ allocation_metrics AS (
 
 -- Final transformation
 final AS (
-  SELECT 
+  SELECT
     -- Primary keys and identifiers
     wave_id,
     facility_code,
-    
+
     -- Business metrics
     total_allocations,
     total_quantity,
     avg_quantity_per_allocation,
-    
+
     -- Calculated fields
     ROUND(total_quantity / NULLIF(total_allocations, 0), 2) as avg_quantity_calc,
-    
+
     -- Audit fields
     CURRENT_TIMESTAMP as model_updated_at,
     '{{ run_started_at }}' as dbt_run_started_at
-    
+
   FROM allocation_metrics
   WHERE total_allocations > 0  -- Data quality filter
 )
@@ -245,29 +255,30 @@ SELECT * FROM final
 ```
 
 #### **SQL Formatting Rules**
+
 ```sql
 -- ✅ GOOD: Consistent formatting and structure
-SELECT 
+SELECT
     -- Primary identifiers
     allocation_id,
     company_code,
     facility_code,
-    
+
     -- Business fields
     allocated_quantity,
     packed_quantity,
-    
+
     -- Calculated fields
-    CASE 
+    CASE
         WHEN packed_quantity >= allocated_quantity THEN 'COMPLETE'
         WHEN packed_quantity > 0 THEN 'PARTIAL'
         ELSE 'PENDING'
     END as pack_status,
-    
+
     -- Audit fields
     created_timestamp,
     modified_timestamp
-    
+
 FROM {{ ref('stg_wms__allocation') }}
 WHERE company_code = '001'
   AND facility_code = 'DC001'
@@ -279,18 +290,19 @@ SELECT allocation_id,company_code,allocated_quantity,CASE WHEN packed_quantity>=
 ```
 
 #### **CTE (Common Table Expression) Standards**
+
 ```sql
 -- Use CTEs for complex logic breakdown
 WITH allocation_base AS (
   -- Base data selection with filters
-  SELECT * 
+  SELECT *
   FROM {{ ref('stg_wms__allocation') }}
   WHERE business_date >= '{{ var("start_date") }}'
 ),
 
 allocation_enriched AS (
   -- Add business logic and enrichments
-  SELECT 
+  SELECT
     a.*,
     o.order_number,
     i.item_description
@@ -303,7 +315,7 @@ allocation_enriched AS (
 
 allocation_metrics AS (
   -- Calculate business metrics
-  SELECT 
+  SELECT
     *,
     allocated_quantity - COALESCE(packed_quantity, 0) as remaining_quantity
   FROM allocation_enriched
@@ -316,12 +328,13 @@ SELECT * FROM allocation_metrics
 ### Business Logic Implementation
 
 #### **WMS-Specific Calculations**
+
 ```sql
 -- Allocation completion rate
-CASE 
+CASE
   WHEN allocated_quantity = 0 THEN 0
   ELSE ROUND(
-    COALESCE(packed_quantity, 0) / allocated_quantity * 100, 
+    COALESCE(packed_quantity, 0) / allocated_quantity * 100,
     2
   )
 END as completion_rate_percent,
@@ -334,7 +347,7 @@ COUNT(*) OVER (PARTITION BY wave_id) as allocations_in_wave,
 SUM(allocated_quantity) OVER (PARTITION BY wave_id) as wave_total_quantity,
 
 -- Order fulfillment status
-CASE 
+CASE
   WHEN SUM(shipped_quantity) >= SUM(ordered_quantity) THEN 'FULFILLED'
   WHEN SUM(shipped_quantity) > 0 THEN 'PARTIAL'
   ELSE 'PENDING'
@@ -342,16 +355,17 @@ END as fulfillment_status
 ```
 
 #### **Data Quality and Validation**
+
 ```sql
 -- Add data quality indicators
-CASE 
-  WHEN company_code IS NULL OR facility_code IS NULL 
+CASE
+  WHEN company_code IS NULL OR facility_code IS NULL
     THEN 'MISSING_REQUIRED_FIELDS'
-  WHEN allocated_quantity < 0 
+  WHEN allocated_quantity < 0
     THEN 'NEGATIVE_QUANTITY'
-  WHEN packed_quantity > allocated_quantity 
+  WHEN packed_quantity > allocated_quantity
     THEN 'OVERPACK'
-  WHEN picked_timestamp > modified_timestamp 
+  WHEN picked_timestamp > modified_timestamp
     THEN 'INVALID_TIMESTAMP_ORDER'
   ELSE 'VALID'
 END as data_quality_status,
@@ -359,7 +373,7 @@ END as data_quality_status,
 -- Generate surrogate keys for dimensional modeling
 {{ dbt_utils.generate_surrogate_key([
   'company_code',
-  'facility_code', 
+  'facility_code',
   'allocation_id'
 ]) }} as allocation_sk
 ```
@@ -369,6 +383,7 @@ END as data_quality_status,
 ### Test Categories
 
 #### **1. Schema Tests (Built-in dbt)**
+
 ```yaml
 # models/staging/schema.yml
 models:
@@ -379,15 +394,15 @@ models:
           column_name: allocation_id
       - not_null:
           column_name: allocation_id
-    
+
     columns:
       - name: company_code
         description: "Company identifier"
         tests:
           - not_null
           - accepted_values:
-              values: ['001', '002', '003']
-      
+              values: ["001", "002", "003"]
+
       - name: allocated_quantity
         description: "Quantity allocated for picking"
         tests:
@@ -399,17 +414,19 @@ models:
 ```
 
 #### **2. Custom Business Rule Tests**
+
 ```sql
 -- tests/business_rules/test_allocation_quantity_logic.sql
 -- Description: Allocated quantity should not exceed ordered quantity
 SELECT *
 FROM {{ ref('stg_wms__allocation') }} a
 JOIN {{ ref('stg_wms__order_dtl') }} o
-  ON a.order_dtl_id = o.order_dtl_id  
+  ON a.order_dtl_id = o.order_dtl_id
 WHERE a.allocated_quantity > o.ordered_quantity
 ```
 
 #### **3. Data Quality Tests**
+
 ```sql
 -- tests/data_quality/test_inventory_consistency.sql
 -- Description: Available quantity should equal on-hand minus allocated
@@ -419,12 +436,13 @@ WHERE available_quantity != (on_hand_quantity - COALESCE(allocated_quantity, 0))
 ```
 
 #### **4. Performance Tests**
+
 ```sql
 -- tests/performance/test_model_row_count.sql
 -- Description: Ensure reasonable data volumes
 {{ config(severity='warn') }}
 
-SELECT 
+SELECT
   '{{ this }}' as model_name,
   COUNT(*) as row_count,
   CURRENT_TIMESTAMP as test_timestamp
@@ -435,6 +453,7 @@ HAVING COUNT(*) > 10000000  -- Warn if over 10M rows
 ### Test Execution Strategy
 
 #### **Development Testing**
+
 ```bash
 # Test individual model during development
 dbt test --select stg_wms__allocation
@@ -448,6 +467,7 @@ dbt test --select "test_type:data"
 ```
 
 #### **CI/CD Testing**
+
 ```bash
 # Full test suite for CI/CD
 dbt test --store-failures
@@ -464,30 +484,31 @@ dbt test --select "path:tests/business_rules"
 ### Model Documentation
 
 #### **Model Description Template**
+
 ```yaml
 # models/staging/schema.yml
 models:
   - name: stg_wms__allocation
     description: |
       Standardized Oracle WMS allocation data for pick and pack operations.
-      
+
       This model performs the following transformations:
       - Standardizes data types and formats from raw Oracle WMS data
       - Applies business rules and data quality validation
       - Generates surrogate keys for dimensional modeling
       - Adds audit fields and data quality indicators
-      
+
       **Business Context**: 
       Allocations represent the assignment of inventory to fulfill order requirements.
       They drive the picking process and track fulfillment progress through the warehouse.
-      
+
       **Data Sources**: 
       - oracle_wms_raw.allocation (via Singer tap-oracle-wms)
-      
+
       **Update Frequency**: Real-time via view materialization
-      
+
       **Data Quality**: 95%+ completeness required for operational dashboards
-    
+
     columns:
       - name: allocation_id
         description: |
@@ -497,7 +518,7 @@ models:
         tests:
           - unique
           - not_null
-      
+
       - name: allocated_quantity
         description: |
           Quantity of the item allocated for picking.
@@ -511,6 +532,7 @@ models:
 ```
 
 #### **Inline Comments**
+
 ```sql
 -- Model: Operational allocation summary for real-time dashboards
 -- Purpose: Provides wave-level allocation metrics for warehouse operations
@@ -521,7 +543,7 @@ models:
 WITH allocation_base AS (
   -- Source: Standardized allocation data from staging layer
   -- Filter: Last 30 days for operational relevance
-  SELECT * 
+  SELECT *
   FROM {{ ref('stg_wms__allocation') }}
   WHERE business_date >= CURRENT_DATE - 30
 ),
@@ -529,21 +551,21 @@ WITH allocation_base AS (
 wave_metrics AS (
   -- Business Logic: Calculate key performance indicators per wave
   -- Metrics: Completion rates, productivity, and exception tracking
-  SELECT 
+  SELECT
     wave_id,
     facility_code,
-    
+
     -- Volume metrics
     COUNT(*) as total_allocations,
     COUNT(CASE WHEN packed_quantity >= allocated_quantity THEN 1 END) as completed_allocations,
-    
+
     -- Performance calculation: Pick completion rate
     ROUND(
-      COUNT(CASE WHEN packed_quantity >= allocated_quantity THEN 1 END) * 100.0 / 
-      NULLIF(COUNT(*), 0), 
+      COUNT(CASE WHEN packed_quantity >= allocated_quantity THEN 1 END) * 100.0 /
+      NULLIF(COUNT(*), 0),
       2
     ) as completion_rate_percent
-    
+
   FROM allocation_base
   GROUP BY wave_id, facility_code
 )
@@ -554,6 +576,7 @@ SELECT * FROM wave_metrics
 ### Documentation Generation
 
 #### **Automated Documentation**
+
 ```bash
 # Generate comprehensive documentation
 dbt docs generate --profiles-dir profiles
@@ -566,23 +589,29 @@ dbt docs serve --profiles-dir profiles --port 8080
 ```
 
 #### **Custom Documentation Blocks**
+
 ```markdown
 <!-- docs/allocation_business_rules.md -->
+
 {% docs allocation_business_rules %}
 
 ## Allocation Business Rules
 
 ### Quantity Validation
+
 - Allocated quantity must be positive
 - Allocated quantity cannot exceed ordered quantity
 - Packed quantity cannot exceed allocated quantity
 
-### Status Progression  
+### Status Progression
+
 Valid status transitions:
+
 - CREATED → RELEASED → PICKING → PICKED → PACKED → SHIPPED
 - Any status → CANCELLED (exception handling)
 
 ### Wave Assignment
+
 - All allocations must belong to a valid wave
 - Wave status must allow allocation modifications
 - Cross-wave allocations are not permitted
@@ -595,14 +624,15 @@ Valid status transitions:
 ### Oracle-Specific Optimizations
 
 #### **Partitioning Strategy**
+
 ```sql
 -- Large fact tables partitioned by business date
-{{ 
+{{
   config(
     materialized='table',
     partition_by='business_date',
     cluster_by=['company_code', 'facility_code', 'wave_id']
-  ) 
+  )
 }}
 
 -- Partition pruning in queries
@@ -612,18 +642,19 @@ WHERE business_date = CURRENT_DATE  -- Enables partition pruning
 ```
 
 #### **Incremental Processing**
+
 ```sql
 -- Incremental models for large datasets
-{{ 
+{{
   config(
     materialized='incremental',
     unique_key='allocation_id',
     on_schema_change='fail',
     partition_by='business_date'
-  ) 
+  )
 }}
 
-SELECT 
+SELECT
   allocation_id,
   business_date,
   allocated_quantity,
@@ -633,13 +664,14 @@ FROM {{ ref('stg_wms__allocation') }}
 {% if is_incremental() %}
   -- Process only new/changed records
   WHERE modified_timestamp > (
-    SELECT MAX(modified_timestamp) 
+    SELECT MAX(modified_timestamp)
     FROM {{ this }}
   )
 {% endif %}
 ```
 
 #### **Query Optimization**
+
 ```sql
 -- Oracle-specific performance hints
 SELECT /*+ USE_HASH(a,o) PARALLEL(4) FIRST_ROWS(1000) */
@@ -656,6 +688,7 @@ WHERE a.business_date >= CURRENT_DATE - 7
 ### Model Performance Guidelines
 
 #### **Avoid Anti-Patterns**
+
 ```sql
 -- ❌ BAD: Expensive operations in WHERE clause
 SELECT *
@@ -667,11 +700,11 @@ SELECT *
 FROM {{ ref('stg_wms__allocation') }}
 WHERE facility_code = 'DC001'
 
--- ❌ BAD: Unnecessary subqueries  
+-- ❌ BAD: Unnecessary subqueries
 SELECT a.*
 FROM {{ ref('stg_wms__allocation') }} a
 WHERE allocation_id IN (
-  SELECT allocation_id 
+  SELECT allocation_id
   FROM {{ ref('stg_wms__allocation') }}
   WHERE packed_quantity > 0
 )
@@ -687,6 +720,7 @@ WHERE packed_quantity > 0
 ### Local Development Process
 
 #### **1. Environment Setup**
+
 ```bash
 # Setup development environment
 make dev-install
@@ -699,6 +733,7 @@ dbt debug --profiles-dir profiles --target dev
 ```
 
 #### **2. Model Development Cycle**
+
 ```bash
 # Create new model
 touch models/staging/stg_wms__new_entity.sql
@@ -715,6 +750,7 @@ cat target/compiled/flext_dbt_oracle_wms/models/staging/stg_wms__new_entity.sql
 ```
 
 #### **3. Quality Gates**
+
 ```bash
 # Run all quality checks before committing
 make validate
@@ -729,6 +765,7 @@ make test        # All tests including dbt
 ### Git Workflow
 
 #### **Branch Strategy**
+
 ```bash
 # Feature development
 git checkout -b feature/new-allocation-metrics
@@ -744,10 +781,11 @@ git push origin feature/new-allocation-metrics
 ```
 
 #### **Commit Message Standards**
+
 ```bash
 # Format: type(scope): description
 feat(allocation): add real-time allocation dashboard model
-fix(inventory): correct available quantity calculation logic  
+fix(inventory): correct available quantity calculation logic
 docs(setup): update Oracle connection configuration guide
 test(business-rules): add order fulfillment validation tests
 perf(marts): optimize allocation summary query performance
@@ -756,6 +794,7 @@ perf(marts): optimize allocation summary query performance
 ### Code Review Guidelines
 
 #### **Review Checklist**
+
 - **Model Logic**: Business rules correctly implemented
 - **Performance**: Efficient SQL and appropriate materialization
 - **Testing**: Adequate test coverage (>90% for business logic)
@@ -764,6 +803,7 @@ perf(marts): optimize allocation summary query performance
 - **Dependencies**: Appropriate model references and layering
 
 #### **Review Focus Areas**
+
 1. **Business Accuracy** - Verify WMS business logic
 2. **Data Quality** - Check validation rules and error handling
 3. **Performance** - Review query efficiency and materialization
@@ -773,15 +813,18 @@ perf(marts): optimize allocation summary query performance
 ## 📚 Additional Resources
 
 ### dbt Resources
+
 - **[dbt Style Guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md)** - Official dbt style guide
 - **[dbt Best Practices](https://docs.getdbt.com/guides/best-practices)** - dbt development best practices
 - **[dbt Oracle Adapter](https://github.com/oracle/dbt-oracle)** - Oracle-specific documentation
 
 ### Oracle WMS Resources
+
 - **[Oracle WMS Documentation](https://docs.oracle.com/en/industries/food-beverage/wms/)** - Official Oracle WMS docs
 - **[WMS Data Model](../integration/oracle-wms.md)** - FLEXT WMS integration guide
 
 ### FLEXT Framework
+
 - **[Clean Architecture Guide](../../flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
 - **[Domain-Driven Design](../../flext-core/docs/architecture/domain-driven-design.md)** - DDD implementation patterns
 

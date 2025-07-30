@@ -1,75 +1,9 @@
 # ============================================================================
-# FLEXT-DBT-ORACLE-WMS - dbt Oracle WMS Analytics .gitignore
-# dbt 1.7+ | Oracle | Python 3.13 | WMS Analytics
+# FLEXT-DBT-ORACLE-WMS .gitignore
+# dbt 1.7+ | Oracle WMS | Python 3.13
 # ============================================================================
 
-# ============================================================================
-# JUNK FILES - NEVER COMMIT THESE
-# ============================================================================
-
-# Archive and backup directories  
-archive/
-archives/
-backup/
-backups/
-.backup/
-*_backup/
-*_backup_*/
-
-# AI-generated files and reports
-*_REPORT*.md
-*_ANALYSIS*.md
-*_SUMMARY*.md  
-*_FINDINGS*.md
-CLAUDE*.md
-CONFIG_MIGRATION*.md
-DEVELOPMENT_STANDARDS*.md
-DUPLICATION_REPORT*.md
-LINT_CORRECTIONS*.md
-*.ai.md
-*.ai.txt
-
-# Backup files with timestamps
-*_20250*.bak
-*_202507*.bak
-*_202506*.bak
-*.md_20250*
-README_20250*.bak
-
-# Generic backup patterns
-*.bak
-*.backup
-*.orig
-*.syntax_backup  
-*.broken
-*.tmp.bak
-*_temp.py
-*_temp.md
-
-# Fix scripts and validation files
-fix_*.py
-*_fix.py
-*_validation.py
-validate_*.py
-investigate_*.py
-temp_*.py
-debug_*.py
-
-# Tool reports and analysis
-*_analysis.txt
-*_report.txt
-*_output.txt
-analysis_temp/
-report_*/
-reports/
-reports_*/
-temp_test_*/
-
-# ============================================================================
-# DBT ARTIFACTS
-# ============================================================================
-
-# dbt compilation artifacts
+# DBT artifacts
 target/
 dbt_packages/
 logs/
@@ -78,27 +12,22 @@ profiles.yml.bak
 **/.user.yml
 profiles/profiles.yml.backup
 
-# ============================================================================
-# PYTHON ARTIFACTS
-# ============================================================================
-
-# Python artifacts (for dbt-core)
+# Python artifacts
 __pycache__/
 *.py[cod]
-*.pyc
-*.pyo
-*.pyd
+*$py.class
 *.so
-
-# Distribution / packaging
+.Python
 build/
 dist/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
+*.manifest
+*.spec
 
-# Testing and coverage
+# Testing & coverage
 htmlcov/
 .tox/
 .nox/
@@ -109,53 +38,74 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Development tools
-.mypy_cache/
-.ruff_cache/
-.pyre/
-.pytype/
-
-# Virtual environments
+# Development environments
 .env
-.venv/
+.venv
 env/
 venv/
 ENV/
+env.bak/
+venv.bak/
 
-# IDEs and editors
+# Development tools
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+
+# IDEs & editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# System files
+# OS files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
-Desktop.ini
 
-# Documentation
-docs/_build/
-site/
+# Oracle specific files
+*.ora
+tnsnames.ora
+sqlnet.ora
+*.dmp
+*.exp
+*.wallet
+*.dbf
+*.ctl
+sqldeveloper.conf
+oracle.dat
 
-# Logs and temporary files
-*.log
+# WMS specific files
+wms_data/
+wms_exports/
+*.wms
+
+# Backup & temporary files
+*.bak
+*.backup
+*.orig
+*_backup/
+backup/
 *.tmp
+temp/
+tmp/
 
-# Database files
-*.db
-*.sqlite
-*.sqlite3
-
-# Security
+# Security & credentials
 *.key
 *.pem
 *.crt
+credentials.json
+connection_info.json
 
 # Force include critical files
 !dbt_project.yml
-!profiles.yml
-!packages.yml
 !pyproject.toml
 !Makefile
 !README.md
+!profiles.yml.template

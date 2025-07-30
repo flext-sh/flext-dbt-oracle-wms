@@ -7,6 +7,7 @@ This guide will walk you through setting up FLEXT DBT Oracle WMS from scratch, i
 ## 📋 Prerequisites
 
 ### System Requirements
+
 - **Python 3.13+** (required for modern typing and performance)
 - **Git** (for version control)
 - **Poetry** (recommended for dependency management)
@@ -14,6 +15,7 @@ This guide will walk you through setting up FLEXT DBT Oracle WMS from scratch, i
 - **Oracle Client** libraries (Oracle Instant Client)
 
 ### Oracle WMS Requirements
+
 - **Oracle WMS** system access
 - **Database permissions** for WMS schemas
 - **Singer tap** setup (flext-tap-oracle-wms)
@@ -67,6 +69,7 @@ pip install -e .
 #### Oracle Instant Client Installation
 
 **Linux/Mac:**
+
 ```bash
 # Download Oracle Instant Client
 wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linux.x64-21.1.0.0.0.zip
@@ -82,6 +85,7 @@ echo 'export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH' >> ~/.bashrc
 ```
 
 **Windows:**
+
 ```powershell
 # Download and extract Oracle Instant Client
 # Set environment variables
@@ -359,22 +363,22 @@ Verify your Oracle WMS source data:
 sqlplus wms_user/password@oracle-host:1521/XEPDB1
 
 -- Check key WMS tables
-SELECT table_name, num_rows 
-FROM user_tables 
+SELECT table_name, num_rows
+FROM user_tables
 WHERE table_name IN ('ALLOCATION', 'INVENTORY', 'ORDER_HDR', 'ORDER_DTL')
 ORDER BY table_name;
 
 -- Verify data freshness
-SELECT 
+SELECT
     'ALLOCATION' as table_name,
     COUNT(*) as total_records,
     MAX(mod_ts) as latest_modified
 FROM allocation
 UNION ALL
-SELECT 
+SELECT
     'INVENTORY' as table_name,
     COUNT(*) as total_records,
-    MAX(mod_ts) as latest_modified  
+    MAX(mod_ts) as latest_modified
 FROM inventory;
 ```
 
@@ -466,6 +470,7 @@ make test          # All tests
 **Problem**: `DPI-1047: Cannot locate a 64-bit Oracle Client library`
 
 **Solution**:
+
 ```bash
 # Ensure Oracle client is properly installed
 export ORACLE_HOME=/path/to/instantclient_21_1
@@ -480,6 +485,7 @@ ldconfig -p | grep oracle
 **Problem**: `ORA-12514: TNS:listener does not currently know of service`
 
 **Solution**:
+
 ```bash
 # Test connection with sqlplus
 sqlplus wms_user/password@oracle-host:1521/XEPDB1
@@ -493,6 +499,7 @@ sqlplus wms_user/password@oracle-host:1521/XEPDB1
 **Problem**: `Compilation Error: Model not found`
 
 **Solution**:
+
 ```bash
 # Clean dbt artifacts
 dbt clean
@@ -509,6 +516,7 @@ dbt compile --parse-only
 **Problem**: Slow model execution
 
 **Solution**:
+
 ```bash
 # Increase threads in profiles.yml
 # Add incremental materialization

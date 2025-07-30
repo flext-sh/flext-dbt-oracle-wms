@@ -1,5 +1,5 @@
 # MIGRATED DBT PROJECT: Uses flext-meltano.dbt patterns
-# 
+#
 # ARCHITECTURAL IMPROVEMENT:
 # - Eliminates duplicated DBT configuration patterns
 # - Uses flext-meltano.dbt.FlextMeltanoDbtProject base patterns
@@ -15,7 +15,7 @@ profile: "{{ var('flext_meltano_dbt_profile', 'flext_oracle_wms') }}"
 
 # Standard paths (from flext-meltano DBT patterns)
 model-paths: ["models"]
-analysis-paths: ["analyses"] 
+analysis-paths: ["analyses"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
@@ -39,8 +39,8 @@ models:
     staging:
       +materialized: "{{ var('flext_meltano_staging_materialization', 'view') }}"
       +schema: "{{ var('flext_meltano_staging_schema', 'wms_staging') }}"
-      
-    # Marts layer (flext-meltano pattern) 
+
+    # Marts layer (flext-meltano pattern)
     marts:
       +materialized: "{{ var('flext_meltano_mart_materialization', 'table') }}"
       +schema: "{{ var('flext_meltano_mart_schema', 'wms_marts') }}"
@@ -62,7 +62,7 @@ vars:
   # Import base variables from flext-meltano DBT patterns
   flext_meltano_project_type: "oracle_wms"
   flext_meltano_source_schema: "{{ env_var('DBT_SOURCE_SCHEMA', 'wms_raw') }}"
-  
+
   # Business-specific variables (WMS specific)
   oracle_wms_entities: "{{ var('flext_meltano_wms_entities', ['allocation', 'order_hdr', 'order_dtl', 'inventory']) }}"
   business_start_date: "{{ var('flext_meltano_business_start_date', '2024-01-01') }}"
@@ -70,14 +70,14 @@ vars:
 # FLEXT-MELTANO HOOKS (standardized across ecosystem)
 on-run-start:
   - "{{ flext_meltano_dbt_run_start_hook() }}"
-  
+
 on-run-end:
   - "{{ flext_meltano_dbt_run_end_hook() }}"
 
 # FLEXT-MELTANO REQUIREMENTS
 require-dbt-version: "{{ var('flext_meltano_required_dbt_version', '>=1.6.0') }}"
 
-# FLEXT-MELTANO DISPATCH (eliminates macro duplication)  
+# FLEXT-MELTANO DISPATCH (eliminates macro duplication)
 dispatch:
   - macro_namespace: flext_meltano_dbt
     search_order: ["flext_dbt_oracle_wms", "flext_meltano_dbt"]
@@ -88,7 +88,6 @@ dispatch:
 query-comment:
   comment: "{{ flext_meltano_dbt_query_comment() }}"
   append: true
-
 # MIGRATION BENEFITS:
 # ✅ 70% reduction in configuration duplication
 # ✅ Centralized DBT patterns via flext-meltano

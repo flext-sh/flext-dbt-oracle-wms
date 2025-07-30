@@ -6,7 +6,7 @@ This guide covers the integration between FLEXT DBT and Oracle WMS, including da
 
 ## 🏢 Oracle WMS Overview
 
-### What is Oracle WMS?
+### What is Oracle WMS
 
 Oracle Warehouse Management System (WMS) is a comprehensive supply chain execution solution that provides:
 
@@ -29,6 +29,7 @@ Oracle Warehouse Management System (WMS) is a comprehensive supply chain executi
 ### Core Business Entities
 
 #### **Allocation Management**
+
 ```sql
 -- Primary allocation entity
 ALLOCATION
@@ -47,6 +48,7 @@ ALLOCATION
 ```
 
 #### **Inventory Management**
+
 ```sql
 -- Real-time inventory positions
 INVENTORY
@@ -65,6 +67,7 @@ INVENTORY
 ```
 
 #### **Order Management**
+
 ```sql
 -- Order header information
 ORDER_HDR
@@ -94,6 +97,7 @@ ORDER_DTL
 ### Reference Data Entities
 
 #### **Master Data**
+
 - **ITEM** - Item master data and attributes
 - **LOCATION** - Warehouse locations and zones
 - **COMPANY** - Company and organization codes
@@ -101,6 +105,7 @@ ORDER_DTL
 - **UOM** - Units of measure and conversions
 
 #### **Status and Type Tables**
+
 - **STATUS** - Various status codes (order, allocation, inventory)
 - **TYPE** - Type classifications (order types, allocation types)
 - **REASON** - Reason codes for adjustments and exceptions
@@ -110,11 +115,13 @@ ORDER_DTL
 ### Oracle Database Requirements
 
 #### **Database Version**
+
 - Oracle Database 12c or higher
 - Oracle WMS application version 23.1.0+
 - Oracle Client 19c or 21c
 
 #### **Required Permissions**
+
 ```sql
 -- Grant necessary permissions to dbt user
 GRANT SELECT ON wms_schema.allocation TO dbt_user;
@@ -133,6 +140,7 @@ GRANT CREATE SEQUENCE TO dbt_user;
 ### Connection Configuration
 
 #### **dbt profiles.yml**
+
 ```yaml
 flext_oracle_wms:
   target: dev
@@ -162,6 +170,7 @@ flext_oracle_wms:
 ```
 
 #### **Environment Variables**
+
 ```bash
 # Oracle WMS Database Connection
 export ORACLE_WMS_HOST="wms-prod.company.com"
@@ -180,6 +189,7 @@ export WMS_ORGANIZATION_ID="101"
 ### Connection Testing
 
 #### **Test Basic Connectivity**
+
 ```bash
 # Test Oracle connection
 sqlplus $ORACLE_WMS_USER/$ORACLE_WMS_PASS@$ORACLE_WMS_HOST:$ORACLE_WMS_PORT/$ORACLE_WMS_SERVICE
@@ -189,15 +199,16 @@ dbt debug --profiles-dir profiles --target dev
 ```
 
 #### **Validate WMS Tables**
+
 ```sql
 -- Check WMS table availability
-SELECT table_name, num_rows 
-FROM user_tables 
+SELECT table_name, num_rows
+FROM user_tables
 WHERE table_name IN ('ALLOCATION', 'INVENTORY', 'ORDER_HDR', 'ORDER_DTL')
 ORDER BY table_name;
 
 -- Verify data freshness
-SELECT 
+SELECT
     'ALLOCATION' as table_name,
     COUNT(*) as record_count,
     MAX(mod_ts) as latest_modified
@@ -220,7 +231,7 @@ sources:
     description: "Raw Oracle WMS data via Singer tap"
     database: "{{ env_var('ORACLE_WMS_DATABASE', 'WMSPROD') }}"
     schema: "{{ env_var('ORACLE_WMS_SCHEMA', 'wms_raw') }}"
-    
+
     tables:
       - name: allocation
         description: "WMS allocation records for pick/pack operations"
@@ -242,11 +253,11 @@ sources:
             description: "Quantity allocated for picking"
             tests:
               - not_null
-        
+
         freshness:
-          warn_after: {count: 2, period: hour}
-          error_after: {count: 6, period: hour}
-        
+          warn_after: { count: 2, period: hour }
+          error_after: { count: 6, period: hour }
+
         loaded_at_field: mod_ts
 
       - name: inventory
@@ -297,6 +308,7 @@ sources:
 ### Singer Tap Integration
 
 #### **flext-tap-oracle-wms Setup**
+
 ```bash
 # Install Singer tap for Oracle WMS
 pip install flext-tap-oracle-wms
@@ -317,7 +329,7 @@ cat > tap-oracle-wms-config.json << 'EOF'
       "replication_key": "mod_ts"
     },
     "WMS.INVENTORY": {
-      "replication_method": "INCREMENTAL", 
+      "replication_method": "INCREMENTAL",
       "replication_key": "mod_ts"
     }
   }
@@ -329,6 +341,7 @@ flext-tap-oracle-wms --config tap-oracle-wms-config.json --discover
 ```
 
 #### **Data Pipeline Flow**
+
 ```
 Oracle WMS Database
         ↓
@@ -346,6 +359,7 @@ Business Intelligence Tools
 ### Real-time Data Considerations
 
 #### **Change Data Capture (CDC)**
+
 ```sql
 -- Enable CDC for critical WMS tables
 -- (Requires Oracle GoldenGate or similar)
@@ -363,9 +377,9 @@ BEGIN
     change_timestamp,
     user_name
   ) VALUES (
-    CASE 
+    CASE
       WHEN INSERTING THEN 'INSERT'
-      WHEN UPDATING THEN 'UPDATE' 
+      WHEN UPDATING THEN 'UPDATE'
       WHEN DELETING THEN 'DELETE'
     END,
     COALESCE(:NEW.id, :OLD.id),
@@ -378,17 +392,18 @@ END;
 ```
 
 #### **Incremental Loading Strategy**
+
 ```sql
 -- dbt incremental model example
-{{ 
+{{
   config(
     materialized='incremental',
     unique_key='allocation_id',
     on_schema_change='fail'
-  ) 
+  )
 }}
 
-SELECT 
+SELECT
   id as allocation_id,
   company_code,
   facility_code,
@@ -407,6 +422,7 @@ FROM {{ source('oracle_wms_raw', 'allocation') }}
 ### Business Logic Implementation
 
 #### **Allocation Status Processing**
+
 ```sql
 -- Standardize allocation status codes
 CASE allocation_status_id
@@ -422,12 +438,13 @@ END as allocation_status
 ```
 
 #### **Inventory Classification**
+
 ```sql
 -- Calculate available inventory
 on_hand_quantity - COALESCE(allocated_quantity, 0) as available_quantity,
 
 -- Classify inventory status
-CASE 
+CASE
   WHEN on_hand_quantity - COALESCE(allocated_quantity, 0) > 0 THEN 'AVAILABLE'
   WHEN on_hand_quantity > 0 AND allocated_quantity >= on_hand_quantity THEN 'ALLOCATED'
   WHEN on_hand_quantity = 0 THEN 'OUT_OF_STOCK'
@@ -436,13 +453,14 @@ END as inventory_classification
 ```
 
 #### **Order Fulfillment Metrics**
+
 ```sql
 -- Calculate order fulfillment rates
-SELECT 
+SELECT
   order_hdr_id,
   SUM(ordered_quantity) as total_ordered,
   SUM(shipped_quantity) as total_shipped,
-  CASE 
+  CASE
     WHEN SUM(ordered_quantity) = 0 THEN 0
     ELSE ROUND(SUM(shipped_quantity) / SUM(ordered_quantity) * 100, 2)
   END as fulfillment_rate_percent
@@ -455,18 +473,20 @@ GROUP BY order_hdr_id
 ### Oracle-Specific Optimizations
 
 #### **Partitioning Strategy**
+
 ```sql
 -- Partition large fact tables by business date
-{{ 
+{{
   config(
     materialized='table',
     partition_by='business_date',
     cluster_by=['company_code', 'facility_code']
-  ) 
+  )
 }}
 ```
 
 #### **Indexing Recommendations**
+
 ```sql
 -- Suggested indexes for Oracle WMS tables
 CREATE INDEX idx_allocation_wave_status ON allocation (wave_id, allocation_status_id);
@@ -475,6 +495,7 @@ CREATE INDEX idx_order_dtl_status ON order_dtl (order_hdr_id, line_status_id);
 ```
 
 #### **Query Optimization**
+
 ```sql
 -- Use Oracle-specific hints for performance
 /*+ USE_HASH(a, o) PARALLEL(4) */
@@ -492,6 +513,7 @@ WHERE a.business_date >= CURRENT_DATE - 7
 ### Business Rule Validation
 
 #### **Allocation Business Rules**
+
 ```sql
 -- Test: Allocated quantity should not exceed ordered quantity
 -- tests/business_rules/test_allocation_quantity_logic.sql
@@ -503,26 +525,28 @@ WHERE a.allocated_quantity > o.ordered_quantity
 ```
 
 #### **Inventory Consistency Rules**
+
 ```sql
 -- Test: Inventory quantities should be non-negative
 -- tests/business_rules/test_inventory_non_negative.sql
 SELECT *
 FROM {{ ref('stg_wms__inventory') }}
-WHERE on_hand_quantity < 0 
+WHERE on_hand_quantity < 0
    OR allocated_quantity < 0
    OR available_quantity < 0
 ```
 
 #### **Order Status Progression**
+
 ```sql
 -- Test: Order status should follow logical progression
 -- tests/business_rules/test_order_status_progression.sql
 WITH status_progression AS (
-  SELECT 
+  SELECT
     order_hdr_id,
     order_status_id,
     LAG(order_status_id) OVER (
-      PARTITION BY order_hdr_id 
+      PARTITION BY order_hdr_id
       ORDER BY modified_timestamp
     ) as previous_status
   FROM {{ ref('stg_wms__order_hdr') }}
@@ -538,6 +562,7 @@ WHERE (previous_status = '60' AND order_status_id = '10') -- Shipped to Created 
 ### Data Quality Monitoring
 
 #### **Freshness Monitoring**
+
 ```yaml
 # models/staging/_sources.yml
 sources:
@@ -545,16 +570,17 @@ sources:
     tables:
       - name: allocation
         freshness:
-          warn_after: {count: 2, period: hour}
-          error_after: {count: 6, period: hour}
+          warn_after: { count: 2, period: hour }
+          error_after: { count: 6, period: hour }
         loaded_at_field: mod_ts
 ```
 
 #### **Volume Anomaly Detection**
+
 ```sql
 -- Detect significant volume changes
 WITH daily_volumes AS (
-  SELECT 
+  SELECT
     DATE(created_timestamp) as business_date,
     COUNT(*) as allocation_count
   FROM {{ ref('stg_wms__allocation') }}
@@ -562,7 +588,7 @@ WITH daily_volumes AS (
   GROUP BY DATE(created_timestamp)
 ),
 volume_stats AS (
-  SELECT 
+  SELECT
     AVG(allocation_count) as avg_volume,
     STDDEV(allocation_count) as stddev_volume
   FROM daily_volumes
@@ -579,6 +605,7 @@ WHERE d.allocation_count > s.avg_volume + (2 * s.stddev_volume)
 ### Common Integration Issues
 
 #### **Connection Problems**
+
 ```bash
 # Test Oracle connectivity
 tnsping $ORACLE_WMS_SERVICE
@@ -592,20 +619,22 @@ SQL> SELECT * FROM user_tab_privs WHERE table_name = 'ALLOCATION';
 ```
 
 #### **Data Type Issues**
+
 ```sql
 -- Common Oracle to dbt type mappings
 Oracle NUMBER(15,4) → DECIMAL(15,4)
-Oracle VARCHAR2(100) → STRING  
+Oracle VARCHAR2(100) → STRING
 Oracle DATE → TIMESTAMP
 Oracle CLOB → STRING
 Oracle TIMESTAMP → TIMESTAMP
 ```
 
 #### **Performance Issues**
+
 ```sql
 -- Check table statistics
 SELECT table_name, num_rows, blocks, avg_row_len
-FROM user_tables 
+FROM user_tables
 WHERE table_name IN ('ALLOCATION', 'INVENTORY', 'ORDER_HDR');
 
 -- Update statistics if needed
