@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "flext-dbt-oracle-wms"
-version = "0.8.0"
+version = "0.9.0"
 description = "FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"

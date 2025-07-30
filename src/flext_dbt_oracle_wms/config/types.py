@@ -31,7 +31,7 @@ class FlextDBTOracleWMSConfig(BaseModel):
         default="flext-dbt-oracle-wms",
         description="DBT Oracle WMS project name",
     )
-    version: Version = Field(default="2.0.0", description="Project version")
+    version: Version = Field(default="0.9.0", description="Project version")
     profile: NonEmptyStr = Field(
         default="flext_oracle_wms",
         description="DBT profile name",

@@ -72,7 +72,7 @@ class DBTOracleWMSDefaults:
     """Default values for DBT Oracle WMS."""
 
     PROJECT_NAME: Final[str] = "flext_dbt_oracle_wms"
-    VERSION: Final[str] = "2.0.0"
+    VERSION: Final[str] = "0.9.0"
     PROFILE: Final[str] = "flext_oracle_wms"
     SCHEMA_PREFIX: Final[str] = "wms"
     BATCH_SIZE: Final[int] = 1000

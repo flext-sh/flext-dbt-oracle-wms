@@ -16,6 +16,9 @@ import importlib.metadata
 import warnings
 from typing import Any, Optional
 
+# Use real FlextResult from flext-core - DRY principle
+from flext_core import FlextResult
+
 # Import from flext-meltano for DBT integration
 # MIGRATED: Singer SDK imports centralized via flext-meltano
 from flext_meltano.dbt import (
@@ -44,21 +47,6 @@ class WMSError(Exception):
 
 class ValidationError(ValueError):
     """Validation error for WMS data."""
-
-
-class FlextResult:
-    """Simple service result wrapper."""
-
-    def __init__(
-        self,
-        success: bool = True,
-        data: Any = None,
-        error: str | None = None,
-    ) -> None:
-        self.success = success
-        self.data = data
-        self.error = error
-
 
 try:
     __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
