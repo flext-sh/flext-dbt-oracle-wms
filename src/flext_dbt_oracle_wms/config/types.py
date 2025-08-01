@@ -89,7 +89,7 @@ class DBTOracleWMSSourceConfiguration(TypedDict):
 
     name: NonEmptyStr
     schema: NonEmptyStr
-    tables: list[dict[str, Any]]
+    tables: list[dict[str, object]]
 
 
 class DBTOracleWMSTestConfiguration(TypedDict):
@@ -111,7 +111,7 @@ class DBTOracleWMSProfileConfiguration(TypedDict):
     """DBT profile configuration using core types."""
 
     target: NonEmptyStr
-    outputs: dict[str, Any]
+    outputs: dict[str, object]
 
 
 # ==============================================================================
