@@ -182,7 +182,12 @@ class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsError):
         if location is not None:
             context["location"] = location
 
-        super().__init__(f"Oracle WMS DBT inventory: {message}", **context)
+        super().__init__(
+            f"Oracle WMS DBT inventory: {message}",
+            model_name=None,
+            warehouse_name=None,
+            **context,
+        )
 
 
 class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsError):
@@ -202,7 +207,12 @@ class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsError):
         if carrier is not None:
             context["carrier"] = carrier
 
-        super().__init__(f"Oracle WMS DBT shipment: {message}", **context)
+        super().__init__(
+            f"Oracle WMS DBT shipment: {message}",
+            model_name=None,
+            warehouse_name=None,
+            **context,
+        )
 
 
 class FlextDbtOracleWmsModelError(FlextDbtOracleWmsError):
@@ -223,6 +233,7 @@ class FlextDbtOracleWmsModelError(FlextDbtOracleWmsError):
         super().__init__(
             f"Oracle WMS DBT model: {message}",
             model_name=model_name,
+            warehouse_name=None,
             **context,
         )
 
@@ -245,6 +256,7 @@ class FlextDbtOracleWmsTestError(FlextDbtOracleWmsError):
         super().__init__(
             f"Oracle WMS DBT test: {message}",
             model_name=model_name,
+            warehouse_name=None,
             **context,
         )
 
