@@ -1,9 +1,10 @@
 """Oracle WMS DBT exception hierarchy using flext-core patterns.
 
+Domain-specific exceptions for Oracle WMS DBT operations inheriting from flext-core.
+
 Copyright (c) 2025 FLEXT Contributors
 SPDX-License-Identifier: MIT
 
-Domain-specific exceptions for Oracle WMS DBT operations inheriting from flext-core.
 """
 
 from __future__ import annotations

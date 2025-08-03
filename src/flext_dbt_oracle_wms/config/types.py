@@ -1,19 +1,19 @@
 """FLEXT DBT Oracle WMS Configuration Types - Unified typing system using flext-core.
 
-Copyright (c) 2025 FLEXT Contributors
-SPDX-License-Identifier: MIT
-
 This module imports from the unified typing system in flext-core and defines
 DBT Oracle WMS configuration types using modern Python 3.13 patterns and Pydantic v2.
 
 IMPORTANT: This module is for Oracle WMS API integration, NOT Oracle Database.
+
+Copyright (c) 2025 FLEXT Team. All rights reserved.
+SPDX-License-Identifier: MIT
+
 """
 
 from __future__ import annotations
 
 from typing import Literal, TypedDict
 
-# Import from unified core typing system - eliminate duplication
 from pydantic import BaseModel, Field
 
 # Simple type aliases for dbt Oracle WMS

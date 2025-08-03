@@ -1,12 +1,13 @@
 """FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using flext-meltano.
 
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
 Version 0.9.0 - DBT Oracle WMS plugin using flext-meltano architecture:
 - Uses flext-meltano for DBT integration and orchestration
 - Built on flext-core foundation for robust Oracle WMS transformations
 - Follows FLEXT architecture where DBT components are centralized in flext-meltano
+
+Copyright (c) 2025 FLEXT Contributors
+SPDX-License-Identifier: MIT
+
 """
 
 from __future__ import annotations
@@ -16,19 +17,20 @@ import importlib.metadata
 import warnings
 from typing import Any, Optional
 
-# Use real FlextResult from flext-core - DRY principle
 from flext_core import FlextResult
-
-# Import from flext-meltano for DBT integration
-# MIGRATED: Singer SDK imports centralized via flext-meltano
 from flext_meltano.dbt import (
     FlextMeltanoDbtManager,
     FlextMeltanoDbtProject,
     FlextMeltanoDbtRunner,
 )
-
-# Simple type definitions for dbt Oracle WMS project
 from pydantic import BaseModel
+
+try:
+    __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
+except importlib.metadata.PackageNotFoundError:
+    __version__ = "0.9.0"
+
+__version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 
 
 # Create local orchestrator implementation - the orchestration.dbt module doesn't exist
@@ -47,14 +49,6 @@ class WMSError(Exception):
 
 class ValidationError(ValueError):
     """Validation error for WMS data."""
-
-
-try:
-    __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
-except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.9.0"
-
-__version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 
 
 class FlextDbtOracleWmsDeprecationWarning(DeprecationWarning):

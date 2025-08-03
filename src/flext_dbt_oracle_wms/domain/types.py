@@ -1,13 +1,14 @@
 """FLEXT DBT Oracle WMS Domain Types - Unified typing system using flext-core.
 
-Copyright (c) 2025 FLEXT Contributors
-SPDX-License-Identifier: MIT
-
 This module imports from the unified typing system in flext-core and defines
 DBT Oracle WMS-specific types using modern Python 3.13 patterns, StrEnum, and
 Pydantic v2.
 
 IMPORTANT: This module is for Oracle WMS API integration, NOT Oracle Database.
+
+Copyright (c) 2025 FLEXT Contributors
+SPDX-License-Identifier: MIT
+
 """
 
 from __future__ import annotations
