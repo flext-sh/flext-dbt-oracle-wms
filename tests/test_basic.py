@@ -22,6 +22,6 @@ def test_package_structure() -> None:
 
     tests_dir = pathlib.Path(__file__).parent
     if tests_dir.name != "tests":
-        msg = f"Expected {'tests'}, got {tests_dir.name}"
+        msg: str = f"Expected {'tests'}, got {tests_dir.name}"
         raise AssertionError(msg)
     assert (tests_dir / "__init__.py").exists()

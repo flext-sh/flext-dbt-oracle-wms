@@ -360,7 +360,7 @@ class DBTOracleWMSDocumentation(TypedDict):
 # EXPORTS
 # ==============================================================================
 
-__all__ = [
+__all__: list[str] = [
     "DBTOracleWMSAnalysis",
     "DBTOracleWMSAnalysisConfiguration",
     "DBTOracleWMSAnalysisTimeout",

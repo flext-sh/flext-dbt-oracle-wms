@@ -262,7 +262,7 @@ class FlextDbtOracleWmsTestError(FlextDbtOracleWmsError):
         )
 
 
-__all__ = [
+__all__: list[str] = [
     "FlextDbtOracleWmsAuthenticationError",
     "FlextDbtOracleWmsConfigurationError",
     "FlextDbtOracleWmsConnectionError",

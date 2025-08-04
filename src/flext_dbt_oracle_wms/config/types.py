@@ -118,7 +118,7 @@ class DBTOracleWMSProfileConfiguration(TypedDict):
 # EXPORTS - ALL DBT ORACLE WMS CONFIG TYPES
 # ==============================================================================
 
-__all__ = [
+__all__: list[str] = [
     # TypedDict configurations
     "DBTOracleWMSConfiguration",
     "DBTOracleWMSMacroConfiguration",

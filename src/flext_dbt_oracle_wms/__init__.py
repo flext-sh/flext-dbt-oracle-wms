@@ -102,7 +102,7 @@ with contextlib.suppress(ImportError):
 # PUBLIC API EXPORTS
 # ================================
 
-__all__ = [
+__all__: list[str] = [
     "BaseModel",  # from flext_dbt_oracle_wms import BaseModel
     # DBT Oracle WMS Analysis (simplified access)
     "DBTOracleWMSAnalysis",  # from flext_dbt_oracle_wms import DBTOracleWMSAnalysis

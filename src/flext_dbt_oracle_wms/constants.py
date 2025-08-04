@@ -103,7 +103,7 @@ class WMSConstants:
 
 
 # Export commonly used constants
-__all__ = [
+__all__: list[str] = [
     "DBTOracleWMSDefaults",
     "DBTOracleWMSDocumentationTypes",
     "DBTOracleWMSEntityTypes",
