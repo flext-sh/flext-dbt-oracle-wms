@@ -42,30 +42,52 @@ class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
 
         # Materialization types
         MATERIALIZATIONS: ClassVar[list[str]] = [
-            "table", "view", "incremental", "snapshot", "ephemeral"
+            "table",
+            "view",
+            "incremental",
+            "snapshot",
+            "ephemeral",
         ]
 
         # Test types
         TEST_TYPES: ClassVar[list[str]] = [
-            "unique", "not_null", "relationships", "accepted_values", "data_quality"
+            "unique",
+            "not_null",
+            "relationships",
+            "accepted_values",
+            "data_quality",
         ]
 
         # Macro types
         MACRO_TYPES: ClassVar[list[str]] = [
-            "utility", "transformation", "audit", "oracle_specific"
+            "utility",
+            "transformation",
+            "audit",
+            "oracle_specific",
         ]
 
         # Documentation types
         DOCUMENTATION_TYPES: ClassVar[list[str]] = [
-            "model", "source", "macro", "analysis"
+            "model",
+            "source",
+            "macro",
+            "analysis",
         ]
 
     class Entities:
         """Oracle WMS entity type constants."""
 
         WMS_ENTITIES: ClassVar[list[str]] = [
-            "allocation", "order_hdr", "order_dtl", "inventory",
-            "location", "item", "shipment", "receipt", "task", "wave"
+            "allocation",
+            "order_hdr",
+            "order_dtl",
+            "inventory",
+            "location",
+            "item",
+            "shipment",
+            "receipt",
+            "task",
+            "wave",
         ]
 
         # Entity priority levels
@@ -83,12 +105,17 @@ class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
 
         # Processing status
         PROCESSING_STATUSES: ClassVar[list[str]] = [
-            "pending", "processing", "completed", "failed"
+            "pending",
+            "processing",
+            "completed",
+            "failed",
         ]
 
         # Validation modes
         VALIDATION_MODES: ClassVar[list[str]] = [
-            "strict", "normal", "relaxed"
+            "strict",
+            "normal",
+            "relaxed",
         ]
 
     class Configuration:
@@ -124,8 +151,12 @@ class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
     PROFILE = FlextDbtOracleWmsSemanticConstants.Dbt.PROFILE
     SCHEMA_PREFIX = FlextDbtOracleWmsSemanticConstants.Dbt.SCHEMA_PREFIX
     BATCH_SIZE = FlextDbtOracleWmsSemanticConstants.Processing.DEFAULT_BATCH_SIZE
-    INCREMENTAL_LOOKBACK_DAYS = FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
-    DATA_QUALITY_THRESHOLD = FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
+    INCREMENTAL_LOOKBACK_DAYS = (
+        FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
+    )
+    DATA_QUALITY_THRESHOLD = (
+        FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
+    )
 
 
 # =============================================================================
@@ -194,8 +225,12 @@ class DBTOracleWMSDefaults:
     PROFILE = FlextDbtOracleWmsSemanticConstants.Dbt.PROFILE
     SCHEMA_PREFIX = FlextDbtOracleWmsSemanticConstants.Dbt.SCHEMA_PREFIX
     BATCH_SIZE = FlextDbtOracleWmsSemanticConstants.Processing.DEFAULT_BATCH_SIZE
-    INCREMENTAL_LOOKBACK_DAYS = FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
-    DATA_QUALITY_THRESHOLD = FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
+    INCREMENTAL_LOOKBACK_DAYS = (
+        FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
+    )
+    DATA_QUALITY_THRESHOLD = (
+        FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
+    )
 
 
 class WMSConstants:
