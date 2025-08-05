@@ -15,14 +15,8 @@ from __future__ import annotations
 import contextlib
 import importlib.metadata
 import warnings
-from typing import Any, Optional
 
 from flext_core import FlextResult
-from flext_meltano.dbt import (
-    FlextMeltanoDbtManager,
-    FlextMeltanoDbtProject,
-    FlextMeltanoDbtRunner,
-)
 from pydantic import BaseModel
 
 try:

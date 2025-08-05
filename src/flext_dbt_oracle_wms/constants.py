@@ -1,114 +1,238 @@
-"""FLEXT DBT Oracle WMS Constants - Simplified version.
+"""FLEXT DBT Oracle WMS Constants extending flext-core platform constants.
 
 Copyright (c) 2025 FLEXT Contributors
 SPDX-License-Identifier: MIT
 
+DBT Oracle WMS-specific constants that extend flext-core patterns.
 """
 
 from __future__ import annotations
 
-from typing import Final
+from typing import ClassVar
+
+from flext_core.constants import FlextSemanticConstants
+
+# =============================================================================
+# DBT ORACLE WMS-SPECIFIC SEMANTIC CONSTANTS - Modern Python 3.13 Structure
+# =============================================================================
 
 
-# DBT Oracle WMS Entity Types
+class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
+    """DBT Oracle WMS semantic constants extending FlextSemanticConstants.
+
+    Modern Python 3.13 constants following semantic grouping patterns.
+    Extends the FLEXT ecosystem constants with DBT Oracle WMS-specific
+    values while maintaining full backward compatibility.
+    """
+
+    class Core:
+        """Core DBT Oracle WMS system constants."""
+
+        NAME = "flext-dbt-oracle-wms"
+        VERSION = "0.9.0"
+        # CONSUME from single source - NO DUPLICATION
+        ECOSYSTEM_SIZE = FlextSemanticConstants.Core.ECOSYSTEM_SIZE
+
+    class Dbt:
+        """DBT-specific configuration constants."""
+
+        PROJECT_NAME = "flext_dbt_oracle_wms"
+        PROFILE = "flext_oracle_wms"
+        SCHEMA_PREFIX = "wms"
+
+        # Materialization types
+        MATERIALIZATIONS: ClassVar[list[str]] = [
+            "table", "view", "incremental", "snapshot", "ephemeral"
+        ]
+
+        # Test types
+        TEST_TYPES: ClassVar[list[str]] = [
+            "unique", "not_null", "relationships", "accepted_values", "data_quality"
+        ]
+
+        # Macro types
+        MACRO_TYPES: ClassVar[list[str]] = [
+            "utility", "transformation", "audit", "oracle_specific"
+        ]
+
+        # Documentation types
+        DOCUMENTATION_TYPES: ClassVar[list[str]] = [
+            "model", "source", "macro", "analysis"
+        ]
+
+    class Entities:
+        """Oracle WMS entity type constants."""
+
+        WMS_ENTITIES: ClassVar[list[str]] = [
+            "allocation", "order_hdr", "order_dtl", "inventory",
+            "location", "item", "shipment", "receipt", "task", "wave"
+        ]
+
+        # Entity priority levels
+        PRIORITY_LEVELS: ClassVar[list[str]] = ["high", "medium", "low"]
+
+    class Processing:
+        """Data processing configuration constants."""
+
+        # Batch processing - CONSUME from single source
+        DEFAULT_BATCH_SIZE = FlextSemanticConstants.Performance.DEFAULT_BATCH_SIZE
+        INCREMENTAL_LOOKBACK_DAYS = 7
+
+        # Data quality
+        DATA_QUALITY_THRESHOLD = 0.95
+
+        # Processing status
+        PROCESSING_STATUSES: ClassVar[list[str]] = [
+            "pending", "processing", "completed", "failed"
+        ]
+
+        # Validation modes
+        VALIDATION_MODES: ClassVar[list[str]] = [
+            "strict", "normal", "relaxed"
+        ]
+
+    class Configuration:
+        """Configuration management constants."""
+
+        DEFAULT_CONFIG: ClassVar[dict[str, object]] = {
+            "project_name": "flext_dbt_oracle_wms",
+            "profile": "flext_oracle_wms",
+            "schema_prefix": "wms",
+            "batch_size": 1000,
+            "incremental_lookback_days": 7,
+            "data_quality_threshold": 0.95,
+        }
+
+
+class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
+    """DBT Oracle WMS constants with backward compatibility.
+
+    Legacy compatibility layer providing both modern semantic access
+    and traditional flat constant access patterns for smooth migration.
+    """
+
+    # Modern semantic access (Primary API) - direct references
+    Core = FlextDbtOracleWmsSemanticConstants.Core
+    Dbt = FlextDbtOracleWmsSemanticConstants.Dbt
+    Entities = FlextDbtOracleWmsSemanticConstants.Entities
+    Processing = FlextDbtOracleWmsSemanticConstants.Processing
+    Configuration = FlextDbtOracleWmsSemanticConstants.Configuration
+
+    # Legacy compatibility - flat access patterns (DEPRECATED - use semantic access)
+    PROJECT_NAME = FlextDbtOracleWmsSemanticConstants.Dbt.PROJECT_NAME
+    VERSION = FlextDbtOracleWmsSemanticConstants.Core.VERSION
+    PROFILE = FlextDbtOracleWmsSemanticConstants.Dbt.PROFILE
+    SCHEMA_PREFIX = FlextDbtOracleWmsSemanticConstants.Dbt.SCHEMA_PREFIX
+    BATCH_SIZE = FlextDbtOracleWmsSemanticConstants.Processing.DEFAULT_BATCH_SIZE
+    INCREMENTAL_LOOKBACK_DAYS = FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
+    DATA_QUALITY_THRESHOLD = FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
+
+
+# =============================================================================
+# LEGACY CLASSES - Backward compatibility (DEPRECATED - use semantic access)
+# =============================================================================
+
+
 class DBTOracleWMSEntityTypes:
-    """Oracle WMS entity types for DBT models."""
+    """Oracle WMS entity types for DBT models (DEPRECATED - use FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES)."""
 
-    ALLOCATION: Final[str] = "allocation"
-    ORDER_HDR: Final[str] = "order_hdr"
-    ORDER_DTL: Final[str] = "order_dtl"
-    INVENTORY: Final[str] = "inventory"
-    LOCATION: Final[str] = "location"
-    ITEM: Final[str] = "item"
-    SHIPMENT: Final[str] = "shipment"
-    RECEIPT: Final[str] = "receipt"
-    TASK: Final[str] = "task"
-    WAVE: Final[str] = "wave"
+    ALLOCATION = "allocation"
+    ORDER_HDR = "order_hdr"
+    ORDER_DTL = "order_dtl"
+    INVENTORY = "inventory"
+    LOCATION = "location"
+    ITEM = "item"
+    SHIPMENT = "shipment"
+    RECEIPT = "receipt"
+    TASK = "task"
+    WAVE = "wave"
 
 
-# DBT Materialization Types
 class DBTOracleWMSMaterializations:
-    """DBT materialization types for Oracle WMS."""
+    """DBT materialization types (DEPRECATED - use FlextDbtOracleWmsConstants.Dbt.MATERIALIZATIONS)."""
 
-    TABLE: Final[str] = "table"
-    VIEW: Final[str] = "view"
-    INCREMENTAL: Final[str] = "incremental"
-    SNAPSHOT: Final[str] = "snapshot"
-    EPHEMERAL: Final[str] = "ephemeral"
+    TABLE = "table"
+    VIEW = "view"
+    INCREMENTAL = "incremental"
+    SNAPSHOT = "snapshot"
+    EPHEMERAL = "ephemeral"
 
 
-# DBT Test Types
 class DBTOracleWMSTestTypes:
-    """DBT test types for Oracle WMS."""
+    """DBT test types (DEPRECATED - use FlextDbtOracleWmsConstants.Dbt.TEST_TYPES)."""
 
-    UNIQUE: Final[str] = "unique"
-    NOT_NULL: Final[str] = "not_null"
-    RELATIONSHIPS: Final[str] = "relationships"
-    ACCEPTED_VALUES: Final[str] = "accepted_values"
-    DATA_QUALITY: Final[str] = "data_quality"
+    UNIQUE = "unique"
+    NOT_NULL = "not_null"
+    RELATIONSHIPS = "relationships"
+    ACCEPTED_VALUES = "accepted_values"
+    DATA_QUALITY = "data_quality"
 
 
-# DBT Macro Types
 class DBTOracleWMSMacroTypes:
-    """DBT macro types for Oracle WMS."""
+    """DBT macro types (DEPRECATED - use FlextDbtOracleWmsConstants.Dbt.MACRO_TYPES)."""
 
-    UTILITY: Final[str] = "utility"
-    TRANSFORMATION: Final[str] = "transformation"
-    AUDIT: Final[str] = "audit"
-    ORACLE_SPECIFIC: Final[str] = "oracle_specific"
+    UTILITY = "utility"
+    TRANSFORMATION = "transformation"
+    AUDIT = "audit"
+    ORACLE_SPECIFIC = "oracle_specific"
 
 
-# DBT Documentation Types
 class DBTOracleWMSDocumentationTypes:
-    """DBT documentation types for Oracle WMS."""
+    """DBT documentation types (DEPRECATED - use FlextDbtOracleWmsConstants.Dbt.DOCUMENTATION_TYPES)."""
 
-    MODEL: Final[str] = "model"
-    SOURCE: Final[str] = "source"
-    MACRO: Final[str] = "macro"
-    ANALYSIS: Final[str] = "analysis"
+    MODEL = "model"
+    SOURCE = "source"
+    MACRO = "macro"
+    ANALYSIS = "analysis"
 
 
-# DBT Defaults
 class DBTOracleWMSDefaults:
-    """Default values for DBT Oracle WMS."""
+    """Default values for DBT Oracle WMS (DEPRECATED - use FlextDbtOracleWmsConstants.Configuration.DEFAULT_CONFIG)."""
 
-    PROJECT_NAME: Final[str] = "flext_dbt_oracle_wms"
-    VERSION: Final[str] = "0.9.0"
-    PROFILE: Final[str] = "flext_oracle_wms"
-    SCHEMA_PREFIX: Final[str] = "wms"
-    BATCH_SIZE: Final[int] = 1000
-    INCREMENTAL_LOOKBACK_DAYS: Final[int] = 7
-    DATA_QUALITY_THRESHOLD: Final[float] = 0.95
+    PROJECT_NAME = FlextDbtOracleWmsSemanticConstants.Dbt.PROJECT_NAME
+    VERSION = FlextDbtOracleWmsSemanticConstants.Core.VERSION
+    PROFILE = FlextDbtOracleWmsSemanticConstants.Dbt.PROFILE
+    SCHEMA_PREFIX = FlextDbtOracleWmsSemanticConstants.Dbt.SCHEMA_PREFIX
+    BATCH_SIZE = FlextDbtOracleWmsSemanticConstants.Processing.DEFAULT_BATCH_SIZE
+    INCREMENTAL_LOOKBACK_DAYS = FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
+    DATA_QUALITY_THRESHOLD = FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
 
 
-# Core WMS Constants
 class WMSConstants:
-    """Core WMS constants for Oracle integration."""
+    """Core WMS constants (DEPRECATED - use FlextDbtOracleWmsConstants.Entities and Processing)."""
 
     # Entity levels
-    HIGH_LEVEL: Final[str] = "high"
-    MEDIUM_LEVEL: Final[str] = "medium"
-    LOW_LEVEL: Final[str] = "low"
+    HIGH_LEVEL = "high"
+    MEDIUM_LEVEL = "medium"
+    LOW_LEVEL = "low"
 
     # Processing status
-    PENDING: Final[str] = "pending"
-    PROCESSING: Final[str] = "processing"
-    COMPLETED: Final[str] = "completed"
-    FAILED: Final[str] = "failed"
+    PENDING = "pending"
+    PROCESSING = "processing"
+    COMPLETED = "completed"
+    FAILED = "failed"
 
     # Validation modes
-    STRICT_VALIDATION: Final[str] = "strict"
-    NORMAL_VALIDATION: Final[str] = "normal"
-    RELAXED_VALIDATION: Final[str] = "relaxed"
+    STRICT_VALIDATION = "strict"
+    NORMAL_VALIDATION = "normal"
+    RELAXED_VALIDATION = "relaxed"
 
 
-# Export commonly used constants
+# =============================================================================
+# EXPORTS - DBT Oracle WMS constants API
+# =============================================================================
+
 __all__: list[str] = [
+    # Legacy classes (deprecated)
     "DBTOracleWMSDefaults",
     "DBTOracleWMSDocumentationTypes",
     "DBTOracleWMSEntityTypes",
     "DBTOracleWMSMacroTypes",
     "DBTOracleWMSMaterializations",
     "DBTOracleWMSTestTypes",
+    # Legacy Compatibility (Backward Compatibility)
+    "FlextDbtOracleWmsConstants",
+    # Modern Semantic Constants (Primary API)
+    "FlextDbtOracleWmsSemanticConstants",
     "WMSConstants",
 ]
