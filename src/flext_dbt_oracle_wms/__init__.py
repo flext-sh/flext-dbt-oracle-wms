@@ -101,17 +101,21 @@ __all__: list[str] = [
     # DBT Oracle WMS Analysis (simplified access)
     "DBTOracleWMSAnalysis",  # from flext_dbt_oracle_wms import DBTOracleWMSAnalysis
     # DBT Oracle WMS Configuration (simplified access)
-    "DBTOracleWMSConfiguration",  # from flext_dbt_oracle_wms import DBTOracleWMSConfiguration
+    "DBTOracleWMSConfiguration",  # from flext_dbt_oracle_wms import
+    # DBTOracleWMSConfiguration
     # DBT Oracle WMS Constants (simplified access)
     "DBTOracleWMSDefaults",  # from flext_dbt_oracle_wms import DBTOracleWMSDefaults
-    "DBTOracleWMSEntityTypes",  # from flext_dbt_oracle_wms import DBTOracleWMSEntityTypes
+    "DBTOracleWMSEntityTypes",  # from flext_dbt_oracle_wms import
+    # DBTOracleWMSEntityTypes
     # DBT Oracle WMS Execution (simplified access)
     "DBTOracleWMSExecution",  # from flext_dbt_oracle_wms import DBTOracleWMSExecution
-    "DBTOracleWMSMaterializations",  # from flext_dbt_oracle_wms import DBTOracleWMSMaterializations
+    "DBTOracleWMSMaterializations",  # from flext_dbt_oracle_wms import
+    # DBTOracleWMSMaterializations
     # DBT Oracle WMS Models (simplified access)
     "DBTOracleWMSModel",  # from flext_dbt_oracle_wms import DBTOracleWMSModel
     "DBTOracleWMSProject",  # from flext_dbt_oracle_wms import DBTOracleWMSProject
-    "FlextDBTOracleWMSConfig",  # from flext_dbt_oracle_wms import FlextDBTOracleWMSConfig
+    "FlextDBTOracleWMSConfig",  # from flext_dbt_oracle_wms import
+    # FlextDBTOracleWMSConfig
     # Deprecation utilities
     "FlextDbtOracleWmsDeprecationWarning",
     # Consolidated Orchestrator (from flext-meltano)
