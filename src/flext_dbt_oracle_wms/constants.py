@@ -11,6 +11,10 @@ from __future__ import annotations
 from typing import ClassVar
 
 from flext_core.constants import FlextSemanticConstants
+from flext_oracle_wms.constants import (
+    FlextOracleWmsSemanticConstants as _WmsConstants,
+    OracleWMSEntityType as _OracleWMSEntityType,
+)
 
 # =============================================================================
 # DBT ORACLE WMS-SPECIFIC SEMANTIC CONSTANTS - Modern Python 3.13 Structure
@@ -75,20 +79,16 @@ class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
         ]
 
     class Entities:
-        """Oracle WMS entity type constants."""
+        """Oracle WMS entity type constants - consumed from flext-oracle-wms."""
 
-        WMS_ENTITIES: ClassVar[list[str]] = [
-            "allocation",
-            "order_hdr",
-            "order_dtl",
-            "inventory",
-            "location",
-            "item",
-            "shipment",
-            "receipt",
-            "task",
-            "wave",
-        ]
+        # CONSUME Oracle WMS entities from single source (flext-oracle-wms)
+        WMS_ENTITIES: ClassVar[list[str]] = (
+            _WmsConstants.Entities.CORE_ENTITIES +
+            _WmsConstants.Entities.ORDER_ENTITIES +
+            _WmsConstants.Entities.INVENTORY_ENTITIES +
+            _WmsConstants.Entities.MOVEMENT_ENTITIES +
+            _WmsConstants.Entities.SHIPMENT_ENTITIES
+        )
 
         # Entity priority levels
         PRIORITY_LEVELS: ClassVar[list[str]] = ["high", "medium", "low"]
@@ -167,13 +167,15 @@ class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
 class DBTOracleWMSEntityTypes:
     """Oracle WMS entity types for DBT models (DEPRECATED - use FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES)."""
 
-    ALLOCATION = "allocation"
-    ORDER_HDR = "order_hdr"
-    ORDER_DTL = "order_dtl"
-    INVENTORY = "inventory"
-    LOCATION = "location"
-    ITEM = "item"
-    SHIPMENT = "shipment"
+    # CONSUME from flext-oracle-wms API - NO DUPLICATION
+    ALLOCATION = _OracleWMSEntityType.ALLOCATION
+    ORDER_HDR = _OracleWMSEntityType.ORDER_HDR
+    ORDER_DTL = _OracleWMSEntityType.ORDER_DTL
+    INVENTORY = _OracleWMSEntityType.INVENTORY
+    LOCATION = _OracleWMSEntityType.LOCATION
+    ITEM = _OracleWMSEntityType.ITEM
+    SHIPMENT = _OracleWMSEntityType.SHIPMENT
+    # Additional entities not in base enum
     RECEIPT = "receipt"
     TASK = "task"
     WAVE = "wave"

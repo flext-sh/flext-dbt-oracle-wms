@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
+from flext_oracle_wms.constants import FlextOracleWmsSemanticConstants as WmsConstants
 from pydantic import BaseModel, Field
 
 # Simple type aliases for dbt Oracle WMS
@@ -44,15 +45,21 @@ class FlextDBTOracleWMSConfig(BaseModel):
     seed_paths: list[str] = Field(default_factory=lambda: ["seeds"])
     macro_paths: list[str] = Field(default_factory=lambda: ["macros"])
 
-    # Oracle WMS specific
+    # Oracle WMS specific - consuming from flext-oracle-wms API
     oracle_wms_schema: str = Field(default="wms_raw")
+
+    # CONSUME Oracle WMS entities from flext-oracle-wms API - NO DUPLICATION
+    @staticmethod
+    def _get_default_wms_entities() -> list[str]:
+        """Get default WMS entities from flext-oracle-wms API."""
+        return (
+            WmsConstants.Entities.CORE_ENTITIES +
+            WmsConstants.Entities.ORDER_ENTITIES +
+            WmsConstants.Entities.INVENTORY_ENTITIES[:2]  # allocation, inventory
+        )
+
     wms_entities: list[str] = Field(
-        default_factory=lambda: [
-            "allocation",
-            "order_hdr",
-            "order_dtl",
-            "inventory",
-        ],
+        default_factory=FlextDBTOracleWMSConfig._get_default_wms_entities,
     )
 
     # Performance settings using core types
