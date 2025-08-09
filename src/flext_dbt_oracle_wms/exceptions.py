@@ -18,16 +18,26 @@ _dbt_wms_exceptions = create_module_exception_classes("flext_dbt_oracle_wms")
 
 # Extract factory-created exception classes
 FlextDbtOracleWmsError = _dbt_wms_exceptions["FlextDbtOracleWmsError"]
-FlextDbtOracleWmsValidationError = _dbt_wms_exceptions["FlextDbtOracleWmsValidationError"]
-FlextDbtOracleWmsConfigurationError = _dbt_wms_exceptions["FlextDbtOracleWmsConfigurationError"]
-FlextDbtOracleWmsConnectionError = _dbt_wms_exceptions["FlextDbtOracleWmsConnectionError"]
-FlextDbtOracleWmsProcessingError = _dbt_wms_exceptions["FlextDbtOracleWmsProcessingError"]
-FlextDbtOracleWmsAuthenticationError = _dbt_wms_exceptions["FlextDbtOracleWmsAuthenticationError"]
+FlextDbtOracleWmsValidationError = _dbt_wms_exceptions[
+    "FlextDbtOracleWmsValidationError"
+]
+FlextDbtOracleWmsConfigurationError = _dbt_wms_exceptions[
+    "FlextDbtOracleWmsConfigurationError"
+]
+FlextDbtOracleWmsConnectionError = _dbt_wms_exceptions[
+    "FlextDbtOracleWmsConnectionError"
+]
+FlextDbtOracleWmsProcessingError = _dbt_wms_exceptions[
+    "FlextDbtOracleWmsProcessingError"
+]
+FlextDbtOracleWmsAuthenticationError = _dbt_wms_exceptions[
+    "FlextDbtOracleWmsAuthenticationError"
+]
 FlextDbtOracleWmsTimeoutError = _dbt_wms_exceptions["FlextDbtOracleWmsTimeoutError"]
 
 
 # Domain-specific exceptions for Oracle WMS DBT business logic
-class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsProcessingError):  # type: ignore[misc,valid-type]
+class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT inventory-specific errors with WMS context."""
 
     def __init__(
@@ -49,7 +59,7 @@ class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsProcessingError):  # type
         super().__init__(message, operation=operation, **context)
 
 
-class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsProcessingError):  # type: ignore[misc,valid-type]
+class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT shipment-specific errors with shipping context."""
 
     def __init__(
@@ -71,7 +81,7 @@ class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsProcessingError):  # type:
         super().__init__(message, operation=operation, **context)
 
 
-class FlextDbtOracleWmsModelError(FlextDbtOracleWmsProcessingError):  # type: ignore[misc,valid-type]
+class FlextDbtOracleWmsModelError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT model-specific errors with dbt model context."""
 
     def __init__(
@@ -93,7 +103,7 @@ class FlextDbtOracleWmsModelError(FlextDbtOracleWmsProcessingError):  # type: ig
         super().__init__(message, operation=operation, **context)
 
 
-class FlextDbtOracleWmsTestError(FlextDbtOracleWmsValidationError):  # type: ignore[misc,valid-type]
+class FlextDbtOracleWmsTestError(FlextDbtOracleWmsValidationError):
     """Oracle WMS DBT test errors with test validation context."""
 
     def __init__(

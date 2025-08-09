@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_core.constants import FlextSemanticConstants
+from flext_core.constants import FlextConstants
 from flext_oracle_wms.constants import (
     FlextOracleWmsSemanticConstants as _WmsConstants,
     OracleWMSEntityType as _OracleWMSEntityType,
@@ -21,8 +21,8 @@ from flext_oracle_wms.constants import (
 # =============================================================================
 
 
-class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
-    """DBT Oracle WMS semantic constants extending FlextSemanticConstants.
+class FlextDbtOracleWmsSemanticConstants(FlextConstants):
+    """DBT Oracle WMS semantic constants extending FlextConstants.
 
     Modern Python 3.13 constants following semantic grouping patterns.
     Extends the FLEXT ecosystem constants with DBT Oracle WMS-specific
@@ -35,7 +35,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
         NAME = "flext-dbt-oracle-wms"
         VERSION = "0.9.0"
         # CONSUME from single source - NO DUPLICATION
-        ECOSYSTEM_SIZE = FlextSemanticConstants.Core.ECOSYSTEM_SIZE
+        ECOSYSTEM_SIZE = FlextConstants.Core.ECOSYSTEM_SIZE
 
     class Dbt:
         """DBT-specific configuration constants."""
@@ -83,11 +83,11 @@ class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
 
         # CONSUME Oracle WMS entities from single source (flext-oracle-wms)
         WMS_ENTITIES: ClassVar[list[str]] = (
-            _WmsConstants.Entities.CORE_ENTITIES +
-            _WmsConstants.Entities.ORDER_ENTITIES +
-            _WmsConstants.Entities.INVENTORY_ENTITIES +
-            _WmsConstants.Entities.MOVEMENT_ENTITIES +
-            _WmsConstants.Entities.SHIPMENT_ENTITIES
+            _WmsConstants.Entities.CORE_ENTITIES
+            + _WmsConstants.Entities.ORDER_ENTITIES
+            + _WmsConstants.Entities.INVENTORY_ENTITIES
+            + _WmsConstants.Entities.MOVEMENT_ENTITIES
+            + _WmsConstants.Entities.SHIPMENT_ENTITIES
         )
 
         # Entity priority levels
@@ -97,7 +97,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextSemanticConstants):
         """Data processing configuration constants."""
 
         # Batch processing - CONSUME from single source
-        DEFAULT_BATCH_SIZE = FlextSemanticConstants.Performance.DEFAULT_BATCH_SIZE
+        DEFAULT_BATCH_SIZE = FlextConstants.Performance.DEFAULT_BATCH_SIZE
         INCREMENTAL_LOOKBACK_DAYS = 7
 
         # Data quality
