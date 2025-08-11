@@ -70,14 +70,14 @@ def _show_deprecation_warning(old_import: str, new_import: str) -> None:
 
 # DBT Oracle WMS Configuration exports - simplified imports
 with contextlib.suppress(ImportError):
-    from flext_dbt_oracle_wms.config.types import (
+    from flext_dbt_oracle_wms.config_types import (
         DBTOracleWMSConfiguration,
         FlextDBTOracleWMSConfig,
     )
 
 # DBT Oracle WMS Domain exports - simplified imports
 with contextlib.suppress(ImportError):
-    from flext_dbt_oracle_wms.domain.types import (
+    from flext_dbt_oracle_wms.domain_types import (
         DBTOracleWMSAnalysis,
         DBTOracleWMSExecution,
         DBTOracleWMSModel,
