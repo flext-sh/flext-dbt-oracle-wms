@@ -14,7 +14,9 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
-from flext_oracle_wms.constants import FlextOracleWmsSemanticConstants as WmsConstants
+from flext_oracle_wms.wms_constants import (
+    FlextOracleWmsSemanticConstants as WmsConstants,
+)
 from pydantic import BaseModel, Field
 
 # Simple type aliases for dbt Oracle WMS
@@ -24,15 +26,15 @@ ProjectName = str
 Version = str
 
 
-
 # Helper function - defined outside class to avoid forward reference
 def _get_default_wms_entities() -> list[str]:
     """Get default WMS entities from flext-oracle-wms API."""
-    return (
-        WmsConstants.Entities.CORE_ENTITIES +
-        WmsConstants.Entities.ORDER_ENTITIES +
-        WmsConstants.Entities.INVENTORY_ENTITIES[:2]  # allocation, inventory
-    )
+    # Avoid Any by building a new list explicitly
+    entities: list[str] = []
+    entities.extend(WmsConstants.Entities.CORE_ENTITIES)
+    entities.extend(WmsConstants.Entities.ORDER_ENTITIES)
+    entities.extend(list(WmsConstants.Entities.INVENTORY_ENTITIES)[:2])
+    return entities
 
 
 class FlextDBTOracleWMSConfig(BaseModel):

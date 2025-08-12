@@ -18,6 +18,14 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Annotated, TypedDict
 
+from flext_dbt_oracle_wms.config_types import (
+    DBTOracleWMSMacroConfiguration,
+    DBTOracleWMSModelConfiguration,
+    DBTOracleWMSProfileConfiguration,
+    DBTOracleWMSSourceConfiguration,
+    DBTOracleWMSTestConfiguration,
+)
+
 # Simple type aliases for dbt Oracle WMS
 EntityId = str
 ProjectName = str
@@ -90,13 +98,7 @@ class DBTOracleWMSRunStatus(StrEnum):
 # ==============================================================================
 
 # Import configuration types from config/types.py to eliminate duplication
-from flext_dbt_oracle_wms.config_types import (
-    DBTOracleWMSModelConfiguration,
-    DBTOracleWMSSourceConfiguration,
-    DBTOracleWMSTestConfiguration,
-    DBTOracleWMSMacroConfiguration,
-    DBTOracleWMSProfileConfiguration,
-)
+
 
 # Extended configurations specific to domain (not in config/types.py)
 class DBTOracleWMSProjectConfiguration(TypedDict):
@@ -316,42 +318,42 @@ class DBTOracleWMSDocumentation(TypedDict):
 __all__: list[str] = [
     # Domain objects
     "DBTOracleWMSAnalysis",
-    "DBTOracleWMSCompilation",
-    "DBTOracleWMSDocumentation",
-    "DBTOracleWMSExecution",
-    "DBTOracleWMSMacro",
-    "DBTOracleWMSModel",
-    "DBTOracleWMSProject",
-    "DBTOracleWMSSnapshot",
-    "DBTOracleWMSSource",
-    "DBTOracleWMSTest",
     # Domain-specific configurations (not imported from config)
     "DBTOracleWMSAnalysisConfiguration",
-    "DBTOracleWMSCompilationConfiguration",
-    "DBTOracleWMSDocumentationConfiguration",
-    "DBTOracleWMSExecutionConfiguration",
-    "DBTOracleWMSProjectConfiguration",
-    "DBTOracleWMSSnapshotConfiguration",
-    # Imported configurations (re-exported for compatibility)
-    "DBTOracleWMSMacroConfiguration",
-    "DBTOracleWMSModelConfiguration",
-    "DBTOracleWMSProfileConfiguration",
-    "DBTOracleWMSSourceConfiguration",
-    "DBTOracleWMSTestConfiguration",
     # Timeout types
     "DBTOracleWMSAnalysisTimeout",
+    "DBTOracleWMSCompilation",
+    "DBTOracleWMSCompilationConfiguration",
     "DBTOracleWMSCompilationTimeout",
+    "DBTOracleWMSDocumentation",
+    "DBTOracleWMSDocumentationConfiguration",
     "DBTOracleWMSDocumentationTimeout",
+    "DBTOracleWMSExecution",
+    "DBTOracleWMSExecutionConfiguration",
     "DBTOracleWMSExecutionTimeout",
+    "DBTOracleWMSMacro",
+    # Imported configurations (re-exported for compatibility)
+    "DBTOracleWMSMacroConfiguration",
     "DBTOracleWMSMacroTimeout",
-    "DBTOracleWMSModelTimeout",
-    "DBTOracleWMSProjectTimeout",
-    "DBTOracleWMSSnapshotTimeout",
-    "DBTOracleWMSSourceTimeout",
-    "DBTOracleWMSTestTimeout",
     # Enums
     "DBTOracleWMSMaterialization",
+    "DBTOracleWMSModel",
+    "DBTOracleWMSModelConfiguration",
+    "DBTOracleWMSModelTimeout",
+    "DBTOracleWMSProfileConfiguration",
+    "DBTOracleWMSProject",
+    "DBTOracleWMSProjectConfiguration",
+    "DBTOracleWMSProjectTimeout",
     "DBTOracleWMSRunStatus",
+    "DBTOracleWMSSnapshot",
+    "DBTOracleWMSSnapshotConfiguration",
+    "DBTOracleWMSSnapshotTimeout",
+    "DBTOracleWMSSource",
+    "DBTOracleWMSSourceConfiguration",
+    "DBTOracleWMSSourceTimeout",
+    "DBTOracleWMSTest",
+    "DBTOracleWMSTestConfiguration",
+    "DBTOracleWMSTestTimeout",
     "DBTOracleWMSTestType",
     # Type aliases
     "OracleWMSConnectionId",

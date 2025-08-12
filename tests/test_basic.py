@@ -4,9 +4,16 @@ Since this is a DBT project with only SQL tests,
 this minimal Python test file ensures mypy can process the tests directory.
 """
 
+import importlib
 import pathlib
 
 import tests
+
+
+def test_package_import() -> None:
+    # Ensure package imports so coverage collects module execution
+    mod = importlib.import_module("flext_dbt_oracle_wms")
+    assert mod is not None
 
 
 def test_basic_import() -> None:

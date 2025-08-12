@@ -1,23 +1,21 @@
-"""FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using flext-meltano.
+"""FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using consolidated DBT patterns.
 
-Version 0.9.0 - DBT Oracle WMS plugin using flext-meltano architecture:
+Version 0.9.0 - Consolidated DBT Oracle WMS following the established DBT pattern:
 - Uses flext-meltano for DBT integration and orchestration
-- Built on flext-core foundation for robust Oracle WMS transformations
-- Follows FLEXT architecture where DBT components are centralized in flext-meltano
+- Built on flext-core foundation with flext-oracle-wms maximum composition
+- Follows consolidated DBT architecture with dbt_config, dbt_client, dbt_models, dbt_services
+- Implements Oracle WMS-specific business logic and transformations
 
-Copyright (c) 2025 FLEXT Contributors
+Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
-
 """
 
 from __future__ import annotations
 
-import contextlib
 import importlib.metadata
-import warnings
 
-from flext_core import FlextResult
-from pydantic import BaseModel
+# Core imports from flext-core
+from flext_core import FlextResult, get_logger
 
 try:
     __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
@@ -26,106 +24,162 @@ except importlib.metadata.PackageNotFoundError:
 
 __version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 
+# ================================
+# CONSOLIDATED DBT ORACLE WMS API
+# ================================
 
-# Create local orchestrator implementation - the orchestration.dbt module doesn't exist
-class FlextOracleWMSDbtOrchestrator:
-    """Oracle WMS DBT orchestrator placeholder."""
+# Configuration - Essential for setup
+from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
+
+# Client - Main interface for Oracle WMS DBT operations
+from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
+
+# Models - Oracle WMS DBT data models and transformers
+from flext_dbt_oracle_wms.dbt_models import (
+    FlextDbtOracleWmsInventoryFact,
+    FlextDbtOracleWmsItemDimension,
+    FlextDbtOracleWmsLocationDimension,
+    FlextDbtOracleWmsShipmentFact,
+    FlextDbtOracleWmsTransformer,
+)
+
+# Services - High-level workflow orchestration
+from flext_dbt_oracle_wms.dbt_services import (
+    FlextDbtOracleWmsMonitoringService,
+    FlextDbtOracleWmsWorkflowService,
+)
+
+# Exceptions - Comprehensive error handling using flext-core factory patterns
+from flext_dbt_oracle_wms.dbt_exceptions import (
+    FlextDbtOracleWmsError,
+    FlextDbtOracleWmsValidationError,
+    FlextDbtOracleWmsConfigurationError,
+    FlextDbtOracleWmsConnectionError,
+    FlextDbtOracleWmsProcessingError,
+    FlextDbtOracleWmsAuthenticationError,
+    FlextDbtOracleWmsTimeoutError,
+    # Domain-specific exceptions
+    FlextDbtOracleWmsInventoryError,
+    FlextDbtOracleWmsModelError,
+    FlextDbtOracleWmsShipmentError,
+    FlextDbtOracleWmsTestError,
+)
+
+# ================================
+# CONVENIENCE FACTORY FUNCTIONS
+# ================================
+
+logger = get_logger(__name__)
 
 
-# Base classes for configuration
-class WMSBaseConfig(BaseModel):
-    """Base configuration for WMS operations."""
+def create_oracle_wms_dbt_client(
+    config: FlextDbtOracleWmsConfig | None = None,
+) -> FlextDbtOracleWmsClient:
+    """Create Oracle WMS DBT client with configuration.
+
+    Args:
+        config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
+
+    Returns:
+        Configured Oracle WMS DBT client
+
+    """
+    logger.info("Creating Oracle WMS DBT client")
+    return FlextDbtOracleWmsClient(config)
 
 
-class WMSError(Exception):
-    """Base exception for WMS-specific errors."""
+def create_oracle_wms_workflow_service(
+    config: FlextDbtOracleWmsConfig | None = None,
+) -> FlextDbtOracleWmsWorkflowService:
+    """Create Oracle WMS workflow service with configuration.
 
+    Args:
+        config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
 
-class ValidationError(ValueError):
-    """Validation error for WMS data."""
+    Returns:
+        Configured Oracle WMS workflow service
 
-
-class FlextDbtOracleWmsDeprecationWarning(DeprecationWarning):
-    """Custom deprecation warning for FLEXT DBT ORACLE WMS import changes."""
-
-
-def _show_deprecation_warning(old_import: str, new_import: str) -> None:
-    """Show deprecation warning for import paths."""
-    message_parts = [
-        f"⚠️  DEPRECATED IMPORT: {old_import}",
-        f"✅ USE INSTEAD: {new_import}",
-        "🔗 This will be removed in version 1.0.0",
-        "📖 See FLEXT DBT ORACLE WMS docs for migration guide",
-    ]
-    warnings.warn(
-        "\n".join(message_parts),
-        FlextDbtOracleWmsDeprecationWarning,
-        stacklevel=3,
-    )
+    """
+    logger.info("Creating Oracle WMS workflow service")
+    return FlextDbtOracleWmsWorkflowService(config)
 
 
 # ================================
-# SIMPLIFIED PUBLIC API EXPORTS
+# BACKWARD COMPATIBILITY ALIASES
 # ================================
 
-# DBT Oracle WMS Configuration exports - simplified imports
-with contextlib.suppress(ImportError):
-    from flext_dbt_oracle_wms.config_types import (
-        DBTOracleWMSConfiguration,
-        FlextDBTOracleWMSConfig,
-    )
-
-# DBT Oracle WMS Domain exports - simplified imports
-with contextlib.suppress(ImportError):
-    from flext_dbt_oracle_wms.domain_types import (
-        DBTOracleWMSAnalysis,
-        DBTOracleWMSExecution,
-        DBTOracleWMSModel,
-        DBTOracleWMSProject,
-    )
-
-# DBT Oracle WMS Constants exports - simplified imports
-with contextlib.suppress(ImportError):
-    from flext_dbt_oracle_wms.constants import (
-        DBTOracleWMSDefaults,
-        DBTOracleWMSEntityTypes,
-        DBTOracleWMSMaterializations,
-    )
+# Maintain compatibility with existing imports
+OracleWMSDBTClient = FlextDbtOracleWmsClient
+OracleWMSDBTConfig = FlextDbtOracleWmsConfig
+OracleWMSTransformer = FlextDbtOracleWmsTransformer
+ItemDimension = FlextDbtOracleWmsItemDimension
+LocationDimension = FlextDbtOracleWmsLocationDimension
+InventoryFact = FlextDbtOracleWmsInventoryFact
+ShipmentFact = FlextDbtOracleWmsShipmentFact
 
 # ================================
 # PUBLIC API EXPORTS
 # ================================
 
 __all__: list[str] = [
-    "BaseModel",  # from flext_dbt_oracle_wms import BaseModel
-    # DBT Oracle WMS Analysis (simplified access)
-    "DBTOracleWMSAnalysis",  # from flext_dbt_oracle_wms import DBTOracleWMSAnalysis
-    # DBT Oracle WMS Configuration (simplified access)
-    "DBTOracleWMSConfiguration",  # from flext_dbt_oracle_wms import
-    # DBTOracleWMSConfiguration
-    # DBT Oracle WMS Constants (simplified access)
-    "DBTOracleWMSDefaults",  # from flext_dbt_oracle_wms import DBTOracleWMSDefaults
-    "DBTOracleWMSEntityTypes",  # from flext_dbt_oracle_wms import
-    # DBTOracleWMSEntityTypes
-    # DBT Oracle WMS Execution (simplified access)
-    "DBTOracleWMSExecution",  # from flext_dbt_oracle_wms import DBTOracleWMSExecution
-    "DBTOracleWMSMaterializations",  # from flext_dbt_oracle_wms import
-    # DBTOracleWMSMaterializations
-    # DBT Oracle WMS Models (simplified access)
-    "DBTOracleWMSModel",  # from flext_dbt_oracle_wms import DBTOracleWMSModel
-    "DBTOracleWMSProject",  # from flext_dbt_oracle_wms import DBTOracleWMSProject
-    "FlextDBTOracleWMSConfig",  # from flext_dbt_oracle_wms import
-    # FlextDBTOracleWMSConfig
-    # Deprecation utilities
-    "FlextDbtOracleWmsDeprecationWarning",
-    # Consolidated Orchestrator (from flext-meltano)
-    "FlextOracleWMSDbtOrchestrator",  # DBT orchestration for Oracle WMS
-    "FlextResult",  # from flext_dbt_oracle_wms import FlextResult
-    "ValidationError",  # from flext_dbt_oracle_wms import ValidationError
-    # Core Patterns (from flext-core)
-    "WMSBaseConfig",  # from flext_dbt_oracle_wms import WMSBaseConfig
-    "WMSError",  # from flext_dbt_oracle_wms import WMSError
-    # Version
+    "annotations", "FlextResult", "get_logger", "FlextDbtOracleWmsConfig", "FlextDbtOracleWmsClient",
+    "FlextDbtOracleWmsInventoryFact", "FlextDbtOracleWmsItemDimension",
+    "FlextDbtOracleWmsLocationDimension", "FlextDbtOracleWmsShipmentFact",
+    "FlextDbtOracleWmsTransformer", "FlextDbtOracleWmsMonitoringService",
+    "FlextDbtOracleWmsWorkflowService", "FlextDbtOracleWmsError", "FlextDbtOracleWmsValidationError",
+    "FlextDbtOracleWmsConfigurationError", "FlextDbtOracleWmsConnectionError",
+    "FlextDbtOracleWmsProcessingError", "FlextDbtOracleWmsAuthenticationError",
+    "FlextDbtOracleWmsTimeoutError", "FlextDbtOracleWmsInventoryError", "FlextDbtOracleWmsModelError",
+    "FlextDbtOracleWmsShipmentError", "FlextDbtOracleWmsTestError", "__version_info__", "logger",
+    "create_oracle_wms_dbt_client", "create_oracle_wms_workflow_service", "OracleWMSDBTClient",
+    "OracleWMSDBTConfig", "OracleWMSTransformer", "ItemDimension", "LocationDimension", "InventoryFact",
+    "ShipmentFact",
+] = [
+    # Configuration
+    "FlextDbtOracleWmsConfig",
+
+    # Client & Services - Primary interfaces
+    "FlextDbtOracleWmsClient",
+    "FlextDbtOracleWmsMonitoringService",
+    "FlextDbtOracleWmsWorkflowService",
+
+    # Models & Transformers - Data structures
+    "FlextDbtOracleWmsInventoryFact",
+    "FlextDbtOracleWmsItemDimension",
+    "FlextDbtOracleWmsLocationDimension",
+    "FlextDbtOracleWmsShipmentFact",
+    "FlextDbtOracleWmsTransformer",
+
+    # Exceptions - Error handling
+    "FlextDbtOracleWmsAuthenticationError",
+    "FlextDbtOracleWmsConfigurationError",
+    "FlextDbtOracleWmsConnectionError",
+    "FlextDbtOracleWmsError",
+    "FlextDbtOracleWmsInventoryError",
+    "FlextDbtOracleWmsModelError",
+    "FlextDbtOracleWmsProcessingError",
+    "FlextDbtOracleWmsShipmentError",
+    "FlextDbtOracleWmsTestError",
+    "FlextDbtOracleWmsTimeoutError",
+    "FlextDbtOracleWmsValidationError",
+
+    # Core patterns (from flext-core)
+    "FlextResult",
+
+    # Factory functions
+    "create_oracle_wms_dbt_client",
+    "create_oracle_wms_workflow_service",
+
+    # Backward compatibility aliases
+    "InventoryFact",
+    "ItemDimension",
+    "LocationDimension",
+    "OracleWMSDBTClient",
+    "OracleWMSDBTConfig",
+    "OracleWMSTransformer",
+    "ShipmentFact",
+
+    # Metadata
     "__version__",
     "__version_info__",
 ]
