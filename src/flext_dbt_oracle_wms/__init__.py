@@ -35,7 +35,7 @@ from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
 
 # Models - Oracle WMS DBT data models and transformers
-from flext_dbt_oracle_wms.dbt_models import (
+from flext_dbt_oracle_wms.models import (
     FlextDbtOracleWmsInventoryFact,
     FlextDbtOracleWmsItemDimension,
     FlextDbtOracleWmsLocationDimension,
