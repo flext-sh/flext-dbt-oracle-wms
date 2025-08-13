@@ -6,6 +6,8 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+import asyncio
+
 import click
 from flext_core import get_logger
 
@@ -27,24 +29,24 @@ def main(ctx: click.Context) -> None:
 
 
 @main.command()
-@click.option("--config-file", help="Path to configuration file")
-def discover(config_file: str | None) -> None:
-    """Discover Oracle WMS entities for DBT transformation."""
+def discover() -> None:
+    """Discover Oracle WMS entities."""
     try:
         config = FlextDbtOracleWmsConfig()
-        if config_file:
-            click.echo(f"Loading configuration from: {config_file}")
-
         workflow_service = create_oracle_wms_workflow_service(config)
 
         click.echo("Discovering Oracle WMS entities...")
-        result = workflow_service.run_entity_discovery_workflow()
+        result = asyncio.run(workflow_service.run_entity_discovery_workflow())
 
         if result.is_success:
             data = result.data or {}
             click.echo("✅ Discovery completed successfully!")
             click.echo(f"📊 Discovered {data.get('discovered_entities', 0)} entities")
-            click.echo(f"🏷️  Entity types: {', '.join(data.get('entity_types', []))}")
+            entity_types = data.get("entity_types", [])
+            if isinstance(entity_types, list):
+                click.echo(f"🏷️  Entity types: {', '.join(entity_types)}")
+            else:
+                click.echo(f"🏷️  Entity types: {entity_types}")
         else:
             click.echo(f"❌ Discovery failed: {result.error}", err=True)
 
@@ -68,7 +70,13 @@ def extract(
         limits = dict.fromkeys(entity_names, limit) if entity_names and limit else None
 
         click.echo(f"Extracting Oracle WMS data: {entity_names or 'all discovered'}")
-        result = workflow_service.run_data_extraction_workflow(entity_names, None, limits)
+        result = asyncio.run(
+            workflow_service.run_data_extraction_workflow(
+                entity_names or [],
+                None,
+                limits,
+            ),
+        )
 
         if result.is_success:
             data = result.data or {}
@@ -97,15 +105,25 @@ def pipeline(
         model_names = list(model) if model else None
 
         click.echo("🚀 Starting full Oracle WMS to DBT pipeline...")
-        result = workflow_service.run_full_transformation_pipeline(
-            entity_names, None, None, model_names,
+        result = asyncio.run(
+            workflow_service.run_full_transformation_pipeline(
+                entity_names,
+                None,
+                model_names,
+            ),
         )
 
         if result.is_success:
             data = result.data or {}
             summary = data.get("summary", {})
-            click.echo("✅ Pipeline completed successfully!")
-            click.echo(f"📊 Processed: {summary.get('entities_processed', 0)} entities")
+            if isinstance(summary, dict):
+                click.echo("✅ Pipeline completed successfully!")
+                click.echo(
+                    f"📊 Processed: {summary.get('entities_processed', 0)} entities",
+                )
+            else:
+                click.echo("✅ Pipeline completed successfully!")
+                click.echo(f"📊 Summary: {summary}")
         else:
             click.echo(f"❌ Pipeline failed: {result.error}", err=True)
 

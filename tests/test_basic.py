@@ -11,22 +11,18 @@ import tests
 
 
 def test_package_import() -> None:
-    # Ensure package imports so coverage collects module execution
+    """Ensure package imports so coverage collects module execution."""
     mod = importlib.import_module("flext_dbt_oracle_wms")
     assert mod is not None
 
 
 def test_basic_import() -> None:
     """Test basic import functionality."""
-    # Simple test to ensure the package can be imported
-
     assert tests is not None
 
 
 def test_package_structure() -> None:
     """Test that this is a valid Python package."""
-    # Verify this directory is a valid Python package
-
     tests_dir = pathlib.Path(__file__).parent
     if tests_dir.name != "tests":
         msg: str = f"Expected {'tests'}, got {tests_dir.name}"

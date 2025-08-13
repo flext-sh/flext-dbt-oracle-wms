@@ -78,7 +78,11 @@ class FlextDbtOracleWmsInventoryError(FlextProcessingError):
         if location is not None:
             context["location"] = location
 
-        super().__init__(f"Oracle WMS DBT inventory: {message}", operation=operation, context=context)
+        super().__init__(
+            f"Oracle WMS DBT inventory: {message}",
+            operation=operation,
+            context=context,
+        )
 
 
 class FlextDbtOracleWmsShipmentError(FlextProcessingError):
@@ -100,7 +104,11 @@ class FlextDbtOracleWmsShipmentError(FlextProcessingError):
         if carrier is not None:
             context["carrier"] = carrier
 
-        super().__init__(f"Oracle WMS DBT shipment: {message}", operation=operation, context=context)
+        super().__init__(
+            f"Oracle WMS DBT shipment: {message}",
+            operation=operation,
+            context=context,
+        )
 
 
 class FlextDbtOracleWmsModelError(FlextProcessingError):
@@ -122,7 +130,11 @@ class FlextDbtOracleWmsModelError(FlextProcessingError):
         if model_type is not None:
             context["model_type"] = model_type
 
-        super().__init__(f"Oracle WMS DBT model: {message}", operation=operation, context=context)
+        super().__init__(
+            f"Oracle WMS DBT model: {message}",
+            operation=operation,
+            context=context,
+        )
 
 
 class FlextDbtOracleWmsTestError(FlextValidationError):
@@ -144,7 +156,11 @@ class FlextDbtOracleWmsTestError(FlextValidationError):
             validation_details["model_name"] = model_name
 
         context = dict(kwargs)
-        super().__init__(f"Oracle WMS DBT test: {message}", validation_details=validation_details, context=context)
+        super().__init__(
+            f"Oracle WMS DBT test: {message}",
+            validation_details=validation_details,
+            context=context,
+        )
 
 
 __all__: list[str] = [

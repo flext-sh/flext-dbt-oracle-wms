@@ -1,5 +1,7 @@
 # FLEXT dbt Oracle WMS - Enterprise Warehouse Management Analytics
 
+**Type**: DBT Project | **Status**: Active Development | **Dependencies**: Python 3.13+, dbt-core, dbt-oracle
+
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![dbt Core](https://img.shields.io/badge/dbt-1.6+-orange.svg)](https://getdbt.com)
 [![Oracle WMS](https://img.shields.io/badge/Oracle-WMS-red.svg)](https://www.oracle.com/applications/supply-chain-management/warehouse-management/)
@@ -844,15 +846,15 @@ ORDER BY business_date DESC, facility_code
 
 ## Quality Standards
 
-### Zero Tolerance Quality Gates
+### Quality Targets
 
-- **Test Coverage**: Minimum 90% Python test coverage
-- **Type Safety**: Strict MyPy with no untyped code
-- **Linting**: Ruff with ALL rules enabled
-- **Security**: Bandit scanning + pip-audit for vulnerabilities
-- **dbt Tests**: All data quality tests must pass
-- **WMS Business Rules**: All WMS-specific validation tests must pass
-- **Pre-commit**: Automated quality checks on every commit
+- **Test Coverage**: 90% Python coverage target for supporting code
+- **Type Safety**: MyPy strict mode adoption for Python components
+- **Linting**: Ruff with comprehensive rules (continuous improvement)
+- **Security**: Bandit scanning + pip-audit
+- **dbt Tests**: Data quality tests should pass before release
+- **WMS Business Rules**: Validation tests tracked and improved over time
+- **Pre-commit**: Use hooks to automate quality checks
 
 ### Code Standards
 
@@ -956,4 +958,4 @@ dbt docs serve --port 8080
 
 ---
 
-**Framework**: FLEXT Ecosystem | **Technology**: dbt Core + Oracle WMS | **Architecture**: Clean Architecture + DDD | **Updated**: 2025-07-30
+**Framework**: FLEXT Ecosystem | **Technology**: dbt Core + Oracle WMS | **Architecture**: Clean Architecture + DDD | **Updated**: 2025-08-13

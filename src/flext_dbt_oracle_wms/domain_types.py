@@ -13,7 +13,6 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-# Define missing types locally using the same patterns as flext-core
 from datetime import datetime
 from enum import StrEnum
 from typing import Annotated, TypedDict

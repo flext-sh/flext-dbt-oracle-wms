@@ -40,7 +40,7 @@ def _get_float(value: object, default: float | None = None) -> float | None:
     return default
 
 
-def _get_bool(value: object, default: bool = False) -> bool:
+def _get_bool(value: object, *, default: bool = False) -> bool:
     if isinstance(value, bool):
         return value
     if isinstance(value, (int, float)):
@@ -73,7 +73,10 @@ class FlextDbtOracleWmsItemDimension(FlextValueObject):
     modified_date: str | None = None
 
     @classmethod
-    def from_oracle_wms_record(cls, record: dict[str, object]) -> FlextDbtOracleWmsItemDimension:
+    def from_oracle_wms_record(
+        cls,
+        record: dict[str, object],
+    ) -> FlextDbtOracleWmsItemDimension:
         """Create item dimension from Oracle WMS record."""
         return cls(
             item_id=_get_str(record.get("itemId"), "") or "",
@@ -84,7 +87,7 @@ class FlextDbtOracleWmsItemDimension(FlextValueObject):
             unit_cost=_get_float(record.get("unitCost")),
             weight=_get_float(record.get("weight")),
             volume=_get_float(record.get("volume")),
-            is_active=_get_bool(record.get("isActive"), True),
+            is_active=_get_bool(record.get("isActive"), default=True),
             created_date=_get_str(record.get("createdDate")),
             modified_date=_get_str(record.get("modifiedDate")),
         )
@@ -141,7 +144,10 @@ class FlextDbtOracleWmsLocationDimension(FlextValueObject):
     modified_date: str | None = None
 
     @classmethod
-    def from_oracle_wms_record(cls, record: dict[str, object]) -> FlextDbtOracleWmsLocationDimension:
+    def from_oracle_wms_record(
+        cls,
+        record: dict[str, object],
+    ) -> FlextDbtOracleWmsLocationDimension:
         """Create location dimension from Oracle WMS record."""
         return cls(
             location_id=_get_str(record.get("locationId"), "") or "",
@@ -154,8 +160,8 @@ class FlextDbtOracleWmsLocationDimension(FlextValueObject):
             position=_get_str(record.get("position")),
             location_type=_get_str(record.get("locationType")),
             capacity=_get_float(record.get("capacity")),
-            is_pickable=_get_bool(record.get("isPickable"), True),
-            is_active=_get_bool(record.get("isActive"), True),
+            is_pickable=_get_bool(record.get("isPickable"), default=True),
+            is_active=_get_bool(record.get("isActive"), default=True),
             created_date=_get_str(record.get("createdDate")),
             modified_date=_get_str(record.get("modifiedDate")),
         )
@@ -163,7 +169,9 @@ class FlextDbtOracleWmsLocationDimension(FlextValueObject):
     def validate_business_rules(self) -> FlextResult[None]:
         """Validate location dimension business rules."""
         if not self.location_id or not self.location_name or not self.facility_id:
-            return FlextResult.failure("Location ID, name, and facility ID are required")
+            return FlextResult.failure(
+                "Location ID, name, and facility ID are required",
+            )
 
         if self.capacity is not None and self.capacity < 0:
             return FlextResult.failure("Capacity cannot be negative")
@@ -209,7 +217,10 @@ class FlextDbtOracleWmsInventoryFact(FlextValueObject):
     total_value: float | None = None
 
     @classmethod
-    def from_oracle_wms_record(cls, record: dict[str, object]) -> FlextDbtOracleWmsInventoryFact:
+    def from_oracle_wms_record(
+        cls,
+        record: dict[str, object],
+    ) -> FlextDbtOracleWmsInventoryFact:
         """Create inventory fact from Oracle WMS record."""
         quantity_on_hand = _get_float(record.get("quantityOnHand"), 0.0) or 0.0
         cost_per_unit = _get_float(record.get("costPerUnit"))
@@ -235,7 +246,9 @@ class FlextDbtOracleWmsInventoryFact(FlextValueObject):
     def validate_business_rules(self) -> FlextResult[None]:
         """Validate inventory fact business rules."""
         if not self.item_id or not self.location_id or not self.facility_id:
-            return FlextResult.failure("Item ID, location ID, and facility ID are required")
+            return FlextResult.failure(
+                "Item ID, location ID, and facility ID are required",
+            )
 
         if self.quantity_on_hand < 0:
             return FlextResult.failure("Quantity on hand cannot be negative")
@@ -283,7 +296,10 @@ class FlextDbtOracleWmsShipmentFact(FlextValueObject):
     freight_cost: float | None = None
 
     @classmethod
-    def from_oracle_wms_record(cls, record: dict[str, object]) -> FlextDbtOracleWmsShipmentFact:
+    def from_oracle_wms_record(
+        cls,
+        record: dict[str, object],
+    ) -> FlextDbtOracleWmsShipmentFact:
         """Create shipment fact from Oracle WMS record."""
         return cls(
             shipment_id=_get_str(record.get("shipmentId"), "") or "",
@@ -291,7 +307,8 @@ class FlextDbtOracleWmsShipmentFact(FlextValueObject):
             facility_id=_get_str(record.get("facilityId"), "") or "",
             carrier=_get_str(record.get("carrier")),
             tracking_number=_get_str(record.get("trackingNumber")),
-            shipment_status=_get_str(record.get("shipmentStatus"), "CREATED") or "CREATED",
+            shipment_status=_get_str(record.get("shipmentStatus"), "CREATED")
+            or "CREATED",
             planned_ship_date=_get_str(record.get("plannedShipDate")),
             actual_ship_date=_get_str(record.get("actualShipDate")),
             planned_delivery_date=_get_str(record.get("plannedDeliveryDate")),
@@ -304,11 +321,22 @@ class FlextDbtOracleWmsShipmentFact(FlextValueObject):
     def validate_business_rules(self) -> FlextResult[None]:
         """Validate shipment fact business rules."""
         if not self.shipment_id or not self.order_id or not self.facility_id:
-            return FlextResult.failure("Shipment ID, order ID, and facility ID are required")
+            return FlextResult.failure(
+                "Shipment ID, order ID, and facility ID are required",
+            )
 
-        valid_statuses = ["CREATED", "PICKED", "PACKED", "SHIPPED", "DELIVERED", "CANCELLED"]
+        valid_statuses = [
+            "CREATED",
+            "PICKED",
+            "PACKED",
+            "SHIPPED",
+            "DELIVERED",
+            "CANCELLED",
+        ]
         if self.shipment_status not in valid_statuses:
-            return FlextResult.failure(f"Invalid shipment status: {self.shipment_status}")
+            return FlextResult.failure(
+                f"Invalid shipment status: {self.shipment_status}",
+            )
 
         if self.total_weight is not None and self.total_weight < 0:
             return FlextResult.failure("Total weight cannot be negative")
@@ -360,7 +388,10 @@ class FlextDbtOracleWmsTransformer:
             List of item dimension models
 
         """
-        logger.info("Transforming %d Oracle WMS records to item dimensions", len(records))
+        logger.info(
+            "Transforming %d Oracle WMS records to item dimensions",
+            len(records),
+        )
 
         item_dims = []
         for record in records:
@@ -398,12 +429,17 @@ class FlextDbtOracleWmsTransformer:
             List of location dimension models
 
         """
-        logger.info("Transforming %d Oracle WMS records to location dimensions", len(records))
+        logger.info(
+            "Transforming %d Oracle WMS records to location dimensions",
+            len(records),
+        )
 
         location_dims = []
         for record in records:
             try:
-                location_dim = FlextDbtOracleWmsLocationDimension.from_oracle_wms_record(record)
+                location_dim = (
+                    FlextDbtOracleWmsLocationDimension.from_oracle_wms_record(record)
+                )
 
                 # Validate business rules
                 validation_result = location_dim.validate_business_rules()
@@ -436,12 +472,17 @@ class FlextDbtOracleWmsTransformer:
             List of inventory fact models
 
         """
-        logger.info("Transforming %d Oracle WMS records to inventory facts", len(records))
+        logger.info(
+            "Transforming %d Oracle WMS records to inventory facts",
+            len(records),
+        )
 
         inventory_facts = []
         for record in records:
             try:
-                inventory_fact = FlextDbtOracleWmsInventoryFact.from_oracle_wms_record(record)
+                inventory_fact = FlextDbtOracleWmsInventoryFact.from_oracle_wms_record(
+                    record,
+                )
 
                 # Validate business rules
                 validation_result = inventory_fact.validate_business_rules()
@@ -475,12 +516,17 @@ class FlextDbtOracleWmsTransformer:
             List of shipment fact models
 
         """
-        logger.info("Transforming %d Oracle WMS records to shipment facts", len(records))
+        logger.info(
+            "Transforming %d Oracle WMS records to shipment facts",
+            len(records),
+        )
 
         shipment_facts = []
         for record in records:
             try:
-                shipment_fact = FlextDbtOracleWmsShipmentFact.from_oracle_wms_record(record)
+                shipment_fact = FlextDbtOracleWmsShipmentFact.from_oracle_wms_record(
+                    record,
+                )
 
                 # Validate business rules
                 validation_result = shipment_fact.validate_business_rules()
@@ -530,7 +576,10 @@ class FlextDbtOracleWmsTransformer:
             elif entity_name == "shipments":
                 transformed_data[entity_name] = list(self.transform_shipments(records))
             else:
-                logger.warning("Unknown entity type for transformation: %s", entity_name)
+                logger.warning(
+                    "Unknown entity type for transformation: %s",
+                    entity_name,
+                )
                 transformed_data[entity_name] = []
 
         logger.info(
