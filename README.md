@@ -2,12 +2,6 @@
 
 **Type**: DBT Project | **Status**: Active Development | **Dependencies**: Python 3.13+, dbt-core, dbt-oracle
 
-[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
-[![dbt Core](https://img.shields.io/badge/dbt-1.6+-orange.svg)](https://getdbt.com)
-[![Oracle WMS](https://img.shields.io/badge/Oracle-WMS-red.svg)](https://www.oracle.com/applications/supply-chain-management/warehouse-management/)
-[![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture%20%2B%20DDD-green.svg)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-[![Coverage](https://img.shields.io/badge/coverage-90%25+-brightgreen.svg)](https://pytest.org)
-
 Enterprise-grade dbt project for Oracle Warehouse Management System (WMS) data transformations and analytics. Built with Python 3.13+, dbt Core, and Clean Architecture patterns as part of the FLEXT enterprise data integration platform.
 
 ## Overview
