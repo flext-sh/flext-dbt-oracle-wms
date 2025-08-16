@@ -28,8 +28,12 @@ Version = str
 
 # Helper function - defined outside class to avoid forward reference
 def _get_default_wms_entities() -> list[str]:
-    """Get default WMS entities from flext-oracle-wms API."""
-    # Avoid Any by building a new list explicitly
+    """Get default WMS entities from flext-oracle-wms API.
+
+    Returns:
+        list[str]: Description.
+
+    """    # Avoid Any by building a new list explicitly
     entities: list[str] = []
     entities.extend(WmsConstants.Entities.CORE_ENTITIES)
     entities.extend(WmsConstants.Entities.ORDER_ENTITIES)

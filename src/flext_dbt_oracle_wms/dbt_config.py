@@ -88,7 +88,8 @@ class FlextDbtOracleWmsConfig(FlextSettings):
         "shipments": ["shipmentId", "orderId", "shipmentStatus"],
         "orders": ["orderId", "customerId", "orderStatus"],
     }
-    validate_business_rules: bool = True
+    # Flag handled as a field, not overriding base class method type
+    validate_business_rules_flag: bool = True
 
     def get_oracle_wms_config(self) -> FlextOracleWmsClientConfig:
         """Get Oracle WMS configuration for flext-oracle-wms integration."""
