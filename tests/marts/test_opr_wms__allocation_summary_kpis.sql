@@ -16,7 +16,7 @@ with daily_status_totals as (
         facility_code,
         business_date,
         sum(status_percentage_of_daily) as total_percentage
-    from {{ ref('opr_wms__allocation_summary') }}
+from {{ ref('opr_wms__allocation_summary') }}
     group by company_code, facility_code, business_date
 )
 select *
@@ -48,7 +48,7 @@ with validation_check as (
         business_date,
         daily_total_allocations,
         sum(total_allocations) as calculated_total_allocations
-    from {{ ref('opr_wms__allocation_summary') }}
+from {{ ref('opr_wms__allocation_summary') }}
     group by 
         company_code,
         facility_code,

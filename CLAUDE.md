@@ -77,17 +77,18 @@ make dbt-test --select staging       # Test staging models
 
 ```bash
 # WMS model testing and execution
-make wms-models-test              # Test WMS-specific models
-make wms-transformations          # Run WMS transformation pipeline
-make wms-inventory-models         # Run inventory models only
-make wms-shipment-models          # Run shipment models only
-make wms-kpi-models              # Run KPI models only
+make wms-test                     # Test WMS-specific models
+make wms-inventory                # Run WMS inventory models
+make wms-shipment                 # Run WMS shipment models
+make wms-analytics                # Run WMS analytics models
+make wms-full-refresh             # Full refresh WMS models
 
-# Analytics and reporting
-make wms-inventory-analytics      # Run inventory analytics
-make wms-performance-metrics      # Calculate performance metrics
-make wms-operational-reports      # Generate operational reports
-make wms-all-analytics           # Run all WMS analytics
+# Makefile aliases for quick access
+make wi                          # wms-inventory
+make ws                          # wms-shipment
+make wa                          # wms-analytics
+make wt                          # wms-test
+make wfr                         # wms-full-refresh
 ```
 
 ### Python Development
@@ -98,10 +99,13 @@ make lint              # Ruff linting (ALL rules enabled)
 make type-check        # MyPy strict type checking
 make security          # Security scans (bandit + pip-audit)
 make format            # Format code with ruff
+make fix               # Auto-fix code issues
 
 # Testing
 make test              # Run pytest with 90% coverage requirement
 make test-unit         # Unit tests only
+make test-integration  # Integration tests only
+make test-fast         # Run tests without coverage
 make coverage-html     # Generate HTML coverage report
 ```
 
@@ -109,8 +113,39 @@ make coverage-html     # Generate HTML coverage report
 
 ```bash
 make install           # Install dependencies with Poetry
-make dev-install       # Development environment setup
-make pre-commit        # Setup pre-commit hooks
+make setup             # Complete development setup (includes dev dependencies and pre-commit)
+make clean             # Clean build artifacts
+make clean-all         # Deep clean including venv
+make reset             # Complete project reset
+```
+
+### Diagnostics and Build
+
+```bash
+# Diagnostics
+make diagnose          # Show environment diagnostics
+make doctor            # Full health check (diagnose + check)
+
+# Build and documentation
+make build             # Build package
+make docs              # Build all documentation  
+make docs-serve        # Serve documentation locally
+
+# Dependencies
+make deps-update       # Update all dependencies
+make deps-audit        # Security audit dependencies
+
+# Common aliases (for faster development)
+make t                 # test
+make l                 # lint
+make f                 # format
+make tc                # type-check
+make c                 # clean
+make i                 # install
+make v                 # validate
+make dr                # dbt-run
+make dt                # dbt-test
+make dc                # dbt-compile
 ```
 
 ## Configuration

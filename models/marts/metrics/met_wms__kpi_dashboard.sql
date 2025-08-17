@@ -34,7 +34,7 @@ with allocation_kpis as (
         -- Alert indicators
         count(case when operational_alert != 'NORMAL' then 1 end) as allocation_alerts_count
         
-    from {{ ref('opr_wms__allocation_summary') }}
+from {{ ref('opr_wms__allocation_summary') }}
     group by company_code, facility_code, business_date
 ),
 
@@ -69,7 +69,7 @@ inventory_kpis as (
         avg(days_of_supply_30d) as avg_days_of_supply_30d,
         avg(annual_turnover_rate) as avg_annual_turnover_rate
         
-    from {{ ref('ana_wms__inventory_analysis') }}
+from {{ ref('ana_wms__inventory_analysis') }}
     group by company_code, facility_code, analysis_date
 ),
 
@@ -103,7 +103,7 @@ order_kpis as (
         count(case when oh.data_quality_status != 'VALID' then 1 end) as invalid_order_headers,
         count(case when od.data_quality_status != 'VALID' then 1 end) as invalid_order_details
         
-    from {{ ref('stg_wms__order_hdr') }} oh
+from {{ ref('stg_wms__order_hdr') }} oh
     left join {{ ref('stg_wms__order_dtl') }} od 
         on oh.company_code = od.company_code
         and oh.facility_code = od.facility_code
@@ -135,7 +135,7 @@ inventory_position_kpis as (
         -- Quality metrics
         count(case when data_quality_status != 'VALID' then 1 end) as invalid_inventory_records
         
-    from {{ ref('stg_wms__inventory') }}
+from {{ ref('stg_wms__inventory') }}
     group by company_code, facility_code, business_date
 ),
 
@@ -161,7 +161,7 @@ consolidated_kpis as (
         null as total_locations, null as active_locations,
         null as availability_utilization_percent, null as allocation_utilization_percent,
         null as invalid_inventory_records
-    from inventory_kpis
+from inventory_kpis
     
     union all
     select 
@@ -183,7 +183,7 @@ consolidated_kpis as (
         null as total_locations, null as active_locations,
         null as availability_utilization_percent, null as allocation_utilization_percent,
         null as invalid_inventory_records
-    from order_kpis
+from order_kpis
     
     union all
     select 
@@ -205,7 +205,7 @@ consolidated_kpis as (
         total_locations, active_locations,
         availability_utilization_percent, allocation_utilization_percent,
         invalid_inventory_records
-    from inventory_position_kpis
+from inventory_position_kpis
 ),
 
 final as (
@@ -222,7 +222,7 @@ final as (
         
         current_timestamp as kpi_calculated_at
         
-    from consolidated_kpis
+from consolidated_kpis
 )
 
 select * from final

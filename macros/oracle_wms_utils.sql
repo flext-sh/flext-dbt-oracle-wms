@@ -84,7 +84,7 @@
       '{{ rule.description }}' as rule_description,
       count(*) as violation_count,
       current_timestamp as check_timestamp
-    from {{ table_name }}
+from {{ table_name }}
     where not ({{ rule.condition }})
     
     {% if not loop.last %}

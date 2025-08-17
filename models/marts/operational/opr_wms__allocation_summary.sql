@@ -25,7 +25,7 @@ with allocation_base as (
         created_timestamp,
         modified_timestamp,
         data_quality_status
-    from {{ ref('stg_wms__allocation') }}
+from {{ ref('stg_wms__allocation') }}
     where data_quality_status = 'VALID'
 ),
 
@@ -74,7 +74,7 @@ allocation_metrics as (
         max(modified_timestamp) as latest_modification_time,
         current_timestamp as snapshot_timestamp
         
-    from allocation_base
+from allocation_base
     group by 
         company_code,
         facility_code, 
@@ -98,7 +98,7 @@ daily_totals as (
         avg(avg_pick_time_hours) as daily_avg_pick_time_hours,
         avg(pack_efficiency_percent) as daily_avg_pack_efficiency_percent
         
-    from allocation_metrics
+from allocation_metrics
     group by company_code, facility_code, business_date
 ),
 
@@ -138,7 +138,7 @@ final as (
             'allocation_status'
         ]) }} as summary_key
         
-    from allocation_metrics am
+from allocation_metrics am
     left join daily_totals dt 
         on am.company_code = dt.company_code
         and am.facility_code = dt.facility_code  

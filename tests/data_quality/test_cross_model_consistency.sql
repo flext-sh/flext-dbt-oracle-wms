@@ -39,7 +39,7 @@ with allocation_totals as (
         facility_code,
         order_dtl_id,
         sum(allocated_quantity) as total_allocated_qty
-    from {{ ref('stg_wms__allocation') }}
+from {{ ref('stg_wms__allocation') }}
     where data_quality_status = 'VALID'
       and order_dtl_id is not null
     group by company_code, facility_code, order_dtl_id
@@ -69,7 +69,7 @@ with kpi_allocation_check as (
         k.kpi_date,
         k.total_allocations as kpi_total_allocations,
         coalesce(sum(o.daily_total_allocations), 0) as operational_total_allocations
-    from {{ ref('met_wms__kpi_dashboard') }} k
+from {{ ref('met_wms__kpi_dashboard') }} k
     left join {{ ref('opr_wms__allocation_summary') }} o
         on k.company_code = o.company_code
         and k.facility_code = o.facility_code

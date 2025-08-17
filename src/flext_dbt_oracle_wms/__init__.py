@@ -78,10 +78,10 @@ def create_oracle_wms_dbt_client(
     """Create Oracle WMS DBT client with configuration.
 
     Args:
-        config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
+      config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
 
     Returns:
-        Configured Oracle WMS DBT client
+      Configured Oracle WMS DBT client
 
     """
     logger.info("Creating Oracle WMS DBT client")
@@ -94,10 +94,10 @@ def create_oracle_wms_workflow_service(
     """Create Oracle WMS workflow service with configuration.
 
     Args:
-        config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
+      config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
 
     Returns:
-        Configured Oracle WMS workflow service
+      Configured Oracle WMS workflow service
 
     """
     logger.info("Creating Oracle WMS workflow service")

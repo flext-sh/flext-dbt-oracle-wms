@@ -30,105 +30,105 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
     """
 
     class Core:
-        """Core DBT Oracle WMS system constants."""
+      """Core DBT Oracle WMS system constants."""
 
-        NAME = "flext-dbt-oracle-wms"
-        VERSION = "0.9.0"
-        # CONSUME from single source - NO DUPLICATION
-        ECOSYSTEM_SIZE = FlextConstants.Core.ECOSYSTEM_SIZE
+      NAME = "flext-dbt-oracle-wms"
+      VERSION = "0.9.0"
+      # CONSUME from single source - NO DUPLICATION
+      ECOSYSTEM_SIZE = FlextConstants.Core.ECOSYSTEM_SIZE
 
     class Dbt:
-        """DBT-specific configuration constants."""
+      """DBT-specific configuration constants."""
 
-        PROJECT_NAME = "flext_dbt_oracle_wms"
-        PROFILE = "flext_oracle_wms"
-        SCHEMA_PREFIX = "wms"
+      PROJECT_NAME = "flext_dbt_oracle_wms"
+      PROFILE = "flext_oracle_wms"
+      SCHEMA_PREFIX = "wms"
 
-        # Materialization types
-        MATERIALIZATIONS: ClassVar[list[str]] = [
-            "table",
-            "view",
-            "incremental",
-            "snapshot",
-            "ephemeral",
-        ]
+      # Materialization types
+      MATERIALIZATIONS: ClassVar[list[str]] = [
+          "table",
+          "view",
+          "incremental",
+          "snapshot",
+          "ephemeral",
+      ]
 
-        # Test types
-        TEST_TYPES: ClassVar[list[str]] = [
-            "unique",
-            "not_null",
-            "relationships",
-            "accepted_values",
-            "data_quality",
-        ]
+      # Test types
+      TEST_TYPES: ClassVar[list[str]] = [
+          "unique",
+          "not_null",
+          "relationships",
+          "accepted_values",
+          "data_quality",
+      ]
 
-        # Macro types
-        MACRO_TYPES: ClassVar[list[str]] = [
-            "utility",
-            "transformation",
-            "audit",
-            "oracle_specific",
-        ]
+      # Macro types
+      MACRO_TYPES: ClassVar[list[str]] = [
+          "utility",
+          "transformation",
+          "audit",
+          "oracle_specific",
+      ]
 
-        # Documentation types
-        DOCUMENTATION_TYPES: ClassVar[list[str]] = [
-            "model",
-            "source",
-            "macro",
-            "analysis",
-        ]
+      # Documentation types
+      DOCUMENTATION_TYPES: ClassVar[list[str]] = [
+          "model",
+          "source",
+          "macro",
+          "analysis",
+      ]
 
     class Entities:
-        """Oracle WMS entity type constants - consumed from flext-oracle-wms."""
+      """Oracle WMS entity type constants - consumed from flext-oracle-wms."""
 
-        # CONSUME Oracle WMS entities from single source (flext-oracle-wms)
-        WMS_ENTITIES: ClassVar[list[str]] = (
-            _WmsConstants.Entities.CORE_ENTITIES
-            + _WmsConstants.Entities.ORDER_ENTITIES
-            + _WmsConstants.Entities.INVENTORY_ENTITIES
-            + _WmsConstants.Entities.MOVEMENT_ENTITIES
-            + _WmsConstants.Entities.SHIPMENT_ENTITIES
-        )
+      # CONSUME Oracle WMS entities from single source (flext-oracle-wms)
+      WMS_ENTITIES: ClassVar[list[str]] = (
+          _WmsConstants.Entities.CORE_ENTITIES
+          + _WmsConstants.Entities.ORDER_ENTITIES
+          + _WmsConstants.Entities.INVENTORY_ENTITIES
+          + _WmsConstants.Entities.MOVEMENT_ENTITIES
+          + _WmsConstants.Entities.SHIPMENT_ENTITIES
+      )
 
-        # Entity priority levels
-        PRIORITY_LEVELS: ClassVar[list[str]] = ["high", "medium", "low"]
+      # Entity priority levels
+      PRIORITY_LEVELS: ClassVar[list[str]] = ["high", "medium", "low"]
 
     class Processing:
-        """Data processing configuration constants."""
+      """Data processing configuration constants."""
 
-        # Batch processing - CONSUME from single source
-        DEFAULT_BATCH_SIZE = FlextConstants.Performance.DEFAULT_BATCH_SIZE
-        INCREMENTAL_LOOKBACK_DAYS = 7
+      # Batch processing - CONSUME from single source
+      DEFAULT_BATCH_SIZE = FlextConstants.Performance.DEFAULT_BATCH_SIZE
+      INCREMENTAL_LOOKBACK_DAYS = 7
 
-        # Data quality
-        DATA_QUALITY_THRESHOLD = 0.95
+      # Data quality
+      DATA_QUALITY_THRESHOLD = 0.95
 
-        # Processing status
-        PROCESSING_STATUSES: ClassVar[list[str]] = [
-            "pending",
-            "processing",
-            "completed",
-            "failed",
-        ]
+      # Processing status
+      PROCESSING_STATUSES: ClassVar[list[str]] = [
+          "pending",
+          "processing",
+          "completed",
+          "failed",
+      ]
 
-        # Validation modes
-        VALIDATION_MODES: ClassVar[list[str]] = [
-            "strict",
-            "normal",
-            "relaxed",
-        ]
+      # Validation modes
+      VALIDATION_MODES: ClassVar[list[str]] = [
+          "strict",
+          "normal",
+          "relaxed",
+      ]
 
     class Configuration:
-        """Configuration management constants."""
+      """Configuration management constants."""
 
-        DEFAULT_CONFIG: ClassVar[dict[str, object]] = {
-            "project_name": "flext_dbt_oracle_wms",
-            "profile": "flext_oracle_wms",
-            "schema_prefix": "wms",
-            "batch_size": 1000,
-            "incremental_lookback_days": 7,
-            "data_quality_threshold": 0.95,
-        }
+      DEFAULT_CONFIG: ClassVar[dict[str, object]] = {
+          "project_name": "flext_dbt_oracle_wms",
+          "profile": "flext_oracle_wms",
+          "schema_prefix": "wms",
+          "batch_size": 1000,
+          "incremental_lookback_days": 7,
+          "data_quality_threshold": 0.95,
+      }
 
 
 class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
@@ -152,10 +152,10 @@ class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
     SCHEMA_PREFIX = FlextDbtOracleWmsSemanticConstants.Dbt.SCHEMA_PREFIX
     BATCH_SIZE = FlextDbtOracleWmsSemanticConstants.Processing.DEFAULT_BATCH_SIZE
     INCREMENTAL_LOOKBACK_DAYS = (
-        FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
+      FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
     )
     DATA_QUALITY_THRESHOLD = (
-        FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
+      FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
     )
 
 
@@ -228,10 +228,10 @@ class DBTOracleWMSDefaults:
     SCHEMA_PREFIX = FlextDbtOracleWmsSemanticConstants.Dbt.SCHEMA_PREFIX
     BATCH_SIZE = FlextDbtOracleWmsSemanticConstants.Processing.DEFAULT_BATCH_SIZE
     INCREMENTAL_LOOKBACK_DAYS = (
-        FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
+      FlextDbtOracleWmsSemanticConstants.Processing.INCREMENTAL_LOOKBACK_DAYS
     )
     DATA_QUALITY_THRESHOLD = (
-        FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
+      FlextDbtOracleWmsSemanticConstants.Processing.DATA_QUALITY_THRESHOLD
     )
 
 

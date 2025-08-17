@@ -129,7 +129,7 @@ standardized as (
             else cast(_sdc_extracted_at as date)
         end as business_date
         
-    from source_data
+from source_data
 ),
 
 final as (
@@ -168,7 +168,7 @@ final as (
         -- Current timestamp for processing
         current_timestamp as dbt_processed_at
         
-    from standardized
+from standardized
 )
 
 select * from final

@@ -34,7 +34,7 @@ with inventory_base as (
         allocation_percent,
         business_date,
         data_quality_status
-    from {{ ref('stg_wms__inventory') }}
+from {{ ref('stg_wms__inventory') }}
     where data_quality_status = 'VALID'
 ),
 
@@ -46,7 +46,7 @@ order_consumption as (
         business_date,
         sum(shipped_quantity) as daily_consumption,
         count(*) as daily_order_lines
-    from {{ ref('stg_wms__order_dtl') }}
+from {{ ref('stg_wms__order_dtl') }}
     where data_quality_status = 'VALID'
       and business_date >= current_date - interval '90 days'
     group by company_code, facility_code, item_id, business_date
@@ -100,7 +100,7 @@ inventory_metrics as (
         coalesce(avg(oc.daily_consumption), 0) as avg_daily_consumption_90d,
         coalesce(sum(oc.daily_consumption), 0) as total_consumption_90d
         
-    from inventory_base ib
+from inventory_base ib
     left join order_consumption oc 
         on ib.company_code = oc.company_code
         and ib.facility_code = oc.facility_code
@@ -166,7 +166,7 @@ inventory_classification as (
             else 'UNKNOWN'
         end as inventory_turnover_category
         
-    from inventory_metrics
+from inventory_metrics
 ),
 
 final as (
@@ -203,7 +203,7 @@ final as (
         
         current_timestamp as analysis_timestamp
         
-    from inventory_classification
+from inventory_classification
 )
 
 select * from final
