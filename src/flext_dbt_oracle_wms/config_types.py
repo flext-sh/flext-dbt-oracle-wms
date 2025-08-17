@@ -33,7 +33,7 @@ def _get_default_wms_entities() -> list[str]:
     Returns:
       list[str]: Description.
 
-    """    # Avoid Any by building a new list explicitly
+    """  # Avoid Any by building a new list explicitly
     entities: list[str] = []
     entities.extend(WmsConstants.Entities.CORE_ENTITIES)
     entities.extend(WmsConstants.Entities.ORDER_ENTITIES)
@@ -45,13 +45,13 @@ class FlextDBTOracleWMSConfig(BaseModel):
     """FLEXT DBT Oracle WMS configuration using core types."""
 
     project_name: ProjectName = Field(
-      default="flext-dbt-oracle-wms",
-      description="DBT Oracle WMS project name",
+        default="flext-dbt-oracle-wms",
+        description="DBT Oracle WMS project name",
     )
     version: Version = Field(default="0.9.0", description="Project version")
     profile: NonEmptyStr = Field(
-      default="flext_oracle_wms",
-      description="DBT profile name",
+        default="flext_oracle_wms",
+        description="DBT profile name",
     )
 
     # DBT configurations
@@ -65,14 +65,14 @@ class FlextDBTOracleWMSConfig(BaseModel):
     oracle_wms_schema: str = Field(default="wms_raw")
 
     wms_entities: list[str] = Field(
-      default_factory=_get_default_wms_entities,
+        default_factory=_get_default_wms_entities,
     )
 
     # Performance settings using core types
     enable_incremental_models: bool = Field(default=True)
     incremental_lookback_days: PositiveInt = Field(
-      default=7,
-      description="Days to look back for incremental models",
+        default=7,
+        description="Days to look back for incremental models",
     )
 
     # Data quality
