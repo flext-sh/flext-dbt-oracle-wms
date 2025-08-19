@@ -66,7 +66,7 @@ class FlextDbtOracleWmsWorkflowService:
             logger.info("Testing Oracle WMS connection...")
             connection_result = await self.client.test_oracle_wms_connection()
             if connection_result.is_failure:
-                return FlextResult.failure(
+                return FlextResult[None].fail(
                     connection_result.error or "Connection failed",
                 )
 
@@ -76,7 +76,7 @@ class FlextDbtOracleWmsWorkflowService:
                 entity_types,
             )
             if discovery_result.is_failure:
-                return FlextResult.failure(discovery_result.error or "Discovery failed")
+                return FlextResult[None].fail(discovery_result.error or "Discovery failed")
 
             entities = discovery_result.data or []
             logger.info("Discovered %d Oracle WMS entities", len(entities))
@@ -99,11 +99,11 @@ class FlextDbtOracleWmsWorkflowService:
                 "Oracle WMS entity discovery workflow completed successfully: %s",
                 workflow_results,
             )
-            return FlextResult.ok(workflow_results)
+            return FlextResult[None].ok(workflow_results)
 
         except Exception as e:
             logger.exception("Unexpected error in Oracle WMS entity discovery workflow")
-            return FlextResult.failure(
+            return FlextResult[None].fail(
                 f"Oracle WMS entity discovery workflow failed: {e}",
             )
 
@@ -147,7 +147,7 @@ class FlextDbtOracleWmsWorkflowService:
                 )
 
                 if extract_result.is_failure:
-                    return FlextResult.failure(
+                    return FlextResult[None].fail(
                         extract_result.error or "Extraction failed",
                     )
 
@@ -175,11 +175,11 @@ class FlextDbtOracleWmsWorkflowService:
                 "Oracle WMS data extraction workflow completed successfully: %s",
                 workflow_results,
             )
-            return FlextResult.ok(workflow_results)
+            return FlextResult[None].ok(workflow_results)
 
         except Exception as e:
             logger.exception("Unexpected error in Oracle WMS data extraction workflow")
-            return FlextResult.failure(
+            return FlextResult[None].fail(
                 f"Oracle WMS data extraction workflow failed: {e}",
             )
 
@@ -248,13 +248,13 @@ class FlextDbtOracleWmsWorkflowService:
             logger.info(
                 "Oracle WMS data transformation workflow completed successfully",
             )
-            return FlextResult.ok(workflow_results)
+            return FlextResult[None].ok(workflow_results)
 
         except Exception as e:
             logger.exception(
                 "Unexpected error in Oracle WMS data transformation workflow",
             )
-            return FlextResult.failure(
+            return FlextResult[None].fail(
                 f"Oracle WMS data transformation workflow failed: {e}",
             )
 
@@ -347,13 +347,13 @@ class FlextDbtOracleWmsWorkflowService:
                 "Oracle WMS full transformation pipeline completed successfully: %s",
                 full_results,
             )
-            return FlextResult.ok(full_results)
+            return FlextResult[None].ok(full_results)
 
         except Exception as e:
             logger.exception(
                 "Unexpected error in Oracle WMS full transformation pipeline",
             )
-            return FlextResult.failure(
+            return FlextResult[None].fail(
                 f"Oracle WMS full transformation pipeline failed: {e}",
             )
 
@@ -376,7 +376,7 @@ class FlextDbtOracleWmsWorkflowService:
             try:
                 connection_result = await self.client.test_oracle_wms_connection()
                 if connection_result.is_failure:
-                    return FlextResult.failure(
+                    return FlextResult[None].fail(
                         connection_result.error or "Connection failed",
                     )
                 validation_results["oracle_wms_connection"] = cast(
@@ -428,11 +428,11 @@ class FlextDbtOracleWmsWorkflowService:
                     "Oracle WMS workflow prerequisites validation completed: %s",
                     overall_status,
                 )
-                return FlextResult.ok(final_results)
+                return FlextResult[None].ok(final_results)
 
             except Exception as e:
                 logger.exception("Oracle WMS connection validation failed")
-                return FlextResult.failure(
+                return FlextResult[None].fail(
                     f"Oracle WMS connection validation failed: {e}",
                 )
 
@@ -440,7 +440,7 @@ class FlextDbtOracleWmsWorkflowService:
             logger.exception(
                 "Unexpected error during Oracle WMS prerequisites validation",
             )
-            return FlextResult.failure(
+            return FlextResult[None].fail(
                 f"Oracle WMS prerequisites validation failed: {e}",
             )
 
@@ -464,13 +464,13 @@ class FlextDbtOracleWmsWorkflowService:
             if entities is None:
                 discovery_result = await self.client.discover_oracle_wms_entities()
                 if discovery_result.is_failure:
-                    return FlextResult.failure(
+                    return FlextResult[None].fail(
                         discovery_result.error or "Discovery failed",
                     )
                 entities = discovery_result.data or []
 
             if not entities:
-                return FlextResult.ok(
+                return FlextResult[None].ok(
                     {
                         "message": "No Oracle WMS entities found for analysis",
                         "recommendations": [],
@@ -557,13 +557,13 @@ class FlextDbtOracleWmsWorkflowService:
                 "Generated %d Oracle WMS workflow recommendations",
                 len(recommendations),
             )
-            return FlextResult.ok(results)
+            return FlextResult[None].ok(results)
 
         except Exception as e:
             logger.exception(
                 "Unexpected error generating Oracle WMS workflow recommendations",
             )
-            return FlextResult.failure(
+            return FlextResult[None].fail(
                 f"Oracle WMS workflow recommendations generation failed: {e}",
             )
 
