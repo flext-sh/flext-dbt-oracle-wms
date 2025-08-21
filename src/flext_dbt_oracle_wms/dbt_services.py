@@ -76,7 +76,9 @@ class FlextDbtOracleWmsWorkflowService:
                 entity_types,
             )
             if discovery_result.is_failure:
-                return FlextResult[None].fail(discovery_result.error or "Discovery failed")
+                return FlextResult[None].fail(
+                    discovery_result.error or "Discovery failed"
+                )
 
             entities = discovery_result.data or []
             logger.info("Discovered %d Oracle WMS entities", len(entities))

@@ -339,7 +339,9 @@ class FlextDbtOracleWmsClient:
                     )
                 return FlextResult[None].ok({"executed_models": execution_results})
             # If no specific models requested, simply return prepared data summary
-            return FlextResult[None].ok({"prepared_entities": list(transformed_data.keys())})
+            return FlextResult[None].ok(
+                {"prepared_entities": list(transformed_data.keys())}
+            )
         except Exception as e:
             logger.exception("Unexpected error during DBT transformation")
             return FlextResult[None].fail(f"DBT transformation error: {e}")
