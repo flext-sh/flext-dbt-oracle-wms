@@ -72,10 +72,10 @@ pip install -e .
 
 ```bash
 # Download Oracle Instant Client
-wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linux.x64-21.1.0.0.0.zip
+wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linux.x64-21.0.9.0.0.zip
 
 # Extract and setup
-unzip instantclient-basic-linux.x64-21.1.0.0.0.zip
+unzip instantclient-basic-linux.x64-21.0.9.0.0.zip
 export ORACLE_HOME=/path/to/instantclient_21_1
 export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
 
@@ -227,7 +227,7 @@ Verify and customize `dbt_project.yml`:
 ```yaml
 # dbt_project.yml
 name: "flext_dbt_oracle_wms"
-version: "1.0.0"
+version: "0.9.0"
 config-version: 2
 
 profile: "flext_oracle_wms"
