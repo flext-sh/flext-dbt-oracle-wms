@@ -85,17 +85,17 @@ class FlextDbtOracleWmsClient:
                     "base_url": self.config.oracle_wms_base_url,
                 }
                 logger.info("Oracle WMS connection test successful")
-                return FlextResult[None].ok(connection_info)
+                return FlextResult[dict[str, str | int]].ok(connection_info)
             logger.error(
                 "Oracle WMS connection test failed: %s",
                 discovery_result.error,
             )
-            return FlextResult[None].fail(
+            return FlextResult[dict[str, str | int]].fail(
                 f"Oracle WMS connection test failed: {discovery_result.error}",
             )
         except Exception as e:
             logger.exception("Unexpected error during Oracle WMS connection test")
-            return FlextResult[None].fail(f"Oracle WMS connection error: {e}")
+            return FlextResult[dict[str, str | int]].fail(f"Oracle WMS connection error: {e}")
 
     async def discover_oracle_wms_entities(
         self,
@@ -127,17 +127,17 @@ class FlextDbtOracleWmsClient:
                     "Successfully discovered %d Oracle WMS entities",
                     len(entities),
                 )
-                return FlextResult[None].ok(entities)
+                return FlextResult[list[dict[str, object]]].ok(entities)
             logger.error(
                 "Oracle WMS entity discovery failed: %s",
                 discovery_result.error,
             )
-            return FlextResult[None].fail(
+            return FlextResult[list[dict[str, object]]].fail(
                 f"Oracle WMS entity discovery failed: {discovery_result.error}",
             )
         except Exception as e:
             logger.exception("Unexpected error during Oracle WMS entity discovery")
-            return FlextResult[None].fail(f"Oracle WMS entity discovery error: {e}")
+            return FlextResult[list[dict[str, object]]].fail(f"Oracle WMS entity discovery error: {e}")
 
     async def extract_oracle_wms_data(
         self,
@@ -181,12 +181,12 @@ class FlextDbtOracleWmsClient:
                 "Oracle WMS data extraction failed: %s",
                 extraction_result.error,
             )
-            return FlextResult[None].fail(
+            return FlextResult[list[dict[str, str | int | float | bool]]].fail(
                 f"Oracle WMS data extraction failed: {extraction_result.error}",
             )
         except Exception as e:
             logger.exception("Unexpected error during Oracle WMS data extraction")
-            return FlextResult[None].fail(f"Oracle WMS data extraction error: {e}")
+            return FlextResult[list[dict[str, str | int | float | bool]]].fail(f"Oracle WMS data extraction error: {e}")
 
     async def validate_oracle_wms_data(
         self,
@@ -280,7 +280,7 @@ class FlextDbtOracleWmsClient:
                 else 0.85
             )
             if quality_score < min_threshold:
-                return FlextResult[None].fail(
+                return FlextResult[dict[str, object]].fail(
                     f"Oracle WMS data quality below threshold for {entity_name}: "
                     f"{quality_score:.2f} < {min_threshold}. Validation details: {validation_metrics}",
                 )
@@ -289,10 +289,10 @@ class FlextDbtOracleWmsClient:
                 entity_name,
                 quality_score,
             )
-            return FlextResult[None].ok(validation_metrics)
+            return FlextResult[dict[str, object]].ok(validation_metrics)
         except Exception as e:
             logger.exception("Unexpected error during Oracle WMS data validation")
-            return FlextResult[None].fail(f"Oracle WMS data validation error: {e}")
+            return FlextResult[dict[str, object]].fail(f"Oracle WMS data validation error: {e}")
 
     async def transform_with_dbt(
         self,
@@ -326,7 +326,7 @@ class FlextDbtOracleWmsClient:
                     mock_payload: dict[str, object] = dict(transformed_data.items())
                     exec_res = hub.execute_model(model, mock_data=mock_payload)
                     if exec_res.is_failure:
-                        return FlextResult[None].fail(
+                        return FlextResult[dict[str, object]].fail(
                             f"DBT model '{model}' execution failed: {exec_res.error}",
                         )
                     execution_results.append(
@@ -337,14 +337,14 @@ class FlextDbtOracleWmsClient:
                             else 0,
                         },
                     )
-                return FlextResult[None].ok({"executed_models": execution_results})
+                return FlextResult[dict[str, object]].ok({"executed_models": execution_results})
             # If no specific models requested, simply return prepared data summary
-            return FlextResult[None].ok(
+            return FlextResult[dict[str, object]].ok(
                 {"prepared_entities": list(transformed_data.keys())}
             )
         except Exception as e:
             logger.exception("Unexpected error during DBT transformation")
-            return FlextResult[None].fail(f"DBT transformation error: {e}")
+            return FlextResult[dict[str, object]].fail(f"DBT transformation error: {e}")
 
     async def run_full_pipeline(
         self,
@@ -368,7 +368,7 @@ class FlextDbtOracleWmsClient:
             discover_result = await self.discover_oracle_wms_entities()
             if discover_result.is_failure:
                 # Convert discovery result to expected format
-                return FlextResult[None].ok(
+                return FlextResult[dict[str, object]].ok(
                     {
                         "discovery_results": discover_result.data,
                         "pipeline_status": "failed_at_discovery",
@@ -391,7 +391,7 @@ class FlextDbtOracleWmsClient:
             )
             if extract_result.is_failure:
                 # Convert extraction result to expected format
-                return FlextResult[None].ok(
+                return FlextResult[dict[str, object]].ok(
                     {
                         "extraction_results": extract_result.data,
                         "pipeline_status": "failed_at_extraction",
@@ -415,7 +415,7 @@ class FlextDbtOracleWmsClient:
             "pipeline_status": "completed",
         }
         logger.info("Full Oracle WMS-to-DBT pipeline completed successfully")
-        return FlextResult[None].ok(pipeline_results)
+        return FlextResult[dict[str, object]].ok(pipeline_results)
 
     def _prepare_oracle_wms_data_for_dbt(
         self,
