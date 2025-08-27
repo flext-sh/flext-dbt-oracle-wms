@@ -11,14 +11,14 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_core import FlextSettings, get_logger
+from flext_core import FlextConfig, get_logger
 from flext_meltano.config import FlextMeltanoConfig
 from flext_oracle_wms.wms_config import FlextOracleWmsClientConfig
 
 logger = get_logger(__name__)
 
 
-class FlextDbtOracleWmsConfig(FlextSettings):
+class FlextDbtOracleWmsConfig(FlextConfig):
     """Configuration for DBT Oracle WMS transformations.
 
     Combines Oracle WMS connection settings with DBT execution configuration.

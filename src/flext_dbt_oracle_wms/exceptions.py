@@ -20,7 +20,7 @@ from typing import cast
 
 from flext_core import (
     FlextProcessingError,
-    FlextExceptions.ValidationError,
+    FlextExceptions,
     create_module_exception_classes,
 )
 
@@ -137,7 +137,7 @@ class FlextDbtOracleWmsModelError(FlextProcessingError):
         )
 
 
-class FlextDbtOracleWmsTestError(FlextExceptions.ValidationError):
+class FlextDbtOracleWmsTestError(FlextExceptions):
     """Oracle WMS DBT test errors with test validation context."""
 
     def __init__(
