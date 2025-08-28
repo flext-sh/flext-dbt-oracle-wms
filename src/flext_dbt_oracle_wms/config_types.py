@@ -33,7 +33,7 @@ def _get_default_wms_entities() -> list[str]:
     Returns:
       list[str]: Description.
 
-    """  # Avoid Any by building a new list explicitly
+    """  # Avoid object by building a new list explicitly
     entities: list[str] = []
     entities.extend(WmsConstants.Entities.CORE_ENTITIES)
     entities.extend(WmsConstants.Entities.ORDER_ENTITIES)
