@@ -15,7 +15,7 @@ from __future__ import annotations
 import importlib.metadata
 
 # Core imports from flext-core
-from flext_core import FlextResult, get_logger
+from flext_core import FlextResult, FlextLogger
 
 try:
     __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
@@ -69,7 +69,7 @@ from flext_dbt_oracle_wms.exceptions import (
 # CONVENIENCE FACTORY FUNCTIONS
 # ================================
 
-logger = get_logger(__name__)
+logger = FlextLogger(__name__)
 
 
 def create_oracle_wms_dbt_client(

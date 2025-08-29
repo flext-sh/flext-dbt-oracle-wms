@@ -9,10 +9,10 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_core import FlextResult, FlextValue, get_logger
+from flext_core import FlextResult, FlextModels.Value, FlextLogger
 from flext_oracle_wms import FlextOracleWmsEntity
 
-logger = get_logger(__name__)
+logger = FlextLogger(__name__)
 
 
 # === Internal helpers for safe type conversion ===
@@ -54,7 +54,7 @@ def _get_bool(value: object, *, default: bool = False) -> bool:
     return default
 
 
-class FlextDbtOracleWmsItemDimension(FlextValue):
+class FlextDbtOracleWmsItemDimension(FlextModels.Value):
     """Item dimension model for DBT Oracle WMS transformations.
 
     Represents an item dimension table structure optimized for analytics.
@@ -122,7 +122,7 @@ class FlextDbtOracleWmsItemDimension(FlextValue):
         }
 
 
-class FlextDbtOracleWmsLocationDimension(FlextValue):
+class FlextDbtOracleWmsLocationDimension(FlextModels.Value):
     """Location dimension model for DBT Oracle WMS transformations.
 
     Represents a location dimension table structure optimized for analytics.
@@ -198,7 +198,7 @@ class FlextDbtOracleWmsLocationDimension(FlextValue):
         }
 
 
-class FlextDbtOracleWmsInventoryFact(FlextValue):
+class FlextDbtOracleWmsInventoryFact(FlextModels.Value):
     """Inventory fact model for DBT Oracle WMS transformations.
 
     Represents inventory levels as fact table optimized for analytics.
@@ -275,7 +275,7 @@ class FlextDbtOracleWmsInventoryFact(FlextValue):
         }
 
 
-class FlextDbtOracleWmsShipmentFact(FlextValue):
+class FlextDbtOracleWmsShipmentFact(FlextModels.Value):
     """Shipment fact model for DBT Oracle WMS transformations.
 
     Represents shipments as fact table optimized for analytics.

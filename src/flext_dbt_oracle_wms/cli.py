@@ -9,7 +9,7 @@ from __future__ import annotations
 import asyncio
 
 import click
-from flext_core import get_logger
+from flext_core import FlextLogger
 
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
@@ -17,7 +17,7 @@ from flext_dbt_oracle_wms import (
     create_oracle_wms_workflow_service,
 )
 
-logger = get_logger(__name__)
+logger = FlextLogger(__name__)
 
 
 @click.group()

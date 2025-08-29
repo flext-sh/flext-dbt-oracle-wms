@@ -13,13 +13,13 @@ import time
 from pathlib import Path
 from typing import cast
 
-from flext_core import FlextResult, get_logger
+from flext_core import FlextLogger, FlextResult
 
 from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsTransformer
 
-logger = get_logger(__name__)
+logger = FlextLogger(__name__)
 
 
 class FlextDbtOracleWmsWorkflowService:
