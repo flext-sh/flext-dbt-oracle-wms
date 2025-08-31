@@ -20,7 +20,7 @@ from typing import cast
 
 from flext_core import (
     FlextExceptions,
-    FlextProcessingError,
+    FlextExceptions.ProcessingError,
     create_module_exception_classes,
 )
 
@@ -59,7 +59,7 @@ FlextDbtOracleWmsTimeoutError: type[Exception] = cast(
 
 
 # Domain-specific exceptions for Oracle WMS DBT business logic
-class FlextDbtOracleWmsInventoryError(FlextProcessingError):
+class FlextDbtOracleWmsInventoryError(FlextExceptions.ProcessingError):
     """Oracle WMS DBT inventory-specific errors with WMS context."""
 
     def __init__(
@@ -85,7 +85,7 @@ class FlextDbtOracleWmsInventoryError(FlextProcessingError):
         )
 
 
-class FlextDbtOracleWmsShipmentError(FlextProcessingError):
+class FlextDbtOracleWmsShipmentError(FlextExceptions.ProcessingError):
     """Oracle WMS DBT shipment-specific errors with shipping context."""
 
     def __init__(
@@ -111,7 +111,7 @@ class FlextDbtOracleWmsShipmentError(FlextProcessingError):
         )
 
 
-class FlextDbtOracleWmsModelError(FlextProcessingError):
+class FlextDbtOracleWmsModelError(FlextExceptions.ProcessingError):
     """Oracle WMS DBT model-specific errors with dbt model context."""
 
     def __init__(
