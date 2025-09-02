@@ -14,10 +14,11 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
+from flext_core import FlextModels
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as WmsConstants,
 )
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 # Simple type aliases for dbt Oracle WMS
 NonEmptyStr = str
@@ -41,7 +42,7 @@ def _get_default_wms_entities() -> list[str]:
     return entities
 
 
-class FlextDBTOracleWMSConfig(BaseModel):
+class FlextDBTOracleWMSConfig(FlextModels):
     """FLEXT DBT Oracle WMS configuration using core types."""
 
     project_name: ProjectName = Field(
