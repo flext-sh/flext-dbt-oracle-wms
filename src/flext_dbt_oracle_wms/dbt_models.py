@@ -54,7 +54,7 @@ def _get_bool(value: object, *, default: bool = False) -> bool:
     return default
 
 
-class FlextDbtOracleWmsItemDimension(FlextModels.BaseConfig):
+class FlextDbtOracleWmsItemDimension(FlextModels.Config):
     """Item dimension model for DBT Oracle WMS transformations.
 
     Represents an item dimension table structure optimized for analytics.
@@ -122,7 +122,7 @@ class FlextDbtOracleWmsItemDimension(FlextModels.BaseConfig):
         }
 
 
-class FlextDbtOracleWmsLocationDimension(FlextModels.BaseConfig):
+class FlextDbtOracleWmsLocationDimension(FlextModels.Config):
     """Location dimension model for DBT Oracle WMS transformations.
 
     Represents a location dimension table structure optimized for analytics.
@@ -198,7 +198,7 @@ class FlextDbtOracleWmsLocationDimension(FlextModels.BaseConfig):
         }
 
 
-class FlextDbtOracleWmsInventoryFact(FlextModels.BaseConfig):
+class FlextDbtOracleWmsInventoryFact(FlextModels.Config):
     """Inventory fact model for DBT Oracle WMS transformations.
 
     Represents inventory levels as fact table optimized for analytics.
@@ -275,7 +275,7 @@ class FlextDbtOracleWmsInventoryFact(FlextModels.BaseConfig):
         }
 
 
-class FlextDbtOracleWmsShipmentFact(FlextModels.BaseConfig):
+class FlextDbtOracleWmsShipmentFact(FlextModels.Config):
     """Shipment fact model for DBT Oracle WMS transformations.
 
     Represents shipments as fact table optimized for analytics.
