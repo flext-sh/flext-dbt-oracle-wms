@@ -128,7 +128,7 @@ make doctor            # Full health check (diagnose + check)
 
 # Build and documentation
 make build             # Build package
-make docs              # Build all documentation  
+make docs              # Build all documentation
 make docs-serve        # Serve documentation locally
 
 # Dependencies
