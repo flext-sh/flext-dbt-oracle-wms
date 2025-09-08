@@ -1,17 +1,7 @@
-"""🚨 ARCHITECTURAL COMPLIANCE: ELIMINATED MASSIVE EXCEPTION DUPLICATION using DRY.
-
-REFATORADO COMPLETO usando create_module_exception_classes:
-- ZERO code duplication através do DRY exception factory pattern de flext-core
-- USA create_module_exception_classes() para eliminar exception boilerplate massivo
-- Elimina 185+ linhas duplicadas de código boilerplate por exception class
-- SOLID: Single source of truth para module exception patterns
-- Redução de 186+ linhas para 85 linhas (54% reduction)
-
-Domain-specific Oracle WMS DBT exceptions using factory pattern to eliminate duplication.
+"""Domain-specific Oracle WMS DBT exceptions using factory pattern to eliminate duplication.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
+SPDX-License-Identifier: MIT.
 """
 
 from __future__ import annotations
@@ -20,6 +10,7 @@ from typing import cast
 
 from flext_core import (
     FlextExceptions,
+    FlextTypes,
     create_module_exception_classes,
 )
 
@@ -148,7 +139,7 @@ class FlextDbtOracleWmsTestError(FlextExceptions):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT test error with test context."""
-        validation_details: dict[str, object] = {}
+        validation_details: FlextTypes.Core.Dict = {}
         if test_name is not None:
             validation_details["test_name"] = test_name
         if model_name is not None:
@@ -162,7 +153,7 @@ class FlextDbtOracleWmsTestError(FlextExceptions):
         )
 
 
-__all__: list[str] = [
+__all__: FlextTypes.Core.StringList = [
     "FlextDbtOracleWmsAuthenticationError",
     "FlextDbtOracleWmsConfigurationError",
     "FlextDbtOracleWmsConnectionError",

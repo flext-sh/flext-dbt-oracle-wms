@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_core import FlextConfig, FlextLogger
+from flext_core import FlextConfig, FlextLogger, FlextTypes
 from flext_meltano.config import FlextMeltanoConfig
 from flext_oracle_wms.wms_config import FlextOracleWmsClientConfig
 
@@ -42,7 +42,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     dbt_log_level: str = "info"
 
     # Oracle WMS-specific DBT Settings
-    oracle_wms_entity_mapping: ClassVar[dict[str, str]] = {
+    oracle_wms_entity_mapping: ClassVar[FlextTypes.Core.Headers] = {
         "items": "stg_wms_items",
         "locations": "stg_wms_locations",
         "inventory": "stg_wms_inventory",
@@ -51,7 +51,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         "orders": "stg_wms_orders",
     }
 
-    oracle_wms_field_mapping: ClassVar[dict[str, str]] = {
+    oracle_wms_field_mapping: ClassVar[FlextTypes.Core.Headers] = {
         "itemId": "item_id",
         "itemNumber": "item_number",
         "itemDescription": "item_description",
@@ -63,7 +63,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     }
 
     # Oracle WMS Business Logic Settings
-    oracle_wms_business_rules: ClassVar[dict[str, object]] = {
+    oracle_wms_business_rules: ClassVar[FlextTypes.Core.Dict] = {
         "inventory_thresholds": {
             "min_quantity": 0,
             "max_quantity": 999999,
@@ -81,7 +81,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     # Data Quality Settings
     min_quality_threshold: float = 0.85
-    required_fields_per_entity: ClassVar[dict[str, list[str]]] = {
+    required_fields_per_entity: ClassVar[dict[str, FlextTypes.Core.StringList]] = {
         "items": ["itemId", "itemNumber", "itemDescription"],
         "locations": ["locationId", "facilityId", "locationName"],
         "inventory": ["itemId", "locationId", "quantityOnHand"],
@@ -111,7 +111,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             dbt_profiles_dir=self.dbt_profiles_dir,
         )
 
-    def get_oracle_wms_quality_config(self) -> dict[str, object]:
+    def get_oracle_wms_quality_config(self) -> FlextTypes.Core.Dict:
         """Get data quality configuration for Oracle WMS validation."""
         return {
             "min_quality_threshold": self.min_quality_threshold,
@@ -142,11 +142,11 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         entity_rules = self.oracle_wms_business_rules.get(entity_name, {})
         return entity_rules.get(rule_name) if isinstance(entity_rules, dict) else None
 
-    def get_required_fields(self, entity_name: str) -> list[str]:
+    def get_required_fields(self, entity_name: str) -> FlextTypes.Core.StringList:
         """Get required fields for specific Oracle WMS entity."""
         return self.required_fields_per_entity.get(entity_name, [])
 
 
-__all__: list[str] = [
+__all__: FlextTypes.Core.StringList = [
     "FlextDbtOracleWmsConfig",
 ]

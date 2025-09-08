@@ -8,7 +8,6 @@ IMPORTANT: This module is for Oracle WMS API integration, NOT Oracle Database.
 
 Copyright (c) 2025 FLEXT Contributors
 SPDX-License-Identifier: MIT
-
 """
 
 from __future__ import annotations
@@ -16,6 +15,8 @@ from __future__ import annotations
 from datetime import datetime
 from enum import StrEnum
 from typing import Annotated, TypedDict
+
+from flext_core import FlextTypes
 
 from flext_dbt_oracle_wms.config_types import (
     DBTOracleWMSMacroConfiguration,
@@ -106,14 +107,14 @@ class DBTOracleWMSProjectConfiguration(TypedDict):
     name: ProjectName
     version: Version
     profile: str
-    model_paths: list[str]
-    analysis_paths: list[str]
-    test_paths: list[str]
-    seed_paths: list[str]
-    macro_paths: list[str]
-    snapshot_paths: list[str]
+    model_paths: FlextTypes.Core.StringList
+    analysis_paths: FlextTypes.Core.StringList
+    test_paths: FlextTypes.Core.StringList
+    seed_paths: FlextTypes.Core.StringList
+    macro_paths: FlextTypes.Core.StringList
+    snapshot_paths: FlextTypes.Core.StringList
     target_path: str
-    clean_targets: list[str]
+    clean_targets: FlextTypes.Core.StringList
     require_dbt_version: str
     dbt_version: str
     timeout: DBTOracleWMSProjectTimeout
@@ -128,10 +129,10 @@ class DBTOracleWMSSnapshotConfiguration(TypedDict):
     strategy: str
     unique_key: str
     updated_at: str | None
-    check_cols: list[str] | None
+    check_cols: FlextTypes.Core.StringList | None
     invalidate_hard_deletes: bool
-    meta: dict[str, str]
-    tags: list[str]
+    meta: FlextTypes.Core.Headers
+    tags: FlextTypes.Core.StringList
     timeout: DBTOracleWMSSnapshotTimeout
 
 
@@ -140,8 +141,8 @@ class DBTOracleWMSAnalysisConfiguration(TypedDict):
 
     name: str
     description: str
-    meta: dict[str, str]
-    tags: list[str]
+    meta: FlextTypes.Core.Headers
+    tags: FlextTypes.Core.StringList
     timeout: DBTOracleWMSAnalysisTimeout
 
 
@@ -151,10 +152,10 @@ class DBTOracleWMSCompilationConfiguration(TypedDict):
     project_dir: str
     profiles_dir: str
     target: str
-    vars: dict[str, str]
+    vars: FlextTypes.Core.Headers
     full_refresh: bool
-    exclude: list[str] | None
-    select: list[str] | None
+    exclude: FlextTypes.Core.StringList | None
+    select: FlextTypes.Core.StringList | None
     timeout: DBTOracleWMSCompilationTimeout
 
 
@@ -164,12 +165,12 @@ class DBTOracleWMSExecutionConfiguration(TypedDict):
     project_dir: str
     profiles_dir: str
     target: str
-    models: list[str] | None
-    exclude: list[str] | None
+    models: FlextTypes.Core.StringList | None
+    exclude: FlextTypes.Core.StringList | None
     full_refresh: bool
     fail_fast: bool
     threads: int
-    vars: dict[str, str]
+    vars: FlextTypes.Core.Headers
     timeout: DBTOracleWMSExecutionTimeout
 
 
@@ -314,7 +315,7 @@ class DBTOracleWMSDocumentation(TypedDict):
 # EXPORTS
 # ==============================================================================
 
-__all__: list[str] = [
+__all__: FlextTypes.Core.StringList = [
     # Domain objects
     "DBTOracleWMSAnalysis",
     # Domain-specific configurations (not imported from config)

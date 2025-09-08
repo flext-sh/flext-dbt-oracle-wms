@@ -1,26 +1,14 @@
 """FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using consolidated DBT patterns.
 
-Version 0.9.0 - Consolidated DBT Oracle WMS following the established DBT pattern:
-- Uses flext-meltano for DBT integration and orchestration
-- Built on flext-core foundation with flext-oracle-wms maximum composition
-- Follows consolidated DBT architecture with dbt_config, dbt_client, dbt_models, dbt_services
-- Implements Oracle WMS-specific business logic and transformations
-
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
 
-from __future__ import annotations
-
 import importlib.metadata
 
-# Core imports from flext-core
 from flext_core import FlextResult, FlextLogger
 
-try:
-    __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
-except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.9.0"
+__version__ = importlib.metadata.version("flext-dbt-oracle-wms")
 
 __version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 
@@ -121,7 +109,7 @@ ShipmentFact = FlextDbtOracleWmsShipmentFact
 # PUBLIC API EXPORTS
 # ================================
 
-__all__: list[str] = [
+__all__: FlextTypes.Core.StringList = [
     # Configuration
     "FlextDbtOracleWmsConfig",
     # Client & Services - Primary interfaces

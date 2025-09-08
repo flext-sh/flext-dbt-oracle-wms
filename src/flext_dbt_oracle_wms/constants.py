@@ -1,16 +1,16 @@
 """FLEXT DBT Oracle WMS Constants extending flext-core platform constants.
 
-Copyright (c) 2025 FLEXT Contributors
-SPDX-License-Identifier: MIT
-
 DBT Oracle WMS-specific constants that extend flext-core patterns.
+
+Copyright (c) 2025 FLEXT Team. All rights reserved.
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_core import FlextConstants
+from flext_core import FlextConstants, FlextTypes
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as _WmsConstants,
     OracleWMSEntityType as _OracleWMSEntityType,
@@ -22,12 +22,7 @@ from flext_oracle_wms.wms_constants import (
 
 
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):
-    """DBT Oracle WMS semantic constants extending FlextConstants.
-
-    Modern Python 3.13 constants following semantic grouping patterns.
-    Extends the FLEXT ecosystem constants with DBT Oracle WMS-specific
-    values while maintaining full backward compatibility.
-    """
+    """DBT Oracle WMS semantic constants extending FlextConstants."""
 
     class Core:
         """Core DBT Oracle WMS system constants."""
@@ -45,7 +40,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         SCHEMA_PREFIX = "wms"
 
         # Materialization types
-        MATERIALIZATIONS: ClassVar[list[str]] = [
+        MATERIALIZATIONS: ClassVar[FlextTypes.Core.StringList] = [
             "table",
             "view",
             "incremental",
@@ -54,7 +49,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Test types
-        TEST_TYPES: ClassVar[list[str]] = [
+        TEST_TYPES: ClassVar[FlextTypes.Core.StringList] = [
             "unique",
             "not_null",
             "relationships",
@@ -63,7 +58,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Macro types
-        MACRO_TYPES: ClassVar[list[str]] = [
+        MACRO_TYPES: ClassVar[FlextTypes.Core.StringList] = [
             "utility",
             "transformation",
             "audit",
@@ -71,7 +66,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Documentation types
-        DOCUMENTATION_TYPES: ClassVar[list[str]] = [
+        DOCUMENTATION_TYPES: ClassVar[FlextTypes.Core.StringList] = [
             "model",
             "source",
             "macro",
@@ -82,7 +77,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         """Oracle WMS entity type constants - consumed from flext-oracle-wms."""
 
         # CONSUME Oracle WMS entities from single source (flext-oracle-wms)
-        WMS_ENTITIES: ClassVar[list[str]] = (
+        WMS_ENTITIES: ClassVar[FlextTypes.Core.StringList] = (
             _WmsConstants.Entities.CORE_ENTITIES
             + _WmsConstants.Entities.ORDER_ENTITIES
             + _WmsConstants.Entities.INVENTORY_ENTITIES
@@ -91,7 +86,11 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         )
 
         # Entity priority levels
-        PRIORITY_LEVELS: ClassVar[list[str]] = ["high", "medium", "low"]
+        PRIORITY_LEVELS: ClassVar[FlextTypes.Core.StringList] = [
+            "high",
+            "medium",
+            "low",
+        ]
 
     class Processing:
         """Data processing configuration constants."""
@@ -104,7 +103,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         DATA_QUALITY_THRESHOLD = 0.95
 
         # Processing status
-        PROCESSING_STATUSES: ClassVar[list[str]] = [
+        PROCESSING_STATUSES: ClassVar[FlextTypes.Core.StringList] = [
             "pending",
             "processing",
             "completed",
@@ -112,7 +111,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Validation modes
-        VALIDATION_MODES: ClassVar[list[str]] = [
+        VALIDATION_MODES: ClassVar[FlextTypes.Core.StringList] = [
             "strict",
             "normal",
             "relaxed",
@@ -121,7 +120,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
     class Configuration:
         """Configuration management constants."""
 
-        DEFAULT_CONFIG: ClassVar[dict[str, object]] = {
+        DEFAULT_CONFIG: ClassVar[FlextTypes.Core.Dict] = {
             "project_name": "flext_dbt_oracle_wms",
             "profile": "flext_oracle_wms",
             "schema_prefix": "wms",
@@ -132,11 +131,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
 
 
 class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
-    """DBT Oracle WMS constants with backward compatibility.
-
-    Legacy compatibility layer providing both modern semantic access
-    and traditional flat constant access patterns for smooth migration.
-    """
+    """DBT Oracle WMS constants with backward compatibility."""
 
     # Modern semantic access (Primary API) - direct references
     Core = FlextDbtOracleWmsSemanticConstants.Core
@@ -259,7 +254,7 @@ class WMSConstants:
 # EXPORTS - DBT Oracle WMS constants API
 # =============================================================================
 
-__all__: list[str] = [
+__all__: FlextTypes.Core.StringList = [
     # Legacy classes (deprecated)
     "DBTOracleWMSDefaults",
     "DBTOracleWMSDocumentationTypes",
