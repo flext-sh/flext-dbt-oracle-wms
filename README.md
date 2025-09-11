@@ -234,7 +234,7 @@ make validate
 
 # Individual checks
 make lint          # SQL and Python linting
-make type-check    # Type checking (Python components)
+make type-check
 make security      # Security scan
 make test          # dbt tests + Python tests
 make coverage      # Coverage report (90%+ required)

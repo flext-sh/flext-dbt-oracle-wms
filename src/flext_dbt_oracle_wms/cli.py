@@ -58,7 +58,9 @@ class FlextDbtOracleWmsCliService:
             # Parse entities from args if provided
             entity_names = args.get("entities", []) if args else []
             limit = args.get("limit") if args else None
-            limits = dict.fromkeys(entity_names, limit) if entity_names and limit else None
+            limits = (
+                dict.fromkeys(entity_names, limit) if entity_names and limit else None
+            )
 
             result = asyncio.run(
                 workflow_service.run_data_extraction_workflow(
@@ -118,8 +120,8 @@ class FlextDbtOracleWmsCliService:
                     "discover   - Discover Oracle WMS entities",
                     "extract    - Extract data from Oracle WMS",
                     "pipeline   - Run full transformation pipeline",
-                    "info       - Show package information"
-                ]
+                    "info       - Show package information",
+                ],
             }
 
             # Use flext-cli to format and display data
@@ -170,7 +172,6 @@ def info() -> None:
 def main() -> None:
     """Main CLI entry point for flext-dbt-oracle-wms."""
     try:
-        # Simple command dispatching without Click
         if len(sys.argv) > 1:
             command = sys.argv[1]
             if command == "discover":

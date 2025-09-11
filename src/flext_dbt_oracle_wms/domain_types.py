@@ -355,7 +355,6 @@ __all__: FlextTypes.Core.StringList = [
     "DBTOracleWMSTestConfiguration",
     "DBTOracleWMSTestTimeout",
     "DBTOracleWMSTestType",
-    # Type aliases
     "OracleWMSConnectionId",
     "OracleWMSOperationId",
     "OracleWMSQueryId",

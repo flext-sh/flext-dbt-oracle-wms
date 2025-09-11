@@ -132,7 +132,6 @@ class DBTOracleWMSProfileConfiguration(TypedDict):
 # ==============================================================================
 
 __all__: FlextTypes.Core.StringList = [
-    # TypedDict configurations
     "DBTOracleWMSConfiguration",
     "DBTOracleWMSMacroConfiguration",
     "DBTOracleWMSModelConfiguration",

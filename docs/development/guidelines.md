@@ -757,7 +757,7 @@ make validate
 
 # Individual quality checks
 make lint        # SQL and Python linting
-make type-check  # Type checking
+make type-check
 make security    # Security scans
 make test        # All tests including dbt
 ```

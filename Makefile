@@ -180,7 +180,7 @@ diagnose: ## Show environment diagnostics
 doctor: diagnose check ## Full health check
 
 # ============================================================================
-# ALIASES
+
 # ============================================================================
 
 t: test

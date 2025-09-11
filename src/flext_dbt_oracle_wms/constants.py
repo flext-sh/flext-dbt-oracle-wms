@@ -16,10 +16,6 @@ from flext_oracle_wms.wms_constants import (
     OracleWMSEntityType as _OracleWMSEntityType,
 )
 
-# =============================================================================
-# DBT ORACLE WMS-SPECIFIC SEMANTIC CONSTANTS - Modern Python 3.13 Structure
-# =============================================================================
-
 
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):
     """DBT Oracle WMS semantic constants extending FlextConstants."""
@@ -154,11 +150,6 @@ class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
     )
 
 
-# =============================================================================
-# LEGACY CLASSES - Backward compatibility (DEPRECATED - use semantic access)
-# =============================================================================
-
-
 class DBTOracleWMSEntityTypes:
     """Oracle WMS entity types for DBT models (DEPRECATED - use FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES)."""
 
@@ -249,10 +240,6 @@ class WMSConstants:
     NORMAL_VALIDATION = "normal"
     RELAXED_VALIDATION = "relaxed"
 
-
-# =============================================================================
-# EXPORTS - DBT Oracle WMS constants API
-# =============================================================================
 
 __all__: FlextTypes.Core.StringList = [
     # Legacy classes (deprecated)
