@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 
 import importlib.metadata
 
-from flext_core import FlextResult, FlextLogger
+from flext_core import FlextLogger, FlextResult
 
 __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
 
@@ -17,19 +17,9 @@ __version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 # ================================
 
 # Configuration - Essential for setup
-from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
-
 # Client - Main interface for Oracle WMS DBT operations
 from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
-
-# Models - Oracle WMS DBT data models and transformers
-from flext_dbt_oracle_wms.models import (
-    FlextDbtOracleWmsInventoryFact,
-    FlextDbtOracleWmsItemDimension,
-    FlextDbtOracleWmsLocationDimension,
-    FlextDbtOracleWmsShipmentFact,
-    FlextDbtOracleWmsTransformer,
-)
+from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 
 # Services - High-level workflow orchestration
 from flext_dbt_oracle_wms.dbt_services import (
@@ -39,18 +29,27 @@ from flext_dbt_oracle_wms.dbt_services import (
 
 # Exceptions - Comprehensive error handling using flext-core factory patterns
 from flext_dbt_oracle_wms.exceptions import (
-    FlextDbtOracleWmsError,
-    FlextDbtOracleWmsValidationError,
+    FlextDbtOracleWmsAuthenticationError,
     FlextDbtOracleWmsConfigurationError,
     FlextDbtOracleWmsConnectionError,
-    FlextDbtOracleWmsProcessingError,
-    FlextDbtOracleWmsAuthenticationError,
-    FlextDbtOracleWmsTimeoutError,
+    FlextDbtOracleWmsError,
     # Domain-specific exceptions
     FlextDbtOracleWmsInventoryError,
     FlextDbtOracleWmsModelError,
+    FlextDbtOracleWmsProcessingError,
     FlextDbtOracleWmsShipmentError,
     FlextDbtOracleWmsTestError,
+    FlextDbtOracleWmsTimeoutError,
+    FlextDbtOracleWmsValidationError,
+)
+
+# Models - Oracle WMS DBT data models and transformers
+from flext_dbt_oracle_wms.models import (
+    FlextDbtOracleWmsInventoryFact,
+    FlextDbtOracleWmsItemDimension,
+    FlextDbtOracleWmsLocationDimension,
+    FlextDbtOracleWmsShipmentFact,
+    FlextDbtOracleWmsTransformer,
 )
 
 # ================================
@@ -110,35 +109,32 @@ ShipmentFact = FlextDbtOracleWmsShipmentFact
 # ================================
 
 __all__: FlextTypes.Core.StringList = [
-    # Configuration
-    "FlextDbtOracleWmsConfig",
-    # Client & Services - Primary interfaces
-    "FlextDbtOracleWmsClient",
-    "FlextDbtOracleWmsMonitoringService",
-    "FlextDbtOracleWmsWorkflowService",
-    # Models & Transformers - Data structures
-    "FlextDbtOracleWmsInventoryFact",
-    "FlextDbtOracleWmsItemDimension",
-    "FlextDbtOracleWmsLocationDimension",
-    "FlextDbtOracleWmsShipmentFact",
-    "FlextDbtOracleWmsTransformer",
     # Exceptions - Error handling
     "FlextDbtOracleWmsAuthenticationError",
+    # Client & Services - Primary interfaces
+    "FlextDbtOracleWmsClient",
+    # Configuration
+    "FlextDbtOracleWmsConfig",
     "FlextDbtOracleWmsConfigurationError",
     "FlextDbtOracleWmsConnectionError",
     "FlextDbtOracleWmsError",
     "FlextDbtOracleWmsInventoryError",
+    # Models & Transformers - Data structures
+    "FlextDbtOracleWmsInventoryFact",
+    "FlextDbtOracleWmsItemDimension",
+    "FlextDbtOracleWmsLocationDimension",
     "FlextDbtOracleWmsModelError",
+    "FlextDbtOracleWmsMonitoringService",
     "FlextDbtOracleWmsProcessingError",
     "FlextDbtOracleWmsShipmentError",
+    "FlextDbtOracleWmsShipmentFact",
     "FlextDbtOracleWmsTestError",
     "FlextDbtOracleWmsTimeoutError",
+    "FlextDbtOracleWmsTransformer",
     "FlextDbtOracleWmsValidationError",
+    "FlextDbtOracleWmsWorkflowService",
     # Core patterns (from flext-core)
     "FlextResult",
-    # Factory functions
-    "create_oracle_wms_dbt_client",
-    "create_oracle_wms_workflow_service",
     # Backward compatibility aliases
     "InventoryFact",
     "ItemDimension",
@@ -150,4 +146,7 @@ __all__: FlextTypes.Core.StringList = [
     # Metadata
     "__version__",
     "__version_info__",
+    # Factory functions
+    "create_oracle_wms_dbt_client",
+    "create_oracle_wms_workflow_service",
 ]
