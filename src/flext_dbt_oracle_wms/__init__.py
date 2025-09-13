@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 
 import importlib.metadata
 
-from flext_core import FlextLogger, FlextResult
+from flext_core import FlextResult
 
 __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
 
@@ -18,6 +18,15 @@ __version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 
 # Configuration - Essential for setup
 # Client - Main interface for Oracle WMS DBT operations
+from flext_dbt_oracle_wms.compatibility import (
+    InventoryFact,
+    ItemDimension,
+    LocationDimension,
+    OracleWMSDBTClient,
+    OracleWMSDBTConfig,
+    OracleWMSTransformer,
+    ShipmentFact,
+)
 from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 
@@ -33,7 +42,6 @@ from flext_dbt_oracle_wms.exceptions import (
     FlextDbtOracleWmsConfigurationError,
     FlextDbtOracleWmsConnectionError,
     FlextDbtOracleWmsError,
-    # Domain-specific exceptions
     FlextDbtOracleWmsInventoryError,
     FlextDbtOracleWmsModelError,
     FlextDbtOracleWmsProcessingError,
@@ -41,6 +49,12 @@ from flext_dbt_oracle_wms.exceptions import (
     FlextDbtOracleWmsTestError,
     FlextDbtOracleWmsTimeoutError,
     FlextDbtOracleWmsValidationError,
+)
+
+# Factory functions and compatibility imports
+from flext_dbt_oracle_wms.factory import (
+    create_oracle_wms_dbt_client,
+    create_oracle_wms_workflow_service,
 )
 
 # Models - Oracle WMS DBT data models and transformers
@@ -53,62 +67,10 @@ from flext_dbt_oracle_wms.models import (
 )
 
 # ================================
-# CONVENIENCE FACTORY FUNCTIONS
-# ================================
-
-logger = FlextLogger(__name__)
-
-
-def create_oracle_wms_dbt_client(
-    config: FlextDbtOracleWmsConfig | None = None,
-) -> FlextDbtOracleWmsClient:
-    """Create Oracle WMS DBT client with configuration.
-
-    Args:
-      config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
-
-    Returns:
-      Configured Oracle WMS DBT client
-
-    """
-    logger.info("Creating Oracle WMS DBT client")
-    return FlextDbtOracleWmsClient(config)
-
-
-def create_oracle_wms_workflow_service(
-    config: FlextDbtOracleWmsConfig | None = None,
-) -> FlextDbtOracleWmsWorkflowService:
-    """Create Oracle WMS workflow service with configuration.
-
-    Args:
-      config: Optional configuration (defaults to FlextDbtOracleWmsConfig())
-
-    Returns:
-      Configured Oracle WMS workflow service
-
-    """
-    logger.info("Creating Oracle WMS workflow service")
-    return FlextDbtOracleWmsWorkflowService(config)
-
-
-# ================================
-# BACKWARD COMPATIBILITY ALIASES
-# ================================
-
-# Maintain compatibility with existing imports
-OracleWMSDBTClient = FlextDbtOracleWmsClient
-OracleWMSDBTConfig = FlextDbtOracleWmsConfig
-OracleWMSTransformer = FlextDbtOracleWmsTransformer
-ItemDimension = FlextDbtOracleWmsItemDimension
-LocationDimension = FlextDbtOracleWmsLocationDimension
-InventoryFact = FlextDbtOracleWmsInventoryFact
-ShipmentFact = FlextDbtOracleWmsShipmentFact
-
-# ================================
 # PUBLIC API EXPORTS
 # ================================
 
-__all__: FlextTypes.Core.StringList = [
+__all__ = [
     # Exceptions - Error handling
     "FlextDbtOracleWmsAuthenticationError",
     # Client & Services - Primary interfaces

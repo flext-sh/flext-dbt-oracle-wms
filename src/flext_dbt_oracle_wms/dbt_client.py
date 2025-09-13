@@ -1,24 +1,15 @@
-"""DBT client for Oracle WMS operations.
-
-Provides high-level interface for DBT Oracle WMS transformations.
-Integrates flext-oracle-wms and flext-meltano for complete data pipeline operations.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-"""
 
 from __future__ import annotations
 
 from pathlib import Path
-
 from flext_core import FlextLogger, FlextResult, FlextTypes
 from flext_meltano import FlextDbtHub, create_dbt_hub
-from flext_oracle_wms import (
-    FlextOracleWmsClient,
-    create_oracle_wms_client,
-)
+from flext_oracle_wms import ( from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig """ from __future__ import annotations FlextOracleWmsClient, create_oracle_wms_client, )
 
-from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
+from flext_core import FlextResult
+from typing import Dict
+from typing import List
+from typing import Optional
 
 logger = FlextLogger(__name__)
 
@@ -31,6 +22,8 @@ class FlextDbtOracleWmsClient:
     """
 
     def __init__(
+        """Initialize the instance."""
+
         self,
         config: FlextDbtOracleWmsConfig | None = None,
     ) -> None:
@@ -40,6 +33,7 @@ class FlextDbtOracleWmsClient:
             config: Configuration for Oracle WMS and DBT operations
 
         """
+
         self.config = config or FlextDbtOracleWmsConfig()
         # Initialize Oracle WMS client using flext-oracle-wms
         oracle_wms_config = self.config.get_oracle_wms_config()
@@ -50,6 +44,7 @@ class FlextDbtOracleWmsClient:
     @property
     def dbt_hub(self) -> FlextDbtHub:
         """Get or create DBT hub instance."""
+
         if self._dbt_hub is None:
             # create_dbt_hub expects a Path, not a config object
             meltano_config = self.config.get_meltano_config()
@@ -64,6 +59,7 @@ class FlextDbtOracleWmsClient:
     @property
     def oracle_wms_client(self) -> FlextOracleWmsClient:
         """Get Oracle WMS client instance."""
+
         return self._oracle_wms_client
 
     async def test_oracle_wms_connection(self) -> FlextResult[dict[str, str | int]]:
@@ -938,6 +934,7 @@ class FlextDbtOracleWmsClient:
             FlextResult containing complete pipeline results
 
         """
+
         logger.info("Starting full Oracle WMS-to-DBT pipeline")
         # Step 1: Discover entities if not specified
         if entity_names is None:
@@ -1007,6 +1004,7 @@ class FlextDbtOracleWmsClient:
             Dictionary of prepared data for DBT
 
         """
+
         prepared_data = {}
         for entity_name, records in entity_data.items():
             # Get DBT table name for entity

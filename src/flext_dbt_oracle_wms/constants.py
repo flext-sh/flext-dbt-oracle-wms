@@ -1,20 +1,9 @@
-"""FLEXT DBT Oracle WMS Constants extending flext-core platform constants.
-
-DBT Oracle WMS-specific constants that extend flext-core patterns.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-"""
 
 from __future__ import annotations
 
 from typing import ClassVar
-
 from flext_core import FlextConstants, FlextTypes
-from flext_oracle_wms.wms_constants import (
-    FlextOracleWmsSemanticConstants as _WmsConstants,
-    OracleWMSEntityType as _OracleWMSEntityType,
-)
+from flext_oracle_wms.wms_constants import ( SPDX-License-Identifier: MIT """ from __future__ import annotations from typing import Dict FlextOracleWmsSemanticConstants as _WmsConstants, OracleWMSEntityType as _OracleWMSEntityType, )
 
 
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):

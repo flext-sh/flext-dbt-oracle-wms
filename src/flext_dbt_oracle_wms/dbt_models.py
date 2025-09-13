@@ -1,10 +1,6 @@
-"""DBT models for Oracle WMS data transformations.
+"""FLEXT Module.
 
-Defines data models and transformers for Oracle WMS-specific DBT operations.
-Integrates with flext-oracle-wms entities and flext-core patterns.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
+Copyright (c) 2025 FLEXT Team. All rights reserved. SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

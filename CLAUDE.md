@@ -14,8 +14,9 @@
 **PROJECT CONTEXT**: flext-dbt-oracle-wms is an enterprise-grade dbt project that provides data transformations for Oracle Warehouse Management System (WMS) data. It follows Clean Architecture principles and implements dimensional modeling patterns for WMS analytics, transforming raw Oracle WMS data from Singer taps into business-ready analytical models.
 
 **CRITICAL REQUIREMENTS**:
+
 - ✅ **95%+ pytest pass rate** with **75%+ coverage** (following flext-core success pattern)
-- ✅ **Zero errors** in ruff, mypy (strict mode), and pyright across ALL source code  
+- ✅ **Zero errors** in ruff, mypy (strict mode), and pyright across ALL source code
 - ✅ **Unified FlextDbtOracleWmsService** - single consolidated class for all Oracle WMS dbt operations
 - ✅ **Oracle WMS expertise** - proper warehouse operations modeling, inventory tracking, allocation processing
 - ✅ **Dimensional modeling excellence** - star schema design, proper fact/dimension structures, SCD handling
@@ -25,6 +26,7 @@
 - ✅ **Production-ready WMS analytics** - scalable dimensional models for enterprise WMS reporting
 
 **CURRENT PROJECT STATUS** (Evidence-based assessment needed):
+
 - 🔴 **Ruff Issues**: To be assessed with `ruff check src/ --output-format=github | wc -l`
 - 🟡 **MyPy Issues**: To be assessed with `mypy src/ --show-error-codes --no-error-summary 2>&1 | grep -E "error:" | wc -l`
 - 🟡 **Pyright Issues**: To be assessed with `pyright src/ --level error 2>&1 | grep -E "error" | wc -l`
@@ -80,7 +82,7 @@
 # ✅ CORRECT - Unified dbt Oracle WMS Service (MANDATORY PATTERN)
 from flext_core import (
     FlextResult,           # Railway pattern for WMS dbt operation results
-    FlextDomainService,    # Base service with Pydantic validation  
+    FlextDomainService,    # Base service with Pydantic validation
     FlextContainer,        # Dependency injection for WMS services
     FlextLogger,           # Structured logging for WMS operations
     FlextConstants,        # WMS constants and business rules
@@ -97,7 +99,7 @@ from flext_oracle_wms import (
 
 from flext_meltano import (
     FlextDbtHub,           # dbt execution and model management
-    DbtModelRunner,        # dbt model compilation and execution  
+    DbtModelRunner,        # dbt model compilation and execution
     DbtTestRunner,         # dbt test execution integration
     DbtDocsGenerator       # dbt documentation generation
 )
@@ -110,7 +112,7 @@ from flext_tap_oracle_wms import (
 
 class UnifiedFlextDbtOracleWmsService(FlextDomainService):
     """Single unified dbt Oracle WMS service class following flext-core patterns.
-    
+
     This class consolidates all Oracle WMS dbt-related operations:
     - Oracle WMS data extraction via flext-tap-oracle-wms Singer tap
     - WMS dimensional modeling with proper star schema design
@@ -118,41 +120,41 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
     - dbt model generation optimized for WMS analytics
     - Incremental processing for large WMS datasets
     - WMS-specific data quality validation and testing
-    
+
     Architecture:
         Oracle WMS → flext-tap-oracle-wms → UnifiedService → dbt Models → WMS Analytics
     """
-    
+
     def __init__(self, **data) -> None:
         """Initialize unified dbt Oracle WMS service with dependency injection."""
         super().__init__(**data)
         # Direct class access - NO wrapper functions (per flext-core patterns)
         self._container = FlextContainer.get_global()
         self._logger = FlextLogger(__name__)
-        
+
         # Initialize WMS APIs with proper business logic
         self._wms_api = self._get_wms_api()
         self._dbt_hub = self._get_dbt_hub()
         self._tap_extractor = self._get_tap_extractor()
-        
+
     def orchestrate_wms_dimensional_pipeline(
-        self, 
-        wms_entities: list[str], 
+        self,
+        wms_entities: list[str],
         extraction_mode: str = "incremental"
     ) -> FlextResult[WmsDimensionalPipelineResult]:
         """Orchestrate complete Oracle WMS-to-dimensional model pipeline.
-        
+
         This method demonstrates the railway pattern for complex WMS operations:
         1. Extract Oracle WMS data via Singer tap (flext-tap-oracle-wms)
         2. Apply WMS business logic transformations (flext-oracle-wms)
         3. Generate dimensional models (star schema with proper fact/dimension separation)
         4. Execute dbt models with WMS-optimized materialization
         5. Run WMS-specific data quality tests and business rule validation
-        
+
         Args:
             wms_entities: WMS entities to include (inventory, allocation, orders, etc.)
             extraction_mode: 'full' or 'incremental' extraction mode
-            
+
         Returns:
             FlextResult with WMS dimensional pipeline execution results or error details
         """
@@ -166,25 +168,25 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
             .map(lambda results: self._create_wms_pipeline_result(results))
             .map_error(lambda e: f"WMS dimensional pipeline failed: {e}")
         )
-    
+
     def extract_wms_data_via_singer_tap(
-        self, 
-        wms_entities: list[str], 
+        self,
+        wms_entities: list[str],
         extraction_mode: str = "incremental"
     ) -> FlextResult[WmsRawData]:
         """Extract Oracle WMS data using flext-tap-oracle-wms Singer tap.
-        
+
         Integrates with Singer ecosystem for standardized WMS data extraction
         with proper incremental processing and state management.
         """
         if not wms_entities:
             return FlextResult[WmsRawData].fail("WMS entities list cannot be empty")
-            
+
         # Validate WMS entities are supported
         validation_result = self._validate_wms_entities(wms_entities)
         if validation_result.is_failure:
             return FlextResult[WmsRawData].fail(f"WMS entity validation failed: {validation_result.error}")
-            
+
         # Configure Singer tap extraction
         tap_config = {
             'entities': wms_entities,
@@ -192,24 +194,24 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
             'wms_optimization': True,
             'incremental_lookback_days': 7 if extraction_mode == 'incremental' else None
         }
-        
+
         # Execute Singer tap extraction
         extraction_result = self._tap_extractor.extract_wms_entities(tap_config)
         if extraction_result.is_failure:
             return FlextResult[WmsRawData].fail(f"Singer tap extraction failed: {extraction_result.error}")
-            
+
         raw_data = extraction_result.unwrap()
-        
+
         # Validate extracted WMS data structure
         validation_result = self._validate_extracted_wms_data(raw_data)
         if validation_result.is_failure:
             return FlextResult[WmsRawData].fail(f"WMS data validation failed: {validation_result.error}")
-            
+
         return FlextResult[WmsRawData].ok(raw_data)
-    
+
     def generate_wms_dimensional_models(self, wms_data: WmsTransformedData) -> FlextResult[list[WmsDimensionalModel]]:
         """Generate WMS dimensional models following star schema design patterns.
-        
+
         Creates proper dimensional models for WMS analytics:
         - Fact tables: inventory movements, allocations, order fulfillment
         - Dimension tables: items, locations, customers, time
@@ -218,40 +220,40 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
         """
         if not wms_data.entities:
             return FlextResult[list[WmsDimensionalModel]].fail("No WMS entities found in transformed data")
-            
+
         dimensional_models = []
-        
+
         # Generate dimension models first (required by fact tables)
         dimension_result = self._generate_wms_dimension_models(wms_data)
         if dimension_result.is_failure:
             return FlextResult[list[WmsDimensionalModel]].fail(f"Dimension model generation failed: {dimension_result.error}")
-            
+
         dimensional_models.extend(dimension_result.unwrap())
-        
+
         # Generate fact models with proper grain and measures
         fact_result = self._generate_wms_fact_models(wms_data, dimensional_models)
         if fact_result.is_failure:
             return FlextResult[list[WmsDimensionalModel]].fail(f"Fact model generation failed: {fact_result.error}")
-            
+
         dimensional_models.extend(fact_result.unwrap())
-        
+
         # Generate bridge models for many-to-many relationships
         bridge_result = self._generate_wms_bridge_models(wms_data, dimensional_models)
         if bridge_result.is_failure:
             return FlextResult[list[WmsDimensionalModel]].fail(f"Bridge model generation failed: {bridge_result.error}")
-            
+
         dimensional_models.extend(bridge_result.unwrap())
-        
+
         # Validate dimensional model relationships
         relationship_validation = self._validate_dimensional_relationships(dimensional_models)
         if relationship_validation.is_failure:
             return FlextResult[list[WmsDimensionalModel]].fail(f"Dimensional relationship validation failed: {relationship_validation.error}")
-            
+
         return FlextResult[list[WmsDimensionalModel]].ok(dimensional_models)
-    
+
     def execute_wms_dbt_models(self, models: list[WmsDimensionalModel]) -> FlextResult[WmsExecutionResult]:
         """Execute WMS dbt models with Oracle optimization and proper dependencies.
-        
+
         Executes WMS dimensional models with:
         - Proper execution order (dimensions before facts)
         - Oracle WMS-specific optimizations (partitioning, indexing)
@@ -260,10 +262,10 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
         """
         if not models:
             return FlextResult[WmsExecutionResult].fail("No WMS dimensional models to execute")
-            
+
         # Sort models by execution dependencies (dimensions → facts → bridges)
         execution_order = self._determine_wms_execution_order(models)
-        
+
         # Configure WMS-specific execution settings
         execution_config = {
             'target': 'oracle_wms_production',
@@ -275,29 +277,29 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
             },
             'incremental_strategy': 'delete+insert'  # WMS data integrity requirement
         }
-        
+
         # Execute models through dbt hub with WMS optimizations
         execution_result = self._dbt_hub.execute_models_with_dependencies(
             models=execution_order,
             config=execution_config,
             wms_business_rules=True
         )
-        
+
         if execution_result.is_failure:
             return FlextResult[WmsExecutionResult].fail(f"WMS dbt execution failed: {execution_result.error}")
-            
+
         execution_data = execution_result.unwrap()
-        
+
         # Validate WMS business rules post-execution
         business_rule_validation = self._validate_wms_business_rules(execution_data)
         if business_rule_validation.is_failure:
             return FlextResult[WmsExecutionResult].fail(f"WMS business rule validation failed: {business_rule_validation.error}")
-            
+
         return FlextResult[WmsExecutionResult].ok(execution_data)
-    
+
     def run_wms_data_quality_tests(self, execution_result: WmsExecutionResult) -> FlextResult[WmsTestResult]:
         """Run comprehensive WMS data quality tests and business rule validation.
-        
+
         Executes WMS-specific tests including:
         - Inventory balance reconciliation across all models
         - Allocation consistency between fact and dimension tables
@@ -307,7 +309,7 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
         """
         if not execution_result.executed_models:
             return FlextResult[WmsTestResult].fail("No WMS models available for testing")
-            
+
         # Configure WMS-specific test execution
         test_config = {
             'test_types': ['schema', 'data', 'wms_business_rules', 'cross_entity_consistency'],
@@ -323,29 +325,29 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
                 'data_freshness_hours': 2     # WMS data must be within 2 hours
             }
         }
-        
+
         # Execute comprehensive WMS tests
         test_result = self._dbt_hub.run_wms_tests(
             models=execution_result.executed_models,
             config=test_config,
             wms_business_logic=self._wms_api
         )
-        
+
         if test_result.is_failure:
             return FlextResult[WmsTestResult].fail(f"WMS data quality tests failed: {test_result.error}")
-            
+
         test_data = test_result.unwrap()
-        
+
         # Analyze WMS test results with business context
         analysis_result = self._analyze_wms_test_results(test_data)
         if analysis_result.is_failure:
             return FlextResult[WmsTestResult].fail(f"WMS test analysis failed: {analysis_result.error}")
-            
+
         return FlextResult[WmsTestResult].ok(analysis_result.unwrap())
-    
+
     def optimize_wms_dimensional_performance(self, models: list[WmsDimensionalModel]) -> FlextResult[WmsPerformanceOptimization]:
         """Optimize WMS dimensional models for Oracle Database and analytics performance.
-        
+
         Applies WMS-specific optimizations:
         - Partition strategies for high-volume fact tables
         - Oracle hints for WMS query patterns
@@ -353,90 +355,90 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
         - Index recommendations for WMS analytical queries
         """
         optimization_results = []
-        
+
         for model in models:
             # Analyze WMS model characteristics for optimization
             analysis_result = self._analyze_wms_model_performance(model)
             if analysis_result.is_failure:
                 return FlextResult[WmsPerformanceOptimization].fail(f"WMS performance analysis failed for {model.name}: {analysis_result.error}")
-                
+
             analysis = analysis_result.unwrap()
-            
+
             # Apply WMS-specific Oracle optimizations
             optimization_result = self._apply_wms_oracle_optimizations(model, analysis)
             if optimization_result.is_failure:
                 return FlextResult[WmsPerformanceOptimization].fail(f"WMS optimization failed for {model.name}: {optimization_result.error}")
-                
+
             optimization_results.append(optimization_result.unwrap())
-            
+
         combined_optimization = self._combine_wms_optimization_results(optimization_results)
         return FlextResult[WmsPerformanceOptimization].ok(combined_optimization)
-    
+
     def _generate_wms_dimension_models(self, wms_data: WmsTransformedData) -> FlextResult[list[WmsDimensionalModel]]:
         """Generate WMS dimension models with proper SCD handling."""
-        
+
         dimension_models = []
-        
+
         # Item dimension with SCD Type 2 for attribute changes
         if 'items' in wms_data.entities:
             item_dim_result = self._create_item_dimension_model(wms_data.entities['items'])
             if item_dim_result.is_failure:
                 return FlextResult[list[WmsDimensionalModel]].fail(f"Item dimension creation failed: {item_dim_result.error}")
             dimension_models.append(item_dim_result.unwrap())
-            
+
         # Location dimension with hierarchy (zone → aisle → bay → level → position)
         if 'locations' in wms_data.entities:
             location_dim_result = self._create_location_dimension_model(wms_data.entities['locations'])
             if location_dim_result.is_failure:
                 return FlextResult[list[WmsDimensionalModel]].fail(f"Location dimension creation failed: {location_dim_result.error}")
             dimension_models.append(location_dim_result.unwrap())
-            
+
         # Customer dimension with SCD Type 2 for profile changes
         if 'customers' in wms_data.entities:
             customer_dim_result = self._create_customer_dimension_model(wms_data.entities['customers'])
             if customer_dim_result.is_failure:
                 return FlextResult[list[WmsDimensionalModel]].fail(f"Customer dimension creation failed: {customer_dim_result.error}")
             dimension_models.append(customer_dim_result.unwrap())
-            
+
         # Time dimension with WMS-specific attributes (business days, seasons, etc.)
         time_dim_result = self._create_time_dimension_model()
         if time_dim_result.is_failure:
             return FlextResult[list[WmsDimensionalModel]].fail(f"Time dimension creation failed: {time_dim_result.error}")
         dimension_models.append(time_dim_result.unwrap())
-        
+
         return FlextResult[list[WmsDimensionalModel]].ok(dimension_models)
-    
+
     def _generate_wms_fact_models(self, wms_data: WmsTransformedData, dimensions: list[WmsDimensionalModel]) -> FlextResult[list[WmsDimensionalModel]]:
         """Generate WMS fact models with proper grain and measures."""
-        
+
         fact_models = []
-        
+
         # Inventory fact table - grain: item × location × time
         if 'inventory' in wms_data.entities:
             inventory_fact_result = self._create_inventory_fact_model(wms_data.entities['inventory'], dimensions)
             if inventory_fact_result.is_failure:
                 return FlextResult[list[WmsDimensionalModel]].fail(f"Inventory fact creation failed: {inventory_fact_result.error}")
             fact_models.append(inventory_fact_result.unwrap())
-            
+
         # Allocation fact table - grain: allocation × item × location × time
         if 'allocations' in wms_data.entities:
             allocation_fact_result = self._create_allocation_fact_model(wms_data.entities['allocations'], dimensions)
             if allocation_fact_result.is_failure:
                 return FlextResult[list[WmsDimensionalModel]].fail(f"Allocation fact creation failed: {allocation_fact_result.error}")
             fact_models.append(allocation_fact_result.unwrap())
-            
+
         # Order fulfillment fact table - grain: order line × time
         if 'orders' in wms_data.entities:
             order_fact_result = self._create_order_fulfillment_fact_model(wms_data.entities['orders'], dimensions)
             if order_fact_result.is_failure:
                 return FlextResult[list[WmsDimensionalModel]].fail(f"Order fact creation failed: {order_fact_result.error}")
             fact_models.append(order_fact_result.unwrap())
-            
+
         return FlextResult[list[WmsDimensionalModel]].ok(fact_models)
-    
+
     def _create_inventory_fact_model(self, inventory_data: dict, dimensions: list[WmsDimensionalModel]) -> FlextResult[WmsDimensionalModel]:
         """Create inventory fact table with proper measures and foreign keys."""
-        
+
         # Define fact table structure with WMS-specific measures
         fact_model = WmsDimensionalModel(
             name="fact_inventory_snapshot",
@@ -470,32 +472,32 @@ class UnifiedFlextDbtOracleWmsService(FlextDomainService):
                 'hints': ['PARALLEL(4)', 'USE_HASH(d)', 'LEADING(f)']
             }
         )
-        
+
         return FlextResult[WmsDimensionalModel].ok(fact_model)
 
 # ✅ CORRECT - WMS Domain Models for Dimensional Analytics
 class WmsRawData(FlextModels.Entity):
     """Raw WMS data extracted from Oracle via Singer tap."""
-    
+
     entities: dict[str, list[dict]]
     extraction_timestamp: str
     extraction_mode: str
-    
+
     def validate_business_rules(self) -> FlextResult[None]:
         """Validate WMS raw data completeness and structure."""
         if not self.entities:
             return FlextResult[None].fail("WMS entities cannot be empty")
-        
+
         required_wms_entities = ['inventory', 'locations', 'items']
         missing_entities = [entity for entity in required_wms_entities if entity not in self.entities]
         if missing_entities:
             return FlextResult[None].fail(f"Missing required WMS entities: {missing_entities}")
-            
+
         return FlextResult[None].ok(None)
 
 class WmsDimensionalModel(FlextModels.Entity):
     """WMS dimensional model entity with star schema specifications."""
-    
+
     name: str
     model_type: str  # 'dimension', 'fact', 'bridge'
     grain: str
@@ -504,23 +506,23 @@ class WmsDimensionalModel(FlextModels.Entity):
     measures: list[dict]
     business_rules: list[str]
     oracle_optimizations: dict
-    
+
     def validate_business_rules(self) -> FlextResult[None]:
         """Validate WMS dimensional model configuration."""
         if not self.name or not self.model_type:
             return FlextResult[None].fail("Model name and type are required")
-            
+
         if self.model_type == 'fact' and not self.measures:
             return FlextResult[None].fail("Fact tables must have measures defined")
-            
+
         if self.model_type == 'dimension' and not self.dimensions:
             return FlextResult[None].fail("Dimension tables must have dimension attributes defined")
-            
+
         return FlextResult[None].ok(None)
 
 class WmsInventoryMovement(FlextModels.Value):
     """WMS inventory movement value object for fact table grain."""
-    
+
     movement_id: str
     item_key: str
     location_key: str
@@ -528,15 +530,15 @@ class WmsInventoryMovement(FlextModels.Value):
     quantity: float
     unit_cost: float
     movement_timestamp: str
-    
+
     def validate_business_rules(self) -> FlextResult[None]:
         """Validate inventory movement business rules."""
         if self.quantity == 0:
             return FlextResult[None].fail("Inventory movement quantity cannot be zero")
-            
+
         if self.unit_cost < 0:
             return FlextResult[None].fail("Unit cost cannot be negative")
-            
+
         return FlextResult[None].ok(None)
 
 # ✅ CORRECT - Module exports
@@ -552,23 +554,23 @@ from flext_core import FlextResult
 
 class FlextDbtOracleWmsConfig:
     """WMS dbt configuration management using flext-cli automatic loading.
-    
+
     Configuration hierarchy (AUTOMATIC):
     1. ENVIRONMENT VARIABLES (WMS_ORACLE_HOST=prod-wms - HIGHEST PRIORITY)
     2. .env FILE (WMS_ORACLE_HOST=localhost - from execution directory)
     3. DEFAULT CONSTANTS (hardcoded WMS defaults in code)
     4. CLI PARAMETERS (--wms-host override-wms for specific executions)
     """
-    
+
     def __init__(self) -> None:
         """Initialize WMS configuration with automatic .env loading."""
         # ✅ AUTOMATIC: Configuration loaded transparently by flext-cli
         self._config = FlextCliConfig()
         self._logger = FlextLogger(__name__)
-        
+
     def get_wms_configuration(self) -> FlextResult[dict]:
         """Get Oracle WMS configuration from automatic hierarchy resolution."""
-        
+
         # Define Oracle WMS configuration schema
         wms_schema = {
             "wms_oracle": {
@@ -586,7 +588,7 @@ class FlextDbtOracleWmsConfig:
                 },
                 "port": {
                     "default": 1521,
-                    "env_var": "WMS_ORACLE_PORT", 
+                    "env_var": "WMS_ORACLE_PORT",
                     "cli_param": "--wms-oracle-port",
                     "config_formats": {
                         "env": "WMS_ORACLE_PORT",
@@ -639,7 +641,7 @@ class FlextDbtOracleWmsConfig:
                     "env_var": "WMS_TAP_BATCH_SIZE",
                     "cli_param": "--batch-size",
                     "config_formats": {
-                        "env": "WMS_TAP_BATCH_SIZE", 
+                        "env": "WMS_TAP_BATCH_SIZE",
                         "toml": "singer_tap.batch_size",
                         "yaml": "singer_tap.batch_size"
                     },
@@ -693,7 +695,7 @@ class FlextDbtOracleWmsConfig:
                     "cli_param": "--allocation-tolerance",
                     "config_formats": {
                         "env": "WMS_ALLOCATION_VARIANCE_TOLERANCE",
-                        "toml": "data_quality.allocation_variance_tolerance", 
+                        "toml": "data_quality.allocation_variance_tolerance",
                         "yaml": "data_quality.allocation_variance_tolerance"
                     },
                     "type": float,
@@ -701,27 +703,27 @@ class FlextDbtOracleWmsConfig:
                 }
             }
         }
-        
+
         # Register schema and get resolved configuration
         schema_result = self._config.register_schema(wms_schema)
         if schema_result.is_failure:
             return FlextResult[dict].fail(f"WMS schema registration failed: {schema_result.error}")
-            
+
         config_result = self._config.get_resolved_configuration()
         if config_result.is_failure:
             return FlextResult[dict].fail(f"WMS configuration resolution failed: {config_result.error}")
-            
+
         return FlextResult[dict].ok(config_result.unwrap())
-        
+
     def get_dbt_wms_profile_configuration(self) -> FlextResult[dict]:
         """Generate dbt profiles.yml configuration for Oracle WMS."""
-        
+
         wms_config_result = self.get_wms_configuration()
         if wms_config_result.is_failure:
             return FlextResult[dict].fail(f"WMS config access failed: {wms_config_result.error}")
-            
+
         wms_config = wms_config_result.unwrap()
-        
+
         # Generate dbt profile configuration for WMS
         dbt_profile = {
             "flext_oracle_wms": {
@@ -756,18 +758,18 @@ class FlextDbtOracleWmsConfig:
                 }
             }
         }
-        
+
         return FlextResult[dict].ok(dbt_profile)
-    
+
     def get_singer_tap_configuration(self) -> FlextResult[dict]:
         """Get Singer tap configuration for Oracle WMS data extraction."""
-        
+
         wms_config_result = self.get_wms_configuration()
         if wms_config_result.is_failure:
             return FlextResult[dict].fail(f"WMS config access failed: {wms_config_result.error}")
-            
+
         wms_config = wms_config_result.unwrap()
-        
+
         # Configure Singer tap for Oracle WMS
         tap_config = {
             "tap_oracle_wms": {
@@ -777,7 +779,7 @@ class FlextDbtOracleWmsConfig:
                 "user": "{{ env_var('WMS_ORACLE_USERNAME') }}",
                 "password": "{{ env_var('WMS_ORACLE_PASSWORD') }}",
                 "schema": wms_config["wms_oracle"]["schema"],
-                
+
                 # WMS entity configuration
                 "entities": {
                     "inventory": {
@@ -811,12 +813,12 @@ class FlextDbtOracleWmsConfig:
                         "batch_size": wms_config["singer_tap"]["batch_size"]
                     }
                 },
-                
+
                 # Incremental processing configuration
                 "incremental_lookback_days": wms_config["singer_tap"]["incremental_lookback_days"],
                 "use_singer_decimal": True,
                 "use_date_datatype": True,
-                
+
                 # Oracle WMS optimizations
                 "oracle_optimizations": {
                     "use_bulk_select": True,
@@ -825,7 +827,7 @@ class FlextDbtOracleWmsConfig:
                 }
             }
         }
-        
+
         return FlextResult[dict].ok(tap_config)
 ```
 
@@ -846,7 +848,7 @@ echo "=== DBT ORACLE WMS PROJECT QUALITY ASSESSMENT ==="
 echo "=== RUFF ISSUES (Oracle WMS dbt) ==="
 ruff check src/ tests/ models/ macros/ --output-format=github | wc -l
 
-echo "=== MYPY ISSUES (Oracle WMS dbt) ==="  
+echo "=== MYPY ISSUES (Oracle WMS dbt) ==="
 mypy src/ --show-error-codes --no-error-summary 2>&1 | grep -E "error:|note:" | wc -l
 
 echo "=== PYRIGHT ISSUES (Oracle WMS dbt) ==="
@@ -893,7 +895,7 @@ except Exception as e:
 **PRIORITY ORDER** (Oracle WMS + dimensional modeling + dbt specific):
 
 1. **Fix Oracle WMS connectivity issues** (enables Singer tap and dbt operations)
-2. **Resolve Singer tap integration errors** (enables WMS data extraction)  
+2. **Resolve Singer tap integration errors** (enables WMS data extraction)
 3. **Address dbt compilation errors** (enables dimensional model execution)
 4. **Fix dimensional modeling issues** (proper fact/dimension relationships)
 5. **Achieve WMS dbt execution coverage** (real WMS model compilation and execution tests)
@@ -927,39 +929,39 @@ from flext_dbt_oracle_wms import UnifiedFlextDbtOracleWmsService, FlextDbtOracle
 
 class TestUnifiedFlextDbtOracleWmsService:
     """Real functional tests for Oracle WMS dbt service.
-    
+
     These tests execute actual WMS dimensional model compilation and Oracle WMS connectivity,
     with minimal mocking only for external Oracle WMS instances.
     """
-    
+
     def setup_method(self) -> None:
         """Setup real Oracle WMS dbt test environment."""
         self.config = FlextDbtOracleWmsConfig()
         self.service = UnifiedFlextDbtOracleWmsService()
-        
+
         # Use test WMS entities configuration
         self.test_wms_entities = ["inventory", "locations", "items", "allocations"]
-        
+
     def test_wms_connectivity_real_connection(self) -> None:
         """Test real Oracle WMS connectivity (may require WMS instance)."""
         # Test actual Oracle WMS connection
         result = self.service._validate_wms_connectivity()
-        
+
         # If Oracle WMS is available, test should succeed
         if result.is_success:
             assert result.is_success
         else:
             # If Oracle WMS unavailable, ensure proper error handling
             assert "WMS connectivity" in result.error or "Oracle connection" in result.error
-            
+
     def test_singer_tap_wms_extraction_functional(self) -> None:
         """Test Singer tap WMS data extraction with real tap integration."""
         # Test WMS data extraction for known entities
         result = self.service.extract_wms_data_via_singer_tap(self.test_wms_entities, "incremental")
-        
+
         # Verify result structure regardless of Oracle WMS availability
         assert isinstance(result, FlextResult)
-        
+
         if result.is_success:
             wms_data = result.unwrap()
             assert isinstance(wms_data, WmsRawData)
@@ -968,47 +970,47 @@ class TestUnifiedFlextDbtOracleWmsService:
         else:
             # Ensure proper error messages for unavailable WMS
             assert "extraction" in result.error.lower() or "wms" in result.error.lower()
-            
+
     def test_wms_dimensional_model_generation(self) -> None:
         """Test WMS dimensional model generation from WMS data."""
         # Create mock WMS data that resembles real Oracle WMS structure
         sample_wms_data = self._create_sample_wms_data()
-        
+
         # Test dimensional model generation
         result = self.service.generate_wms_dimensional_models(sample_wms_data)
-        
+
         assert result.is_success, f"WMS dimensional model generation failed: {result.error}"
         models = result.unwrap()
         assert len(models) > 0
-        
+
         # Verify dimensional model structure
         dimension_models = [m for m in models if m.model_type == 'dimension']
         fact_models = [m for m in models if m.model_type == 'fact']
-        
+
         assert len(dimension_models) > 0, "Must have dimension models"
         assert len(fact_models) > 0, "Must have fact models"
-        
+
         # Verify WMS-specific models
         model_names = [m.name for m in models]
         assert any('dim_item' in name for name in model_names), "Must have item dimension"
         assert any('dim_location' in name for name in model_names), "Must have location dimension"
         assert any('fact_inventory' in name for name in model_names), "Must have inventory fact"
-        
+
     def test_wms_dbt_model_compilation_real_dbt(self) -> None:
         """Test actual WMS dbt model compilation using dbt CLI."""
         # Generate sample WMS dimensional models
         wms_data = self._create_sample_wms_data()
         model_result = self.service.generate_wms_dimensional_models(wms_data)
-        
+
         assert model_result.is_success
         models = model_result.unwrap()
-        
+
         # Test dbt compilation (real dbt execution)
         compilation_result = self.service._compile_wms_dbt_models(models)
-        
+
         # Verify compilation works or provides proper error
         assert isinstance(compilation_result, FlextResult)
-        
+
         if compilation_result.is_success:
             compiled = compilation_result.unwrap()
             assert compiled.compiled_models
@@ -1016,7 +1018,7 @@ class TestUnifiedFlextDbtOracleWmsService:
         else:
             # Ensure dbt compilation errors are properly captured
             assert "compilation" in compilation_result.error.lower()
-            
+
     def test_complete_wms_dimensional_pipeline_integration(self) -> None:
         """Test complete Oracle WMS dimensional pipeline with real components."""
         # Test full WMS dimensional pipeline orchestration
@@ -1024,10 +1026,10 @@ class TestUnifiedFlextDbtOracleWmsService:
             wms_entities=self.test_wms_entities[:2],  # Limit for testing
             extraction_mode="incremental"
         )
-        
+
         # Verify pipeline structure regardless of Oracle WMS availability
         assert isinstance(pipeline_result, FlextResult)
-        
+
         if pipeline_result.is_success:
             pipeline_data = pipeline_result.unwrap()
             assert hasattr(pipeline_data, 'executed_models')
@@ -1037,25 +1039,25 @@ class TestUnifiedFlextDbtOracleWmsService:
             # Ensure pipeline failures are properly captured and reported
             assert len(pipeline_result.error) > 0
             self._log_wms_pipeline_failure(pipeline_result.error)
-            
+
     def test_wms_business_rule_validation(self) -> None:
         """Test WMS-specific business rule validation."""
         # Create inventory movement data with business rule violations
         invalid_movement = WmsInventoryMovement(
             movement_id="TEST001",
             item_key="ITEM001",
-            location_key="LOC001", 
+            location_key="LOC001",
             movement_type="ADJUSTMENT",
             quantity=0.0,  # Invalid: zero quantity
             unit_cost=-5.00,  # Invalid: negative cost
             movement_timestamp="2025-01-08T10:00:00Z"
         )
-        
+
         # Test business rule validation
         validation_result = invalid_movement.validate_business_rules()
         assert validation_result.is_failure
         assert "zero" in validation_result.error.lower()
-        
+
         # Create valid inventory movement
         valid_movement = WmsInventoryMovement(
             movement_id="TEST002",
@@ -1066,33 +1068,33 @@ class TestUnifiedFlextDbtOracleWmsService:
             unit_cost=25.50,
             movement_timestamp="2025-01-08T10:00:00Z"
         )
-        
+
         validation_result = valid_movement.validate_business_rules()
         assert validation_result.is_success
-        
+
     def test_wms_dimensional_model_relationships(self) -> None:
         """Test WMS dimensional model relationship integrity."""
         # Generate WMS dimensional models
         wms_data = self._create_sample_wms_data()
         model_result = self.service.generate_wms_dimensional_models(wms_data)
-        
+
         assert model_result.is_success
         models = model_result.unwrap()
-        
+
         # Test dimensional model relationships
         relationship_validation = self.service._validate_dimensional_relationships(models)
-        
+
         if relationship_validation.is_success:
             # Verify fact tables reference dimensions
             fact_models = [m for m in models if m.model_type == 'fact']
             dimension_models = [m for m in models if m.model_type == 'dimension']
-            
+
             dimension_names = [m.name for m in dimension_models]
-            
+
             for fact in fact_models:
                 # Verify fact has foreign keys to dimensions
                 assert fact.dimensions, f"Fact model {fact.name} must have dimension references"
-                
+
                 # Verify referenced dimensions exist
                 for dim_ref in fact.dimensions:
                     referenced_dim = dim_ref['references']
@@ -1101,21 +1103,21 @@ class TestUnifiedFlextDbtOracleWmsService:
         else:
             # Log relationship validation issues for debugging
             self._logger.warning(f"Dimensional relationship validation failed: {relationship_validation.error}")
-            
+
     def test_wms_performance_optimization_patterns(self) -> None:
         """Test Oracle WMS performance optimization implementation."""
         # Create models with different WMS characteristics
         high_volume_inventory = self._create_test_wms_dimensional_model("fact_inventory_movements", row_count=50000000)
         low_volume_allocations = self._create_test_wms_dimensional_model("fact_allocations", row_count=500000)
-        
+
         models = [high_volume_inventory, low_volume_allocations]
-        
+
         # Test WMS performance optimization
         optimization_result = self.service.optimize_wms_dimensional_performance(models)
-        
+
         if optimization_result.is_success:
             optimization_data = optimization_result.unwrap()
-            
+
             # Verify high-volume fact tables get partition strategies
             inventory_optimization = next(
                 (opt for opt in optimization_data.optimizations if opt.model_name == "fact_inventory_movements"),
@@ -1124,21 +1126,21 @@ class TestUnifiedFlextDbtOracleWmsService:
             assert inventory_optimization
             assert inventory_optimization.partition_strategy
             assert "RANGE" in inventory_optimization.partition_strategy
-            
+
             # Verify Oracle hints are applied
             assert inventory_optimization.oracle_hints
             assert "PARALLEL" in str(inventory_optimization.oracle_hints)
-            
+
         else:
             self._logger.warning(f"WMS performance optimization failed: {optimization_result.error}")
-            
+
     def _create_sample_wms_data(self) -> WmsTransformedData:
         """Create sample Oracle WMS data for testing."""
         sample_entities = {
             'inventory': [
                 {
                     'item_id': 'ITEM001',
-                    'location_id': 'LOC001', 
+                    'location_id': 'LOC001',
                     'on_hand_qty': 100,
                     'allocated_qty': 25,
                     'last_updated': '2025-01-08T10:00:00Z'
@@ -1162,13 +1164,13 @@ class TestUnifiedFlextDbtOracleWmsService:
                 }
             ]
         }
-        
+
         return WmsTransformedData(
             entities=sample_entities,
             transformation_timestamp="2025-01-08T10:00:00Z",
             wms_business_rules_applied=True
         )
-        
+
     def _create_test_wms_dimensional_model(self, name: str, row_count: int) -> WmsDimensionalModel:
         """Create test WMS dimensional model with specified characteristics."""
         return WmsDimensionalModel(
@@ -1188,7 +1190,7 @@ class TestUnifiedFlextDbtOracleWmsService:
             business_rules=["quantity >= 0", "value = quantity * unit_cost"],
             oracle_optimizations={"row_count": row_count}
         )
-        
+
     def _log_wms_pipeline_failure(self, error: str) -> None:
         """Log WMS pipeline failure for debugging."""
         self.service._logger.error(f"Oracle WMS dimensional pipeline test failure: {error}")
@@ -1208,7 +1210,7 @@ class TestUnifiedFlextDbtOracleWmsService:
 python -m flext_dbt_oracle_wms debug-config --debug
 # Shows: WMS_ORACLE_HOST, WMS_ORACLE_PORT, Singer tap configuration
 
-# Phase 2: Oracle WMS Connectivity Testing  
+# Phase 2: Oracle WMS Connectivity Testing
 python -m flext_dbt_oracle_wms test-wms-connection --debug --trace
 # Tests: Oracle WMS database connectivity and Singer tap integration
 
@@ -1239,35 +1241,35 @@ python -m flext_dbt_oracle_wms validate-wms-business-rules --debug \
 # ✅ CORRECT - Oracle WMS environment validation through FLEXT
 class FlextDbtOracleWmsCliService:
     """Oracle WMS dbt CLI service using FLEXT ecosystem patterns."""
-    
+
     def __init__(self) -> None:
         """Initialize with automatic .env configuration loading."""
         self._cli_api = FlextCliApi()
         self._config = FlextCliConfig()  # Automatically loads .env + defaults
         self._wms_service = UnifiedFlextDbtOracleWmsService()
-        
+
     def debug_wms_configuration(self) -> FlextResult[dict]:
         """Debug complete Oracle WMS dbt configuration."""
-        
+
         # Get Oracle WMS configuration
         config_result = self._config.get_wms_configuration()
         if config_result.is_failure:
             return FlextResult[dict].fail(f"WMS config failed: {config_result.error}")
-            
+
         config_data = config_result.unwrap()
-        
+
         # Display configuration through FLEXT CLI
         debug_display_result = self._cli_api.display_debug_information(
             title="Oracle WMS dbt Configuration Debug (ENV → .env → DEFAULT → CLI)",
             data=config_data,
             format_type="tree"
         )
-        
+
         return FlextResult[dict].ok(config_data)
-        
+
     def test_wms_connectivity_debug(self) -> FlextResult[dict]:
         """Test Oracle WMS connectivity with comprehensive debugging."""
-        
+
         # Test Oracle WMS connection through service
         connection_result = self._wms_service._validate_wms_connectivity()
         if connection_result.is_failure:
@@ -1276,26 +1278,26 @@ class FlextDbtOracleWmsCliService:
                 debug_data={"wms_config": "check WMS_ORACLE_* environment variables"},
                 suggestions=[
                     "Verify Oracle WMS Database is running",
-                    "Check WMS_ORACLE_HOST, WMS_ORACLE_PORT in .env", 
+                    "Check WMS_ORACLE_HOST, WMS_ORACLE_PORT in .env",
                     "Validate Oracle WMS credentials",
                     "Test network connectivity to WMS server",
                     "Verify WMS schema access permissions"
                 ]
             )
             return FlextResult[dict].fail(connection_result.error)
-            
+
         # Display success information
         self._cli_api.display_success_with_debug(
             success_message="Oracle WMS Database connectivity successful",
             debug_data={"wms_status": "active", "schema_access": "verified"},
             format_type="table"
         )
-        
+
         return FlextResult[dict].ok({"wms_connectivity": "success"})
-        
+
     def test_singer_tap_integration_debug(self) -> FlextResult[dict]:
         """Test Singer tap Oracle WMS integration with debug output."""
-        
+
         # Test Singer tap connection
         tap_result = self._wms_service._test_singer_tap_connection()
         if tap_result.is_failure:
@@ -1310,31 +1312,31 @@ class FlextDbtOracleWmsCliService:
                 ]
             )
             return FlextResult[dict].fail(tap_result.error)
-            
+
         # Display tap integration success
         self._cli_api.display_success_with_debug(
             success_message="Singer tap Oracle WMS integration successful",
             debug_data={"tap_status": "connected", "extraction_ready": "yes"},
             format_type="table"
         )
-        
+
         return FlextResult[dict].ok({"singer_tap": "success"})
-        
+
     def test_wms_dimensional_models_compilation_debug(self, wms_entities: list[str]) -> FlextResult[dict]:
         """Test WMS dimensional model compilation with debug output."""
-        
+
         # Extract WMS data via Singer tap
         extraction_result = self._wms_service.extract_wms_data_via_singer_tap(wms_entities, "incremental")
         if extraction_result.is_failure:
             return FlextResult[dict].fail(f"WMS data extraction failed: {extraction_result.error}")
-            
+
         # Generate dimensional models
         models_result = self._wms_service.generate_wms_dimensional_models(extraction_result.unwrap())
         if models_result.is_failure:
             return FlextResult[dict].fail(f"WMS dimensional model generation failed: {models_result.error}")
-            
+
         models = models_result.unwrap()
-        
+
         # Test dbt compilation
         compilation_result = self._wms_service._compile_wms_dbt_models(models)
         if compilation_result.is_failure:
@@ -1354,9 +1356,9 @@ class FlextDbtOracleWmsCliService:
                 ]
             )
             return FlextResult[dict].fail(compilation_result.error)
-            
+
         compilation_data = compilation_result.unwrap()
-        
+
         # Display compilation success
         self._cli_api.display_success_with_debug(
             success_message=f"WMS dbt compilation successful: {len(models)} dimensional models compiled",
@@ -1368,39 +1370,39 @@ class FlextDbtOracleWmsCliService:
             },
             format_type="summary"
         )
-        
+
         return FlextResult[dict].ok({
             "compilation_status": "success",
             "models_compiled": len(compilation_data.compiled_models)
         })
-        
+
     def validate_complete_wms_environment(self) -> FlextResult[dict]:
         """Complete Oracle WMS dbt environment validation."""
         validation_results = {}
-        
+
         # Phase 1: Configuration validation
         config_result = self.debug_wms_configuration()
         validation_results["wms_configuration"] = "✅ PASSED" if config_result.is_success else f"❌ FAILED: {config_result.error}"
-        
+
         # Phase 2: Oracle WMS connectivity validation
         wms_result = self.test_wms_connectivity_debug()
         validation_results["wms_connectivity"] = "✅ PASSED" if wms_result.is_success else f"❌ FAILED: {wms_result.error}"
-        
+
         # Phase 3: Singer tap integration validation
         tap_result = self.test_singer_tap_integration_debug()
         validation_results["singer_tap_integration"] = "✅ PASSED" if tap_result.is_success else f"❌ FAILED: {tap_result.error}"
-        
+
         # Phase 4: WMS dimensional model compilation validation
         models_result = self.test_wms_dimensional_models_compilation_debug(["inventory", "locations"])
         validation_results["wms_dimensional_models"] = "✅ PASSED" if models_result.is_success else f"❌ FAILED: {models_result.error}"
-        
+
         # Display complete validation results
         self._cli_api.display_validation_results(
             title="Complete Oracle WMS dbt Environment Validation",
             results=validation_results,
             format_type="detailed_table"
         )
-        
+
         return FlextResult[dict].ok(validation_results)
 
 # ✅ CORRECT - CLI entry point for Oracle WMS dbt
@@ -1408,7 +1410,7 @@ def create_wms_cli_with_debug_support() -> FlextResult[None]:
     """Create Oracle WMS dbt CLI with comprehensive debug support."""
     cli_service = FlextDbtOracleWmsCliService()
     cli_api = FlextCliApi()
-    
+
     # Register Oracle WMS dbt debug commands
     commands = [
         {
@@ -1418,7 +1420,7 @@ def create_wms_cli_with_debug_support() -> FlextResult[None]:
             "supports_debug": True
         },
         {
-            "name": "test-wms-connection", 
+            "name": "test-wms-connection",
             "description": "Test Oracle WMS Database connectivity",
             "handler": cli_service.test_wms_connectivity_debug,
             "supports_debug": True,
@@ -1433,7 +1435,7 @@ def create_wms_cli_with_debug_support() -> FlextResult[None]:
         },
         {
             "name": "compile-wms-models",
-            "description": "Test WMS dimensional model compilation", 
+            "description": "Test WMS dimensional model compilation",
             "handler": cli_service.test_wms_dimensional_models_compilation_debug,
             "arguments": ["wms_entities"],
             "supports_debug": True
@@ -1446,13 +1448,13 @@ def create_wms_cli_with_debug_support() -> FlextResult[None]:
             "supports_trace": True
         }
     ]
-    
+
     # Register all commands
     for cmd in commands:
         result = cli_api.register_command(**cmd)
         if result.is_failure:
             return FlextResult[None].fail(f"Command registration failed for {cmd['name']}: {result.error}")
-            
+
     return FlextResult[None].ok(None)
 ```
 
@@ -1472,11 +1474,11 @@ cd flext-dbt-oracle-wms
 # Quality Gates
 echo "=== CODE QUALITY VALIDATION ==="
 ruff check src/ tests/ models/ macros/ --statistics
-mypy src/ --strict --show-error-codes  
+mypy src/ --strict --show-error-codes
 pyright src/ --stats
 pytest tests/ --cov=src --cov-report=term-missing --cov-fail-under=75
 
-# Oracle WMS dbt Functional Validation  
+# Oracle WMS dbt Functional Validation
 echo "=== ORACLE WMS DBT FUNCTIONAL VALIDATION ==="
 python -c "
 import sys
@@ -1485,40 +1487,40 @@ sys.path.insert(0, 'src')
 try:
     # Test Oracle WMS dbt imports
     from flext_dbt_oracle_wms import (
-        UnifiedFlextDbtOracleWmsService, 
+        UnifiedFlextDbtOracleWmsService,
         FlextDbtOracleWmsConfig,
         WmsRawData,
         WmsDimensionalModel
     )
     print('✅ Oracle WMS dbt imports: SUCCESS')
-    
+
     # Test flext-core integration
     from flext_core import FlextResult, FlextContainer, FlextLogger
     print('✅ flext-core integration: SUCCESS')
-    
+
     # Test flext-oracle-wms integration
     from flext_oracle_wms import FlextOracleWmsApi
     print('✅ flext-oracle-wms integration: SUCCESS')
-    
-    # Test flext-meltano integration  
+
+    # Test flext-meltano integration
     from flext_meltano import FlextDbtHub
     print('✅ flext-meltano integration: SUCCESS')
-    
+
     # Test flext-tap-oracle-wms integration
     from flext_tap_oracle_wms import OracleWmsTapExtractor
     print('✅ flext-tap-oracle-wms integration: SUCCESS')
-    
+
     # Test configuration loading
     config = FlextDbtOracleWmsConfig()
     config_result = config.get_wms_configuration()
     print(f'✅ WMS Configuration loading: {"SUCCESS" if config_result.is_success else "FAILED"}')
-    
+
     # Test service initialization
     service = UnifiedFlextDbtOracleWmsService()
     print('✅ WMS Service initialization: SUCCESS')
-    
+
     print('✅ ALL ORACLE WMS VALIDATIONS: PASSED')
-    
+
 except Exception as e:
     print(f'❌ VALIDATION FAILED: {e}')
     sys.exit(1)
@@ -1547,7 +1549,7 @@ try:
     from flext_dbt_oracle_wms import FlextDbtOracleWmsConfig, UnifiedFlextDbtOracleWmsService
     config = FlextDbtOracleWmsConfig()
     service = UnifiedFlextDbtOracleWmsService()
-    
+
     # Test Oracle WMS connectivity (may fail if WMS not available)
     result = service._validate_wms_connectivity()
     if result.is_success:
@@ -1555,7 +1557,7 @@ try:
     else:
         print(f'⚠️  Oracle WMS connectivity: UNAVAILABLE ({result.error[:50]}...)')
         print('   This is expected if Oracle WMS Database is not running')
-        
+
 except Exception as e:
     print(f'⚠️  Oracle WMS connectivity test error: {e}')
     print('   This is expected if Oracle WMS Database is not configured')
@@ -1567,7 +1569,7 @@ python -c "
 try:
     from flext_tap_oracle_wms import OracleWmsTapExtractor
     extractor = OracleWmsTapExtractor()
-    
+
     # Test Singer tap WMS integration
     result = extractor.test_connection()
     if result.is_success:
@@ -1575,7 +1577,7 @@ try:
     else:
         print(f'⚠️  Singer tap WMS integration: UNAVAILABLE ({result.error[:50]}...)')
         print('   This is expected if Oracle WMS Database is not configured for taps')
-        
+
 except Exception as e:
     print(f'⚠️  Singer tap WMS integration test error: {e}')
     print('   This is expected if flext-tap-oracle-wms is not configured')

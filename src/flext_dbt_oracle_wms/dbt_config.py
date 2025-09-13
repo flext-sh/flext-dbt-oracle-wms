@@ -1,9 +1,5 @@
-"""DBT configuration for Oracle WMS transformations.
+"""FLEXT Module.
 
-Provides configuration management for DBT Oracle WMS projects using flext-core patterns.
-Integrates with flext-oracle-wms for connection settings and flext-meltano for DBT execution.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
 
