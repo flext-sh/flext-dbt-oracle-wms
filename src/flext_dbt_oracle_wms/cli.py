@@ -29,7 +29,7 @@ class FlextDbtOracleWmsCliService:
         self._cli_api = FlextCliApi()
         self._config = FlextCliConfig()
 
-    def handle_discover(self, args: dict | None = None) -> FlextResult[str]:
+    def handle_discover(self, _args: dict | None = None) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
             config = FlextDbtOracleWmsConfig()
@@ -108,7 +108,7 @@ class FlextDbtOracleWmsCliService:
             logger.exception("Unexpected error in pipeline command")
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
-    def handle_info(self, args: dict | None = None) -> FlextResult[str]:
+    def handle_info(self, _args: dict | None = None) -> FlextResult[str]:
         """Handle info command using flext-cli output."""
         try:
             info_data = {

@@ -1,22 +1,24 @@
-# FLEXT dbt Oracle WMS - Enterprise Warehouse Management Analytics
+# FLEXT dbt Oracle WMS - Warehouse Management Analytics
 
 **Type**: DBT Project | **Status**: Active Development | **Dependencies**: Python 3.13+, dbt-core, dbt-oracle
 
-Enterprise-grade dbt project for Oracle Warehouse Management System (WMS) data transformations and analytics. Built with Python 3.13+, dbt Core, and Clean Architecture patterns as part of the FLEXT enterprise data integration platform.
+dbt project for Oracle Warehouse Management System (WMS) data transformations and analytics. Built with Python 3.13+, dbt Core, and Clean Architecture patterns as part of the FLEXT data integration platform.
 
 ## Overview
 
-FLEXT dbt Oracle WMS provides comprehensive data transformations, dimensional modeling, and advanced analytics for Oracle WMS environments. The project transforms raw Oracle WMS data from Singer taps into business-ready analytical models with real-time operational metrics and historical trend analysis.
+FLEXT dbt Oracle WMS provides data transformations, dimensional modeling, and advanced analytics for Oracle WMS environments. The project transforms raw Oracle WMS data from Singer taps into business-ready analytical models with real-time operational metrics and historical trend analysis.
+
+> For verified project capabilities and accurate status information, see [ACTUAL_CAPABILITIES.md](../../ACTUAL_CAPABILITIES.md)
 
 ### Key Features
 
-- **Oracle WMS Analytics**: Comprehensive transformations for warehouse management data
+- **Oracle WMS Analytics**: Transformations for warehouse management data
 - **Dimensional Modeling**: Star schema design for inventory, orders, and operational analytics
 - **WMS-Specific Macros**: Custom dbt macros for WMS business logic and calculations
 - **Operational Dashboards**: Real-time metrics for warehouse operations and KPIs
 - **Historical Analytics**: Trend analysis and performance reporting
 - **Clean Architecture**: Python components with domain-driven design patterns
-- **Zero Tolerance Quality**: 90% test coverage with comprehensive quality gates
+- **Zero Tolerance Quality**: 90% test coverage with quality gates
 
 ## Quick Start
 
@@ -844,7 +846,7 @@ ORDER BY business_date DESC, facility_code
 
 - **Test Coverage**: 90% Python coverage target for supporting code
 - **Type Safety**: MyPy strict mode adoption for Python components
-- **Linting**: Ruff with comprehensive rules (continuous improvement)
+- **Linting**: Ruff with rules (continuous improvement)
 - **Security**: Bandit scanning + pip-audit
 - **dbt Tests**: Data quality tests should pass before release
 - **WMS Business Rules**: Validation tests tracked and improved over time
@@ -926,7 +928,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 ### Architecture & Development
 
 - [CLAUDE.md](CLAUDE.md) - Development guidance and architectural patterns
-- [docs/](docs/) - Comprehensive project documentation
+- [docs/](docs/) - Project documentation
 
 ### Generated Documentation
 
