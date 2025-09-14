@@ -33,7 +33,7 @@ class FlextDbtOracleWmsWorkflowService:
 
         """
         self.config = config or FlextDbtOracleWmsConfig()
-        # TODO: Initialize WMS client properly
+        # TODO(@developer): Initialize WMS client properly (https://github.com/flext-team/flext-dbt-oracle-wms/issues/1)
         self.client = None  # Will need to be properly initialized
 
     async def generate_workflow_recommendations(

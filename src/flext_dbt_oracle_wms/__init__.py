@@ -18,15 +18,7 @@ __version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 
 # Configuration - Essential for setup
 # Client - Main interface for Oracle WMS DBT operations
-from flext_dbt_oracle_wms.compatibility import (
-    InventoryFact,
-    ItemDimension,
-    LocationDimension,
-    OracleWMSDBTClient,
-    OracleWMSDBTConfig,
-    OracleWMSTransformer,
-    ShipmentFact,
-)
+# Compatibility imports temporarily disabled - modules not implemented yet
 from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 
@@ -52,11 +44,7 @@ from flext_dbt_oracle_wms.exceptions import (
 )
 
 # Factory functions and compatibility imports
-from flext_dbt_oracle_wms.factory import (
-    create_oracle_wms_dbt_client,
-    create_oracle_wms_workflow_service,
-)
-
+# Factory functions temporarily disabled - modules not implemented yet
 # Models - Oracle WMS DBT data models and transformers
 from flext_dbt_oracle_wms.models import (
     FlextDbtOracleWmsInventoryFact,
@@ -97,18 +85,9 @@ __all__ = [
     "FlextDbtOracleWmsWorkflowService",
     # Core patterns (from flext-core)
     "FlextResult",
-    # Backward compatibility aliases
-    "InventoryFact",
-    "ItemDimension",
-    "LocationDimension",
-    "OracleWMSDBTClient",
-    "OracleWMSDBTConfig",
-    "OracleWMSTransformer",
-    "ShipmentFact",
+    # Backward compatibility aliases - temporarily disabled
     # Metadata
     "__version__",
     "__version_info__",
-    # Factory functions
-    "create_oracle_wms_dbt_client",
-    "create_oracle_wms_workflow_service",
+    # Factory functions - temporarily disabled
 ]

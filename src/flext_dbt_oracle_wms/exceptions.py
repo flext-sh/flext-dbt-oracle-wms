@@ -6,50 +6,43 @@ SPDX-License-Identifier: MIT.
 
 from __future__ import annotations
 
-from typing import cast
-from flext_core import ( from __future__ import annotations from typing import Dict FlextExceptions, FlextTypes, create_module_exception_classes, )
+from flext_core import FlextExceptions
 
-# 🚨 DRY PATTERN: Use create_module_exception_classes to eliminate exception duplication
-_exceptions = create_module_exception_classes("flext_dbt_oracle_wms")
 
-# Extract exception classes with proper typing for MyPy
-FlextDbtOracleWmsError: type[Exception] = cast(
-    "type[Exception]",
-    _exceptions["FlextDbtOracleWmsError"],
-)
-FlextDbtOracleWmsValidationError: type[Exception] = cast(
-    "type[Exception]",
-    _exceptions["FlextDbtOracleWmsValidationError"],
-)
-FlextDbtOracleWmsConfigurationError: type[Exception] = cast(
-    "type[Exception]",
-    _exceptions["FlextDbtOracleWmsConfigurationError"],
-)
-FlextDbtOracleWmsConnectionError: type[Exception] = cast(
-    "type[Exception]",
-    _exceptions["FlextDbtOracleWmsConnectionError"],
-)
-FlextDbtOracleWmsProcessingError: type[Exception] = cast(
-    "type[Exception]",
-    _exceptions["FlextDbtOracleWmsProcessingError"],
-)
-FlextDbtOracleWmsAuthenticationError: type[Exception] = cast(
-    "type[Exception]",
-    _exceptions["FlextDbtOracleWmsAuthenticationError"],
-)
-FlextDbtOracleWmsTimeoutError: type[Exception] = cast(
-    "type[Exception]",
-    _exceptions["FlextDbtOracleWmsTimeoutError"],
-)
+# Base exception classes for Oracle WMS DBT operations
+class FlextDbtOracleWmsError(FlextExceptions._Error):
+    """Base exception for Oracle WMS DBT operations."""
+
+
+class FlextDbtOracleWmsValidationError(FlextExceptions._ValidationError):
+    """Oracle WMS DBT validation errors."""
+
+
+class FlextDbtOracleWmsConfigurationError(FlextExceptions._ConfigurationError):
+    """Oracle WMS DBT configuration errors."""
+
+
+class FlextDbtOracleWmsConnectionError(FlextExceptions._ConnectionError):
+    """Oracle WMS DBT connection errors."""
+
+
+class FlextDbtOracleWmsProcessingError(FlextExceptions._ProcessingError):
+    """Oracle WMS DBT processing errors."""
+
+
+class FlextDbtOracleWmsAuthenticationError(FlextExceptions._AuthenticationError):
+    """Oracle WMS DBT authentication errors."""
+
+
+class FlextDbtOracleWmsTimeoutError(FlextExceptions._TimeoutError):
+    """Oracle WMS DBT timeout errors."""
 
 
 # Domain-specific exceptions for Oracle WMS DBT business logic
-class FlextDbtOracleWmsInventoryError(FlextExceptions.ProcessingError):
+class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT inventory-specific errors with WMS context."""
 
     def __init__(
-        """Initialize the instance."""
-
         self,
         message: str = "Oracle WMS DBT inventory error",
         *,
@@ -59,7 +52,6 @@ class FlextDbtOracleWmsInventoryError(FlextExceptions.ProcessingError):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT inventory error with WMS context."""
-
         context = dict(kwargs)
         if item_code is not None:
             context["item_code"] = item_code
@@ -73,12 +65,10 @@ class FlextDbtOracleWmsInventoryError(FlextExceptions.ProcessingError):
         )
 
 
-class FlextDbtOracleWmsShipmentError(FlextExceptions.ProcessingError):
+class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT shipment-specific errors with shipping context."""
 
     def __init__(
-        """Initialize the instance."""
-
         self,
         message: str = "Oracle WMS DBT shipment error",
         *,
@@ -88,7 +78,6 @@ class FlextDbtOracleWmsShipmentError(FlextExceptions.ProcessingError):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT shipment error with shipping context."""
-
         context = dict(kwargs)
         if shipment_id is not None:
             context["shipment_id"] = shipment_id
@@ -102,12 +91,10 @@ class FlextDbtOracleWmsShipmentError(FlextExceptions.ProcessingError):
         )
 
 
-class FlextDbtOracleWmsModelError(FlextExceptions.ProcessingError):
+class FlextDbtOracleWmsModelError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT model-specific errors with dbt model context."""
 
     def __init__(
-        """Initialize the instance."""
-
         self,
         message: str = "Oracle WMS DBT model error",
         *,
@@ -117,7 +104,6 @@ class FlextDbtOracleWmsModelError(FlextExceptions.ProcessingError):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT model error with dbt context."""
-
         context = dict(kwargs)
         if model_name is not None:
             context["model_name"] = model_name
@@ -131,12 +117,10 @@ class FlextDbtOracleWmsModelError(FlextExceptions.ProcessingError):
         )
 
 
-class FlextDbtOracleWmsTestError(FlextExceptions):
+class FlextDbtOracleWmsTestError(FlextDbtOracleWmsValidationError):
     """Oracle WMS DBT test errors with test validation context."""
 
     def __init__(
-        """Initialize the instance."""
-
         self,
         message: str = "Oracle WMS DBT test failed",
         *,
@@ -145,8 +129,7 @@ class FlextDbtOracleWmsTestError(FlextExceptions):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT test error with test context."""
-
-        validation_details: FlextTypes.Core.Dict = {}
+        validation_details: dict[str, object] = {}
         if test_name is not None:
             validation_details["test_name"] = test_name
         if model_name is not None:
@@ -160,7 +143,7 @@ class FlextDbtOracleWmsTestError(FlextExceptions):
         )
 
 
-__all__: FlextTypes.Core.StringList = [
+__all__: list[str] = [
     "FlextDbtOracleWmsAuthenticationError",
     "FlextDbtOracleWmsConfigurationError",
     "FlextDbtOracleWmsConnectionError",

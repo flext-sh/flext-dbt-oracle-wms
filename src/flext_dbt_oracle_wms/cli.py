@@ -188,8 +188,8 @@ def main() -> None:
     except KeyboardInterrupt:
         logger.info("Interrupted by user")
         sys.exit(1)
-    except (OSError, RuntimeError, ValueError) as e:
-        logger.exception(f"CLI error: {e}")
+    except (OSError, RuntimeError, ValueError):
+        logger.exception("CLI error")
         sys.exit(1)
 
 
