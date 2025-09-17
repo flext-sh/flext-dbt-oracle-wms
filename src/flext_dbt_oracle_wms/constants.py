@@ -4,11 +4,12 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_core import FlextConstants, FlextTypes
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as _WmsConstants,
     OracleWMSEntityType as _OracleWMSEntityType,
 )
+
+from flext_core import FlextConstants, FlextTypes
 
 
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):
@@ -19,7 +20,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
 
         NAME = "flext-dbt-oracle-wms"
         VERSION = "0.9.0"
-        # CONSUME from single source - NO DUPLICATION
+        # CONSUME from single source
         ECOSYSTEM_SIZE = FlextConstants.Core.ECOSYSTEM_SIZE
 
     class Dbt:
@@ -147,7 +148,7 @@ class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
 class DBTOracleWMSEntityTypes:
     """Oracle WMS entity types for DBT models (DEPRECATED - use FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES)."""
 
-    # CONSUME from flext-oracle-wms API - NO DUPLICATION
+    # CONSUME from flext-oracle-wms API
     ALLOCATION = _OracleWMSEntityType.ALLOCATION
     ORDER_HDR = _OracleWMSEntityType.ORDER_HDR
     ORDER_DTL = _OracleWMSEntityType.ORDER_DTL

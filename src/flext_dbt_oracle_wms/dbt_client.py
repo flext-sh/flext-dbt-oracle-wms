@@ -5,10 +5,9 @@ from __future__ import annotations
 from pathlib import Path
 
 from flext_core import FlextLogger, FlextResult, FlextTypes
+from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 from flext_meltano import FlextMeltanoDbtService
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
-
-from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 
 logger = FlextLogger(__name__)
 

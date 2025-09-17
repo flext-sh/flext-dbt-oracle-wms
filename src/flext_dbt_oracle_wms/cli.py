@@ -11,7 +11,6 @@ import sys
 
 from flext_cli import FlextCliApi, FlextCliConfig
 from flext_core import FlextLogger, FlextResult
-
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
     __version__,

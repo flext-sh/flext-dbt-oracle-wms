@@ -8,7 +8,6 @@ from __future__ import annotations
 import time
 
 from flext_core import FlextLogger, FlextResult, FlextTypes
-
 from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 
 logger = FlextLogger(__name__)
