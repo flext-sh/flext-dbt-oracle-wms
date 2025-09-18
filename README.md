@@ -1,6 +1,6 @@
 # FLEXT dbt Oracle WMS - Warehouse Management Analytics
 
-**Type**: DBT Project | **Status**: Active Development | **Dependencies**: Python 3.13+, dbt-core, dbt-oracle
+**Type**: DBT Project | **Status**: 1.0.0 Release Preparation | **Dependencies**: Python 3.13+, dbt-core, dbt-oracle
 
 dbt project for Oracle Warehouse Management System (WMS) data transformations and analytics. Built with Python 3.13+, dbt Core, and Clean Architecture patterns as part of the FLEXT data integration platform.
 

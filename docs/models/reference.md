@@ -255,7 +255,7 @@ ORDER BY pick_rate_percent ASC;
 - **Time**: Daily, weekly, monthly aggregations
 - **Product**: Item, category, ABC classification
 - **Location**: Zone, aisle, location type
-- **Status**: Available, allocated, damaged inventory
+- **Status**: Available, allocated, damaged inventory · 1.0.0 Release Preparation
 
 ### marts/metrics/met_wms\_\_kpi_dashboard
 
