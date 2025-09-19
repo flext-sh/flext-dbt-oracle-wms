@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
-from flext_oracle_wms.wms_constants import (
-    FlextOracleWmsSemanticConstants as WmsConstants,
-)
 from pydantic import Field
 
 from flext_core import FlextModels
+from flext_oracle_wms.wms_constants import (
+    FlextOracleWmsSemanticConstants as WmsConstants,
+)
 
 # Simple type aliases for dbt Oracle WMS
 NonEmptyStr = str

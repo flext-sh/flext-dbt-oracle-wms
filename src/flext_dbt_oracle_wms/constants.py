@@ -4,12 +4,11 @@ from __future__ import annotations
 
 from typing import ClassVar
 
+from flext_core import FlextConstants, FlextTypes
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as _WmsConstants,
     OracleWMSEntityType as _OracleWMSEntityType,
 )
-
-from flext_core import FlextConstants, FlextTypes
 
 
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):

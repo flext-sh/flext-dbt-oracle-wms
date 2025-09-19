@@ -7,10 +7,9 @@ from __future__ import annotations
 
 from typing import ClassVar
 
+from flext_core import FlextConfig, FlextLogger, FlextTypes
 from flext_meltano.config import FlextMeltanoConfig
 from flext_oracle_wms.wms_config import FlextOracleWmsClientConfig
-
-from flext_core import FlextConfig, FlextLogger, FlextTypes
 
 logger = FlextLogger(__name__)
 
