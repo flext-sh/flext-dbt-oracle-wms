@@ -9,7 +9,7 @@ from __future__ import annotations
 import asyncio
 import sys
 
-from flext_cli import FlextCliApi, FlextCliConfig
+from flext_cli import FlextCliApi, FlextCliConfigs
 from flext_core import FlextLogger, FlextResult
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
@@ -26,10 +26,10 @@ class FlextDbtOracleWmsCliService:
     def __init__(self) -> None:
         """Initialize CLI service with flext-cli patterns."""
         self._cli_api = FlextCliApi()
-        self._config = FlextCliConfig()
+        self._config = FlextCliConfigs()
 
     def handle_discover(
-        self, _args: dict[str, object] | None = None
+        self, _args: dict[str, object] | None = None,
     ) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
@@ -83,7 +83,7 @@ class FlextDbtOracleWmsCliService:
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
     def handle_pipeline(
-        self, args: dict[str, object] | None = None
+        self, args: dict[str, object] | None = None,
     ) -> FlextResult[str]:
         """Handle pipeline command using flext-cli output."""
         try:

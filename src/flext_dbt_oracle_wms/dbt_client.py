@@ -916,7 +916,7 @@ class FlextDbtOracleWmsClient:
             test_result = FlextResult[dict[str, object]].ok({"status": "connected"})
             if test_result.is_failure:
                 return FlextResult[dict[str, str | int]].fail(
-                    f"Connection test failed: {test_result.error}"
+                    f"Connection test failed: {test_result.error}",
                 )
 
             # Return connection status
@@ -925,7 +925,7 @@ class FlextDbtOracleWmsClient:
                     "status": "connected",
                     "timestamp": "2025-01-01T00:00:00Z",
                     "entities_count": 0,
-                }
+                },
             )
         except Exception as e:
             return FlextResult[dict[str, str | int]].fail(f"Connection test error: {e}")
@@ -985,7 +985,7 @@ class FlextDbtOracleWmsClient:
             validate_result = await self.validate_oracle_wms_data(entity_name, records)
             if validate_result.is_failure:
                 return FlextResult[dict[str, object]].fail(
-                    validate_result.error or "Validation failed"
+                    validate_result.error or "Validation failed",
                 )
             entity_data[entity_name] = records
         # Step 4: Transform with DBT
@@ -1046,7 +1046,7 @@ class FlextDbtOracleWmsClient:
             return FlextResult[list[str]].fail(f"Failed to discover entities: {e}")
 
     async def extract_oracle_wms_data(
-        self, entity_name: str, filters: dict[str, object]
+        self, entity_name: str, filters: dict[str, object],
     ) -> FlextResult[list[dict[str, object]]]:
         """Extract data from Oracle WMS for a specific entity."""
         try:
@@ -1058,11 +1058,11 @@ class FlextDbtOracleWmsClient:
             return FlextResult[list[dict[str, object]]].ok(data)
         except Exception as e:
             return FlextResult[list[dict[str, object]]].fail(
-                f"Failed to extract data: {e}"
+                f"Failed to extract data: {e}",
             )
 
     async def validate_oracle_wms_data(
-        self, entity_name: str, records: list[dict[str, object]]
+        self, entity_name: str, records: list[dict[str, object]],
     ) -> FlextResult[list[dict[str, object]]]:
         """Validate Oracle WMS data quality."""
         try:
@@ -1071,7 +1071,7 @@ class FlextDbtOracleWmsClient:
             # Basic validation - check that records are not empty
             if not records:
                 return FlextResult[list[dict[str, object]]].fail(
-                    "No records to validate"
+                    "No records to validate",
                 )
 
             # Return validated records
@@ -1097,7 +1097,7 @@ class FlextDbtOracleWmsClient:
             return FlextResult[dict[str, object]].ok(result)
         except Exception as e:
             return FlextResult[dict[str, object]].fail(
-                f"DBT transformation failed: {e}"
+                f"DBT transformation failed: {e}",
             )
 
 

@@ -561,7 +561,7 @@ __all__ = ["UnifiedFlextDbtOracleWmsService", "WmsRawData", "WmsDimensionalModel
 
 ```python
 # ✅ CORRECT - Oracle WMS dbt Configuration (AUTOMATIC LOADING)
-from flext_cli import FlextCliConfig
+from flext_cli import FlextCliConfigs
 from flext_core import FlextResult
 
 class FlextDbtOracleWmsConfig:
@@ -577,7 +577,7 @@ class FlextDbtOracleWmsConfig:
     def __init__(self) -> None:
         """Initialize WMS configuration with automatic .env loading."""
         # ✅ AUTOMATIC: Configuration loaded transparently by flext-cli
-        self._config = FlextCliConfig()
+        self._config = FlextCliConfigs()
         self._logger = FlextLogger(__name__)
 
     def get_wms_configuration(self) -> FlextResult[dict]:
@@ -1257,7 +1257,7 @@ class FlextDbtOracleWmsCliService:
     def __init__(self) -> None:
         """Initialize with automatic .env configuration loading."""
         self._cli_api = FlextCliApi()
-        self._config = FlextCliConfig()  # Automatically loads .env + defaults
+        self._config = FlextCliConfigs()  # Automatically loads .env + defaults
         self._wms_service = UnifiedFlextDbtOracleWmsService()
 
     def debug_wms_configuration(self) -> FlextResult[dict]:
