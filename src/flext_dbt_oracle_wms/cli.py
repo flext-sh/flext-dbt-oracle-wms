@@ -29,7 +29,8 @@ class FlextDbtOracleWmsCliService:
         self._config = FlextCliConfigs()
 
     def handle_discover(
-        self, _args: dict[str, object] | None = None,
+        self,
+        _args: dict[str, object] | None = None,
     ) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
@@ -83,7 +84,8 @@ class FlextDbtOracleWmsCliService:
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
     def handle_pipeline(
-        self, args: dict[str, object] | None = None,
+        self,
+        args: dict[str, object] | None = None,
     ) -> FlextResult[str]:
         """Handle pipeline command using flext-cli output."""
         try:

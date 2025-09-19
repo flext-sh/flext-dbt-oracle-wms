@@ -38,7 +38,8 @@ class FlextDbtOracleWmsWorkflowService:
         )
 
     async def generate_workflow_recommendations(
-        self, entities: list[FlextTypes.Core.Dict] | None = None,
+        self,
+        entities: list[FlextTypes.Core.Dict] | None = None,
     ) -> FlextResult[FlextTypes.Core.Dict]:
         """Generate Oracle WMS workflow recommendations.
 

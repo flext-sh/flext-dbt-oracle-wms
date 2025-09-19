@@ -1046,7 +1046,9 @@ class FlextDbtOracleWmsClient:
             return FlextResult[list[str]].fail(f"Failed to discover entities: {e}")
 
     async def extract_oracle_wms_data(
-        self, entity_name: str, filters: dict[str, object],
+        self,
+        entity_name: str,
+        filters: dict[str, object],
     ) -> FlextResult[list[dict[str, object]]]:
         """Extract data from Oracle WMS for a specific entity."""
         try:
@@ -1062,7 +1064,9 @@ class FlextDbtOracleWmsClient:
             )
 
     async def validate_oracle_wms_data(
-        self, entity_name: str, records: list[dict[str, object]],
+        self,
+        entity_name: str,
+        records: list[dict[str, object]],
     ) -> FlextResult[list[dict[str, object]]]:
         """Validate Oracle WMS data quality."""
         try:
