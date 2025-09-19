@@ -13,8 +13,8 @@ from flext_cli import FlextCliApi, FlextCliConfig
 from flext_core import FlextLogger, FlextResult
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
+    FlextDbtOracleWmsWorkflowService,
     __version__,
-    create_oracle_wms_workflow_service,
 )
 
 logger = FlextLogger(__name__)
@@ -28,11 +28,13 @@ class FlextDbtOracleWmsCliService:
         self._cli_api = FlextCliApi()
         self._config = FlextCliConfig()
 
-    def handle_discover(self, _args: dict | None = None) -> FlextResult[str]:
+    def handle_discover(
+        self, _args: dict[str, object] | None = None
+    ) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
             config = FlextDbtOracleWmsConfig()
-            workflow_service = create_oracle_wms_workflow_service(config)
+            workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             result = asyncio.run(workflow_service.run_entity_discovery_workflow())
 
@@ -48,14 +50,17 @@ class FlextDbtOracleWmsCliService:
             logger.exception("Unexpected error in discovery command")
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
-    def handle_extract(self, args: dict | None = None) -> FlextResult[str]:
+    def handle_extract(self, args: dict[str, object] | None = None) -> FlextResult[str]:
         """Handle extract command using flext-cli output."""
         try:
             config = FlextDbtOracleWmsConfig()
-            workflow_service = create_oracle_wms_workflow_service(config)
+            workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse entities from args if provided
-            entity_names = args.get("entities", []) if args else []
+            entity_names_raw = args.get("entities", []) if args else []
+            entity_names = (
+                entity_names_raw if isinstance(entity_names_raw, list) else []
+            )
             limit = args.get("limit") if args else None
             limits = (
                 dict.fromkeys(entity_names, limit) if entity_names and limit else None
@@ -77,15 +82,21 @@ class FlextDbtOracleWmsCliService:
             logger.exception("Unexpected error in extraction command")
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
-    def handle_pipeline(self, args: dict | None = None) -> FlextResult[str]:
+    def handle_pipeline(
+        self, args: dict[str, object] | None = None
+    ) -> FlextResult[str]:
         """Handle pipeline command using flext-cli output."""
         try:
             config = FlextDbtOracleWmsConfig()
-            workflow_service = create_oracle_wms_workflow_service(config)
+            workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse parameters from args if provided
-            entity_names = args.get("entities", []) if args else []
-            model_names = args.get("models", []) if args else []
+            entity_names_raw = args.get("entities", []) if args else []
+            entity_names = (
+                entity_names_raw if isinstance(entity_names_raw, list) else []
+            )
+            model_names_raw = args.get("models", []) if args else []
+            model_names = model_names_raw if isinstance(model_names_raw, list) else []
 
             result = asyncio.run(
                 workflow_service.run_full_transformation_pipeline(
@@ -107,7 +118,7 @@ class FlextDbtOracleWmsCliService:
             logger.exception("Unexpected error in pipeline command")
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
-    def handle_info(self, _args: dict | None = None) -> FlextResult[str]:
+    def handle_info(self, _args: dict[str, object] | None = None) -> FlextResult[str]:
         """Handle info command using flext-cli output."""
         try:
             info_data = {
@@ -125,7 +136,7 @@ class FlextDbtOracleWmsCliService:
 
             # Use flext-cli to format and display data
             try:
-                self._cli_api.format_data(info_data)
+                self._cli_api.format_data(info_data, "table")
                 return FlextResult[str].ok("Package information displayed successfully")
             except Exception:
                 # Fallback display
