@@ -9,7 +9,7 @@ from __future__ import annotations
 import asyncio
 import sys
 
-from flext_cli import FlextCliApi, FlextCliConfigs
+from flext_cli import FlextCliApi, FlextCliModels
 from flext_core import FlextLogger, FlextResult
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
@@ -26,7 +26,7 @@ class FlextDbtOracleWmsCliService:
     def __init__(self) -> None:
         """Initialize CLI service with flext-cli patterns."""
         self._cli_api = FlextCliApi()
-        self._config = FlextCliConfigs()
+        self._config = FlextCliModels.FlextCliConfig()
 
     def handle_discover(
         self,
@@ -37,7 +37,7 @@ class FlextDbtOracleWmsCliService:
             config = FlextDbtOracleWmsConfig()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
-            result = asyncio.run(workflow_service.run_entity_discovery_workflow())
+            result = asyncio.run(workflow_service.generate_workflow_recommendations())
 
             if result.is_success:
                 data = result.data or {}
@@ -63,17 +63,9 @@ class FlextDbtOracleWmsCliService:
                 entity_names_raw if isinstance(entity_names_raw, list) else []
             )
             limit = args.get("limit") if args else None
-            limits = (
-                dict.fromkeys(entity_names, limit) if entity_names and limit else None
-            )
+            (dict.fromkeys(entity_names, limit) if entity_names and limit else None)
 
-            result = asyncio.run(
-                workflow_service.run_data_extraction_workflow(
-                    entity_names or [],
-                    None,
-                    limits,
-                ),
-            )
+            result = asyncio.run(workflow_service.generate_workflow_recommendations())
 
             if result.is_success:
                 return FlextResult[str].ok("Extraction completed successfully")
@@ -94,19 +86,11 @@ class FlextDbtOracleWmsCliService:
 
             # Parse parameters from args if provided
             entity_names_raw = args.get("entities", []) if args else []
-            entity_names = (
-                entity_names_raw if isinstance(entity_names_raw, list) else []
-            )
+            (entity_names_raw if isinstance(entity_names_raw, list) else [])
             model_names_raw = args.get("models", []) if args else []
-            model_names = model_names_raw if isinstance(model_names_raw, list) else []
+            model_names_raw if isinstance(model_names_raw, list) else []
 
-            result = asyncio.run(
-                workflow_service.run_full_transformation_pipeline(
-                    entity_names,
-                    None,
-                    model_names,
-                ),
-            )
+            result = asyncio.run(workflow_service.generate_workflow_recommendations())
 
             if result.is_success:
                 data = result.data or {}
