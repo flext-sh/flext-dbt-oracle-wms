@@ -31,7 +31,7 @@ class FlextDbtOracleWmsWorkflowService:
             config: Configuration for Oracle WMS and DBT operations
 
         """
-        self.config = config or FlextDbtOracleWmsConfig()
+        self.config: dict[str, object] = config or FlextDbtOracleWmsConfig()
         # Initialize WMS client - placeholder for future implementation
         self.client = (
             None  # Will be properly initialized when WMS integration is complete
@@ -60,7 +60,9 @@ class FlextDbtOracleWmsWorkflowService:
                         "WMS client not initialized",
                         error_code="CLIENT_NOT_INITIALIZED",
                     )
-                discovery_result = await self.client.discover_oracle_wms_entities()
+                discovery_result: FlextResult[
+                    object
+                ] = await self.client.discover_oracle_wms_entities()
                 if discovery_result.is_failure:
                     return FlextResult[FlextTypes.Core.Dict].fail(
                         discovery_result.error or "Discovery failed",
@@ -76,7 +78,7 @@ class FlextDbtOracleWmsWorkflowService:
                 )
 
             # Analyze entities and generate recommendations
-            recommendations = []
+            recommendations: list[dict[str, str]] = []
 
             # Analyze entity distribution
             entity_counts: FlextTypes.Core.CounterDict = {}
@@ -182,7 +184,7 @@ class FlextDbtOracleWmsMonitoringService:
             config: Configuration for monitoring settings
 
         """
-        self.config = config
+        self.config: dict[str, object] = config
         logger.info("Initialized Oracle WMS DBT monitoring service")
 
     def track_workflow_execution(

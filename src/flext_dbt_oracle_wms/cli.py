@@ -23,10 +23,10 @@ logger = FlextLogger(__name__)
 class FlextDbtOracleWmsCliService:
     """FLEXT DBT Oracle WMS CLI service using flext-cli foundation exclusively."""
 
-    def __init__(self) -> None:
+    def __init__(self: object) -> None:
         """Initialize CLI service with flext-cli patterns."""
         self._cli_api = FlextCliApi()
-        self._config = FlextCliModels.FlextCliConfig()
+        self._config: dict[str, object] = FlextCliModels.FlextCliConfig()
 
     def handle_discover(
         self,
@@ -34,14 +34,16 @@ class FlextDbtOracleWmsCliService:
     ) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
-            config = FlextDbtOracleWmsConfig()
+            config: dict[str, object] = FlextDbtOracleWmsConfig()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
-            result = asyncio.run(workflow_service.generate_workflow_recommendations())
+            result: FlextResult[object] = asyncio.run(
+                workflow_service.generate_workflow_recommendations()
+            )
 
             if result.is_success:
                 data = result.data or {}
-                entity_types = data.get("entity_types", [])
+                entity_types: list[object] = data.get("entity_types", [])
                 if isinstance(entity_types, list):
                     pass
                 return FlextResult[str].ok("Discovery completed successfully")
@@ -54,18 +56,20 @@ class FlextDbtOracleWmsCliService:
     def handle_extract(self, args: dict[str, object] | None = None) -> FlextResult[str]:
         """Handle extract command using flext-cli output."""
         try:
-            config = FlextDbtOracleWmsConfig()
+            config: dict[str, object] = FlextDbtOracleWmsConfig()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse entities from args if provided
-            entity_names_raw = args.get("entities", []) if args else []
+            entity_names_raw: list[object] = args.get("entities", []) if args else []
             entity_names = (
                 entity_names_raw if isinstance(entity_names_raw, list) else []
             )
             limit = args.get("limit") if args else None
             (dict.fromkeys(entity_names, limit) if entity_names and limit else None)
 
-            result = asyncio.run(workflow_service.generate_workflow_recommendations())
+            result: FlextResult[object] = asyncio.run(
+                workflow_service.generate_workflow_recommendations()
+            )
 
             if result.is_success:
                 return FlextResult[str].ok("Extraction completed successfully")
@@ -81,20 +85,22 @@ class FlextDbtOracleWmsCliService:
     ) -> FlextResult[str]:
         """Handle pipeline command using flext-cli output."""
         try:
-            config = FlextDbtOracleWmsConfig()
+            config: dict[str, object] = FlextDbtOracleWmsConfig()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse parameters from args if provided
-            entity_names_raw = args.get("entities", []) if args else []
+            entity_names_raw: list[object] = args.get("entities", []) if args else []
             (entity_names_raw if isinstance(entity_names_raw, list) else [])
-            model_names_raw = args.get("models", []) if args else []
+            model_names_raw: list[object] = args.get("models", []) if args else []
             model_names_raw if isinstance(model_names_raw, list) else []
 
-            result = asyncio.run(workflow_service.generate_workflow_recommendations())
+            result: FlextResult[object] = asyncio.run(
+                workflow_service.generate_workflow_recommendations()
+            )
 
             if result.is_success:
                 data = result.data or {}
-                summary = data.get("summary", {})
+                summary: dict[str, object] = data.get("summary", {})
                 if isinstance(summary, dict):
                     pass
                 return FlextResult[str].ok("Pipeline completed successfully")
@@ -136,7 +142,7 @@ class FlextDbtOracleWmsCliService:
 def discover() -> None:
     """Discover Oracle WMS entities."""
     cli_service = FlextDbtOracleWmsCliService()
-    result = cli_service.handle_discover()
+    result: FlextResult[object] = cli_service.handle_discover()
     if result.is_failure:
         sys.exit(1)
 
@@ -144,7 +150,7 @@ def discover() -> None:
 def extract() -> None:
     """Extract data from Oracle WMS entities."""
     cli_service = FlextDbtOracleWmsCliService()
-    result = cli_service.handle_extract()
+    result: FlextResult[object] = cli_service.handle_extract()
     if result.is_failure:
         sys.exit(1)
 
@@ -152,7 +158,7 @@ def extract() -> None:
 def pipeline() -> None:
     """Run full Oracle WMS to DBT transformation pipeline."""
     cli_service = FlextDbtOracleWmsCliService()
-    result = cli_service.handle_pipeline()
+    result: FlextResult[object] = cli_service.handle_pipeline()
     if result.is_failure:
         sys.exit(1)
 
@@ -160,7 +166,7 @@ def pipeline() -> None:
 def info() -> None:
     """Show FLEXT DBT Oracle WMS information."""
     cli_service = FlextDbtOracleWmsCliService()
-    result = cli_service.handle_info()
+    result: FlextResult[object] = cli_service.handle_info()
     if result.is_failure:
         sys.exit(1)
 

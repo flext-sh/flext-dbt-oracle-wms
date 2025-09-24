@@ -33,19 +33,19 @@ class FlextDbtOracleWmsClient:
             config: Configuration for Oracle WMS and DBT operations
 
         """
-        self.config = config or FlextDbtOracleWmsConfig()
+        self.config: dict[str, object] = config or FlextDbtOracleWmsConfig()
         # Initialize Oracle WMS client using flext-oracle-wms
-        oracle_wms_config = self.config.get_oracle_wms_config()
+        oracle_wms_config: dict[str, object] = self.config.get_oracle_wms_config()
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
         self._dbt_service: object | None = None
         logger.info("Initialized DBT Oracle WMS client with config: %s", self.config)
 
     @property
-    def dbt_service(self) -> object:
+    def dbt_service(self: object) -> object:
         """Get or create DBT service instance."""
         if self._dbt_service is None:
             # Create DBT service with configuration
-            meltano_config = self.config.get_meltano_config()
+            meltano_config: dict[str, object] = self.config.get_meltano_config()
             # Suppress unused registry_path warning for future use
             _ = (
                 Path(meltano_config.project_root)
@@ -56,7 +56,7 @@ class FlextDbtOracleWmsClient:
         return self._dbt_service
 
     @property
-    def oracle_wms_client(self) -> FlextOracleWmsClient:
+    def oracle_wms_client(self: object) -> FlextOracleWmsClient:
         """Get Oracle WMS client instance."""
         return self._oracle_wms_client
 
@@ -917,7 +917,9 @@ class FlextDbtOracleWmsClient:
         try:
             # Test the Oracle WMS connection
             # Mock connection test for now
-            test_result = FlextResult[dict[str, object]].ok({"status": "connected"})
+            test_result: FlextResult[object] = FlextResult[dict[str, object]].ok({
+                "status": "connected"
+            })
             if test_result.is_failure:
                 return FlextResult[dict[str, str | int]].fail(
                     f"Connection test failed: {test_result.error}",
@@ -954,7 +956,9 @@ class FlextDbtOracleWmsClient:
         logger.info("Starting full Oracle WMS-to-DBT pipeline")
         # Step 1: Discover entities if not specified
         if entity_names is None:
-            discover_result = await self.discover_oracle_wms_entities()
+            discover_result: FlextResult[
+                object
+            ] = await self.discover_oracle_wms_entities()
             if discover_result.is_failure:
                 # Convert discovery result to expected format
                 return FlextResult[FlextTypes.Core.Dict].ok(
@@ -971,7 +975,9 @@ class FlextDbtOracleWmsClient:
         # Step 2: Extract data for each entity
         entity_data = {}
         for entity_name in entity_names:
-            entity_filters = filters.get(entity_name, {}) if filters else {}
+            entity_filters: dict[str, object] = (
+                filters.get(entity_name, {}) if filters else {}
+            )
             extract_result = await self.extract_oracle_wms_data(
                 entity_name,
                 entity_filters,
@@ -986,14 +992,18 @@ class FlextDbtOracleWmsClient:
                 )
             records = extract_result.data or []
             # Step 3: Validate data quality
-            validate_result = await self.validate_oracle_wms_data(entity_name, records)
+            validate_result: FlextResult[object] = await self.validate_oracle_wms_data(
+                entity_name, records
+            )
             if validate_result.is_failure:
                 return FlextResult[dict[str, object]].fail(
                     validate_result.error or "Validation failed",
                 )
             entity_data[entity_name] = records
         # Step 4: Transform with DBT
-        transform_result = await self.transform_with_dbt(entity_data, model_names)
+        transform_result: FlextResult[object] = await self.transform_with_dbt(
+            entity_data, model_names
+        )
         if transform_result.is_failure:
             return transform_result
         # Combine results

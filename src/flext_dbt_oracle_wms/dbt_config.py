@@ -89,7 +89,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     # Flag handled as a field, not overriding base class method type
     validate_business_rules_flag: bool = True
 
-    def get_oracle_wms_config(self) -> FlextOracleWmsClientConfig:
+    def get_oracle_wms_config(self: object) -> FlextOracleWmsClientConfig:
         """Get Oracle WMS configuration for flext-oracle-wms integration."""
         return FlextOracleWmsClientConfig(
             base_url=self.oracle_wms_base_url,
@@ -100,7 +100,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             environment=self.oracle_wms_environment,
         )
 
-    def get_meltano_config(self) -> FlextMeltanoConfig:
+    def get_meltano_config(self: object) -> FlextMeltanoConfig:
         """Get Meltano configuration for flext-meltano integration."""
         return FlextMeltanoConfig(
             project_root=self.dbt_project_dir,
@@ -109,7 +109,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             dbt_profiles_dir=self.dbt_profiles_dir,
         )
 
-    def get_oracle_wms_quality_config(self) -> FlextTypes.Core.Dict:
+    def get_oracle_wms_quality_config(self: object) -> FlextTypes.Core.Dict:
         """Get data quality configuration for Oracle WMS validation."""
         return {
             "min_quality_threshold": self.min_quality_threshold,
@@ -126,7 +126,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         """Get DBT field name for Oracle WMS field."""
         return self.oracle_wms_field_mapping.get(field_name, field_name.lower())
 
-    def validate_oracle_wms_connection(self) -> bool:
+    def validate_oracle_wms_connection(self: object) -> bool:
         """Validate Oracle WMS connection configuration."""
         required_fields = [
             self.oracle_wms_base_url,
@@ -137,7 +137,9 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
         """Get business rule for specific Oracle WMS entity."""
-        entity_rules = self.oracle_wms_business_rules.get(entity_name, {})
+        entity_rules: dict[str, object] = self.oracle_wms_business_rules.get(
+            entity_name, {}
+        )
         return entity_rules.get(rule_name) if isinstance(entity_rules, dict) else None
 
     def get_required_fields(self, entity_name: str) -> FlextTypes.Core.StringList:

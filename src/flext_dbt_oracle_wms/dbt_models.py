@@ -92,7 +92,7 @@ class FlextDbtOracleWmsItemDimension(FlextModels.Config):
             modified_date=_get_str(record.get("modifiedDate")),
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextResult[None]:
         """Validate item dimension business rules."""
         if not self.item_id or not self.item_number:
             return FlextResult[None].fail("Item ID and item number are required")
@@ -105,7 +105,7 @@ class FlextDbtOracleWmsItemDimension(FlextModels.Config):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self) -> FlextTypes.Core.Dict:
+    def to_dbt_dict(self: object) -> FlextTypes.Core.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "item_id": self.item_id,
@@ -166,7 +166,7 @@ class FlextDbtOracleWmsLocationDimension(FlextModels.Config):
             modified_date=_get_str(record.get("modifiedDate")),
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextResult[None]:
         """Validate location dimension business rules."""
         if not self.location_id or not self.location_name or not self.facility_id:
             return FlextResult[None].fail(
@@ -178,7 +178,7 @@ class FlextDbtOracleWmsLocationDimension(FlextModels.Config):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self) -> FlextTypes.Core.Dict:
+    def to_dbt_dict(self: object) -> FlextTypes.Core.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "location_id": self.location_id,
@@ -243,7 +243,7 @@ class FlextDbtOracleWmsInventoryFact(FlextModels.Config):
             total_value=total_value,
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextResult[None]:
         """Validate inventory fact business rules."""
         if not self.item_id or not self.location_id or not self.facility_id:
             return FlextResult[None].fail(
@@ -258,7 +258,7 @@ class FlextDbtOracleWmsInventoryFact(FlextModels.Config):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self) -> FlextTypes.Core.Dict:
+    def to_dbt_dict(self: object) -> FlextTypes.Core.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "item_id": self.item_id,
@@ -318,7 +318,7 @@ class FlextDbtOracleWmsShipmentFact(FlextModels.Config):
             freight_cost=_get_float(record.get("freightCost")),
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextResult[None]:
         """Validate shipment fact business rules."""
         if not self.shipment_id or not self.order_id or not self.facility_id:
             return FlextResult[None].fail(
@@ -346,7 +346,7 @@ class FlextDbtOracleWmsShipmentFact(FlextModels.Config):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self) -> FlextTypes.Core.Dict:
+    def to_dbt_dict(self: object) -> FlextTypes.Core.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "shipment_id": self.shipment_id,
@@ -371,7 +371,7 @@ class FlextDbtOracleWmsTransformer:
     Transforms Oracle WMS records into DBT-compatible data models.
     """
 
-    def __init__(self) -> None:
+    def __init__(self: object) -> None:
         """Initialize Oracle WMS transformer."""
         logger.info("Initialized Oracle WMS DBT transformer")
 
@@ -399,7 +399,9 @@ class FlextDbtOracleWmsTransformer:
                 item_dim = FlextDbtOracleWmsItemDimension.from_oracle_wms_record(record)
 
                 # Validate business rules
-                validation_result = item_dim.validate_business_rules()
+                validation_result: FlextResult[object] = (
+                    item_dim.validate_business_rules()
+                )
                 if validation_result.is_success:
                     item_dims.append(item_dim)
                 else:
@@ -442,7 +444,9 @@ class FlextDbtOracleWmsTransformer:
                 )
 
                 # Validate business rules
-                validation_result = location_dim.validate_business_rules()
+                validation_result: FlextResult[object] = (
+                    location_dim.validate_business_rules()
+                )
                 if validation_result.is_success:
                     location_dims.append(location_dim)
                 else:
@@ -485,7 +489,9 @@ class FlextDbtOracleWmsTransformer:
                 )
 
                 # Validate business rules
-                validation_result = inventory_fact.validate_business_rules()
+                validation_result: FlextResult[object] = (
+                    inventory_fact.validate_business_rules()
+                )
                 if validation_result.is_success:
                     inventory_facts.append(inventory_fact)
                 else:
@@ -529,7 +535,9 @@ class FlextDbtOracleWmsTransformer:
                 )
 
                 # Validate business rules
-                validation_result = shipment_fact.validate_business_rules()
+                validation_result: FlextResult[object] = (
+                    shipment_fact.validate_business_rules()
+                )
                 if validation_result.is_success:
                     shipment_facts.append(shipment_fact)
                 else:

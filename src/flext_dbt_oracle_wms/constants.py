@@ -220,8 +220,8 @@ class DBTOracleWMSDefaults:
     )
 
 
-class WMSConstants:
-    """Core WMS constants (DEPRECATED - use FlextDbtOracleWmsConstants.Entities and Processing)."""
+class FlextWmsConstants(FlextConstants):
+    """Core WMS constants extending FlextConstants (DEPRECATED - use FlextDbtOracleWmsConstants.Entities and Processing)."""
 
     # Entity levels
     HIGH_LEVEL = "high"
@@ -252,5 +252,5 @@ __all__: FlextTypes.Core.StringList = [
     "FlextDbtOracleWmsConstants",
     # Modern Semantic Constants (Primary API)
     "FlextDbtOracleWmsSemanticConstants",
-    "WMSConstants",
+    "FlextWmsConstants",
 ]
