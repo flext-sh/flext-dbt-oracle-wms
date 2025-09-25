@@ -192,7 +192,7 @@ class FlextDbtOracleWmsMonitoringService:
         workflow_name: str,
         workflow_type: str,
         entity_names: FlextTypes.Core.StringList | None = None,
-        additional_data: dict[str, str | int | float | bool] | None = None,
+        additional_data: dict[str, str | int, float] | bool | None = None,
     ) -> FlextTypes.Core.Dict:
         """Track Oracle WMS workflow execution metrics.
 
@@ -224,8 +224,8 @@ class FlextDbtOracleWmsMonitoringService:
 
     def log_workflow_completion(
         self,
-        tracking_info: dict[str, str | int | float | bool],
-        result: FlextResult[dict[str, str | int | float | bool]],
+        tracking_info: dict[str, str | int, float] | bool,
+        result: FlextResult[dict[str, str | int, float] | bool],
     ) -> None:
         """Log Oracle WMS workflow completion metrics.
 

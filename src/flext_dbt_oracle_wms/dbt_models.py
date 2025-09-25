@@ -56,7 +56,7 @@ class FlextDbtOracleWmsItemDimension(FlextModels.Config):
     Represents an item dimension table structure optimized for analytics.
 
     Returns:
-            str | None:: Description of return value.
+            str | None: Description of return value.
 
     """
 

@@ -1018,8 +1018,8 @@ class FlextDbtOracleWmsClient:
 
     def _prepare_oracle_wms_data_for_dbt(
         self,
-        entity_data: dict[str, list[dict[str, str | int | float | bool]]],
-    ) -> dict[str, list[dict[str, str | int | float | bool]]]:
+        entity_data: dict[str, list[dict[str, str | int, float] | bool]],
+    ) -> dict[str, list[dict[str, str | int, float] | bool]]:
         """Prepare Oracle WMS data for DBT processing.
 
         Converts Oracle WMS records to format suitable for DBT models using field mappings.
