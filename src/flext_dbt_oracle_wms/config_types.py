@@ -13,7 +13,7 @@ from flext_oracle_wms.wms_constants import (
 )
 from pydantic import Field
 
-from flext_core import FlextModels
+from flext_core import FlextConfig
 
 # Simple type aliases for dbt Oracle WMS
 NonEmptyStr = str
@@ -37,7 +37,7 @@ def _get_default_wms_entities() -> list[str]:
     return entities
 
 
-class FlextDBTOracleWMSConfig(FlextModels):
+class FlextDBTOracleWMSConfig(FlextConfig):
     """FLEXT DBT Oracle WMS configuration using core types."""
 
     project_name: ProjectName = Field(
@@ -46,7 +46,7 @@ class FlextDBTOracleWMSConfig(FlextModels):
     )
     version: Version = Field(default="0.9.0", description="Project version")
     profile: NonEmptyStr = Field(
-        default="flext_oracle_wms",
+        default=flext_oracle_wms,
         description="DBT profile name",
     )
 

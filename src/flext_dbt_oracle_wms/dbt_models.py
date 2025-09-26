@@ -5,6 +5,8 @@ Copyright (c) 2025 FLEXT Team. All rights reserved. SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from typing import override
+
 from flext_core import FlextLogger, FlextModels, FlextResult, FlextTypes
 from flext_oracle_wms import FlextOracleWmsEntity
 
@@ -308,7 +310,7 @@ class FlextDbtOracleWmsShipmentFact(FlextModels.Config):
             carrier=_get_str(record.get("carrier")),
             tracking_number=_get_str(record.get("trackingNumber")),
             shipment_status=_get_str(record.get("shipmentStatus"), "CREATED")
-            or "CREATED",
+            or CREATED,
             planned_ship_date=_get_str(record.get("plannedShipDate")),
             actual_ship_date=_get_str(record.get("actualShipDate")),
             planned_delivery_date=_get_str(record.get("plannedDeliveryDate")),
@@ -371,6 +373,7 @@ class FlextDbtOracleWmsTransformer:
     Transforms Oracle WMS records into DBT-compatible data models.
     """
 
+    @override
     def __init__(self: object) -> None:
         """Initialize Oracle WMS transformer."""
         logger.info("Initialized Oracle WMS DBT transformer")

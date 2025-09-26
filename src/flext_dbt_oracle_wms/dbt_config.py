@@ -72,8 +72,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             "status_hierarchy": ["CREATED", "PICKED", "PACKED", "SHIPPED", "DELIVERED"],
         },
         "location_constraints": {
-            "allow_negative_inventory": False,
-            "enforce_capacity_limits": True,
+            "allow_negative_inventory": "False",
+            "enforce_capacity_limits": "True",
         },
     }
 

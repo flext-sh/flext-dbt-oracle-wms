@@ -1,3 +1,7 @@
+"""Module docstring."""
+
+from __future__ import annotations
+
 """FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using consolidated DBT patterns.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
@@ -45,14 +49,8 @@ from flext_dbt_oracle_wms.exceptions import (
 
 # Factory functions and compatibility imports
 # Factory functions temporarily disabled - modules not implemented yet
-# Models - Oracle WMS DBT data models and transformers
-from flext_dbt_oracle_wms.models import (
-    FlextDbtOracleWmsInventoryFact,
-    FlextDbtOracleWmsItemDimension,
-    FlextDbtOracleWmsLocationDimension,
-    FlextDbtOracleWmsShipmentFact,
-    FlextDbtOracleWmsTransformer,
-)
+# Models - Oracle WMS DBT unified models collection
+from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 
 # ================================
 # PUBLIC API EXPORTS
@@ -69,18 +67,14 @@ __all__ = [
     "FlextDbtOracleWmsConnectionError",
     "FlextDbtOracleWmsError",
     "FlextDbtOracleWmsInventoryError",
-    # Models & Transformers - Data structures
-    "FlextDbtOracleWmsInventoryFact",
-    "FlextDbtOracleWmsItemDimension",
-    "FlextDbtOracleWmsLocationDimension",
     "FlextDbtOracleWmsModelError",
+    # Models - Unified models collection
+    "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsMonitoringService",
     "FlextDbtOracleWmsProcessingError",
     "FlextDbtOracleWmsShipmentError",
-    "FlextDbtOracleWmsShipmentFact",
     "FlextDbtOracleWmsTestError",
     "FlextDbtOracleWmsTimeoutError",
-    "FlextDbtOracleWmsTransformer",
     "FlextDbtOracleWmsValidationError",
     "FlextDbtOracleWmsWorkflowService",
     # Core patterns (from flext-core)

@@ -6,6 +6,7 @@ Copyright (c) 2025 FLEXT Team. All rights reserved. SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 import time
+from typing import override
 
 from flext_core import FlextLogger, FlextResult, FlextTypes
 from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
@@ -21,6 +22,8 @@ class FlextDbtOracleWmsWorkflowService:
     Oracle WMS data transformation pipelines.
     """
 
+    @override
+    @override
     def __init__(
         self,
         config: FlextDbtOracleWmsConfig | None = None,
@@ -132,8 +135,8 @@ class FlextDbtOracleWmsWorkflowService:
 
             results: FlextTypes.Core.Dict = {
                 "analysis": {
-                    "total_entities": total_entities,
-                    "entity_type_distribution": entity_counts,
+                    "total_entities": "total_entities",
+                    "entity_type_distribution": "entity_counts",
                     "most_common_entity_type": max(
                         entity_counts,
                         key=lambda k: entity_counts[k],
@@ -141,7 +144,7 @@ class FlextDbtOracleWmsWorkflowService:
                     if entity_counts
                     else None,
                 },
-                "recommendations": recommendations,
+                "recommendations": "recommendations",
                 "suggested_config": {
                     "dbt_threads": min(8, max(4, total_entities // 5))
                     if total_entities > config_threads_threshold
@@ -174,6 +177,8 @@ class FlextDbtOracleWmsMonitoringService:
     Provides monitoring, logging, and metrics collection for workflow execution.
     """
 
+    @override
+    @override
     def __init__(
         self,
         config: FlextDbtOracleWmsConfig,
@@ -192,7 +197,7 @@ class FlextDbtOracleWmsMonitoringService:
         workflow_name: str,
         workflow_type: str,
         entity_names: FlextTypes.Core.StringList | None = None,
-        additional_data: dict[str, str | int, float] | bool | None = None,
+        additional_data: dict[str, str | int | float] | None = None,
     ) -> FlextTypes.Core.Dict:
         """Track Oracle WMS workflow execution metrics.
 
@@ -208,8 +213,8 @@ class FlextDbtOracleWmsMonitoringService:
         """
         # Create tracking info
         tracking_info: FlextTypes.Core.Dict = {
-            "workflow_name": workflow_name,
-            "workflow_type": workflow_type,
+            "workflow_name": "workflow_name",
+            "workflow_type": "workflow_type",
             "start_time": time.time(),
             "entity_names": entity_names or [],
             "additional_data": additional_data or {},
@@ -224,8 +229,8 @@ class FlextDbtOracleWmsMonitoringService:
 
     def log_workflow_completion(
         self,
-        tracking_info: dict[str, str | int, float] | bool,
-        result: FlextResult[dict[str, str | int, float] | bool],
+        tracking_info: dict[str, str | int | float],
+        result: FlextResult[dict[str, str | int | float]],
     ) -> None:
         """Log Oracle WMS workflow completion metrics.
 

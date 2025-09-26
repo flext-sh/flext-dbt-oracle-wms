@@ -136,7 +136,7 @@ class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
     Configuration = FlextDbtOracleWmsSemanticConstants.Configuration
 
     # Legacy compatibility - flat access patterns (DEPRECATED - use semantic access)
-    PROJECT_NAME = FlextDbtOracleWmsSemanticConstants.Dbt.PROJECT_NAME
+    # PROJECT_NAME = FlextDbtOracleWmsSemanticConstants.Dbt.PROJECT_NAME  # Disabled: Final override violation
     VERSION = FlextDbtOracleWmsSemanticConstants.Core.VERSION
     PROFILE = FlextDbtOracleWmsSemanticConstants.Dbt.PROFILE
     SCHEMA_PREFIX = FlextDbtOracleWmsSemanticConstants.Dbt.SCHEMA_PREFIX

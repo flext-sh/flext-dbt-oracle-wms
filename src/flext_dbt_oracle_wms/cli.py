@@ -8,13 +8,13 @@ from __future__ import annotations
 
 import asyncio
 import sys
+from typing import override
 
 from flext_cli import FlextCliApi, FlextCliModels
 from flext_core import FlextLogger, FlextResult
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
     FlextDbtOracleWmsWorkflowService,
-    __version__,
 )
 
 logger = FlextLogger(__name__)
@@ -23,6 +23,7 @@ logger = FlextLogger(__name__)
 class FlextDbtOracleWmsCliService:
     """FLEXT DBT Oracle WMS CLI service using flext-cli foundation exclusively."""
 
+    @override
     def __init__(self: object) -> None:
         """Initialize CLI service with flext-cli patterns."""
         self._cli_api = FlextCliApi()
@@ -115,7 +116,7 @@ class FlextDbtOracleWmsCliService:
         try:
             info_data = {
                 "name": "FLEXT DBT Oracle WMS",
-                "version": __version__,
+                "version": "__version__",
                 "purpose": "Oracle WMS data transformation with DBT",
                 "architecture": "flext-core + flext-oracle-wms + flext-meltano",
                 "commands": [

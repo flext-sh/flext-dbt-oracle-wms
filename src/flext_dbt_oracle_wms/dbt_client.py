@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from pathlib import Path
+from typing import override
 
 from flext_core import FlextLogger, FlextResult, FlextTypes
 from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
@@ -23,6 +24,7 @@ class FlextDbtOracleWmsClient:
     and DBT transformation operations using maximum composition from flext-oracle-wms.
     """
 
+    @override
     def __init__(
         self,
         config: FlextDbtOracleWmsConfig | None = None,
@@ -917,7 +919,7 @@ class FlextDbtOracleWmsClient:
         try:
             # Test the Oracle WMS connection
             # Mock connection test for now
-            test_result: FlextResult[object] = FlextResult[dict[str, object]].ok({
+            test_result: FlextResult[object] = FlextResult[dict["str", "object"]].ok({
                 "status": "connected"
             })
             if test_result.is_failure:
@@ -996,7 +998,7 @@ class FlextDbtOracleWmsClient:
                 entity_name, records
             )
             if validate_result.is_failure:
-                return FlextResult[dict[str, object]].fail(
+                return FlextResult[dict["str", "object"]].fail(
                     validate_result.error or "Validation failed",
                 )
             entity_data[entity_name] = records
@@ -1071,9 +1073,9 @@ class FlextDbtOracleWmsClient:
             # Use the Oracle WMS client to extract data
             # Mock data extraction for now
             data = [{"id": 1, "name": f"sample_{entity_name}"}]
-            return FlextResult[list[dict[str, object]]].ok(data)
+            return FlextResult[list[dict["str", "object"]]].ok(data)
         except Exception as e:
-            return FlextResult[list[dict[str, object]]].fail(
+            return FlextResult[list[dict["str", "object"]]].fail(
                 f"Failed to extract data: {e}",
             )
 
@@ -1088,14 +1090,16 @@ class FlextDbtOracleWmsClient:
             _ = entity_name
             # Basic validation - check that records are not empty
             if not records:
-                return FlextResult[list[dict[str, object]]].fail(
+                return FlextResult[list[dict["str", "object"]]].fail(
                     "No records to validate",
                 )
 
             # Return validated records
-            return FlextResult[list[dict[str, object]]].ok(records)
+            return FlextResult[list[dict["str", "object"]]].ok(records)
         except Exception as e:
-            return FlextResult[list[dict[str, object]]].fail(f"Validation failed: {e}")
+            return FlextResult[list[dict["str", "object"]]].fail(
+                f"Validation failed: {e}"
+            )
 
     async def transform_with_dbt(
         self,
@@ -1112,9 +1116,9 @@ class FlextDbtOracleWmsClient:
                 "transformed_tables": list(entity_data.keys()),
                 "status": "success",
             }
-            return FlextResult[dict[str, object]].ok(result)
+            return FlextResult[dict["str", "object"]].ok(result)
         except Exception as e:
-            return FlextResult[dict[str, object]].fail(
+            return FlextResult[dict["str", "object"]].fail(
                 f"DBT transformation failed: {e}",
             )
 
