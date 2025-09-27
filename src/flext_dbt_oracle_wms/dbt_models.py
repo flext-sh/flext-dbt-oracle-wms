@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextLogger, FlextModels, FlextResult, FlextTypes
+from flext_core import FlextConfig, FlextLogger, FlextResult, FlextTypes
 from flext_oracle_wms import FlextOracleWmsEntity
 
 logger = FlextLogger(__name__)
@@ -52,7 +52,7 @@ def _get_bool(value: object, *, default: bool = False) -> bool:
     return default
 
 
-class FlextDbtOracleWmsItemDimension(FlextModels.Config):
+class FlextDbtOracleWmsItemDimension(FlextConfig):
     """Item dimension model for DBT Oracle WMS transformations.
 
     Represents an item dimension table structure optimized for analytics.
@@ -124,7 +124,7 @@ class FlextDbtOracleWmsItemDimension(FlextModels.Config):
         }
 
 
-class FlextDbtOracleWmsLocationDimension(FlextModels.Config):
+class FlextDbtOracleWmsLocationDimension(FlextConfig):
     """Location dimension model for DBT Oracle WMS transformations.
 
     Represents a location dimension table structure optimized for analytics.
@@ -200,7 +200,7 @@ class FlextDbtOracleWmsLocationDimension(FlextModels.Config):
         }
 
 
-class FlextDbtOracleWmsInventoryFact(FlextModels.Config):
+class FlextDbtOracleWmsInventoryFact(FlextConfig):
     """Inventory fact model for DBT Oracle WMS transformations.
 
     Represents inventory levels as fact table optimized for analytics.
@@ -277,7 +277,7 @@ class FlextDbtOracleWmsInventoryFact(FlextModels.Config):
         }
 
 
-class FlextDbtOracleWmsShipmentFact(FlextModels.Config):
+class FlextDbtOracleWmsShipmentFact(FlextConfig):
     """Shipment fact model for DBT Oracle WMS transformations.
 
     Represents shipments as fact table optimized for analytics.
@@ -310,7 +310,7 @@ class FlextDbtOracleWmsShipmentFact(FlextModels.Config):
             carrier=_get_str(record.get("carrier")),
             tracking_number=_get_str(record.get("trackingNumber")),
             shipment_status=_get_str(record.get("shipmentStatus"), "CREATED")
-            or CREATED,
+            or "CREATED",
             planned_ship_date=_get_str(record.get("plannedShipDate")),
             actual_ship_date=_get_str(record.get("actualShipDate")),
             planned_delivery_date=_get_str(record.get("plannedDeliveryDate")),

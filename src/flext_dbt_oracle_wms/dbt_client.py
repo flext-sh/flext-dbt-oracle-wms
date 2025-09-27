@@ -11,7 +11,7 @@ from typing import override
 
 from flext_core import FlextLogger, FlextResult, FlextTypes
 from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
-from flext_meltano import FlextMeltanoDbtService
+from flext_meltano import FlextMeltanoAPI
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
 logger = FlextLogger(__name__)
@@ -35,7 +35,9 @@ class FlextDbtOracleWmsClient:
             config: Configuration for Oracle WMS and DBT operations
 
         """
-        self.config: dict[str, object] = config or FlextDbtOracleWmsConfig()
+        self.config: dict[str, object] = (
+            config or FlextDbtOracleWmsConfig.get_global_instance()
+        )
         # Initialize Oracle WMS client using flext-oracle-wms
         oracle_wms_config: dict[str, object] = self.config.get_oracle_wms_config()
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
@@ -54,7 +56,7 @@ class FlextDbtOracleWmsClient:
                 if getattr(meltano_config, "project_root", None)
                 else None
             )
-            self._dbt_service = FlextMeltanoDbtService(name="dbt-oracle-wms")
+            self._dbt_service = FlextMeltanoAPI()
         return self._dbt_service
 
     @property

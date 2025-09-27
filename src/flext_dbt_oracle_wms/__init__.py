@@ -1,16 +1,16 @@
-"""Module docstring."""
-
-from __future__ import annotations
-
 """FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using consolidated DBT patterns.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
 
+from __future__ import annotations
+
 import importlib.metadata
 
 from flext_core import FlextResult
+from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 
 __version__ = importlib.metadata.version("flext-dbt-oracle-wms")
 
@@ -23,8 +23,6 @@ __version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
 # Configuration - Essential for setup
 # Client - Main interface for Oracle WMS DBT operations
 # Compatibility imports temporarily disabled - modules not implemented yet
-from flext_dbt_oracle_wms.dbt_client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 
 # Services - High-level workflow orchestration
 from flext_dbt_oracle_wms.dbt_services import (
@@ -50,7 +48,10 @@ from flext_dbt_oracle_wms.exceptions import (
 # Factory functions and compatibility imports
 # Factory functions temporarily disabled - modules not implemented yet
 # Models - Oracle WMS DBT unified models collection
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
+from flext_dbt_oracle_wms.models import (
+    FlextDbtOracleWmsModels,
+    FlextDbtOracleWmsUtilities,
+)
 
 # ================================
 # PUBLIC API EXPORTS
@@ -75,6 +76,8 @@ __all__ = [
     "FlextDbtOracleWmsShipmentError",
     "FlextDbtOracleWmsTestError",
     "FlextDbtOracleWmsTimeoutError",
+    # Utilities - Standardized [Project]Utilities pattern
+    "FlextDbtOracleWmsUtilities",
     "FlextDbtOracleWmsValidationError",
     "FlextDbtOracleWmsWorkflowService",
     # Core patterns (from flext-core)

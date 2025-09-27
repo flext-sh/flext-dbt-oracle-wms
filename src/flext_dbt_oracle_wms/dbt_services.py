@@ -34,7 +34,9 @@ class FlextDbtOracleWmsWorkflowService:
             config: Configuration for Oracle WMS and DBT operations
 
         """
-        self.config: dict[str, object] = config or FlextDbtOracleWmsConfig()
+        self.config: dict[str, object] = (
+            config or FlextDbtOracleWmsConfig.get_global_instance()
+        )
         # Initialize WMS client - placeholder for future implementation
         self.client = (
             None  # Will be properly initialized when WMS integration is complete
@@ -211,6 +213,10 @@ class FlextDbtOracleWmsMonitoringService:
             Dictionary containing execution tracking information
 
         """
+        _ = (
+            workflow_name,
+            workflow_type,
+        )  # Parameters required by API but not used in stub implementation
         # Create tracking info
         tracking_info: FlextTypes.Core.Dict = {
             "workflow_name": "workflow_name",

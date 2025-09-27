@@ -9,7 +9,6 @@ from __future__ import annotations
 from typing import ClassVar
 
 from flext_oracle_wms.wms_constants import (
-    FlextOracleWmsSemanticConstants as _WmsConstants,
     OracleWMSEntityType as _OracleWMSEntityType,
 )
 
@@ -25,7 +24,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         NAME = "flext-dbt-oracle-wms"
         VERSION = "0.9.0"
         # CONSUME from single source
-        ECOSYSTEM_SIZE = FlextConstants.Core.ECOSYSTEM_SIZE
+        ECOSYSTEM_SIZE = 33  # Total FLEXT ecosystem projects
 
     class Dbt:
         """DBT-specific configuration constants."""
@@ -72,13 +71,17 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         """Oracle WMS entity type constants - consumed from flext-oracle-wms."""
 
         # CONSUME Oracle WMS entities from single source (flext-oracle-wms)
-        WMS_ENTITIES: ClassVar[FlextTypes.Core.StringList] = (
-            _WmsConstants.Entities.CORE_ENTITIES
-            + _WmsConstants.Entities.ORDER_ENTITIES
-            + _WmsConstants.Entities.INVENTORY_ENTITIES
-            + _WmsConstants.Entities.MOVEMENT_ENTITIES
-            + _WmsConstants.Entities.SHIPMENT_ENTITIES
-        )
+        WMS_ENTITIES: ClassVar[FlextTypes.Core.StringList] = [
+            "inventory",
+            "location",
+            "allocation",
+            "order",
+            "item",
+            "shipment",
+            "receipt",
+            "task",
+            "wave",
+        ]
 
         # Entity priority levels
         PRIORITY_LEVELS: ClassVar[FlextTypes.Core.StringList] = [
@@ -91,7 +94,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         """Data processing configuration constants."""
 
         # Batch processing - CONSUME from single source
-        DEFAULT_BATCH_SIZE = FlextConstants.Performance.DEFAULT_BATCH_SIZE
+        DEFAULT_BATCH_SIZE = 1000  # Default batch size for WMS operations
         INCREMENTAL_LOOKBACK_DAYS = 7
 
         # Data quality
@@ -153,14 +156,14 @@ class DBTOracleWMSEntityTypes:
     """Oracle WMS entity types for DBT models (DEPRECATED - use FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES)."""
 
     # CONSUME from flext-oracle-wms API
-    ALLOCATION = _OracleWMSEntityType.ALLOCATION
-    ORDER_HDR = _OracleWMSEntityType.ORDER_HDR
-    ORDER_DTL = _OracleWMSEntityType.ORDER_DTL
     INVENTORY = _OracleWMSEntityType.INVENTORY
+    ORDER = _OracleWMSEntityType.ORDER
+    SHIPMENT = _OracleWMSEntityType.SHIPMENT
+    PICKING = _OracleWMSEntityType.PICKING
     LOCATION = _OracleWMSEntityType.LOCATION
     ITEM = _OracleWMSEntityType.ITEM
-    SHIPMENT = _OracleWMSEntityType.SHIPMENT
     # Additional entities not in base enum
+    ALLOCATION = "allocation"
     RECEIPT = "receipt"
     TASK = "task"
     WAVE = "wave"

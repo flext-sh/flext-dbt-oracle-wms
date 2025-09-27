@@ -35,7 +35,7 @@ class FlextDbtOracleWmsCliService:
     ) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig()
+            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             result: FlextResult[object] = asyncio.run(
@@ -57,7 +57,7 @@ class FlextDbtOracleWmsCliService:
     def handle_extract(self, args: dict[str, object] | None = None) -> FlextResult[str]:
         """Handle extract command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig()
+            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse entities from args if provided
@@ -86,7 +86,7 @@ class FlextDbtOracleWmsCliService:
     ) -> FlextResult[str]:
         """Handle pipeline command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig()
+            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse parameters from args if provided
