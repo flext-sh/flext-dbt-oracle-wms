@@ -8,9 +8,7 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_oracle_wms.wms_constants import (
-    OracleWMSEntityType as _OracleWMSEntityType,
-)
+from flext_oracle_wms.wms_constants import OracleWMSEntityType
 
 from flext_core import FlextConstants, FlextTypes
 
@@ -156,12 +154,12 @@ class DBTOracleWMSEntityTypes:
     """Oracle WMS entity types for DBT models (DEPRECATED - use FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES)."""
 
     # CONSUME from flext-oracle-wms API
-    INVENTORY = _OracleWMSEntityType.INVENTORY
-    ORDER = _OracleWMSEntityType.ORDER
-    SHIPMENT = _OracleWMSEntityType.SHIPMENT
-    PICKING = _OracleWMSEntityType.PICKING
-    LOCATION = _OracleWMSEntityType.LOCATION
-    ITEM = _OracleWMSEntityType.ITEM
+    INVENTORY = OracleWMSEntityType.INVENTORY
+    ORDER = OracleWMSEntityType.ORDER
+    SHIPMENT = OracleWMSEntityType.SHIPMENT
+    PICKING = OracleWMSEntityType.PICKING
+    LOCATION = OracleWMSEntityType.LOCATION
+    ITEM = OracleWMSEntityType.ITEM
     # Additional entities not in base enum
     ALLOCATION = "allocation"
     RECEIPT = "receipt"
