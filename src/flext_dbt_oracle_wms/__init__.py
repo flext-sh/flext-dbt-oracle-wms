@@ -48,10 +48,8 @@ from flext_dbt_oracle_wms.exceptions import (
 # Factory functions and compatibility imports
 # Factory functions temporarily disabled - modules not implemented yet
 # Models - Oracle WMS DBT unified models collection
-from flext_dbt_oracle_wms.models import (
-    FlextDbtOracleWmsModels,
-    FlextDbtOracleWmsUtilities,
-)
+from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
+from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities
 
 # ================================
 # PUBLIC API EXPORTS

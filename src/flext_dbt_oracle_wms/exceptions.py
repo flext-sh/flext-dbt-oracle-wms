@@ -45,9 +45,6 @@ class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT inventory-specific errors with WMS context."""
 
     @override
-    @override
-    @override
-    @override
     def __init__(
         self,
         message: str = "Oracle WMS DBT inventory error",
@@ -74,9 +71,6 @@ class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsProcessingError):
 class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT shipment-specific errors with shipping context."""
 
-    @override
-    @override
-    @override
     @override
     def __init__(
         self,
@@ -105,9 +99,6 @@ class FlextDbtOracleWmsModelError(FlextDbtOracleWmsProcessingError):
     """Oracle WMS DBT model-specific errors with dbt model context."""
 
     @override
-    @override
-    @override
-    @override
     def __init__(
         self,
         message: str = "Oracle WMS DBT model error",
@@ -134,9 +125,6 @@ class FlextDbtOracleWmsModelError(FlextDbtOracleWmsProcessingError):
 class FlextDbtOracleWmsTestError(FlextDbtOracleWmsValidationError):
     """Oracle WMS DBT test errors with test validation context."""
 
-    @override
-    @override
-    @override
     @override
     def __init__(
         self,

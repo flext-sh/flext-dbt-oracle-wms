@@ -23,7 +23,6 @@ class FlextDbtOracleWmsWorkflowService:
     """
 
     @override
-    @override
     def __init__(
         self,
         config: FlextDbtOracleWmsConfig | None = None,
@@ -179,7 +178,6 @@ class FlextDbtOracleWmsMonitoringService:
     Provides monitoring, logging, and metrics collection for workflow execution.
     """
 
-    @override
     @override
     def __init__(
         self,
