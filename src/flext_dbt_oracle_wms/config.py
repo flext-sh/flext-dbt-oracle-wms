@@ -14,10 +14,8 @@ from flext_oracle_wms.wms_config import FlextOracleWmsConfig
 from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import SettingsConfigDict
 
-from flext_core import FlextConfig, FlextLogger, FlextResult, FlextTypes
+from flext_core import FlextConfig, FlextResult, FlextTypes
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
-
-logger = FlextLogger(__name__)
 
 
 class FlextDbtOracleWmsConfig(FlextConfig):

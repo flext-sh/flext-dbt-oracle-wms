@@ -14,8 +14,6 @@ from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
 from flext_meltano import FlextMeltanoAPI
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
-logger = FlextLogger(__name__)
-
 
 class FlextDbtOracleWmsClient:
     """DBT client for Oracle WMS data transformations.
@@ -23,6 +21,9 @@ class FlextDbtOracleWmsClient:
     Provides unified interface for Oracle WMS data extraction, validation,
     and DBT transformation operations using maximum composition from flext-oracle-wms.
     """
+
+    # Shared logger for all DBT Oracle WMS client operations
+    _logger = FlextLogger(__name__)
 
     @override
     def __init__(
@@ -42,7 +43,9 @@ class FlextDbtOracleWmsClient:
         oracle_wms_config: dict[str, object] = self.config.get_oracle_wms_config()
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
         self._dbt_service: object | None = None
-        logger.info("Initialized DBT Oracle WMS client with config: %s", self.config)
+        FlextDbtOracleWmsClient._logger.info(
+            "Initialized DBT Oracle WMS client with config: %s", self.config
+        )
 
     @property
     def dbt_service(self: object) -> object:
@@ -110,7 +113,7 @@ class FlextDbtOracleWmsClient:
             FlextResult containing complete pipeline results
 
         """
-        logger.info("Starting full Oracle WMS-to-DBT pipeline")
+        FlextDbtOracleWmsClient._logger.info("Starting full Oracle WMS-to-DBT pipeline")
         # Step 1: Discover entities if not specified
         if entity_names is None:
             discover_result: FlextResult[
@@ -170,7 +173,9 @@ class FlextDbtOracleWmsClient:
             "transformation_results": transform_result.data,
             "pipeline_status": "completed",
         }
-        logger.info("Full Oracle WMS-to-DBT pipeline completed successfully")
+        FlextDbtOracleWmsClient._logger.info(
+            "Full Oracle WMS-to-DBT pipeline completed successfully"
+        )
         return FlextResult[FlextTypes.Core.Dict].ok(pipeline_results)
 
     def _prepare_oracle_wms_data_for_dbt(
@@ -200,7 +205,7 @@ class FlextDbtOracleWmsClient:
                     mapped_record[dbt_field] = value
                 mapped_records.append(mapped_record)
             prepared_data[table_name] = mapped_records
-        logger.debug(
+        FlextDbtOracleWmsClient._logger.debug(
             "Prepared Oracle WMS data for DBT: %s",
             {k: len(v) for k, v in prepared_data.items()},
         )
