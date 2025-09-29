@@ -25,6 +25,7 @@ from flext_dbt_oracle_wms.exceptions import (
     FlextDbtOracleWmsValidationError,
 )
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
+from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsMonitoringService,
     FlextDbtOracleWmsWorkflowService,
@@ -47,6 +48,7 @@ __all__ = [
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsMonitoringService",
     "FlextDbtOracleWmsProcessingError",
+    "FlextDbtOracleWmsProtocols",
     "FlextDbtOracleWmsShipmentError",
     "FlextDbtOracleWmsTestError",
     "FlextDbtOracleWmsTimeoutError",

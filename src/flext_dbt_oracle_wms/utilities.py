@@ -14,6 +14,7 @@ from flext_core import (
     FlextResult,
     FlextUtilities,
 )
+from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsSemanticConstants
 
 __all__: list[str] = ["FlextDbtOracleWmsUtilities"]
 
@@ -257,6 +258,15 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
 
             """
             try:
+                # Validate inventory configuration
+                if not inventory_config:
+                    return FlextResult[str].fail(
+                        "Inventory configuration cannot be empty"
+                    )
+
+                # Use configuration for materialization strategy
+                inventory_config.get("materialization", "table")
+                inventory_config.get("enable_partitioning", True)
                 model_sql = """{{
     config(
         materialized='table',
@@ -378,6 +388,12 @@ select * from final
 
             """
             try:
+                # Validate location configuration
+                if not location_config:
+                    return FlextResult[str].fail(
+                        "Location configuration cannot be empty"
+                    )
+
                 model_sql = """{{
     config(
         materialized='table',
@@ -469,6 +485,10 @@ where location_id is not null
 
             """
             try:
+                # Validate fact configuration
+                if not fact_config:
+                    return FlextResult[str].fail("Fact configuration cannot be empty")
+
                 model_sql = """{{
     config(
         materialized='incremental',
@@ -578,6 +598,12 @@ left join {{ ref('dim_user') }} u on t.user_id = u.user_id
 
             """
             try:
+                # Validate snapshot configuration
+                if not snapshot_config:
+                    return FlextResult[str].fail(
+                        "Snapshot configuration cannot be empty"
+                    )
+
                 model_sql = """{{
     config(
         materialized='table',
@@ -736,7 +762,10 @@ from inventory_metrics
                     ])
 
                 # Data volume-based optimizations
-                if data_volume > 100:  # > 100GB daily
+                if (
+                    data_volume
+                    > FlextDbtOracleWmsSemanticConstants.Processing.HIGH_VOLUME_THRESHOLD
+                ):  # > 100GB daily
                     optimization_results["optimization_level"] = "enterprise"
                     optimization_results["recommendations"].extend([
                         "Implement Oracle Exadata optimization features",
@@ -751,7 +780,10 @@ from inventory_metrics
                         "30-50% reduction"
                     )
 
-                elif data_volume > 10:  # > 10GB daily
+                elif (
+                    data_volume
+                    > FlextDbtOracleWmsSemanticConstants.Processing.MEDIUM_VOLUME_THRESHOLD
+                ):  # > 10GB daily
                     optimization_results["optimization_level"] = "advanced"
                     optimization_results["recommendations"].extend([
                         "Use Oracle advanced compression",
@@ -767,7 +799,10 @@ from inventory_metrics
                     )
 
                 # Query frequency-based optimizations
-                if query_frequency > 1000:  # > 1000 queries/hour
+                if (
+                    query_frequency
+                    > FlextDbtOracleWmsSemanticConstants.Processing.HIGH_FREQUENCY_THRESHOLD
+                ):  # > 1000 queries/hour
                     optimization_results["implementation_priority"] = "high"
                     optimization_results["recommendations"].extend([
                         "Implement Oracle connection pooling",
@@ -797,6 +832,12 @@ from inventory_metrics
 
             """
             try:
+                # Validate quality configuration
+                if not quality_config:
+                    return FlextResult[dict[str, Any]].fail(
+                        "Quality configuration cannot be empty"
+                    )
+
                 quality_analysis = {
                     "overall_score": 0,
                     "dimension_scores": {},
@@ -820,7 +861,11 @@ from inventory_metrics
                     quality_analysis["dimension_scores"][dimension] = score
 
                     # Generate dimension-specific issues and recommendations
-                    if dimension == "completeness" and score < 95:
+                    if (
+                        dimension == "completeness"
+                        and score
+                        < FlextDbtOracleWmsSemanticConstants.Processing.HIGH_QUALITY_THRESHOLD
+                    ):
                         quality_analysis["data_issues"].append(
                             f"Missing data in {dimension}: {100 - score}% incomplete"
                         )
@@ -828,7 +873,11 @@ from inventory_metrics
                             "Implement data validation rules for mandatory WMS fields"
                         )
 
-                    elif dimension == "accuracy" and score < 90:
+                    elif (
+                        dimension == "accuracy"
+                        and score
+                        < FlextDbtOracleWmsSemanticConstants.Processing.ACCEPTABLE_QUALITY_THRESHOLD
+                    ):
                         quality_analysis["data_issues"].append(
                             f"Data accuracy issues in {dimension}"
                         )
@@ -836,7 +885,11 @@ from inventory_metrics
                             "Implement automated WMS data reconciliation processes"
                         )
 
-                    elif dimension == "consistency" and score < 92:
+                    elif (
+                        dimension == "consistency"
+                        and score
+                        < FlextDbtOracleWmsSemanticConstants.Processing.GOOD_QUALITY_THRESHOLD
+                    ):
                         quality_analysis["data_issues"].append(
                             "Data consistency issues across WMS modules"
                         )
@@ -844,7 +897,11 @@ from inventory_metrics
                             "Standardize WMS data formats and reference data"
                         )
 
-                    elif dimension == "timeliness" and score < 88:
+                    elif (
+                        dimension == "timeliness"
+                        and score
+                        < FlextDbtOracleWmsSemanticConstants.Processing.MINIMUM_QUALITY_THRESHOLD
+                    ):
                         quality_analysis["data_issues"].append(
                             "WMS data latency issues"
                         )
@@ -858,14 +915,20 @@ from inventory_metrics
                 ) / len(quality_dimensions)
 
                 # Assess business impact
-                if quality_analysis["overall_score"] >= 95:
+                if (
+                    quality_analysis["overall_score"]
+                    >= FlextDbtOracleWmsSemanticConstants.Processing.HIGH_QUALITY_THRESHOLD
+                ):
                     quality_analysis["business_impact"] = {
                         "risk_level": "LOW",
                         "analytics_reliability": "HIGH",
                         "decision_confidence": "HIGH",
                         "estimated_accuracy": "> 98%",
                     }
-                elif quality_analysis["overall_score"] >= 85:
+                elif (
+                    quality_analysis["overall_score"]
+                    >= FlextDbtOracleWmsSemanticConstants.Processing.LOW_QUALITY_THRESHOLD
+                ):
                     quality_analysis["business_impact"] = {
                         "risk_level": "MEDIUM",
                         "analytics_reliability": "MEDIUM",

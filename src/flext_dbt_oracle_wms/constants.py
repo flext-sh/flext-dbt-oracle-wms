@@ -95,8 +95,20 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         DEFAULT_BATCH_SIZE = 1000  # Default batch size for WMS operations
         INCREMENTAL_LOOKBACK_DAYS = 7
 
-        # Data quality
+        # Data quality thresholds
         DATA_QUALITY_THRESHOLD = 0.95
+        HIGH_QUALITY_THRESHOLD = 95  # High quality score threshold
+        GOOD_QUALITY_THRESHOLD = 92  # Good quality score threshold
+        ACCEPTABLE_QUALITY_THRESHOLD = 90  # Acceptable quality score threshold
+        MINIMUM_QUALITY_THRESHOLD = 88  # Minimum quality score threshold
+        LOW_QUALITY_THRESHOLD = 85  # Low quality score threshold
+
+        # Data volume thresholds
+        HIGH_VOLUME_THRESHOLD = 100  # High volume threshold for WMS data
+        MEDIUM_VOLUME_THRESHOLD = 10  # Medium volume threshold for WMS data
+
+        # Query frequency thresholds
+        HIGH_FREQUENCY_THRESHOLD = 1000  # High frequency threshold for queries
 
         # Processing status
         PROCESSING_STATUSES: ClassVar[FlextTypes.Core.StringList] = [

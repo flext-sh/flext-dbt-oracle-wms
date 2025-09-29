@@ -14,7 +14,7 @@ from flext_oracle_wms.wms_config import FlextOracleWmsConfig
 from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import SettingsConfigDict
 
-from flext_core import FlextConfig, FlextResult, FlextTypes
+from flext_core import FlextConfig, FlextConstants, FlextResult, FlextTypes
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 
@@ -69,7 +69,9 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     )
 
     oracle_wms_max_retries: int = Field(
-        default=3, ge=0, description="Oracle WMS maximum retries"
+        default=FlextConstants.Reliability.MAX_RETRY_ATTEMPTS,
+        ge=0,
+        description="Oracle WMS maximum retries",
     )
 
     oracle_wms_environment: str = Field(
@@ -84,7 +86,11 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     dbt_target: str = Field(default="dev", description="DBT target environment")
 
-    dbt_threads: int = Field(default=4, ge=1, description="Number of DBT threads")
+    dbt_threads: int = Field(
+        default=FlextConstants.Container.DEFAULT_WORKERS,
+        ge=1,
+        description="Number of DBT threads",
+    )
 
     dbt_log_level: str = Field(default="info", description="DBT logging level")
 
