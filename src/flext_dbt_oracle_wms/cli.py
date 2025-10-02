@@ -6,11 +6,10 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-import asyncio
 import sys
 from typing import override
 
-from flext_cli import FlextCliApi, FlextCliModels
+from flext_cli import FlextCli, FlextCliModels
 from flext_core import FlextLogger, FlextResult
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
@@ -26,7 +25,7 @@ class FlextDbtOracleWmsCliService:
     @override
     def __init__(self: object) -> None:
         """Initialize CLI service with flext-cli patterns."""
-        self._cli_api = FlextCliApi()
+        self._cli_api = FlextCli()
         self._config: dict[str, object] = FlextCliModels.FlextCliConfig()
 
     def handle_discover(
@@ -38,7 +37,7 @@ class FlextDbtOracleWmsCliService:
             config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
-            result: FlextResult[object] = asyncio.run(
+            result: FlextResult[object] = (
                 workflow_service.generate_workflow_recommendations()
             )
 
@@ -68,7 +67,7 @@ class FlextDbtOracleWmsCliService:
             limit = args.get("limit") if args else None
             (dict.fromkeys(entity_names, limit) if entity_names and limit else None)
 
-            result: FlextResult[object] = asyncio.run(
+            result: FlextResult[object] = (
                 workflow_service.generate_workflow_recommendations()
             )
 
@@ -95,7 +94,7 @@ class FlextDbtOracleWmsCliService:
             model_names_raw: list[object] = args.get("models", []) if args else []
             model_names_raw if isinstance(model_names_raw, list) else []
 
-            result: FlextResult[object] = asyncio.run(
+            result: FlextResult[object] = (
                 workflow_service.generate_workflow_recommendations()
             )
 

@@ -42,7 +42,7 @@ class FlextDbtOracleWmsServices:
                 None  # Will be properly initialized when WMS integration is complete
             )
 
-        async def generate_workflow_recommendations(
+        def generate_workflow_recommendations(
             self,
             entities: list[FlextTypes.Core.Dict] | None = None,
         ) -> FlextResult[FlextTypes.Core.Dict]:
@@ -67,9 +67,9 @@ class FlextDbtOracleWmsServices:
                             "WMS client not initialized",
                             error_code="CLIENT_NOT_INITIALIZED",
                         )
-                    discovery_result: FlextResult[
-                        object
-                    ] = await self.client.discover_oracle_wms_entities()
+                    discovery_result: FlextResult[object] = (
+                        self.client.discover_oracle_wms_entities()
+                    )
                     if discovery_result.is_failure:
                         return FlextResult[FlextTypes.Core.Dict].fail(
                             discovery_result.error or "Discovery failed",

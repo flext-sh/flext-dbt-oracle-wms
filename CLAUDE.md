@@ -1,19 +1,42 @@
 # COMPREHENSIVE QUALITY REFACTORING - FLEXT DBT ORACLE WMS
 
-**Enterprise-Grade Oracle WMS Data Transformation Quality Standards**  
-**Version**: 2.1.0 | **Authority**: PROJECT | **Updated**: 2025-01-08  
-**Environment**: `/home/marlonsc/flext/.venv/bin/python` (No PYTHONPATH required)  
+**Enterprise-Grade Oracle WMS Data Transformation Quality Standards**
+**Version**: 2.1.0 | **Authority**: PROJECT | **Updated**: 2025-01-08
+**Environment**: `/home/marlonsc/flext/.venv/bin/python` (No PYTHONPATH required)
 **Based on**: flext-core 0.9.9 with 75%+ coverage (PROVEN FOUNDATION) and Oracle WMS dimensional modeling
 
 **Hierarchy**: This document provides project-specific standards based on workspace-level patterns defined in [../CLAUDE.md](../CLAUDE.md). For architectural principles, quality gates, and MCP server usage, reference the main workspace standards.
 
-## 🔗 MCP SERVER INTEGRATION
+## 📋 DOCUMENT STRUCTURE & REFERENCES
 
-| MCP Server              | Purpose                                                       | Status     |
-| ----------------------- | ------------------------------------------------------------- | ---------- |
-| **serena**              | DBT Oracle WMS codebase analysis and transformation patterns  | **ACTIVE** |
-| **sequential-thinking** | Oracle WMS data modeling and DBT architecture problem solving | **ACTIVE** |
-| **github**              | DBT ecosystem integration and Oracle WMS transformation PRs   | **ACTIVE** |
+**Quick Links**:
+- **[~/.claude/commands/flext.md](~/.claude/commands/flext.md)**: Optimization command for module refactoring (USE with `/flext` command)
+- **[../CLAUDE.md](../CLAUDE.md)**: FLEXT ecosystem standards and domain library rules
+
+**Document Purpose**:
+- **This file (CLAUDE.md)**: Project-specific flext-dbt-oracle-wms standards, DBT Oracle WMS transformation patterns, and warehouse management analytics authority
+- **flext.md command**: Practical refactoring workflows and MCP tool usage patterns (HOW-TO)
+- **Workspace CLAUDE.md**: Domain library standards and ecosystem architectural principles (WHAT and WHY)
+
+**DO NOT DUPLICATE**: This file focuses on flext-dbt-oracle-wms warehouse management analytics authority with MANDATORY use of flext-meltano, flext-oracle-wms, flext-db-oracle, and flext-core.
+
+**Usage**: Reference [~/.claude/commands/flext.md](~/.claude/commands/flext.md) for MCP workflows. Use `/flext` command for DBT Oracle WMS module optimization and Clean Architecture refactoring.
+
+**CRITICAL INTEGRATION DEPENDENCIES**:
+- **flext-meltano**: MANDATORY for ALL DBT operations (ZERO TOLERANCE for direct dbt imports)
+- **flext-oracle-wms**: MANDATORY for ALL Oracle WMS operations (ZERO TOLERANCE for bypassing WMS domain)
+- **flext-db-oracle**: MANDATORY for ALL Oracle Database operations (ZERO TOLERANCE for direct SQLAlchemy/oracledb imports)
+- **flext-core**: Foundation patterns (FlextResult, FlextService, FlextContainer)
+- **flext-cli**: MANDATORY for ALL CLI operations (ZERO TOLERANCE for direct click/rich imports)
+
+## 🔗 MCP SERVER INTEGRATION (MANDATORY)
+
+| MCP Server              | Purpose                                                       | Status          |
+| ----------------------- | ------------------------------------------------------------- | --------------- |
+| **serena-flext**        | Semantic code analysis, symbol manipulation, refactoring      | **MANDATORY**   |
+| **sequential-thinking** | Oracle WMS data modeling and DBT architecture problem solving | **RECOMMENDED** |
+| **context7**            | Third-party library documentation (dbt, Oracle WMS)           | **RECOMMENDED** |
+| **github**              | Repository operations and DBT Oracle WMS ecosystem PRs        | **ACTIVE**      |
 
 **Usage**: `claude mcp list` for available servers, leverage for DBT-specific development patterns and Oracle WMS transformation analysis.
 

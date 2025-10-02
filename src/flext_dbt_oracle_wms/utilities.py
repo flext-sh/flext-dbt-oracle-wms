@@ -949,12 +949,3 @@ from inventory_metrics
                 return FlextResult[dict[str, Any]].fail(
                     f"WMS data quality analysis failed: {e}"
                 )
-
-    async def execute_async(self) -> FlextResult[dict[str, Any]]:
-        """Execute DBT Oracle WMS utilities service operation asynchronously."""
-        return FlextResult[dict[str, Any]].ok({
-            "status": "operational",
-            "service": "flext-dbt-oracle-wms-utilities",
-            "timestamp": "now",
-            "version": "1.0.0",
-        })
