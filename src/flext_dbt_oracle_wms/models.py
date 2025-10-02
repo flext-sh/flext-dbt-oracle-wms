@@ -2,13 +2,14 @@
 
 Copyright (c) 2025 FLEXT Team. All rights reserved. SPDX-License-Identifier: MIT.
 """
-# SQL injection warnings are false positives for DBT template strings
 
+# SQL injection warnings are false positives for DBT template strings
 from __future__ import annotations
 
 from typing import override
 
 from flext_core import FlextModels, FlextResult, FlextUtilities
+
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 # Constants for magic values

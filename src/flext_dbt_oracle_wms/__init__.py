@@ -6,9 +6,10 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-import importlib.metadata
+from typing import Final
 
 from flext_core import FlextResult
+
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
 from flext_dbt_oracle_wms.exceptions import (
@@ -31,12 +32,16 @@ from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsWorkflowService,
 )
 from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities
+from flext_dbt_oracle_wms.version import VERSION, FlextDbtOracleWmsVersion
 
-__version__ = importlib.metadata.version("flext-dbt-oracle-wms")
+PROJECT_VERSION: Final[FlextDbtOracleWmsVersion] = VERSION
 
-__version_info__ = tuple(int(x) for x in __version__.split(".") if x.isdigit())
+__version__: str = VERSION.version
+__version_info__: tuple[int | str, ...] = VERSION.version_info
 
 __all__ = [
+    "PROJECT_VERSION",
+    "VERSION",
     "FlextDbtOracleWmsAuthenticationError",
     "FlextDbtOracleWmsClient",
     "FlextDbtOracleWmsConfig",
@@ -54,6 +59,7 @@ __all__ = [
     "FlextDbtOracleWmsTimeoutError",
     "FlextDbtOracleWmsUtilities",
     "FlextDbtOracleWmsValidationError",
+    "FlextDbtOracleWmsVersion",
     "FlextDbtOracleWmsWorkflowService",
     "FlextResult",
     "__version__",

@@ -8,12 +8,11 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
+from flext_core import FlextConfig
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as WmsConstants,
 )
 from pydantic import Field
-
-from flext_core import FlextConfig
 
 # Simple type aliases for dbt Oracle WMS
 NonEmptyStr = str
@@ -88,7 +87,7 @@ class DBTOracleWMSConfiguration(TypedDict):
 class DBTOracleWMSModelConfiguration(TypedDict):
     """DBT model configuration using core types."""
 
-    materialized: Literal["table", "view", "incremental"]
+    materialized: Literal[table, view, incremental]
     schema: NonEmptyStr
     tags: list[NonEmptyStr]
 

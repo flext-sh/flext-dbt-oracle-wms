@@ -31,7 +31,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: DBT run results or error
 
             """
-            ...
 
         def test_dbt_models(
             self,
@@ -48,7 +47,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: DBT test results or error
 
             """
-            ...
 
         def compile_dbt_models(
             self,
@@ -65,7 +63,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: DBT compilation results or error
 
             """
-            ...
 
         def get_dbt_manifest(self) -> FlextResult[dict[str, object]]:
             """Get DBT manifest with Oracle WMS model definitions.
@@ -74,7 +71,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: DBT manifest or error
 
             """
-            ...
 
         def validate_dbt_project(self, project_path: str) -> FlextResult[bool]:
             """Validate DBT project configuration for Oracle WMS integration.
@@ -86,7 +82,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[bool]: Validation status or error
 
             """
-            ...
 
     @runtime_checkable
     class WmsIntegrationProtocol(FlextProtocols.Domain.Service, Protocol):
@@ -105,7 +100,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Extracted WMS inventory data or error
 
             """
-            ...
 
         def extract_wms_transaction_data(
             self, wms_config: dict[str, object], extraction_config: dict[str, object]
@@ -120,7 +114,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Extracted WMS transaction data or error
 
             """
-            ...
 
         def transform_wms_to_dbt_format(
             self,
@@ -137,7 +130,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Transformed data or error
 
             """
-            ...
 
         def validate_wms_data_quality(
             self, data: list[dict[str, object]], quality_rules: dict[str, object]
@@ -152,7 +144,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Quality validation results or error
 
             """
-            ...
 
         def sync_wms_to_warehouse(
             self, wms_data: list[dict[str, object]], warehouse_config: dict[str, object]
@@ -167,7 +158,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Sync operation results or error
 
             """
-            ...
 
     @runtime_checkable
     class ModelingProtocol(FlextProtocols.Domain.Service, Protocol):
@@ -188,7 +178,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Inventory dimension model or error
 
             """
-            ...
 
         def create_location_dimension(
             self,
@@ -205,7 +194,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Location dimension model or error
 
             """
-            ...
 
         def create_warehouse_operations_models(
             self,
@@ -222,7 +210,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Warehouse operations models or error
 
             """
-            ...
 
         def generate_fact_tables(
             self, dimensions: list[dict[str, object]], fact_config: dict[str, object]
@@ -237,7 +224,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Generated fact tables or error
 
             """
-            ...
 
     @runtime_checkable
     class TransformationProtocol(FlextProtocols.Domain.Service, Protocol):
@@ -258,7 +244,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Normalized WMS inventory data or error
 
             """
-            ...
 
         def process_wms_transactions(
             self,
@@ -275,7 +260,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Processed transaction data or error
 
             """
-            ...
 
         def apply_business_rules(
             self, data: list[dict[str, object]], business_rules: dict[str, object]
@@ -290,7 +274,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Transformed data or error
 
             """
-            ...
 
         def calculate_wms_kpis(
             self, wms_data: list[dict[str, object]], kpi_config: dict[str, object]
@@ -305,7 +288,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Calculated WMS KPIs or error
 
             """
-            ...
 
     @runtime_checkable
     class MacroProtocol(FlextProtocols.Domain.Service, Protocol):
@@ -323,7 +305,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[str]: Generated DBT macro or error
 
             """
-            ...
 
         def create_wms_test_macro(
             self, test_config: dict[str, object]
@@ -337,7 +318,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[str]: Generated test macro or error
 
             """
-            ...
 
         def generate_wms_transformation_macro(
             self, transformation_config: dict[str, object]
@@ -351,7 +331,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[str]: Generated transformation macro or error
 
             """
-            ...
 
         def create_wms_snapshot_macro(
             self, snapshot_config: dict[str, object]
@@ -365,7 +344,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[str]: Generated snapshot macro or error
 
             """
-            ...
 
     @runtime_checkable
     class QualityProtocol(FlextProtocols.Domain.Service, Protocol):
@@ -384,7 +362,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Accuracy validation results or error
 
             """
-            ...
 
         def check_data_completeness(
             self, data: list[dict[str, object]], completeness_config: dict[str, object]
@@ -399,7 +376,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Completeness check results or error
 
             """
-            ...
 
         def detect_data_anomalies(
             self, data: list[dict[str, object]], anomaly_config: dict[str, object]
@@ -414,7 +390,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[list[dict[str, object]]]: Detected anomalies or error
 
             """
-            ...
 
         def generate_quality_report(
             self,
@@ -431,7 +406,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Quality report or error
 
             """
-            ...
 
     @runtime_checkable
     class PerformanceProtocol(FlextProtocols.Domain.Service, Protocol):
@@ -452,7 +426,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Optimization recommendations or error
 
             """
-            ...
 
         def tune_wms_data_extraction(
             self, extraction_config: dict[str, object], tuning_config: dict[str, object]
@@ -467,7 +440,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Tuned extraction configuration or error
 
             """
-            ...
 
         def monitor_dbt_performance(
             self, run_results: dict[str, object]
@@ -481,7 +453,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Performance metrics or error
 
             """
-            ...
 
         def optimize_warehouse_operations(
             self, operations_config: dict[str, object]
@@ -495,7 +466,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Operations optimization results or error
 
             """
-            ...
 
     @runtime_checkable
     class MonitoringProtocol(FlextProtocols.Domain.Service, Protocol):
@@ -514,7 +484,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[bool]: Metric tracking success status
 
             """
-            ...
 
         def monitor_wms_data_freshness(
             self, freshness_config: dict[str, object]
@@ -528,7 +497,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Data freshness status or error
 
             """
-            ...
 
         def get_health_status(self) -> FlextResult[dict[str, object]]:
             """Get DBT Oracle WMS integration health status.
@@ -537,7 +505,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Health status or error
 
             """
-            ...
 
         def create_monitoring_dashboard(
             self, dashboard_config: dict[str, object]
@@ -551,7 +518,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Dashboard creation result or error
 
             """
-            ...
 
         def track_inventory_metrics(
             self, inventory_config: dict[str, object]
@@ -565,7 +531,6 @@ class FlextDbtOracleWmsProtocols(FlextProtocols):
                 FlextResult[dict[str, object]]: Inventory metrics or error
 
             """
-            ...
 
     # Convenience aliases for easier downstream usage
     DbtOracleWmsProtocol = DbtProtocol
