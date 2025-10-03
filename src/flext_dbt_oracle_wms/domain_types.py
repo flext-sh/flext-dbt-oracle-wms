@@ -99,14 +99,14 @@ class DBTOracleWMSProjectConfiguration(TypedDict):
     name: ProjectName
     version: Version
     profile: str
-    model_paths: FlextTypes.Core.StringList
-    analysis_paths: FlextTypes.Core.StringList
-    test_paths: FlextTypes.Core.StringList
-    seed_paths: FlextTypes.Core.StringList
-    macro_paths: FlextTypes.Core.StringList
-    snapshot_paths: FlextTypes.Core.StringList
+    model_paths: FlextTypes.StringList
+    analysis_paths: FlextTypes.StringList
+    test_paths: FlextTypes.StringList
+    seed_paths: FlextTypes.StringList
+    macro_paths: FlextTypes.StringList
+    snapshot_paths: FlextTypes.StringList
     target_path: str
-    clean_targets: FlextTypes.Core.StringList
+    clean_targets: FlextTypes.StringList
     require_dbt_version: str
     dbt_version: str
     timeout: DBTOracleWMSProjectTimeout
@@ -121,10 +121,10 @@ class DBTOracleWMSSnapshotConfiguration(TypedDict):
     strategy: str
     unique_key: str
     updated_at: str | None
-    check_cols: FlextTypes.Core.StringList | None
+    check_cols: FlextTypes.StringList | None
     invalidate_hard_deletes: bool
-    meta: FlextTypes.Core.Headers
-    tags: FlextTypes.Core.StringList
+    meta: FlextTypes.StringDict
+    tags: FlextTypes.StringList
     timeout: DBTOracleWMSSnapshotTimeout
 
 
@@ -133,8 +133,8 @@ class DBTOracleWMSAnalysisConfiguration(TypedDict):
 
     name: str
     description: str
-    meta: FlextTypes.Core.Headers
-    tags: FlextTypes.Core.StringList
+    meta: FlextTypes.StringDict
+    tags: FlextTypes.StringList
     timeout: DBTOracleWMSAnalysisTimeout
 
 
@@ -144,10 +144,10 @@ class DBTOracleWMSCompilationConfiguration(TypedDict):
     project_dir: str
     profiles_dir: str
     target: str
-    vars: FlextTypes.Core.Headers
+    vars: FlextTypes.StringDict
     full_refresh: bool
-    exclude: FlextTypes.Core.StringList | None
-    select: FlextTypes.Core.StringList | None
+    exclude: FlextTypes.StringList | None
+    select: FlextTypes.StringList | None
     timeout: DBTOracleWMSCompilationTimeout
 
 
@@ -157,12 +157,12 @@ class DBTOracleWMSExecutionConfiguration(TypedDict):
     project_dir: str
     profiles_dir: str
     target: str
-    models: FlextTypes.Core.StringList | None
-    exclude: FlextTypes.Core.StringList | None
+    models: FlextTypes.StringList | None
+    exclude: FlextTypes.StringList | None
     full_refresh: bool
     fail_fast: bool
     threads: int
-    vars: FlextTypes.Core.Headers
+    vars: FlextTypes.StringDict
     timeout: DBTOracleWMSExecutionTimeout
 
 
@@ -307,7 +307,7 @@ class DBTOracleWMSDocumentation(TypedDict):
 # EXPORTS
 # ==============================================================================
 
-__all__: FlextTypes.Core.StringList = [
+__all__: FlextTypes.StringList = [
     # Domain objects
     "DBTOracleWMSAnalysis",
     # Domain-specific configurations (not imported from config)

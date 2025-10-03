@@ -107,7 +107,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     )
 
     # Oracle WMS-specific mappings (ClassVar - not configurable)
-    oracle_wms_entity_mapping: ClassVar[FlextTypes.Core.Headers] = {
+    oracle_wms_entity_mapping: ClassVar[FlextTypes.StringDict] = {
         "items": "stg_wms_items",
         "locations": "stg_wms_locations",
         "inventory": "stg_wms_inventory",
@@ -116,7 +116,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         "orders": "stg_wms_orders",
     }
 
-    oracle_wms_field_mapping: ClassVar[FlextTypes.Core.Headers] = {
+    oracle_wms_field_mapping: ClassVar[FlextTypes.StringDict] = {
         "itemId": "item_id",
         "itemNumber": "item_number",
         "itemDescription": "item_description",
@@ -127,7 +127,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         "receiptId": "receipt_id",
     }
 
-    oracle_wms_business_rules: ClassVar[FlextTypes.Core.Dict] = {
+    oracle_wms_business_rules: ClassVar[FlextTypes.Dict] = {
         "inventory_thresholds": {
             "min_quantity": 0,
             "max_quantity": 999999,
@@ -143,7 +143,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         },
     }
 
-    required_fields_per_entity: ClassVar[dict[str, FlextTypes.Core.StringList]] = {
+    required_fields_per_entity: ClassVar[dict[str, FlextTypes.StringList]] = {
         "items": ["itemId", "itemNumber", "itemDescription"],
         "locations": ["locationId", "facilityId", "locationName"],
         "inventory": ["itemId", "locationId", "quantityOnHand"],
@@ -229,7 +229,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             dbt_profiles_dir=self.dbt_profiles_dir,
         )
 
-    def get_oracle_wms_quality_config(self) -> FlextTypes.Core.Dict:
+    def get_oracle_wms_quality_config(self) -> FlextTypes.Dict:
         """Get data quality configuration for Oracle WMS validation."""
         return {
             "min_quality_threshold": self.min_quality_threshold,
@@ -260,12 +260,12 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
         """Get business rule for specific Oracle WMS entity."""
-        entity_rules: dict[str, object] = self.oracle_wms_business_rules.get(
+        entity_rules: FlextTypes.Dict = self.oracle_wms_business_rules.get(
             entity_name, {}
         )
         return entity_rules.get(rule_name) if isinstance(entity_rules, dict) else None
 
-    def get_required_fields(self, entity_name: str) -> FlextTypes.Core.StringList:
+    def get_required_fields(self, entity_name: str) -> FlextTypes.StringList:
         """Get required fields for specific Oracle WMS entity."""
         return self.required_fields_per_entity.get(entity_name, [])
 
@@ -352,6 +352,6 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         cls.reset_shared_instance(project_name="flext-dbt-oracle-wms")
 
 
-__all__: FlextTypes.Core.StringList = [
+__all__: FlextTypes.StringList = [
     "FlextDbtOracleWmsConfig",
 ]

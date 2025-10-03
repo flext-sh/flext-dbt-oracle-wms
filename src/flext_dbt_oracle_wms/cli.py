@@ -10,7 +10,8 @@ import sys
 from typing import override
 
 from flext_cli import FlextCli, FlextCliModels
-from flext_core import FlextLogger, FlextResult
+
+from flext_core import FlextLogger, FlextResult, FlextTypes
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsConfig,
     FlextDbtOracleWmsWorkflowService,
@@ -26,15 +27,15 @@ class FlextDbtOracleWmsCliService:
     def __init__(self: object) -> None:
         """Initialize CLI service with flext-cli patterns."""
         self._cli_api = FlextCli()
-        self._config: dict[str, object] = FlextCliModels.FlextCliConfig()
+        self._config: FlextTypes.Dict = FlextCliModels.FlextCliConfig()
 
     def handle_discover(
         self,
-        _args: dict[str, object] | None = None,
+        _args: FlextTypes.Dict | None = None,
     ) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
+            config: FlextTypes.Dict = FlextDbtOracleWmsConfig.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             result: FlextResult[object] = (
@@ -43,7 +44,7 @@ class FlextDbtOracleWmsCliService:
 
             if result.is_success:
                 data = result.data or {}
-                entity_types: list[object] = data.get("entity_types", [])
+                entity_types: FlextTypes.List = data.get("entity_types", [])
                 if isinstance(entity_types, list):
                     pass
                 return FlextResult[str].ok("Discovery completed successfully")
@@ -53,14 +54,14 @@ class FlextDbtOracleWmsCliService:
             logger.exception("Unexpected error in discovery command")
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
-    def handle_extract(self, args: dict[str, object] | None = None) -> FlextResult[str]:
+    def handle_extract(self, args: FlextTypes.Dict | None = None) -> FlextResult[str]:
         """Handle extract command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
+            config: FlextTypes.Dict = FlextDbtOracleWmsConfig.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse entities from args if provided
-            entity_names_raw: list[object] = args.get("entities", []) if args else []
+            entity_names_raw: FlextTypes.List = args.get("entities", []) if args else []
             entity_names = (
                 entity_names_raw if isinstance(entity_names_raw, list) else []
             )
@@ -81,17 +82,17 @@ class FlextDbtOracleWmsCliService:
 
     def handle_pipeline(
         self,
-        args: dict[str, object] | None = None,
+        args: FlextTypes.Dict | None = None,
     ) -> FlextResult[str]:
         """Handle pipeline command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
+            config: FlextTypes.Dict = FlextDbtOracleWmsConfig.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse parameters from args if provided
-            entity_names_raw: list[object] = args.get("entities", []) if args else []
+            entity_names_raw: FlextTypes.List = args.get("entities", []) if args else []
             (entity_names_raw if isinstance(entity_names_raw, list) else [])
-            model_names_raw: list[object] = args.get("models", []) if args else []
+            model_names_raw: FlextTypes.List = args.get("models", []) if args else []
             model_names_raw if isinstance(model_names_raw, list) else []
 
             result: FlextResult[object] = (
@@ -100,7 +101,7 @@ class FlextDbtOracleWmsCliService:
 
             if result.is_success:
                 data = result.data or {}
-                summary: dict[str, object] = data.get("summary", {})
+                summary: FlextTypes.Dict = data.get("summary", {})
                 if isinstance(summary, dict):
                     pass
                 return FlextResult[str].ok("Pipeline completed successfully")
@@ -110,7 +111,7 @@ class FlextDbtOracleWmsCliService:
             logger.exception("Unexpected error in pipeline command")
             return FlextResult[str].fail(f"Unexpected error: {e}")
 
-    def handle_info(self, _args: dict[str, object] | None = None) -> FlextResult[str]:
+    def handle_info(self, _args: FlextTypes.Dict | None = None) -> FlextResult[str]:
         """Handle info command using flext-cli output."""
         try:
             info_data = {

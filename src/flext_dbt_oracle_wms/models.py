@@ -8,8 +8,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextModels, FlextResult, FlextUtilities
-
+from flext_core import FlextModels, FlextResult, FlextTypes, FlextUtilities
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 # Constants for magic values
@@ -39,13 +38,13 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     wms_entity_type: str  # inventory, location, allocation, order, item
     schema_name: str
     table_name: str
-    columns: list[dict[str, object]]
+    columns: list[FlextTypes.Dict]
     materialization: str
     sql_content: str
     description: str
     oracle_source: str
-    dependencies: list[str]
-    wms_business_rules: list[str]
+    dependencies: FlextTypes.StringList
+    wms_business_rules: FlextTypes.StringList
 
     def validate_business_rules(self) -> FlextResult[None]:
         """Validate DBT Oracle WMS model business rules."""
@@ -96,10 +95,10 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         except Exception as e:
             return FlextResult[str].fail(f"SQL file generation failed: {e}")
 
-    def to_schema_entry(self) -> FlextResult[dict[str, object]]:
+    def to_schema_entry(self) -> FlextResult[FlextTypes.Dict]:
         """Convert model to schema.yml entry with WMS metadata."""
         try:
-            schema_entry: dict[str, object] = {
+            schema_entry: FlextTypes.Dict = {
                 "name": self.name,
                 "description": self.description,
                 "meta": {
@@ -126,7 +125,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     @classmethod
     def create_generator(
         cls,
-        config: dict[str, object],
+        config: FlextTypes.Dict,
     ) -> FlextDbtOracleWmsModels._ModelGenerator:
         """Create a WMS model generator instance."""
         return cls._ModelGenerator(config)
@@ -137,13 +136,13 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         @override
         def __init__(
             self,
-            config: dict[str, object],
+            config: FlextTypes.Dict,
         ) -> None:
             """Initialize the Oracle WMS model generator."""
             self.config = config
 
         def generate_wms_dimensional_models(
-            self, wms_entities: list[str]
+            self, wms_entities: FlextTypes.StringList
         ) -> FlextResult[list[FlextDbtOracleWmsModels]]:
             """Generate dimensional models from Oracle WMS entities."""
             dimensional_models: list[FlextDbtOracleWmsModels] = []
@@ -163,7 +162,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
             return FlextResult[list[FlextDbtOracleWmsModels]].ok(dimensional_models)
 
         def generate_wms_staging_models(
-            self, oracle_sources: list[str]
+            self, oracle_sources: FlextTypes.StringList
         ) -> FlextResult[list[FlextDbtOracleWmsModels]]:
             """Generate staging models from Oracle WMS sources."""
             staging_models: list[FlextDbtOracleWmsModels] = []

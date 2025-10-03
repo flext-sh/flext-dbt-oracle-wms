@@ -32,7 +32,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         SCHEMA_PREFIX = "wms"
 
         # Materialization types
-        MATERIALIZATIONS: ClassVar[FlextTypes.Core.StringList] = [
+        MATERIALIZATIONS: ClassVar[FlextTypes.StringList] = [
             "table",
             "view",
             "incremental",
@@ -41,7 +41,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Test types
-        TEST_TYPES: ClassVar[FlextTypes.Core.StringList] = [
+        TEST_TYPES: ClassVar[FlextTypes.StringList] = [
             "unique",
             "not_null",
             "relationships",
@@ -50,7 +50,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Macro types
-        MACRO_TYPES: ClassVar[FlextTypes.Core.StringList] = [
+        MACRO_TYPES: ClassVar[FlextTypes.StringList] = [
             "utility",
             "transformation",
             "audit",
@@ -58,7 +58,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Documentation types
-        DOCUMENTATION_TYPES: ClassVar[FlextTypes.Core.StringList] = [
+        DOCUMENTATION_TYPES: ClassVar[FlextTypes.StringList] = [
             "model",
             "source",
             "macro",
@@ -69,7 +69,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         """Oracle WMS entity type constants - consumed from flext-oracle-wms."""
 
         # CONSUME Oracle WMS entities from single source (flext-oracle-wms)
-        WMS_ENTITIES: ClassVar[FlextTypes.Core.StringList] = [
+        WMS_ENTITIES: ClassVar[FlextTypes.StringList] = [
             "inventory",
             "location",
             "allocation",
@@ -82,7 +82,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Entity priority levels
-        PRIORITY_LEVELS: ClassVar[FlextTypes.Core.StringList] = [
+        PRIORITY_LEVELS: ClassVar[FlextTypes.StringList] = [
             "high",
             "medium",
             "low",
@@ -111,7 +111,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         HIGH_FREQUENCY_THRESHOLD = 1000  # High frequency threshold for queries
 
         # Processing status
-        PROCESSING_STATUSES: ClassVar[FlextTypes.Core.StringList] = [
+        PROCESSING_STATUSES: ClassVar[FlextTypes.StringList] = [
             "pending",
             "processing",
             "completed",
@@ -119,7 +119,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         ]
 
         # Validation modes
-        VALIDATION_MODES: ClassVar[FlextTypes.Core.StringList] = [
+        VALIDATION_MODES: ClassVar[FlextTypes.StringList] = [
             "strict",
             "normal",
             "relaxed",
@@ -128,7 +128,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
     class Configuration:
         """Configuration management constants."""
 
-        DEFAULT_CONFIG: ClassVar[FlextTypes.Core.Dict] = {
+        DEFAULT_CONFIG: ClassVar[FlextTypes.Dict] = {
             "project_name": "flext_dbt_oracle_wms",
             "profile": "flext_oracle_wms",
             "schema_prefix": "wms",
@@ -253,7 +253,7 @@ class FlextWmsConstants(FlextConstants):
     RELAXED_VALIDATION = "relaxed"
 
 
-__all__: FlextTypes.Core.StringList = [
+__all__: FlextTypes.StringList = [
     # Legacy classes (deprecated)
     "DBTOracleWMSDefaults",
     "DBTOracleWMSDocumentationTypes",

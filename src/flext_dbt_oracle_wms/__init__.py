@@ -9,7 +9,6 @@ from __future__ import annotations
 from typing import Final
 
 from flext_core import FlextResult
-
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
 from flext_dbt_oracle_wms.exceptions import (

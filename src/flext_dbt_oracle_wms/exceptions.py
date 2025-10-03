@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextExceptions
+from flext_core import FlextExceptions, FlextTypes
 
 
 # Base exception classes for Oracle WMS DBT operations
@@ -55,16 +55,28 @@ class FlextDbtOracleWmsInventoryError(FlextDbtOracleWmsProcessingError):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT inventory error with WMS context."""
-        context = dict(kwargs)
-        if item_code is not None:
-            context["item_code"] = item_code
-        if location is not None:
-            context["location"] = location
+        # Store domain-specific attributes before extracting common kwargs
+        self.item_code = item_code
+        self.location = location
+        self.operation = operation
 
+        # Extract common parameters using helper
+        base_context, correlation_id, error_code = self._extract_common_kwargs(kwargs)
+
+        # Build context with inventory-specific fields
+        context = self._build_context(
+            base_context,
+            item_code=item_code,
+            location=location,
+            operation=operation,
+        )
+
+        # Call parent with complete error information
         super().__init__(
             f"Oracle WMS DBT inventory: {message}",
-            operation=operation,
+            code=error_code or "DBT_ORACLE_WMS_INVENTORY_ERROR",
             context=context,
+            correlation_id=correlation_id,
         )
 
 
@@ -82,16 +94,28 @@ class FlextDbtOracleWmsShipmentError(FlextDbtOracleWmsProcessingError):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT shipment error with shipping context."""
-        context = dict(kwargs)
-        if shipment_id is not None:
-            context["shipment_id"] = shipment_id
-        if carrier is not None:
-            context["carrier"] = carrier
+        # Store domain-specific attributes before extracting common kwargs
+        self.shipment_id = shipment_id
+        self.carrier = carrier
+        self.operation = operation
 
+        # Extract common parameters using helper
+        base_context, correlation_id, error_code = self._extract_common_kwargs(kwargs)
+
+        # Build context with shipment-specific fields
+        context = self._build_context(
+            base_context,
+            shipment_id=shipment_id,
+            carrier=carrier,
+            operation=operation,
+        )
+
+        # Call parent with complete error information
         super().__init__(
             f"Oracle WMS DBT shipment: {message}",
-            operation=operation,
+            code=error_code or "DBT_ORACLE_WMS_SHIPMENT_ERROR",
             context=context,
+            correlation_id=correlation_id,
         )
 
 
@@ -109,16 +133,28 @@ class FlextDbtOracleWmsModelError(FlextDbtOracleWmsProcessingError):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT model error with dbt context."""
-        context = dict(kwargs)
-        if model_name is not None:
-            context["model_name"] = model_name
-        if model_type is not None:
-            context["model_type"] = model_type
+        # Store domain-specific attributes before extracting common kwargs
+        self.model_name = model_name
+        self.model_type = model_type
+        self.operation = operation
 
+        # Extract common parameters using helper
+        base_context, correlation_id, error_code = self._extract_common_kwargs(kwargs)
+
+        # Build context with model-specific fields
+        context = self._build_context(
+            base_context,
+            model_name=model_name,
+            model_type=model_type,
+            operation=operation,
+        )
+
+        # Call parent with complete error information
         super().__init__(
             f"Oracle WMS DBT model: {message}",
-            operation=operation,
+            code=error_code or "DBT_ORACLE_WMS_MODEL_ERROR",
             context=context,
+            correlation_id=correlation_id,
         )
 
 
@@ -135,21 +171,30 @@ class FlextDbtOracleWmsTestError(FlextDbtOracleWmsValidationError):
         **kwargs: object,
     ) -> None:
         """Initialize Oracle WMS DBT test error with test context."""
-        validation_details: dict[str, object] = {}
-        if test_name is not None:
-            validation_details["test_name"] = test_name
-        if model_name is not None:
-            validation_details["model_name"] = model_name
+        # Store domain-specific attributes before extracting common kwargs
+        self.test_name = test_name
+        self.model_name = model_name
 
-        context = dict(kwargs)
+        # Extract common parameters using helper
+        base_context, correlation_id, error_code = self._extract_common_kwargs(kwargs)
+
+        # Build context with test-specific fields
+        context = self._build_context(
+            base_context,
+            test_name=test_name,
+            model_name=model_name,
+        )
+
+        # Call parent with complete error information
         super().__init__(
             f"Oracle WMS DBT test: {message}",
-            validation_details=validation_details,
+            code=error_code or "DBT_ORACLE_WMS_TEST_ERROR",
             context=context,
+            correlation_id=correlation_id,
         )
 
 
-__all__: list[str] = [
+__all__: FlextTypes.StringList = [
     "FlextDbtOracleWmsAuthenticationError",
     "FlextDbtOracleWmsConfigurationError",
     "FlextDbtOracleWmsConnectionError",
