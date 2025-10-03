@@ -88,7 +88,7 @@ class DBTOracleWMSConfiguration(TypedDict):
 class DBTOracleWMSModelConfiguration(TypedDict):
     """DBT model configuration using core types."""
 
-    materialized: Literal[table, view, incremental]
+    materialized: Literal["table", "view", "incremental"]
     schema: NonEmptyStr
     tags: list[NonEmptyStr]
 
