@@ -8,7 +8,8 @@ from __future__ import annotations
 import time
 
 from flext_core import FlextLogger, FlextResult, FlextTypes
-from flext_dbt_oracle_wms.dbt_config import FlextDbtOracleWmsConfig
+
+from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
 
 
 class FlextDbtOracleWmsServices:
@@ -270,6 +271,13 @@ class FlextDbtOracleWmsServices:
                 )
 
 
+# Aliases for backward compatibility
+FlextDbtOracleWmsWorkflowService = FlextDbtOracleWmsServices
+FlextDbtOracleWmsMonitoringService = FlextDbtOracleWmsServices
+
+
 __all__: FlextTypes.StringList = [
+    "FlextDbtOracleWmsMonitoringService",
     "FlextDbtOracleWmsServices",
+    "FlextDbtOracleWmsWorkflowService",
 ]

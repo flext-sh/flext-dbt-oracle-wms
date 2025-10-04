@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import Final
 
 from flext_core import FlextResult
+
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
 from flext_dbt_oracle_wms.exceptions import (
@@ -30,6 +31,7 @@ from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsMonitoringService,
     FlextDbtOracleWmsWorkflowService,
 )
+from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms, FlextDbtOracleWmsAPI
 from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities
 from flext_dbt_oracle_wms.version import VERSION, FlextDbtOracleWmsVersion
 
@@ -41,6 +43,8 @@ __version_info__: tuple[int | str, ...] = VERSION.version_info
 __all__ = [
     "PROJECT_VERSION",
     "VERSION",
+    "FlextDbtOracleWms",
+    "FlextDbtOracleWmsAPI",
     "FlextDbtOracleWmsAuthenticationError",
     "FlextDbtOracleWmsClient",
     "FlextDbtOracleWmsConfig",

@@ -10,6 +10,7 @@ from enum import StrEnum
 from typing import Annotated, TypedDict
 
 from flext_core import FlextTypes
+
 from flext_dbt_oracle_wms.config_types import (
     DBTOracleWMSMacroConfiguration,
     DBTOracleWMSModelConfiguration,

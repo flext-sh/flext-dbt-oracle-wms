@@ -15,6 +15,7 @@ from flext_core import (
     FlextTypes,
     FlextUtilities,
 )
+
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsSemanticConstants
 
 __all__: FlextTypes.StringList = ["FlextDbtOracleWmsUtilities"]

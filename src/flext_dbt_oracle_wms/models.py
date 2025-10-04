@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import override
 
 from flext_core import FlextModels, FlextResult, FlextTypes, FlextUtilities
+
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 # Constants for magic values
@@ -417,10 +418,10 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
             @staticmethod
             def validate_oracle_wms_connection_config(
                 config: dict,
-            ) -> FlextResult[dict]:
+            ) -> FlextResult[FlextTypes.Dict]:
                 """Validate Oracle WMS connection configuration for DBT."""
                 if not config:
-                    return FlextResult[dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         "Oracle WMS connection config cannot be empty"
                     )
 
@@ -435,27 +436,31 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
 
                 for field in required_fields:
                     if field not in config:
-                        return FlextResult[dict].fail(
+                        return FlextResult[FlextTypes.Dict].fail(
                             f"Missing required Oracle WMS connection field: {field}"
                         )
 
                 # Validate port is integer
                 if not isinstance(config.get("port"), int):
-                    return FlextResult[dict].fail("Oracle WMS port must be an integer")
+                    return FlextResult[FlextTypes.Dict].fail(
+                        "Oracle WMS port must be an integer"
+                    )
 
                 # Validate port range
                 port = config["port"]
                 if not (MIN_PORT_NUMBER <= port <= MAX_PORT_NUMBER):
-                    return FlextResult[dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         f"Oracle WMS port must be between {MIN_PORT_NUMBER} and {MAX_PORT_NUMBER}"
                     )
 
                 # Validate WMS schema format
                 wms_schema = config["wms_schema"]
                 if not wms_schema.upper().startswith("WMS"):
-                    return FlextResult[dict].fail("WMS schema must start with 'WMS'")
+                    return FlextResult[FlextTypes.Dict].fail(
+                        "WMS schema must start with 'WMS'"
+                    )
 
-                return FlextResult[dict].ok(config)
+                return FlextResult[FlextTypes.Dict].ok(config)
 
 
 __all__ = ["FlextDbtOracleWmsModels"]
