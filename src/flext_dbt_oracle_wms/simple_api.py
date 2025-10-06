@@ -58,7 +58,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         # Complete FLEXT ecosystem integration
         self._container = FlextContainer.ensure_global_manager().get_or_create()
         self._context = FlextContext()
-        self._logger = FlextLogger(__name__)
+        self.logger = FlextLogger(__name__)
 
     @classmethod
     def create(cls) -> FlextDbtOracleWms:
@@ -115,7 +115,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self._logger.info("Running Oracle WMS-to-DBT workflow")
+            self.logger.info("Running Oracle WMS-to-DBT workflow")
             return self.workflow_service.run_oracle_wms_to_dbt_workflow(
                 inventory_items=inventory_items,
                 shipments=shipments,
@@ -143,7 +143,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self._logger.info("Generating DBT models from Oracle WMS")
+            self.logger.info("Generating DBT models from Oracle WMS")
             return self.workflow_service.generate_dbt_models_from_wms(
                 inventory_items=inventory_items,
                 shipments=shipments,
@@ -172,7 +172,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self._logger.info("Extracting Oracle WMS metadata")
+            self.logger.info("Extracting Oracle WMS metadata")
             return self.workflow_service.extract_wms_metadata(
                 inventory_items=inventory_items,
                 shipments=shipments,
@@ -198,7 +198,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self._logger.info(f"Monitoring DBT execution: {command}")
+            self.logger.info(f"Monitoring DBT execution: {command}")
             return self.monitoring_service.monitor_dbt_execution(
                 command=command,
                 timeout_seconds=timeout_seconds,
@@ -214,7 +214,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self._logger.info("Validating Oracle WMS connection")
+            self.logger.info("Validating Oracle WMS connection")
             return self.client.validate_connection()
         except Exception as e:
             return FlextResult[bool].fail(f"Connection validation failed: {e}")
@@ -233,7 +233,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self._logger.info(f"Getting WMS inventory info: {item_id}")
+            self.logger.info(f"Getting WMS inventory info: {item_id}")
             return self.client.get_inventory_info(item_id=item_id)
         except Exception as e:
             return FlextResult[FlextTypes.Dict].fail(
@@ -254,7 +254,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self._logger.info(f"Getting WMS shipment info: {shipment_id}")
+            self.logger.info(f"Getting WMS shipment info: {shipment_id}")
             return self.client.get_shipment_info(shipment_id=shipment_id)
         except Exception as e:
             return FlextResult[FlextTypes.Dict].fail(

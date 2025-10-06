@@ -20,7 +20,7 @@ class FlextDbtOracleWmsServices:
     """
 
     # Shared logger for all Oracle WMS service operations
-    _logger = FlextLogger(__name__)
+    logger = FlextLogger(__name__)
 
     class WorkflowService:
         """Service for orchestrating complete Oracle WMS-to-DBT workflows."""
@@ -57,7 +57,7 @@ class FlextDbtOracleWmsServices:
 
             """
             try:
-                FlextDbtOracleWmsServices._logger.info(
+                FlextDbtOracleWmsServices.logger.info(
                     "Generating Oracle WMS workflow recommendations..."
                 )
 
@@ -161,14 +161,14 @@ class FlextDbtOracleWmsServices:
                     },
                 }
 
-                FlextDbtOracleWmsServices._logger.info(
+                FlextDbtOracleWmsServices.logger.info(
                     "Generated %d Oracle WMS workflow recommendations",
                     len(recommendations),
                 )
                 return FlextResult[FlextTypes.Dict].ok(results)
 
             except Exception as e:
-                FlextDbtOracleWmsServices._logger.exception(
+                FlextDbtOracleWmsServices.logger.exception(
                     "Unexpected error generating Oracle WMS workflow recommendations",
                 )
                 return FlextResult[FlextTypes.Dict].fail(
@@ -189,7 +189,7 @@ class FlextDbtOracleWmsServices:
 
             """
             self.config: FlextTypes.Dict = config
-            FlextDbtOracleWmsServices._logger.info(
+            FlextDbtOracleWmsServices.logger.info(
                 "Initialized Oracle WMS DBT monitoring service"
             )
 
@@ -226,7 +226,7 @@ class FlextDbtOracleWmsServices:
                 "status": "running",
             }
 
-            FlextDbtOracleWmsServices._logger.info(
+            FlextDbtOracleWmsServices.logger.info(
                 "Started tracking Oracle WMS workflow execution: %s",
                 tracking_info["tracking_id"],
             )
@@ -261,12 +261,12 @@ class FlextDbtOracleWmsServices:
             }
 
             if result.is_success:
-                FlextDbtOracleWmsServices._logger.info(
+                FlextDbtOracleWmsServices.logger.info(
                     "Oracle WMS workflow completed successfully: %s",
                     completion_info,
                 )
             else:
-                FlextDbtOracleWmsServices._logger.error(
+                FlextDbtOracleWmsServices.logger.error(
                     "Oracle WMS workflow failed: %s", completion_info
                 )
 

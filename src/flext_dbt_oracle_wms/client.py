@@ -24,7 +24,7 @@ class FlextDbtOracleWmsClient:
     """
 
     # Shared logger for all DBT Oracle WMS client operations
-    _logger = FlextLogger(__name__)
+    logger = FlextLogger(__name__)
 
     @override
     def __init__(
@@ -44,7 +44,7 @@ class FlextDbtOracleWmsClient:
         oracle_wms_config: FlextTypes.Dict = self.config.get_oracle_wms_config()
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
         self._dbt_service: object | None = None
-        FlextDbtOracleWmsClient._logger.info(
+        FlextDbtOracleWmsClient.logger.info(
             "Initialized DBT Oracle WMS client with config: %s", self.config
         )
 
@@ -114,7 +114,7 @@ class FlextDbtOracleWmsClient:
             FlextResult containing complete pipeline results
 
         """
-        FlextDbtOracleWmsClient._logger.info("Starting full Oracle WMS-to-DBT pipeline")
+        FlextDbtOracleWmsClient.logger.info("Starting full Oracle WMS-to-DBT pipeline")
         # Step 1: Discover entities if not specified
         if entity_names is None:
             discover_result: FlextResult[object] = self.discover_oracle_wms_entities()
@@ -172,7 +172,7 @@ class FlextDbtOracleWmsClient:
             "transformation_results": transform_result.data,
             "pipeline_status": "completed",
         }
-        FlextDbtOracleWmsClient._logger.info(
+        FlextDbtOracleWmsClient.logger.info(
             "Full Oracle WMS-to-DBT pipeline completed successfully"
         )
         return FlextResult[FlextTypes.Dict].ok(pipeline_results)
@@ -204,7 +204,7 @@ class FlextDbtOracleWmsClient:
                     mapped_record[dbt_field] = value
                 mapped_records.append(mapped_record)
             prepared_data[table_name] = mapped_records
-        FlextDbtOracleWmsClient._logger.debug(
+        FlextDbtOracleWmsClient.logger.debug(
             "Prepared Oracle WMS data for DBT: %s",
             {k: len(v) for k, v in prepared_data.items()},
         )
