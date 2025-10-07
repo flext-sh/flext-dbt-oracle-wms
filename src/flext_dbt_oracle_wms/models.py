@@ -127,11 +127,11 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     def create_generator(
         cls,
         config: FlextTypes.Dict,
-    ) -> FlextDbtOracleWmsModels._ModelGenerator:
+    ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a WMS model generator instance."""
-        return cls._ModelGenerator(config)
+        return cls.ModelGenerator(config)
 
-    class _ModelGenerator:
+    class ModelGenerator:
         """Internal model generator class for DBT Oracle WMS models."""
 
         @override
