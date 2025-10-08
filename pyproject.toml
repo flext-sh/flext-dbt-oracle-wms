@@ -17,16 +17,15 @@
         "Typing :: Typed",
     ]
     dependencies = [
-        "click>=8.2.1,<9.0.0",
-        "flext-core @ file:///home/marlonsc/flext/flext-core",
-        "flext-meltano @ file:///home/marlonsc/flext/flext-meltano",
-        "flext-observability @ file:///home/marlonsc/flext/flext-observability",
-        "flext-oracle-wms @ file:///home/marlonsc/flext/flext-oracle-wms",
+        "click>=8.2.1",
+        "flext-core @ file:../flext-core",
+        "flext-meltano @ file:../flext-meltano",
+        "flext-observability @ file:../flext-observability",
+        "flext-oracle-wms @ file:../flext-oracle-wms",
         "pydantic>=2.11.7",
     ]
     description = "FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT"
     keywords = [
-        "",
         "data-transformation",
         "dbt",
         "enterprise",

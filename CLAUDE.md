@@ -2,7 +2,7 @@
 
 **Enterprise-Grade Oracle WMS Data Transformation Quality Standards**
 **Version**: 2.1.0 | **Authority**: PROJECT | **Updated**: 2025-01-08
-**Environment**: `/home/marlonsc/flext/.venv/bin/python` (No PYTHONPATH required)
+**Environment**: `../.venv/bin/python` (No PYTHONPATH required)
 **Based on**: flext-core 0.9.9 with 75%+ coverage (PROVEN FOUNDATION) and Oracle WMS dimensional modeling
 
 **Hierarchy**: This document provides project-specific standards based on workspace-level patterns defined in [../CLAUDE.md](../CLAUDE.md). For architectural principles, quality gates, and MCP server usage, reference the main workspace standards.
