@@ -99,6 +99,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         self,
         inventory_items: FlextTypes.StringList | None = None,
         shipments: FlextTypes.StringList | None = None,
+        *,
         generate_models: bool = True,
         run_transformations: bool = False,
     ) -> FlextResult[FlextTypes.Dict]:
