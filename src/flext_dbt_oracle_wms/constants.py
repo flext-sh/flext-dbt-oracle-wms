@@ -11,6 +11,16 @@ from typing import ClassVar
 from flext_core import FlextConstants, FlextTypes
 from flext_oracle_wms.wms_constants import OracleWMSEntityType
 
+# Import metadata from single source of truth (avoid circular import)
+try:
+    from importlib.metadata import metadata as _pkg_metadata
+
+    _metadata = _pkg_metadata("flext-dbt-oracle-wms")
+    __version__ = _metadata["Version"]
+except Exception:
+    # Fallback during development/testing
+    __version__ = "0.9.0"
+
 
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):
     """DBT Oracle WMS semantic constants extending FlextConstants."""
@@ -19,7 +29,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         """Core DBT Oracle WMS system constants."""
 
         NAME = "flext-dbt-oracle-wms"
-        VERSION = "0.9.0"
+        VERSION = __version__  # Use single source of truth from pyproject.toml
         # CONSUME from single source
         ECOSYSTEM_SIZE = 33  # Total FLEXT ecosystem projects
 
