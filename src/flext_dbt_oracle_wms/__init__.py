@@ -8,8 +8,6 @@ from __future__ import annotations
 
 from typing import Final
 
-from flext_core import FlextResult
-
 from flext_dbt_oracle_wms.__version__ import __version__, __version_info__
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
@@ -65,7 +63,6 @@ __all__ = [
     "FlextDbtOracleWmsValidationError",
     "FlextDbtOracleWmsVersion",
     "FlextDbtOracleWmsWorkflowService",
-    "FlextResult",
     "__version__",
     "__version_info__",
 ]

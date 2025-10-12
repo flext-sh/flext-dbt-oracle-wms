@@ -2,11 +2,11 @@
 
 from typing import Protocol, runtime_checkable
 
-from flext_core import FlextProtocols, FlextResult, FlextTypes
+from flext_core import FlextCore
 
 
 class FlextDbtOracleWmsProtocols:
-    """DBT Oracle WMS protocols with explicit re-exports from FlextProtocols foundation.
+    """DBT Oracle WMS protocols with explicit re-exports from FlextCore.Protocols foundation.
 
     This class provides protocol definitions for DBT operations with Oracle WMS integration,
     warehouse management data transformation, inventory analytics, and enterprise WMS patterns.
@@ -21,12 +21,12 @@ class FlextDbtOracleWmsProtocols:
     # RE-EXPORT FOUNDATION PROTOCOLS (EXPLICIT PATTERN)
     # ============================================================================
 
-    Foundation = FlextProtocols.Foundation
-    Domain = FlextProtocols.Domain
-    Application = FlextProtocols.Application
-    Infrastructure = FlextProtocols.Infrastructure
-    Extensions = FlextProtocols.Extensions
-    Commands = FlextProtocols.Commands
+    Foundation = FlextCore.Protocols.Foundation
+    Domain = FlextCore.Protocols.Domain
+    Application = FlextCore.Protocols.Application
+    Infrastructure = FlextCore.Protocols.Infrastructure
+    Extensions = FlextCore.Protocols.Extensions
+    Commands = FlextCore.Protocols.Commands
 
     # ============================================================================
     # DBT ORACLE WMS-SPECIFIC PROTOCOLS (DOMAIN NAMESPACE)
@@ -36,14 +36,14 @@ class FlextDbtOracleWmsProtocols:
         """DBT Oracle WMS domain protocols for warehouse management data transformation and analytics."""
 
         @runtime_checkable
-        class DbtProtocol(FlextProtocols.Domain.Service, Protocol):
+        class DbtProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for DBT operations with Oracle WMS data."""
 
             def run_dbt_models(
                 self,
-                models: FlextTypes.StringList | None = None,
-                config: FlextTypes.Dict | None = None,
-            ) -> FlextResult[FlextTypes.Dict]:
+                models: FlextCore.Types.StringList | None = None,
+                config: FlextCore.Types.Dict | None = None,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Run DBT models with Oracle WMS data sources.
 
                 Args:
@@ -51,15 +51,15 @@ class FlextDbtOracleWmsProtocols:
                     config: DBT configuration parameters
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: DBT run results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: DBT run results or error
 
                 """
 
             def test_dbt_models(
                 self,
-                models: FlextTypes.StringList | None = None,
-                config: FlextTypes.Dict | None = None,
-            ) -> FlextResult[FlextTypes.Dict]:
+                models: FlextCore.Types.StringList | None = None,
+                config: FlextCore.Types.Dict | None = None,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Test DBT models with Oracle WMS data validation.
 
                 Args:
@@ -67,15 +67,15 @@ class FlextDbtOracleWmsProtocols:
                     config: DBT test configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: DBT test results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: DBT test results or error
 
                 """
 
             def compile_dbt_models(
                 self,
-                models: FlextTypes.StringList | None = None,
-                config: FlextTypes.Dict | None = None,
-            ) -> FlextResult[FlextTypes.Dict]:
+                models: FlextCore.Types.StringList | None = None,
+                config: FlextCore.Types.Dict | None = None,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Compile DBT models for Oracle WMS data processing.
 
                 Args:
@@ -83,36 +83,38 @@ class FlextDbtOracleWmsProtocols:
                     config: DBT compilation configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: DBT compilation results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: DBT compilation results or error
 
                 """
 
-            def get_dbt_manifest(self) -> FlextResult[FlextTypes.Dict]:
+            def get_dbt_manifest(self) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Get DBT manifest with Oracle WMS model definitions.
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: DBT manifest or error
+                    FlextCore.Result[FlextCore.Types.Dict]: DBT manifest or error
 
                 """
 
-            def validate_dbt_project(self, project_path: str) -> FlextResult[bool]:
+            def validate_dbt_project(self, project_path: str) -> FlextCore.Result[bool]:
                 """Validate DBT project configuration for Oracle WMS integration.
 
                 Args:
                     project_path: Path to DBT project directory
 
                 Returns:
-                    FlextResult[bool]: Validation status or error
+                    FlextCore.Result[bool]: Validation status or error
 
                 """
 
         @runtime_checkable
-        class WmsIntegrationProtocol(FlextProtocols.Domain.Service, Protocol):
+        class WmsIntegrationProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for Oracle WMS data integration operations."""
 
             def extract_wms_inventory_data(
-                self, wms_config: FlextTypes.Dict, extraction_config: FlextTypes.Dict
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                self,
+                wms_config: FlextCore.Types.Dict,
+                extraction_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Extract inventory data from Oracle WMS for DBT processing.
 
                 Args:
@@ -120,13 +122,15 @@ class FlextDbtOracleWmsProtocols:
                     extraction_config: Data extraction parameters
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Extracted WMS inventory data or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Extracted WMS inventory data or error
 
                 """
 
             def extract_wms_transaction_data(
-                self, wms_config: FlextTypes.Dict, extraction_config: FlextTypes.Dict
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                self,
+                wms_config: FlextCore.Types.Dict,
+                extraction_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Extract transaction data from Oracle WMS for DBT processing.
 
                 Args:
@@ -134,15 +138,15 @@ class FlextDbtOracleWmsProtocols:
                     extraction_config: Transaction extraction parameters
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Extracted WMS transaction data or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Extracted WMS transaction data or error
 
                 """
 
             def transform_wms_to_dbt_format(
                 self,
-                wms_data: list[FlextTypes.Dict],
-                transformation_config: FlextTypes.Dict,
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                wms_data: list[FlextCore.Types.Dict],
+                transformation_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Transform Oracle WMS data to DBT-compatible format.
 
                 Args:
@@ -150,13 +154,15 @@ class FlextDbtOracleWmsProtocols:
                     transformation_config: Transformation parameters
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Transformed data or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Transformed data or error
 
                 """
 
             def validate_wms_data_quality(
-                self, data: list[FlextTypes.Dict], quality_rules: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self,
+                data: list[FlextCore.Types.Dict],
+                quality_rules: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Validate Oracle WMS data quality for DBT processing.
 
                 Args:
@@ -164,13 +170,15 @@ class FlextDbtOracleWmsProtocols:
                     quality_rules: Data quality validation rules
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Quality validation results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Quality validation results or error
 
                 """
 
             def sync_wms_to_warehouse(
-                self, wms_data: list[FlextTypes.Dict], warehouse_config: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self,
+                wms_data: list[FlextCore.Types.Dict],
+                warehouse_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Sync Oracle WMS data to data warehouse for DBT processing.
 
                 Args:
@@ -178,19 +186,19 @@ class FlextDbtOracleWmsProtocols:
                     warehouse_config: Data warehouse configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Sync operation results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Sync operation results or error
 
                 """
 
         @runtime_checkable
-        class ModelingProtocol(FlextProtocols.Domain.Service, Protocol):
+        class ModelingProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for Oracle WMS data modeling operations."""
 
             def create_inventory_dimension(
                 self,
-                wms_inventory: list[FlextTypes.Dict],
-                dimension_config: FlextTypes.Dict,
-            ) -> FlextResult[FlextTypes.Dict]:
+                wms_inventory: list[FlextCore.Types.Dict],
+                dimension_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Create inventory dimension model from Oracle WMS inventory data.
 
                 Args:
@@ -198,15 +206,15 @@ class FlextDbtOracleWmsProtocols:
                     dimension_config: Dimension modeling configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Inventory dimension model or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Inventory dimension model or error
 
                 """
 
             def create_location_dimension(
                 self,
-                wms_locations: list[FlextTypes.Dict],
-                dimension_config: FlextTypes.Dict,
-            ) -> FlextResult[FlextTypes.Dict]:
+                wms_locations: list[FlextCore.Types.Dict],
+                dimension_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Create location dimension model from Oracle WMS location data.
 
                 Args:
@@ -214,15 +222,15 @@ class FlextDbtOracleWmsProtocols:
                     dimension_config: Dimension modeling configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Location dimension model or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Location dimension model or error
 
                 """
 
             def create_warehouse_operations_models(
                 self,
-                wms_operations: list[FlextTypes.Dict],
-                modeling_config: FlextTypes.Dict,
-            ) -> FlextResult[FlextTypes.Dict]:
+                wms_operations: list[FlextCore.Types.Dict],
+                modeling_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Create warehouse operations models from Oracle WMS operations data.
 
                 Args:
@@ -230,13 +238,15 @@ class FlextDbtOracleWmsProtocols:
                     modeling_config: Operations modeling configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Warehouse operations models or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Warehouse operations models or error
 
                 """
 
             def generate_fact_tables(
-                self, dimensions: list[FlextTypes.Dict], fact_config: FlextTypes.Dict
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                self,
+                dimensions: list[FlextCore.Types.Dict],
+                fact_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Generate fact tables from Oracle WMS dimensions.
 
                 Args:
@@ -244,19 +254,19 @@ class FlextDbtOracleWmsProtocols:
                     fact_config: Fact table configuration
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Generated fact tables or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Generated fact tables or error
 
                 """
 
         @runtime_checkable
-        class TransformationProtocol(FlextProtocols.Domain.Service, Protocol):
+        class TransformationProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for Oracle WMS data transformation operations."""
 
             def normalize_wms_inventory_data(
                 self,
-                wms_inventory: list[FlextTypes.Dict],
-                normalization_rules: FlextTypes.Dict,
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                wms_inventory: list[FlextCore.Types.Dict],
+                normalization_rules: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Normalize Oracle WMS inventory data for consistent processing.
 
                 Args:
@@ -264,15 +274,15 @@ class FlextDbtOracleWmsProtocols:
                     normalization_rules: Inventory normalization rules
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Normalized WMS inventory data or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Normalized WMS inventory data or error
 
                 """
 
             def process_wms_transactions(
                 self,
-                wms_transactions: list[FlextTypes.Dict],
-                processing_config: FlextTypes.Dict,
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                wms_transactions: list[FlextCore.Types.Dict],
+                processing_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Process Oracle WMS transaction data for analytics.
 
                 Args:
@@ -280,13 +290,15 @@ class FlextDbtOracleWmsProtocols:
                     processing_config: Transaction processing configuration
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Processed transaction data or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Processed transaction data or error
 
                 """
 
             def apply_business_rules(
-                self, data: list[FlextTypes.Dict], business_rules: FlextTypes.Dict
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                self,
+                data: list[FlextCore.Types.Dict],
+                business_rules: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Apply business rules to Oracle WMS data transformations.
 
                 Args:
@@ -294,13 +306,15 @@ class FlextDbtOracleWmsProtocols:
                     business_rules: Business transformation rules
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Transformed data or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Transformed data or error
 
                 """
 
             def calculate_wms_kpis(
-                self, wms_data: list[FlextTypes.Dict], kpi_config: FlextTypes.Dict
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                self,
+                wms_data: list[FlextCore.Types.Dict],
+                kpi_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Calculate warehouse management KPIs from Oracle WMS data.
 
                 Args:
@@ -308,73 +322,75 @@ class FlextDbtOracleWmsProtocols:
                     kpi_config: KPI calculation configuration
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Calculated WMS KPIs or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Calculated WMS KPIs or error
 
                 """
 
         @runtime_checkable
-        class MacroProtocol(FlextProtocols.Domain.Service, Protocol):
+        class MacroProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for DBT macro operations with Oracle WMS data."""
 
             def generate_wms_source_macro(
-                self, source_config: FlextTypes.Dict
-            ) -> FlextResult[str]:
+                self, source_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[str]:
                 """Generate DBT macro for Oracle WMS data sources.
 
                 Args:
                     source_config: Oracle WMS source configuration
 
                 Returns:
-                    FlextResult[str]: Generated DBT macro or error
+                    FlextCore.Result[str]: Generated DBT macro or error
 
                 """
 
             def create_wms_test_macro(
-                self, test_config: FlextTypes.Dict
-            ) -> FlextResult[str]:
+                self, test_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[str]:
                 """Create DBT test macro for Oracle WMS data validation.
 
                 Args:
                     test_config: Oracle WMS test configuration
 
                 Returns:
-                    FlextResult[str]: Generated test macro or error
+                    FlextCore.Result[str]: Generated test macro or error
 
                 """
 
             def generate_wms_transformation_macro(
-                self, transformation_config: FlextTypes.Dict
-            ) -> FlextResult[str]:
+                self, transformation_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[str]:
                 """Generate DBT transformation macro for Oracle WMS data.
 
                 Args:
                     transformation_config: WMS transformation configuration
 
                 Returns:
-                    FlextResult[str]: Generated transformation macro or error
+                    FlextCore.Result[str]: Generated transformation macro or error
 
                 """
 
             def create_wms_snapshot_macro(
-                self, snapshot_config: FlextTypes.Dict
-            ) -> FlextResult[str]:
+                self, snapshot_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[str]:
                 """Create DBT snapshot macro for Oracle WMS data versioning.
 
                 Args:
                     snapshot_config: WMS snapshot configuration
 
                 Returns:
-                    FlextResult[str]: Generated snapshot macro or error
+                    FlextCore.Result[str]: Generated snapshot macro or error
 
                 """
 
         @runtime_checkable
-        class QualityProtocol(FlextProtocols.Domain.Service, Protocol):
+        class QualityProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for Oracle WMS data quality operations."""
 
             def validate_wms_inventory_accuracy(
-                self, wms_data: list[FlextTypes.Dict], accuracy_rules: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self,
+                wms_data: list[FlextCore.Types.Dict],
+                accuracy_rules: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Validate Oracle WMS inventory accuracy for DBT processing.
 
                 Args:
@@ -382,13 +398,15 @@ class FlextDbtOracleWmsProtocols:
                     accuracy_rules: Inventory accuracy validation rules
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Accuracy validation results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Accuracy validation results or error
 
                 """
 
             def check_data_completeness(
-                self, data: list[FlextTypes.Dict], completeness_config: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self,
+                data: list[FlextCore.Types.Dict],
+                completeness_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Check Oracle WMS data completeness for DBT processing.
 
                 Args:
@@ -396,13 +414,15 @@ class FlextDbtOracleWmsProtocols:
                     completeness_config: Completeness validation configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Completeness check results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Completeness check results or error
 
                 """
 
             def detect_data_anomalies(
-                self, data: list[FlextTypes.Dict], anomaly_config: FlextTypes.Dict
-            ) -> FlextResult[list[FlextTypes.Dict]]:
+                self,
+                data: list[FlextCore.Types.Dict],
+                anomaly_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
                 """Detect anomalies in Oracle WMS data for quality assurance.
 
                 Args:
@@ -410,15 +430,15 @@ class FlextDbtOracleWmsProtocols:
                     anomaly_config: Anomaly detection configuration
 
                 Returns:
-                    FlextResult[list[FlextTypes.Dict]]: Detected anomalies or error
+                    FlextCore.Result[list[FlextCore.Types.Dict]]: Detected anomalies or error
 
                 """
 
             def generate_quality_report(
                 self,
-                quality_results: list[FlextTypes.Dict],
-                report_config: FlextTypes.Dict,
-            ) -> FlextResult[FlextTypes.Dict]:
+                quality_results: list[FlextCore.Types.Dict],
+                report_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Generate data quality report for Oracle WMS DBT processing.
 
                 Args:
@@ -426,19 +446,19 @@ class FlextDbtOracleWmsProtocols:
                     report_config: Report generation configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Quality report or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Quality report or error
 
                 """
 
         @runtime_checkable
-        class PerformanceProtocol(FlextProtocols.Domain.Service, Protocol):
+        class PerformanceProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for DBT Oracle WMS performance optimization operations."""
 
             def optimize_dbt_models(
                 self,
-                model_config: FlextTypes.Dict,
-                performance_metrics: FlextTypes.Dict,
-            ) -> FlextResult[FlextTypes.Dict]:
+                model_config: FlextCore.Types.Dict,
+                performance_metrics: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Optimize DBT models for Oracle WMS data processing performance.
 
                 Args:
@@ -446,13 +466,15 @@ class FlextDbtOracleWmsProtocols:
                     performance_metrics: Current performance metrics
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Optimization recommendations or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Optimization recommendations or error
 
                 """
 
             def tune_wms_data_extraction(
-                self, extraction_config: FlextTypes.Dict, tuning_config: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self,
+                extraction_config: FlextCore.Types.Dict,
+                tuning_config: FlextCore.Types.Dict,
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Tune Oracle WMS data extraction for improved performance.
 
                 Args:
@@ -460,43 +482,43 @@ class FlextDbtOracleWmsProtocols:
                     tuning_config: Extraction tuning parameters
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Tuned extraction configuration or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Tuned extraction configuration or error
 
                 """
 
             def monitor_dbt_performance(
-                self, run_results: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self, run_results: FlextCore.Types.Dict
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Monitor DBT performance with Oracle WMS data processing.
 
                 Args:
                     run_results: DBT run results
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Performance metrics or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Performance metrics or error
 
                 """
 
             def optimize_warehouse_operations(
-                self, operations_config: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self, operations_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Optimize warehouse operations analysis for DBT processing.
 
                 Args:
                     operations_config: Warehouse operations configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Operations optimization results or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Operations optimization results or error
 
                 """
 
         @runtime_checkable
-        class MonitoringProtocol(FlextProtocols.Domain.Service, Protocol):
+        class MonitoringProtocol(FlextCore.Protocols.Domain.Service, Protocol):
             """Protocol for DBT Oracle WMS monitoring operations."""
 
             def track_dbt_run_metrics(
-                self, run_id: str, metrics: FlextTypes.Dict
-            ) -> FlextResult[bool]:
+                self, run_id: str, metrics: FlextCore.Types.Dict
+            ) -> FlextCore.Result[bool]:
                 """Track DBT run metrics for Oracle WMS data processing.
 
                 Args:
@@ -504,54 +526,54 @@ class FlextDbtOracleWmsProtocols:
                     metrics: Run metrics data
 
                 Returns:
-                    FlextResult[bool]: Metric tracking success status
+                    FlextCore.Result[bool]: Metric tracking success status
 
                 """
 
             def monitor_wms_data_freshness(
-                self, freshness_config: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self, freshness_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Monitor Oracle WMS data freshness for DBT processing.
 
                 Args:
                     freshness_config: Data freshness monitoring configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Data freshness status or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Data freshness status or error
 
                 """
 
-            def get_health_status(self) -> FlextResult[FlextTypes.Dict]:
+            def get_health_status(self) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Get DBT Oracle WMS integration health status.
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Health status or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Health status or error
 
                 """
 
             def create_monitoring_dashboard(
-                self, dashboard_config: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self, dashboard_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Create monitoring dashboard for DBT Oracle WMS operations.
 
                 Args:
                     dashboard_config: Dashboard configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Dashboard creation result or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Dashboard creation result or error
 
                 """
 
             def track_inventory_metrics(
-                self, inventory_config: FlextTypes.Dict
-            ) -> FlextResult[FlextTypes.Dict]:
+                self, inventory_config: FlextCore.Types.Dict
+            ) -> FlextCore.Result[FlextCore.Types.Dict]:
                 """Track inventory management metrics for WMS analytics.
 
                 Args:
                     inventory_config: Inventory tracking configuration
 
                 Returns:
-                    FlextResult[FlextTypes.Dict]: Inventory metrics or error
+                    FlextCore.Result[FlextCore.Types.Dict]: Inventory metrics or error
 
                 """
 

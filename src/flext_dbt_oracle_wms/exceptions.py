@@ -8,35 +8,35 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextExceptions, FlextTypes
+from flext_core import FlextCore
 
 
 # Base exception classes for Oracle WMS DBT operations
-class FlextDbtOracleWmsError(FlextExceptions.Error):
+class FlextDbtOracleWmsError(FlextCore.Exceptions.Error):
     """Base exception for Oracle WMS DBT operations."""
 
 
-class FlextDbtOracleWmsValidationError(FlextExceptions.ValidationError):
+class FlextDbtOracleWmsValidationError(FlextCore.Exceptions.ValidationError):
     """Oracle WMS DBT validation errors."""
 
 
-class FlextDbtOracleWmsConfigurationError(FlextExceptions.ConfigurationError):
+class FlextDbtOracleWmsConfigurationError(FlextCore.Exceptions.ConfigurationError):
     """Oracle WMS DBT configuration errors."""
 
 
-class FlextDbtOracleWmsConnectionError(FlextExceptions.ConnectionError):
+class FlextDbtOracleWmsConnectionError(FlextCore.Exceptions.ConnectionError):
     """Oracle WMS DBT connection errors."""
 
 
-class FlextDbtOracleWmsProcessingError(FlextExceptions.ProcessingError):
+class FlextDbtOracleWmsProcessingError(FlextCore.Exceptions.ProcessingError):
     """Oracle WMS DBT processing errors."""
 
 
-class FlextDbtOracleWmsAuthenticationError(FlextExceptions.AuthenticationError):
+class FlextDbtOracleWmsAuthenticationError(FlextCore.Exceptions.AuthenticationError):
     """Oracle WMS DBT authentication errors."""
 
 
-class FlextDbtOracleWmsTimeoutError(FlextExceptions.TimeoutError):
+class FlextDbtOracleWmsTimeoutError(FlextCore.Exceptions.TimeoutError):
     """Oracle WMS DBT timeout errors."""
 
 
@@ -194,7 +194,7 @@ class FlextDbtOracleWmsTestError(FlextDbtOracleWmsValidationError):
         )
 
 
-__all__: FlextTypes.StringList = [
+__all__: FlextCore.Types.StringList = [
     "FlextDbtOracleWmsAuthenticationError",
     "FlextDbtOracleWmsConfigurationError",
     "FlextDbtOracleWmsConnectionError",

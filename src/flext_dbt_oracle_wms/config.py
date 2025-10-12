@@ -9,7 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import ClassVar, Self
 
-from flext_core import FlextConfig, FlextConstants, FlextResult, FlextTypes
+from flext_core import FlextCore
 from flext_meltano.config import FlextMeltanoConfig
 from flext_oracle_wms.config import FlextOracleWmsConfig
 from pydantic import Field, SecretStr, field_validator, model_validator
@@ -18,13 +18,13 @@ from pydantic_settings import SettingsConfigDict
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 
-class FlextDbtOracleWmsConfig(FlextConfig):
+class FlextDbtOracleWmsConfig(FlextCore.Config):
     """Configuration for DBT Oracle WMS transformations.
 
     Follows standardized [Project]Config pattern:
-    - Extends FlextConfig from flext-core
+    - Extends FlextCore.Config from flext-core
     - Uses SecretStr for sensitive data
-    - All defaults from FlextConstants
+    - All defaults from FlextCore.Constants
     - Proper Pydantic 2 validation
     - Enhanced singleton pattern with inverse dependency injection
 
@@ -69,7 +69,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     )
 
     oracle_wms_max_retries: int = Field(
-        default=FlextConstants.Reliability.MAX_RETRY_ATTEMPTS,
+        default=FlextCore.Constants.Reliability.MAX_RETRY_ATTEMPTS,
         ge=0,
         description="Oracle WMS maximum retries",
     )
@@ -87,7 +87,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     dbt_target: str = Field(default="dev", description="DBT target environment")
 
     dbt_threads: int = Field(
-        default=FlextConstants.Container.DEFAULT_WORKERS,
+        default=FlextCore.Constants.Container.DEFAULT_WORKERS,
         ge=1,
         description="Number of DBT threads",
     )
@@ -107,7 +107,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     )
 
     # Oracle WMS-specific mappings (ClassVar - not configurable)
-    oracle_wms_entity_mapping: ClassVar[FlextTypes.StringDict] = {
+    oracle_wms_entity_mapping: ClassVar[FlextCore.Types.StringDict] = {
         "items": "stg_wms_items",
         "locations": "stg_wms_locations",
         "inventory": "stg_wms_inventory",
@@ -116,7 +116,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         "orders": "stg_wms_orders",
     }
 
-    oracle_wms_field_mapping: ClassVar[FlextTypes.StringDict] = {
+    oracle_wms_field_mapping: ClassVar[FlextCore.Types.StringDict] = {
         "itemId": "item_id",
         "itemNumber": "item_number",
         "itemDescription": "item_description",
@@ -127,7 +127,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         "receiptId": "receipt_id",
     }
 
-    oracle_wms_business_rules: ClassVar[FlextTypes.Dict] = {
+    oracle_wms_business_rules: ClassVar[FlextCore.Types.Dict] = {
         "inventory_thresholds": {
             "min_quantity": 0,
             "max_quantity": 999999,
@@ -143,7 +143,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         },
     }
 
-    required_fields_per_entity: ClassVar[dict[str, FlextTypes.StringList]] = {
+    required_fields_per_entity: ClassVar[dict[str, FlextCore.Types.StringList]] = {
         "items": ["itemId", "itemNumber", "itemDescription"],
         "locations": ["locationId", "facilityId", "locationName"],
         "inventory": ["itemId", "locationId", "quantityOnHand"],
@@ -229,7 +229,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             dbt_profiles_dir=self.dbt_profiles_dir,
         )
 
-    def get_oracle_wms_quality_config(self) -> FlextTypes.Dict:
+    def get_oracle_wms_quality_config(self) -> FlextCore.Types.Dict:
         """Get data quality configuration for Oracle WMS validation."""
         return {
             "min_quality_threshold": self.min_quality_threshold,
@@ -260,17 +260,17 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
         """Get business rule for specific Oracle WMS entity."""
-        entity_rules: FlextTypes.Dict = self.oracle_wms_business_rules.get(
+        entity_rules: FlextCore.Types.Dict = self.oracle_wms_business_rules.get(
             entity_name, {}
         )
         return entity_rules.get(rule_name) if isinstance(entity_rules, dict) else None
 
-    def get_required_fields(self, entity_name: str) -> FlextTypes.StringList:
+    def get_required_fields(self, entity_name: str) -> FlextCore.Types.StringList:
         """Get required fields for specific Oracle WMS entity."""
         return self.required_fields_per_entity.get(entity_name, [])
 
     @classmethod
-    def create_for_development(cls, **overrides: object) -> FlextResult[Self]:
+    def create_for_development(cls, **overrides: object) -> FlextCore.Result[Self]:
         """Create configuration optimized for development environment."""
         dev_config = {
             "dbt_target": "development",
@@ -284,12 +284,14 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms", **config_data
             )
-            return FlextResult[Self].ok(instance)
+            return FlextCore.Result[Self].ok(instance)
         except Exception as e:
-            return FlextResult[Self].fail(f"Development config creation failed: {e}")
+            return FlextCore.Result[Self].fail(
+                f"Development config creation failed: {e}"
+            )
 
     @classmethod
-    def create_for_production(cls, **overrides: object) -> FlextResult[Self]:
+    def create_for_production(cls, **overrides: object) -> FlextCore.Result[Self]:
         """Create configuration optimized for production environment."""
         prod_config = {
             "dbt_target": "production",
@@ -304,12 +306,14 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms", **config_data
             )
-            return FlextResult[Self].ok(instance)
+            return FlextCore.Result[Self].ok(instance)
         except Exception as e:
-            return FlextResult[Self].fail(f"Production config creation failed: {e}")
+            return FlextCore.Result[Self].fail(
+                f"Production config creation failed: {e}"
+            )
 
     @classmethod
-    def create_for_testing(cls, **overrides: object) -> FlextResult[Self]:
+    def create_for_testing(cls, **overrides: object) -> FlextCore.Result[Self]:
         """Create configuration optimized for testing environment."""
         test_config = {
             "dbt_target": "test",
@@ -324,14 +328,14 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms", **config_data
             )
-            return FlextResult[Self].ok(instance)
+            return FlextCore.Result[Self].ok(instance)
         except Exception as e:
-            return FlextResult[Self].fail(f"Testing config creation failed: {e}")
+            return FlextCore.Result[Self].fail(f"Testing config creation failed: {e}")
 
     @classmethod
     def create_for_environment(
         cls, environment: str, **overrides: object
-    ) -> FlextResult[Self]:
+    ) -> FlextCore.Result[Self]:
         """Create configuration for specific environment."""
         if environment == "production":
             return cls.create_for_production(**overrides)
@@ -339,11 +343,11 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             return cls.create_for_development(**overrides)
         if environment == "testing":
             return cls.create_for_testing(**overrides)
-        return FlextResult[Self].fail(f"Unknown environment: {environment}")
+        return FlextCore.Result[Self].fail(f"Unknown environment: {environment}")
 
     @classmethod
     def get_global_instance(cls) -> Self:
-        """Get the global singleton instance using enhanced FlextConfig pattern."""
+        """Get the global singleton instance using enhanced FlextCore.Config pattern."""
         return cls.get_or_create_shared_instance(project_name="flext-dbt-oracle-wms")
 
     @classmethod
@@ -352,6 +356,6 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         cls.reset_shared_instance(project_name="flext-dbt-oracle-wms")
 
 
-__all__: FlextTypes.StringList = [
+__all__: FlextCore.Types.StringList = [
     "FlextDbtOracleWmsConfig",
 ]

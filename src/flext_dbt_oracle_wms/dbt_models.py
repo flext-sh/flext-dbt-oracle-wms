@@ -7,10 +7,10 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextConfig, FlextLogger, FlextResult, FlextTypes
+from flext_core import FlextCore
 from flext_oracle_wms import FlextOracleWmsEntity
 
-logger = FlextLogger(__name__)
+logger = FlextCore.Logger(__name__)
 
 
 # === Internal helpers for safe type conversion ===
@@ -52,7 +52,7 @@ def _get_bool(value: object, *, default: bool = False) -> bool:
     return default
 
 
-class FlextDbtOracleWmsItemDimension(FlextConfig):
+class FlextDbtOracleWmsItemDimension(FlextCore.Config):
     """Item dimension model for DBT Oracle WMS transformations.
 
     Represents an item dimension table structure optimized for analytics.
@@ -77,7 +77,7 @@ class FlextDbtOracleWmsItemDimension(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: FlextCore.Types.Dict,
     ) -> FlextDbtOracleWmsItemDimension:
         """Create item dimension from Oracle WMS record."""
         return cls(
@@ -94,20 +94,20 @@ class FlextDbtOracleWmsItemDimension(FlextConfig):
             modified_date=_get_str(record.get("modifiedDate")),
         )
 
-    def validate_business_rules(self: object) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextCore.Result[None]:
         """Validate item dimension business rules."""
         if not self.item_id or not self.item_number:
-            return FlextResult[None].fail("Item ID and item number are required")
+            return FlextCore.Result[None].fail("Item ID and item number are required")
 
         if self.unit_cost is not None and self.unit_cost < 0:
-            return FlextResult[None].fail("Unit cost cannot be negative")
+            return FlextCore.Result[None].fail("Unit cost cannot be negative")
 
         if self.weight is not None and self.weight < 0:
-            return FlextResult[None].fail("Weight cannot be negative")
+            return FlextCore.Result[None].fail("Weight cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextCore.Result[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> FlextCore.Types.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "item_id": self.item_id,
@@ -124,7 +124,7 @@ class FlextDbtOracleWmsItemDimension(FlextConfig):
         }
 
 
-class FlextDbtOracleWmsLocationDimension(FlextConfig):
+class FlextDbtOracleWmsLocationDimension(FlextCore.Config):
     """Location dimension model for DBT Oracle WMS transformations.
 
     Represents a location dimension table structure optimized for analytics.
@@ -148,7 +148,7 @@ class FlextDbtOracleWmsLocationDimension(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: FlextCore.Types.Dict,
     ) -> FlextDbtOracleWmsLocationDimension:
         """Create location dimension from Oracle WMS record."""
         return cls(
@@ -168,19 +168,19 @@ class FlextDbtOracleWmsLocationDimension(FlextConfig):
             modified_date=_get_str(record.get("modifiedDate")),
         )
 
-    def validate_business_rules(self: object) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextCore.Result[None]:
         """Validate location dimension business rules."""
         if not self.location_id or not self.location_name or not self.facility_id:
-            return FlextResult[None].fail(
+            return FlextCore.Result[None].fail(
                 "Location ID, name, and facility ID are required",
             )
 
         if self.capacity is not None and self.capacity < 0:
-            return FlextResult[None].fail("Capacity cannot be negative")
+            return FlextCore.Result[None].fail("Capacity cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextCore.Result[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> FlextCore.Types.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "location_id": self.location_id,
@@ -200,7 +200,7 @@ class FlextDbtOracleWmsLocationDimension(FlextConfig):
         }
 
 
-class FlextDbtOracleWmsInventoryFact(FlextConfig):
+class FlextDbtOracleWmsInventoryFact(FlextCore.Config):
     """Inventory fact model for DBT Oracle WMS transformations.
 
     Represents inventory levels as fact table optimized for analytics.
@@ -221,7 +221,7 @@ class FlextDbtOracleWmsInventoryFact(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: FlextCore.Types.Dict,
     ) -> FlextDbtOracleWmsInventoryFact:
         """Create inventory fact from Oracle WMS record."""
         quantity_on_hand = _get_float(record.get("quantityOnHand"), 0.0) or 0.0
@@ -245,22 +245,22 @@ class FlextDbtOracleWmsInventoryFact(FlextConfig):
             total_value=total_value,
         )
 
-    def validate_business_rules(self: object) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextCore.Result[None]:
         """Validate inventory fact business rules."""
         if not self.item_id or not self.location_id or not self.facility_id:
-            return FlextResult[None].fail(
+            return FlextCore.Result[None].fail(
                 "Item ID, location ID, and facility ID are required",
             )
 
         if self.quantity_on_hand < 0:
-            return FlextResult[None].fail("Quantity on hand cannot be negative")
+            return FlextCore.Result[None].fail("Quantity on hand cannot be negative")
 
         if self.quantity_available is not None and self.quantity_available < 0:
-            return FlextResult[None].fail("Quantity available cannot be negative")
+            return FlextCore.Result[None].fail("Quantity available cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextCore.Result[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> FlextCore.Types.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "item_id": self.item_id,
@@ -277,7 +277,7 @@ class FlextDbtOracleWmsInventoryFact(FlextConfig):
         }
 
 
-class FlextDbtOracleWmsShipmentFact(FlextConfig):
+class FlextDbtOracleWmsShipmentFact(FlextCore.Config):
     """Shipment fact model for DBT Oracle WMS transformations.
 
     Represents shipments as fact table optimized for analytics.
@@ -300,7 +300,7 @@ class FlextDbtOracleWmsShipmentFact(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: FlextCore.Types.Dict,
     ) -> FlextDbtOracleWmsShipmentFact:
         """Create shipment fact from Oracle WMS record."""
         return cls(
@@ -320,10 +320,10 @@ class FlextDbtOracleWmsShipmentFact(FlextConfig):
             freight_cost=_get_float(record.get("freightCost")),
         )
 
-    def validate_business_rules(self: object) -> FlextResult[None]:
+    def validate_business_rules(self: object) -> FlextCore.Result[None]:
         """Validate shipment fact business rules."""
         if not self.shipment_id or not self.order_id or not self.facility_id:
-            return FlextResult[None].fail(
+            return FlextCore.Result[None].fail(
                 "Shipment ID, order ID, and facility ID are required",
             )
 
@@ -336,19 +336,19 @@ class FlextDbtOracleWmsShipmentFact(FlextConfig):
             "CANCELLED",
         ]
         if self.shipment_status not in valid_statuses:
-            return FlextResult[None].fail(
+            return FlextCore.Result[None].fail(
                 f"Invalid shipment status: {self.shipment_status}",
             )
 
         if self.total_weight is not None and self.total_weight < 0:
-            return FlextResult[None].fail("Total weight cannot be negative")
+            return FlextCore.Result[None].fail("Total weight cannot be negative")
 
         if self.freight_cost is not None and self.freight_cost < 0:
-            return FlextResult[None].fail("Freight cost cannot be negative")
+            return FlextCore.Result[None].fail("Freight cost cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextCore.Result[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> FlextCore.Types.Dict:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "shipment_id": self.shipment_id,
@@ -380,7 +380,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_items(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[FlextCore.Types.Dict],
     ) -> list[FlextDbtOracleWmsItemDimension]:
         """Transform Oracle WMS records to item dimensions.
 
@@ -402,7 +402,7 @@ class FlextDbtOracleWmsTransformer:
                 item_dim = FlextDbtOracleWmsItemDimension.from_oracle_wms_record(record)
 
                 # Validate business rules
-                validation_result: FlextResult[object] = (
+                validation_result: FlextCore.Result[object] = (
                     item_dim.validate_business_rules()
                 )
                 if validation_result.is_success:
@@ -423,7 +423,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_locations(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[FlextCore.Types.Dict],
     ) -> list[FlextDbtOracleWmsLocationDimension]:
         """Transform Oracle WMS records to location dimensions.
 
@@ -447,7 +447,7 @@ class FlextDbtOracleWmsTransformer:
                 )
 
                 # Validate business rules
-                validation_result: FlextResult[object] = (
+                validation_result: FlextCore.Result[object] = (
                     location_dim.validate_business_rules()
                 )
                 if validation_result.is_success:
@@ -468,7 +468,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_inventory(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[FlextCore.Types.Dict],
     ) -> list[FlextDbtOracleWmsInventoryFact]:
         """Transform Oracle WMS records to inventory facts.
 
@@ -492,7 +492,7 @@ class FlextDbtOracleWmsTransformer:
                 )
 
                 # Validate business rules
-                validation_result: FlextResult[object] = (
+                validation_result: FlextCore.Result[object] = (
                     inventory_fact.validate_business_rules()
                 )
                 if validation_result.is_success:
@@ -514,7 +514,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_shipments(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[FlextCore.Types.Dict],
     ) -> list[FlextDbtOracleWmsShipmentFact]:
         """Transform Oracle WMS records to shipment facts.
 
@@ -538,7 +538,7 @@ class FlextDbtOracleWmsTransformer:
                 )
 
                 # Validate business rules
-                validation_result: FlextResult[object] = (
+                validation_result: FlextCore.Result[object] = (
                     shipment_fact.validate_business_rules()
                 )
                 if validation_result.is_success:
@@ -559,8 +559,8 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_all_entities(
         self,
-        entity_data: dict[str, list[FlextTypes.Dict]],
-    ) -> dict[str, FlextTypes.List]:
+        entity_data: dict[str, list[FlextCore.Types.Dict]],
+    ) -> dict[str, FlextCore.Types.List]:
         """Transform all Oracle WMS entities to their respective DBT models.
 
         Args:
@@ -575,7 +575,7 @@ class FlextDbtOracleWmsTransformer:
             list(entity_data.keys()),
         )
 
-        transformed_data: dict[str, FlextTypes.List] = {}
+        transformed_data: dict[str, FlextCore.Types.List] = {}
 
         for entity_name, records in entity_data.items():
             if entity_name == "items":
@@ -609,7 +609,7 @@ ShipmentFact = FlextDbtOracleWmsShipmentFact
 OracleWMSTransformer = FlextDbtOracleWmsTransformer
 
 
-__all__: FlextTypes.StringList = [
+__all__: FlextCore.Types.StringList = [
     "FlextDbtOracleWmsInventoryFact",
     "FlextDbtOracleWmsItemDimension",
     "FlextDbtOracleWmsLocationDimension",
