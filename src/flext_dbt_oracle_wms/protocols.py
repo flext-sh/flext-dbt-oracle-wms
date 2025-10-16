@@ -25,7 +25,6 @@ class FlextDbtOracleWmsProtocols:
     # RE-EXPORT FOUNDATION PROTOCOLS (EXPLICIT PATTERN)
     # ============================================================================
 
-
     # ============================================================================
     # DBT ORACLE WMS-SPECIFIC PROTOCOLS (DOMAIN NAMESPACE)
     # ============================================================================
