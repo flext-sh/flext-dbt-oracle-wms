@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextCore
+from flext_core import FlextModels, FlextResult, FlextTypes, FlextUtilities
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
@@ -27,7 +27,7 @@ INVENTORY_INCREMENTAL_THRESHOLD = 1000000
 HIGH_LOAD_FACTOR_THRESHOLD = 1.5
 
 
-class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
+class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     """Unified DBT Oracle WMS models collection with "dimensional" modeling capabilities.
 
     Immutable representation of a generated DBT model with Oracle WMS-specific metadata
@@ -39,38 +39,36 @@ class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
     wms_entity_type: str  # inventory, location, allocation, order, item
     schema_name: str
     table_name: str
-    columns: list[FlextCore.Types.Dict]
+    columns: list[FlextTypes.Dict]
     materialization: str
     sql_content: str
     description: str
     oracle_source: str
-    dependencies: FlextCore.Types.StringList
-    wms_business_rules: FlextCore.Types.StringList
+    dependencies: FlextTypes.StringList
+    wms_business_rules: FlextTypes.StringList
 
-    def validate_business_rules(self) -> FlextCore.Result[None]:
+    def validate_business_rules(self) -> FlextResult[None]:
         """Validate DBT Oracle WMS model business rules."""
         try:
             if not self.name.strip():
-                return FlextCore.Result[None].fail("Model name cannot be empty")
+                return FlextResult[None].fail("Model name cannot be empty")
             if (
                 self.dbt_model_type
                 not in FlextDbtOracleWmsConstants.Dbt.MATERIALIZATIONS
             ):
-                return FlextCore.Result[None].fail("Invalid model_type")
+                return FlextResult[None].fail("Invalid model_type")
             if (
                 self.wms_entity_type
                 not in FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES
             ):
-                return FlextCore.Result[None].fail("Invalid WMS entity type")
+                return FlextResult[None].fail("Invalid WMS entity type")
             if not self.schema_name.strip() or not self.table_name.strip():
-                return FlextCore.Result[None].fail(
-                    "Schema and table names cannot be empty"
-                )
+                return FlextResult[None].fail("Schema and table names cannot be empty")
             if not self.sql_content.strip():
-                return FlextCore.Result[None].fail("SQL content cannot be empty")
-            return FlextCore.Result[None].ok(None)
+                return FlextResult[None].fail("SQL content cannot be empty")
+            return FlextResult[None].ok(None)
         except Exception as e:
-            return FlextCore.Result[None].fail(f"Business rule validation failed: {e}")
+            return FlextResult[None].fail(f"Business rule validation failed: {e}")
 
     def get_file_path(self) -> str:
         """Get the file path for this DBT Oracle WMS model."""
@@ -80,7 +78,7 @@ class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
         """Get the schema file path for this DBT Oracle WMS model."""
         return f"models/{self.dbt_model_type}/schema.yml"
 
-    def to_sql_file(self) -> FlextCore.Result[str]:
+    def to_sql_file(self) -> FlextResult[str]:
         """Convert model to SQL file content with Oracle WMS optimizations."""
         try:
             config_block = f"""
@@ -94,14 +92,14 @@ class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
   )
 }}}}"""
             content = f"{config_block}\n\n{self.sql_content}"
-            return FlextCore.Result[str].ok(content)
+            return FlextResult[str].ok(content)
         except Exception as e:
-            return FlextCore.Result[str].fail(f"SQL file generation failed: {e}")
+            return FlextResult[str].fail(f"SQL file generation failed: {e}")
 
-    def to_schema_entry(self) -> FlextCore.Result[FlextCore.Types.Dict]:
+    def to_schema_entry(self) -> FlextResult[FlextTypes.Dict]:
         """Convert model to schema.yml entry with WMS metadata."""
         try:
-            schema_entry: FlextCore.Types.Dict = {
+            schema_entry: FlextTypes.Dict = {
                 "name": self.name,
                 "description": self.description,
                 "meta": {
@@ -119,16 +117,16 @@ class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
                     for col in self.columns
                 ],
             }
-            return FlextCore.Result[dict["str", "object"]].ok(schema_entry)
+            return FlextResult[dict["str", "object"]].ok(schema_entry)
         except Exception as e:
-            return FlextCore.Result[dict["str", "object"]].fail(
+            return FlextResult[dict["str", "object"]].fail(
                 f"Schema entry generation failed: {e}"
             )
 
     @classmethod
     def create_generator(
         cls,
-        config: FlextCore.Types.Dict,
+        config: FlextTypes.Dict,
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a WMS model generator instance."""
         return cls.ModelGenerator(config)
@@ -139,14 +137,14 @@ class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
         @override
         def __init__(
             self,
-            config: FlextCore.Types.Dict,
+            config: FlextTypes.Dict,
         ) -> None:
             """Initialize the Oracle WMS model generator."""
             self.config = config
 
         def generate_wms_dimensional_models(
-            self, wms_entities: FlextCore.Types.StringList
-        ) -> FlextCore.Result[list[FlextDbtOracleWmsModels]]:
+            self, wms_entities: FlextTypes.StringList
+        ) -> FlextResult[list[FlextDbtOracleWmsModels]]:
             """Generate dimensional models from Oracle WMS entities."""
             dimensional_models: list[FlextDbtOracleWmsModels] = []
 
@@ -162,13 +160,11 @@ class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
                     if fact_result.is_success:
                         dimensional_models.append(fact_result.unwrap())
 
-            return FlextCore.Result[list[FlextDbtOracleWmsModels]].ok(
-                dimensional_models
-            )
+            return FlextResult[list[FlextDbtOracleWmsModels]].ok(dimensional_models)
 
         def generate_wms_staging_models(
-            self, oracle_sources: FlextCore.Types.StringList
-        ) -> FlextCore.Result[list[FlextDbtOracleWmsModels]]:
+            self, oracle_sources: FlextTypes.StringList
+        ) -> FlextResult[list[FlextDbtOracleWmsModels]]:
             """Generate staging models from Oracle WMS sources."""
             staging_models: list[FlextDbtOracleWmsModels] = []
 
@@ -177,11 +173,11 @@ class FlextDbtOracleWmsModels(FlextCore.Models.ArbitraryTypesModel):
                 if model_result.is_success:
                     staging_models.append(model_result.unwrap())
 
-            return FlextCore.Result[list[FlextDbtOracleWmsModels]].ok(staging_models)
+            return FlextResult[list[FlextDbtOracleWmsModels]].ok(staging_models)
 
         def _create_dimension_model(
             self, wms_entity: str
-        ) -> FlextCore.Result[FlextDbtOracleWmsModels]:
+        ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a dimension model for WMS entity."""
             try:
                 sql_content = f"""
@@ -256,16 +252,16 @@ from {{{{ ref('stg_wms_{wms_entity}') }}}}
                     ],
                 )
 
-                return FlextCore.Result[FlextDbtOracleWmsModels].ok(dimension_model)
+                return FlextResult[FlextDbtOracleWmsModels].ok(dimension_model)
 
             except Exception as e:
-                return FlextCore.Result[FlextDbtOracleWmsModels].fail(
+                return FlextResult[FlextDbtOracleWmsModels].fail(
                     f"Failed to create dimension model: {e}"
                 )
 
         def _create_fact_model(
             self, wms_entity: str
-        ) -> FlextCore.Result[FlextDbtOracleWmsModels]:
+        ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a fact model for WMS entity."""
             try:
                 sql_content = f"""
@@ -360,16 +356,16 @@ from {{{{ ref('int_wms_{wms_entity}') }}}}
                     ],
                 )
 
-                return FlextCore.Result[FlextDbtOracleWmsModels].ok(fact_model)
+                return FlextResult[FlextDbtOracleWmsModels].ok(fact_model)
 
             except Exception as e:
-                return FlextCore.Result[FlextDbtOracleWmsModels].fail(
+                return FlextResult[FlextDbtOracleWmsModels].fail(
                     f"Failed to create fact model: {e}"
                 )
 
         def _create_staging_model(
             self, oracle_source: str
-        ) -> FlextCore.Result[FlextDbtOracleWmsModels]:
+        ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a staging model from Oracle WMS source."""
             try:
                 sql_content = f"""
@@ -396,15 +392,15 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
                     wms_business_rules=[],
                 )
 
-                return FlextCore.Result[FlextDbtOracleWmsModels].ok(staging_model)
+                return FlextResult[FlextDbtOracleWmsModels].ok(staging_model)
 
             except Exception as e:
-                return FlextCore.Result[FlextDbtOracleWmsModels].fail(
+                return FlextResult[FlextDbtOracleWmsModels].fail(
                     f"Failed to create staging model: {e}"
                 )
 
-    class Utilities(FlextCore.Utilities):
-        """Unified DBT Oracle WMS utilities extending FlextCore.Utilities.
+    class Utilities(FlextUtilities):
+        """Unified DBT Oracle WMS utilities extending FlextUtilities.
 
         Provides comprehensive utility classes for DBT Oracle WMS operations:
         - Oracle WMS database connection and metadata utilities
@@ -413,7 +409,7 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
         - DBT model generation utilities for WMS dimensional analytics
         - Performance optimization utilities for Oracle WMS DBT operations
 
-        All nested utility classes follow SOLID principles and FlextCore.Result patterns.
+        All nested utility classes follow SOLID principles and FlextResult patterns.
         """
 
         class _OracleWmsConnectionHelper:
@@ -422,10 +418,10 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
             @staticmethod
             def validate_oracle_wms_connection_config(
                 config: dict,
-            ) -> FlextCore.Result[FlextCore.Types.Dict]:
+            ) -> FlextResult[FlextTypes.Dict]:
                 """Validate Oracle WMS connection configuration for DBT."""
                 if not config:
-                    return FlextCore.Result[FlextCore.Types.Dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         "Oracle WMS connection config cannot be empty"
                     )
 
@@ -440,31 +436,31 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
 
                 for field in required_fields:
                     if field not in config:
-                        return FlextCore.Result[FlextCore.Types.Dict].fail(
+                        return FlextResult[FlextTypes.Dict].fail(
                             f"Missing required Oracle WMS connection field: {field}"
                         )
 
                 # Validate port is integer
                 if not isinstance(config.get("port"), int):
-                    return FlextCore.Result[FlextCore.Types.Dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         "Oracle WMS port must be an integer"
                     )
 
                 # Validate port range
                 port = config["port"]
                 if not (MIN_PORT_NUMBER <= port <= MAX_PORT_NUMBER):
-                    return FlextCore.Result[FlextCore.Types.Dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         f"Oracle WMS port must be between {MIN_PORT_NUMBER} and {MAX_PORT_NUMBER}"
                     )
 
                 # Validate WMS schema format
                 wms_schema = config["wms_schema"]
                 if not wms_schema.upper().startswith("WMS"):
-                    return FlextCore.Result[FlextCore.Types.Dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         "WMS schema must start with 'WMS'"
                     )
 
-                return FlextCore.Result[FlextCore.Types.Dict].ok(config)
+                return FlextResult[FlextTypes.Dict].ok(config)
 
 
 __all__ = ["FlextDbtOracleWmsModels"]

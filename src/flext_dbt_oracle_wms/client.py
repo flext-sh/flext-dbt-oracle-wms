@@ -10,7 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import override
 
-from flext_core import FlextCore
+from flext_core import FlextLogger, FlextResult, FlextTypes
 from flext_meltano import FlextMeltanoAPI
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
@@ -25,7 +25,7 @@ class FlextDbtOracleWmsClient:
     """
 
     # Shared logger for all DBT Oracle WMS client operations
-    logger = FlextCore.Logger(__name__)
+    logger = FlextLogger(__name__)
 
     @override
     def __init__(
@@ -38,11 +38,11 @@ class FlextDbtOracleWmsClient:
             config: Configuration for Oracle WMS and DBT operations
 
         """
-        self.config: FlextCore.Types.Dict = (
+        self.config: FlextTypes.Dict = (
             config or FlextDbtOracleWmsConfig.get_global_instance()
         )
         # Initialize Oracle WMS client using flext-oracle-wms
-        oracle_wms_config: FlextCore.Types.Dict = self.config.get_oracle_wms_config()
+        oracle_wms_config: FlextTypes.Dict = self.config.get_oracle_wms_config()
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
         self._dbt_service: object | None = None
         FlextDbtOracleWmsClient.logger.info(
@@ -54,7 +54,7 @@ class FlextDbtOracleWmsClient:
         """Get or create DBT service instance."""
         if self._dbt_service is None:
             # Create DBT service with configuration
-            meltano_config: FlextCore.Types.Dict = self.config.get_meltano_config()
+            meltano_config: FlextTypes.Dict = self.config.get_meltano_config()
             # Suppress unused registry_path warning for future use
             _ = (
                 Path(meltano_config.project_root)
@@ -69,26 +69,26 @@ class FlextDbtOracleWmsClient:
         """Get Oracle WMS client instance."""
         return self._oracle_wms_client
 
-    def test_oracle_wms_connection(self) -> FlextCore.Result[dict[str, str | int]]:
+    def test_oracle_wms_connection(self) -> FlextResult[dict[str, str | int]]:
         """Test Oracle WMS connection and basic functionality.
 
         Returns:
-            FlextCore.Result containing connection status and basic info
+            FlextResult containing connection status and basic info
 
         """
         try:
             # Test the Oracle WMS connection
             # Mock connection test for now
-            test_result: FlextCore.Result[object] = FlextCore.Result[
-                dict["str", "object"]
-            ].ok({"status": "connected"})
+            test_result: FlextResult[object] = FlextResult[dict["str", "object"]].ok(
+                {"status": "connected"}
+            )
             if test_result.is_failure:
-                return FlextCore.Result[dict[str, str | int]].fail(
+                return FlextResult[dict[str, str | int]].fail(
                     f"Connection test failed: {test_result.error}",
                 )
 
             # Return connection status
-            return FlextCore.Result[dict[str, str | int]].ok(
+            return FlextResult[dict[str, str | int]].ok(
                 {
                     "status": "connected",
                     "timestamp": "2025-01-01T00:00:00Z",
@@ -96,16 +96,14 @@ class FlextDbtOracleWmsClient:
                 },
             )
         except Exception as e:
-            return FlextCore.Result[dict[str, str | int]].fail(
-                f"Connection test error: {e}"
-            )
+            return FlextResult[dict[str, str | int]].fail(f"Connection test error: {e}")
 
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
-        entity_names: FlextCore.Types.StringList | None = None,
-        filters: FlextCore.Types.NestedDict | None = None,
-        model_names: FlextCore.Types.StringList | None = None,
-    ) -> FlextCore.Result[FlextCore.Types.Dict]:
+        entity_names: FlextTypes.StringList | None = None,
+        filters: FlextTypes.NestedDict | None = None,
+        model_names: FlextTypes.StringList | None = None,
+    ) -> FlextResult[FlextTypes.Dict]:
         """Run full Oracle WMS-to-DBT pipeline.
 
         Args:
@@ -114,18 +112,16 @@ class FlextDbtOracleWmsClient:
             model_names: DBT models to run
 
         Returns:
-            FlextCore.Result containing complete pipeline results
+            FlextResult containing complete pipeline results
 
         """
         FlextDbtOracleWmsClient.logger.info("Starting full Oracle WMS-to-DBT pipeline")
         # Step 1: Discover entities if not specified
         if entity_names is None:
-            discover_result: FlextCore.Result[object] = (
-                self.discover_oracle_wms_entities()
-            )
+            discover_result: FlextResult[object] = self.discover_oracle_wms_entities()
             if discover_result.is_failure:
                 # Convert discovery result to expected format
-                return FlextCore.Result[FlextCore.Types.Dict].ok(
+                return FlextResult[FlextTypes.Dict].ok(
                     {
                         "discovery_results": discover_result.data,
                         "pipeline_status": "failed_at_discovery",
@@ -139,7 +135,7 @@ class FlextDbtOracleWmsClient:
         # Step 2: Extract data for each entity
         entity_data = {}
         for entity_name in entity_names:
-            entity_filters: FlextCore.Types.Dict = (
+            entity_filters: FlextTypes.Dict = (
                 filters.get(entity_name, {}) if filters else {}
             )
             extract_result = self.extract_oracle_wms_data(
@@ -148,7 +144,7 @@ class FlextDbtOracleWmsClient:
             )
             if extract_result.is_failure:
                 # Convert extraction result to expected format
-                return FlextCore.Result[FlextCore.Types.Dict].ok(
+                return FlextResult[FlextTypes.Dict].ok(
                     {
                         "extraction_results": extract_result.data,
                         "pipeline_status": "failed_at_extraction",
@@ -156,22 +152,22 @@ class FlextDbtOracleWmsClient:
                 )
             records = extract_result.data or []
             # Step 3: Validate data quality
-            validate_result: FlextCore.Result[object] = self.validate_oracle_wms_data(
+            validate_result: FlextResult[object] = self.validate_oracle_wms_data(
                 entity_name, records
             )
             if validate_result.is_failure:
-                return FlextCore.Result[dict["str", "object"]].fail(
+                return FlextResult[dict["str", "object"]].fail(
                     validate_result.error or "Validation failed",
                 )
             entity_data[entity_name] = records
         # Step 4: Transform with DBT
-        transform_result: FlextCore.Result[object] = self.transform_with_dbt(
+        transform_result: FlextResult[object] = self.transform_with_dbt(
             entity_data, model_names
         )
         if transform_result.is_failure:
             return transform_result
         # Combine results
-        pipeline_results: FlextCore.Types.Dict = {
+        pipeline_results: FlextTypes.Dict = {
             "processed_entities": list(entity_data.keys()),
             "total_records": sum(len(records) for records in entity_data.values()),
             "transformation_results": transform_result.data,
@@ -180,7 +176,7 @@ class FlextDbtOracleWmsClient:
         FlextDbtOracleWmsClient.logger.info(
             "Full Oracle WMS-to-DBT pipeline completed successfully"
         )
-        return FlextCore.Result[FlextCore.Types.Dict].ok(pipeline_results)
+        return FlextResult[FlextTypes.Dict].ok(pipeline_results)
 
     def _prepare_oracle_wms_data_for_dbt(
         self,
@@ -217,23 +213,23 @@ class FlextDbtOracleWmsClient:
 
     def discover_oracle_wms_entities(
         self,
-    ) -> FlextCore.Result[FlextCore.Types.StringList]:
+    ) -> FlextResult[FlextTypes.StringList]:
         """Discover available Oracle WMS entities."""
         try:
             # Use the Oracle WMS client to discover entities
             # Mock entities discovery for now
             entities = ["company", "facility", "location", "item"]
-            return FlextCore.Result[FlextCore.Types.StringList].ok(entities)
+            return FlextResult[FlextTypes.StringList].ok(entities)
         except Exception as e:
-            return FlextCore.Result[FlextCore.Types.StringList].fail(
+            return FlextResult[FlextTypes.StringList].fail(
                 f"Failed to discover entities: {e}"
             )
 
     def extract_oracle_wms_data(
         self,
         entity_name: str,
-        filters: FlextCore.Types.Dict,
-    ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
+        filters: FlextTypes.Dict,
+    ) -> FlextResult[list[FlextTypes.Dict]]:
         """Extract data from Oracle WMS for a specific entity."""
         try:
             # Suppress unused filters parameter warning for future use
@@ -241,39 +237,39 @@ class FlextDbtOracleWmsClient:
             # Use the Oracle WMS client to extract data
             # Mock data extraction for now
             data = [{"id": 1, "name": f"sample_{entity_name}"}]
-            return FlextCore.Result[list[dict["str", "object"]]].ok(data)
+            return FlextResult[list[dict["str", "object"]]].ok(data)
         except Exception as e:
-            return FlextCore.Result[list[dict["str", "object"]]].fail(
+            return FlextResult[list[dict["str", "object"]]].fail(
                 f"Failed to extract data: {e}",
             )
 
     def validate_oracle_wms_data(
         self,
         entity_name: str,
-        records: list[FlextCore.Types.Dict],
-    ) -> FlextCore.Result[list[FlextCore.Types.Dict]]:
+        records: list[FlextTypes.Dict],
+    ) -> FlextResult[list[FlextTypes.Dict]]:
         """Validate Oracle WMS data quality."""
         try:
             # Suppress unused entity_name parameter warning for future use
             _ = entity_name
             # Basic validation - check that records are not empty
             if not records:
-                return FlextCore.Result[list[dict["str", "object"]]].fail(
+                return FlextResult[list[dict["str", "object"]]].fail(
                     "No records to validate",
                 )
 
             # Return validated records
-            return FlextCore.Result[list[dict["str", "object"]]].ok(records)
+            return FlextResult[list[dict["str", "object"]]].ok(records)
         except Exception as e:
-            return FlextCore.Result[list[dict["str", "object"]]].fail(
+            return FlextResult[list[dict["str", "object"]]].fail(
                 f"Validation failed: {e}"
             )
 
     def transform_with_dbt(
         self,
-        entity_data: dict[str, list[FlextCore.Types.Dict]],
-        model_names: FlextCore.Types.StringList | None,
-    ) -> FlextCore.Result[FlextCore.Types.Dict]:
+        entity_data: dict[str, list[FlextTypes.Dict]],
+        model_names: FlextTypes.StringList | None,
+    ) -> FlextResult[FlextTypes.Dict]:
         """Transform data using DBT."""
         try:
             # Suppress unused model_names parameter warning for future use
@@ -284,13 +280,13 @@ class FlextDbtOracleWmsClient:
                 "transformed_tables": list(entity_data.keys()),
                 "status": "success",
             }
-            return FlextCore.Result[dict["str", "object"]].ok(result)
+            return FlextResult[dict["str", "object"]].ok(result)
         except Exception as e:
-            return FlextCore.Result[dict["str", "object"]].fail(
+            return FlextResult[dict["str", "object"]].fail(
                 f"DBT transformation failed: {e}",
             )
 
 
-__all__: FlextCore.Types.StringList = [
+__all__: FlextTypes.StringList = [
     "FlextDbtOracleWmsClient",
 ]

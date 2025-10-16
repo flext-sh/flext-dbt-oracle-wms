@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
-from flext_core import FlextCore
+from flext_core import FlextConfig, FlextTypes
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as WmsConstants,
 )
@@ -23,21 +23,21 @@ Version = str
 
 
 # Helper function - defined outside class to avoid forward reference
-def _get_default_wms_entities() -> FlextCore.Types.StringList:
+def _get_default_wms_entities() -> FlextTypes.StringList:
     """Get default WMS entities from flext-oracle-wms API.
 
     Returns:
-      FlextCore.Types.StringList: List of default WMS entity names.
+      FlextTypes.StringList: List of default WMS entity names.
 
     """
-    entities: FlextCore.Types.StringList = []
+    entities: FlextTypes.StringList = []
     entities.extend(WmsConstants.OracleWmsEntities.CORE_ENTITIES)
     entities.extend(WmsConstants.OracleWmsEntities.ORDER_ENTITIES)
     entities.extend(list(WmsConstants.OracleWmsEntities.INVENTORY_ENTITIES)[:2])
     return entities
 
 
-class FlextDBTOracleWMSConfig(FlextCore.Config):
+class FlextDBTOracleWMSConfig(FlextConfig):
     """FLEXT DBT Oracle WMS configuration using core types."""
 
     project_name: ProjectName = Field(
@@ -51,18 +51,16 @@ class FlextDBTOracleWMSConfig(FlextCore.Config):
     )
 
     # DBT configurations
-    model_paths: FlextCore.Types.StringList = Field(default_factory=lambda: ["models"])
-    analysis_paths: FlextCore.Types.StringList = Field(
-        default_factory=lambda: ["analyses"]
-    )
-    test_paths: FlextCore.Types.StringList = Field(default_factory=lambda: ["tests"])
-    seed_paths: FlextCore.Types.StringList = Field(default_factory=lambda: ["seeds"])
-    macro_paths: FlextCore.Types.StringList = Field(default_factory=lambda: ["macros"])
+    model_paths: FlextTypes.StringList = Field(default_factory=lambda: ["models"])
+    analysis_paths: FlextTypes.StringList = Field(default_factory=lambda: ["analyses"])
+    test_paths: FlextTypes.StringList = Field(default_factory=lambda: ["tests"])
+    seed_paths: FlextTypes.StringList = Field(default_factory=lambda: ["seeds"])
+    macro_paths: FlextTypes.StringList = Field(default_factory=lambda: ["macros"])
 
     # Oracle WMS specific - consuming from flext-oracle-wms API
     oracle_wms_schema: str = Field(default="wms_raw")
 
-    wms_entities: FlextCore.Types.StringList = Field(
+    wms_entities: FlextTypes.StringList = Field(
         default_factory=_get_default_wms_entities,
     )
 
@@ -100,7 +98,7 @@ class DBTOracleWMSSourceConfiguration(TypedDict):
 
     name: NonEmptyStr
     schema: NonEmptyStr
-    tables: list[FlextCore.Types.Dict]
+    tables: list[FlextTypes.Dict]
 
 
 class DBTOracleWMSTestConfiguration(TypedDict):
@@ -122,14 +120,14 @@ class DBTOracleWMSProfileConfiguration(TypedDict):
     """DBT profile configuration using core types."""
 
     target: NonEmptyStr
-    outputs: FlextCore.Types.Dict
+    outputs: FlextTypes.Dict
 
 
 # ==============================================================================
 # EXPORTS - ALL DBT ORACLE WMS CONFIG TYPES
 # ==============================================================================
 
-__all__: FlextCore.Types.StringList = [
+__all__: FlextTypes.StringList = [
     "DBTOracleWMSConfiguration",
     "DBTOracleWMSMacroConfiguration",
     "DBTOracleWMSModelConfiguration",

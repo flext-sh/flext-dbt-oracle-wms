@@ -9,14 +9,20 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_core import FlextCore
+from flext_core import (
+    FlextContainer,
+    FlextLogger,
+    FlextResult,
+    FlextTypes,
+    FlextUtilities,
+)
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsSemanticConstants
 
-__all__: FlextCore.Types.StringList = ["FlextDbtOracleWmsUtilities"]
+__all__: FlextTypes.StringList = ["FlextDbtOracleWmsUtilities"]
 
 
-class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
+class FlextDbtOracleWmsUtilities(FlextUtilities):
     """Single unified utilities class for DBT Oracle WMS data warehouse operations.
 
     Provides comprehensive DBT Oracle WMS utilities for warehouse management system integration,
@@ -40,36 +46,38 @@ class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
     def __init__(self) -> None:
         """Initialize FlextDbtOracleWmsUtilities service."""
         super().__init__()
-        self._container = FlextCore.Container.get_global()
-        self.logger = FlextCore.Logger(__name__)
+        self._container = FlextContainer.get_global()
+        self.logger = FlextLogger(__name__)
 
-    def execute(self) -> FlextCore.Result[FlextCore.Types.Dict]:
+    def execute(self) -> FlextResult[FlextTypes.Dict]:
         """Execute the main DBT Oracle WMS service operation.
 
         Returns:
-            FlextCore.Result[FlextCore.Types.Dict]: Service status and capabilities.
+            FlextResult[FlextTypes.Dict]: Service status and capabilities.
 
         """
-        return FlextCore.Result[FlextCore.Types.Dict].ok({
-            "status": "operational",
-            "service": "flext-dbt-oracle-wms-utilities",
-            "capabilities": [
-                "wms_data_extraction",
-                "wms_dimensional_modeling",
-                "dbt_model_generation",
-                "wms_analytics_optimization",
-                "inventory_analytics",
-                "warehouse_performance_analysis",
-            ],
-        })
+        return FlextResult[FlextTypes.Dict].ok(
+            {
+                "status": "operational",
+                "service": "flext-dbt-oracle-wms-utilities",
+                "capabilities": [
+                    "wms_data_extraction",
+                    "wms_dimensional_modeling",
+                    "dbt_model_generation",
+                    "wms_analytics_optimization",
+                    "inventory_analytics",
+                    "warehouse_performance_analysis",
+                ],
+            }
+        )
 
     @property
-    def logger(self) -> FlextCore.Logger:
+    def logger(self) -> FlextLogger:
         """Get logger instance."""
         return self.logger
 
     @property
-    def container(self) -> FlextCore.Container:
+    def container(self) -> FlextContainer:
         """Get container instance."""
         return self._container
 
@@ -78,15 +86,15 @@ class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[FlextCore.Types.Dict]:
+            extraction_config: FlextTypes.Dict,
+        ) -> FlextResult[FlextTypes.Dict]:
             """Extract Oracle WMS inventory data for analytics.
 
             Args:
                 extraction_config: WMS extraction configuration
 
             Returns:
-                FlextCore.Result containing WMS inventory data or error
+                FlextResult containing WMS inventory data or error
 
             """
             try:
@@ -94,7 +102,7 @@ class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
                 required_config = ["wms_host", "wms_schema", "date_range"]
                 for config_key in required_config:
                     if config_key not in extraction_config:
-                        return FlextCore.Result[FlextCore.Types.Dict].fail(
+                        return FlextResult[FlextTypes.Dict].fail(
                             f"Missing WMS config: {config_key}"
                         )
 
@@ -111,14 +119,17 @@ class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
 
                 # Simulate WMS inventory extraction
                 for location_type in ["PICK", "RESERVE", "STAGING", "SHIPPING"]:
-                    inventory_data["inventory_records"].append({
-                        "location_type": location_type,
-                        "total_items": 1000 + hash(location_type) % 5000,
-                        "total_quantity": 50000 + hash(location_type) % 100000,
-                        "total_value": 1000000 + hash(location_type) % 5000000,
-                        "last_cycle_count": "2025-01-09",
-                        "accuracy_percentage": 98.5 + (hash(location_type) % 30) / 10,
-                    })
+                    inventory_data["inventory_records"].append(
+                        {
+                            "location_type": location_type,
+                            "total_items": 1000 + hash(location_type) % 5000,
+                            "total_quantity": 50000 + hash(location_type) % 100000,
+                            "total_value": 1000000 + hash(location_type) % 5000000,
+                            "last_cycle_count": "2025-01-09",
+                            "accuracy_percentage": 98.5
+                            + (hash(location_type) % 30) / 10,
+                        }
+                    )
 
                 # Extract location hierarchy for dimensional modeling
                 inventory_data["location_hierarchy"] = {
@@ -146,29 +157,29 @@ class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
                     },
                 }
 
-                return FlextCore.Result[FlextCore.Types.Dict].ok(inventory_data)
+                return FlextResult[FlextTypes.Dict].ok(inventory_data)
 
             except Exception as e:
-                return FlextCore.Result[FlextCore.Types.Dict].fail(
+                return FlextResult[FlextTypes.Dict].fail(
                     f"WMS inventory extraction failed: {e}"
                 )
 
         @staticmethod
         def extract_wms_transaction_data(
-            transaction_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[FlextCore.Types.Dict]:
+            transaction_config: FlextTypes.Dict,
+        ) -> FlextResult[FlextTypes.Dict]:
             """Extract Oracle WMS transaction data for operational analytics.
 
             Args:
                 transaction_config: WMS transaction extraction configuration
 
             Returns:
-                FlextCore.Result containing WMS transaction data or error
+                FlextResult containing WMS transaction data or error
 
             """
             try:
                 if not transaction_config.get("transaction_types"):
-                    return FlextCore.Result[FlextCore.Types.Dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         "Transaction types must be specified"
                     )
 
@@ -231,10 +242,10 @@ class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
                     // len(transaction_data["transaction_summary"]),
                 }
 
-                return FlextCore.Result[FlextCore.Types.Dict].ok(transaction_data)
+                return FlextResult[FlextTypes.Dict].ok(transaction_data)
 
             except Exception as e:
-                return FlextCore.Result[FlextCore.Types.Dict].fail(
+                return FlextResult[FlextTypes.Dict].fail(
                     f"WMS transaction extraction failed: {e}"
                 )
 
@@ -243,21 +254,21 @@ class FlextDbtOracleWmsUtilities(FlextCore.Utilities):
 
         @staticmethod
         def generate_wms_inventory_dimension(
-            inventory_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[str]:
+            inventory_config: FlextTypes.Dict,
+        ) -> FlextResult[str]:
             """Generate WMS inventory dimension model.
 
             Args:
                 inventory_config: Inventory dimension configuration
 
             Returns:
-                FlextCore.Result containing dimension model SQL or error
+                FlextResult containing dimension model SQL or error
 
             """
             try:
                 # Validate inventory configuration
                 if not inventory_config:
-                    return FlextCore.Result[str].fail(
+                    return FlextResult[str].fail(
                         "Inventory configuration cannot be empty"
                     )
 
@@ -364,30 +375,30 @@ final as (
 select * from final
 """
 
-                return FlextCore.Result[str].ok(model_sql)
+                return FlextResult[str].ok(model_sql)
 
             except Exception as e:
-                return FlextCore.Result[str].fail(
+                return FlextResult[str].fail(
                     f"WMS inventory dimension generation failed: {e}"
                 )
 
         @staticmethod
         def generate_wms_location_dimension(
-            location_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[str]:
+            location_config: FlextTypes.Dict,
+        ) -> FlextResult[str]:
             """Generate WMS location dimension model.
 
             Args:
                 location_config: Location dimension configuration
 
             Returns:
-                FlextCore.Result containing location dimension SQL or error
+                FlextResult containing location dimension SQL or error
 
             """
             try:
                 # Validate location configuration
                 if not location_config:
-                    return FlextCore.Result[str].fail(
+                    return FlextResult[str].fail(
                         "Location configuration cannot be empty"
                     )
 
@@ -458,10 +469,10 @@ from {{ ref('stg_wms_locations') }}
 where location_id is not null
 """
 
-                return FlextCore.Result[str].ok(model_sql)
+                return FlextResult[str].ok(model_sql)
 
             except Exception as e:
-                return FlextCore.Result[str].fail(
+                return FlextResult[str].fail(
                     f"WMS location dimension generation failed: {e}"
                 )
 
@@ -470,23 +481,21 @@ where location_id is not null
 
         @staticmethod
         def generate_wms_transaction_fact(
-            fact_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[str]:
+            fact_config: FlextTypes.Dict,
+        ) -> FlextResult[str]:
             """Generate WMS transaction fact table model.
 
             Args:
                 fact_config: Fact table configuration
 
             Returns:
-                FlextCore.Result containing fact table SQL or error
+                FlextResult containing fact table SQL or error
 
             """
             try:
                 # Validate fact configuration
                 if not fact_config:
-                    return FlextCore.Result[str].fail(
-                        "Fact configuration cannot be empty"
-                    )
+                    return FlextResult[str].fail("Fact configuration cannot be empty")
 
                 model_sql = """{{
     config(
@@ -576,30 +585,30 @@ left join {{ ref('dim_user') }} u on t.user_id = u.user_id
 {% endif %}
 """
 
-                return FlextCore.Result[str].ok(model_sql)
+                return FlextResult[str].ok(model_sql)
 
             except Exception as e:
-                return FlextCore.Result[str].fail(
+                return FlextResult[str].fail(
                     f"WMS transaction fact generation failed: {e}"
                 )
 
         @staticmethod
         def generate_wms_inventory_snapshot_fact(
-            snapshot_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[str]:
+            snapshot_config: FlextTypes.Dict,
+        ) -> FlextResult[str]:
             """Generate WMS inventory snapshot fact table.
 
             Args:
                 snapshot_config: Snapshot fact configuration
 
             Returns:
-                FlextCore.Result containing snapshot fact SQL or error
+                FlextResult containing snapshot fact SQL or error
 
             """
             try:
                 # Validate snapshot configuration
                 if not snapshot_config:
-                    return FlextCore.Result[str].fail(
+                    return FlextResult[str].fail(
                         "Snapshot configuration cannot be empty"
                     )
 
@@ -699,10 +708,10 @@ select
 from inventory_metrics
 """
 
-                return FlextCore.Result[str].ok(model_sql)
+                return FlextResult[str].ok(model_sql)
 
             except Exception as e:
-                return FlextCore.Result[str].fail(
+                return FlextResult[str].fail(
                     f"WMS inventory snapshot fact generation failed: {e}"
                 )
 
@@ -711,15 +720,15 @@ from inventory_metrics
 
         @staticmethod
         def optimize_wms_query_performance(
-            query_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[FlextCore.Types.Dict]:
+            query_config: FlextTypes.Dict,
+        ) -> FlextResult[FlextTypes.Dict]:
             """Optimize WMS analytical queries for performance.
 
             Args:
                 query_config: Query optimization configuration
 
             Returns:
-                FlextCore.Result containing optimization recommendations or error
+                FlextResult containing optimization recommendations or error
 
             """
             try:
@@ -737,28 +746,34 @@ from inventory_metrics
 
                 # Optimization recommendations based on query patterns
                 if "inventory" in query_type.lower():
-                    optimization_results["recommendations"].extend([
-                        "Partition inventory fact tables by date for temporal queries",
-                        "Create composite indexes on (item_id, location_id, effective_date)",
-                        "Use Oracle materialized views for frequently accessed inventory summaries",
-                        "Implement incremental refresh strategy for inventory snapshots",
-                    ])
+                    optimization_results["recommendations"].extend(
+                        [
+                            "Partition inventory fact tables by date for temporal queries",
+                            "Create composite indexes on (item_id, location_id, effective_date)",
+                            "Use Oracle materialized views for frequently accessed inventory summaries",
+                            "Implement incremental refresh strategy for inventory snapshots",
+                        ]
+                    )
 
                 if "transaction" in query_type.lower():
-                    optimization_results["recommendations"].extend([
-                        "Partition transaction fact by transaction_date with sub-partitioning by warehouse",
-                        "Create bitmap indexes on transaction_type and movement_type",
-                        "Use Oracle parallel query for large transaction aggregations",
-                        "Implement result cache for frequent transaction summaries",
-                    ])
+                    optimization_results["recommendations"].extend(
+                        [
+                            "Partition transaction fact by transaction_date with sub-partitioning by warehouse",
+                            "Create bitmap indexes on transaction_type and movement_type",
+                            "Use Oracle parallel query for large transaction aggregations",
+                            "Implement result cache for frequent transaction summaries",
+                        ]
+                    )
 
                 if "performance" in query_type.lower():
-                    optimization_results["recommendations"].extend([
-                        "Use Oracle analytical functions for performance calculations",
-                        "Create specialized indexes for time-based performance queries",
-                        "Implement Oracle In-Memory for hot performance data",
-                        "Use Oracle hints for optimal execution plans",
-                    ])
+                    optimization_results["recommendations"].extend(
+                        [
+                            "Use Oracle analytical functions for performance calculations",
+                            "Create specialized indexes for time-based performance queries",
+                            "Implement Oracle In-Memory for hot performance data",
+                            "Use Oracle hints for optimal execution plans",
+                        ]
+                    )
 
                 # Data volume-based optimizations
                 if (
@@ -766,12 +781,14 @@ from inventory_metrics
                     > FlextDbtOracleWmsSemanticConstants.Processing.HIGH_VOLUME_THRESHOLD
                 ):  # > 100GB daily
                     optimization_results["optimization_level"] = "enterprise"
-                    optimization_results["recommendations"].extend([
-                        "Implement Oracle Exadata optimization features",
-                        "Use Oracle compression for historical WMS data",
-                        "Implement Oracle partitioning with interval partitions",
-                        "Consider Oracle Real Application Clusters (RAC) for scalability",
-                    ])
+                    optimization_results["recommendations"].extend(
+                        [
+                            "Implement Oracle Exadata optimization features",
+                            "Use Oracle compression for historical WMS data",
+                            "Implement Oracle partitioning with interval partitions",
+                            "Consider Oracle Real Application Clusters (RAC) for scalability",
+                        ]
+                    )
                     optimization_results["estimated_improvement"][
                         "query_performance"
                     ] = "40-60% faster"
@@ -784,12 +801,14 @@ from inventory_metrics
                     > FlextDbtOracleWmsSemanticConstants.Processing.MEDIUM_VOLUME_THRESHOLD
                 ):  # > 10GB daily
                     optimization_results["optimization_level"] = "advanced"
-                    optimization_results["recommendations"].extend([
-                        "Use Oracle advanced compression",
-                        "Implement Oracle automatic indexing",
-                        "Use Oracle SQL Plan Management",
-                        "Implement Oracle Database In-Memory for active data",
-                    ])
+                    optimization_results["recommendations"].extend(
+                        [
+                            "Use Oracle advanced compression",
+                            "Implement Oracle automatic indexing",
+                            "Use Oracle SQL Plan Management",
+                            "Implement Oracle Database In-Memory for active data",
+                        ]
+                    )
                     optimization_results["estimated_improvement"][
                         "query_performance"
                     ] = "25-40% faster"
@@ -803,37 +822,39 @@ from inventory_metrics
                     > FlextDbtOracleWmsSemanticConstants.Processing.HIGH_FREQUENCY_THRESHOLD
                 ):  # > 1000 queries/hour
                     optimization_results["implementation_priority"] = "high"
-                    optimization_results["recommendations"].extend([
-                        "Implement Oracle connection pooling",
-                        "Use Oracle prepared statements and bind variables",
-                        "Implement Oracle Result Cache",
-                        "Use Oracle Database Resident Connection Pooling (DRCP)",
-                    ])
+                    optimization_results["recommendations"].extend(
+                        [
+                            "Implement Oracle connection pooling",
+                            "Use Oracle prepared statements and bind variables",
+                            "Implement Oracle Result Cache",
+                            "Use Oracle Database Resident Connection Pooling (DRCP)",
+                        ]
+                    )
 
-                return FlextCore.Result[FlextCore.Types.Dict].ok(optimization_results)
+                return FlextResult[FlextTypes.Dict].ok(optimization_results)
 
             except Exception as e:
-                return FlextCore.Result[FlextCore.Types.Dict].fail(
+                return FlextResult[FlextTypes.Dict].fail(
                     f"WMS query optimization failed: {e}"
                 )
 
         @staticmethod
         def analyze_wms_data_quality(
-            quality_config: FlextCore.Types.Dict,
-        ) -> FlextCore.Result[FlextCore.Types.Dict]:
+            quality_config: FlextTypes.Dict,
+        ) -> FlextResult[FlextTypes.Dict]:
             """Analyze WMS data quality for analytics reliability.
 
             Args:
                 quality_config: Data quality analysis configuration
 
             Returns:
-                FlextCore.Result containing quality analysis or error
+                FlextResult containing quality analysis or error
 
             """
             try:
                 # Validate quality configuration
                 if not quality_config:
-                    return FlextCore.Result[FlextCore.Types.Dict].fail(
+                    return FlextResult[FlextTypes.Dict].fail(
                         "Quality configuration cannot be empty"
                     )
 
@@ -942,9 +963,9 @@ from inventory_metrics
                         "estimated_accuracy": "< 90%",
                     }
 
-                return FlextCore.Result[FlextCore.Types.Dict].ok(quality_analysis)
+                return FlextResult[FlextTypes.Dict].ok(quality_analysis)
 
             except Exception as e:
-                return FlextCore.Result[FlextCore.Types.Dict].fail(
+                return FlextResult[FlextTypes.Dict].fail(
                     f"WMS data quality analysis failed: {e}"
                 )
