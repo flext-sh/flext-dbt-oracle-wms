@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextConfig, FlextLogger, FlextResult, FlextTypes
+from flext_core import FlextConfig, FlextLogger, FlextResult
 from flext_oracle_wms import FlextOracleWmsEntity
 
 logger = FlextLogger(__name__)
@@ -77,7 +77,7 @@ class FlextDbtOracleWmsItemDimension(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: dict[str, object],
     ) -> FlextDbtOracleWmsItemDimension:
         """Create item dimension from Oracle WMS record."""
         return cls(
@@ -107,7 +107,7 @@ class FlextDbtOracleWmsItemDimension(FlextConfig):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> dict[str, object]:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "item_id": self.item_id,
@@ -148,7 +148,7 @@ class FlextDbtOracleWmsLocationDimension(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: dict[str, object],
     ) -> FlextDbtOracleWmsLocationDimension:
         """Create location dimension from Oracle WMS record."""
         return cls(
@@ -180,7 +180,7 @@ class FlextDbtOracleWmsLocationDimension(FlextConfig):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> dict[str, object]:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "location_id": self.location_id,
@@ -221,7 +221,7 @@ class FlextDbtOracleWmsInventoryFact(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: dict[str, object],
     ) -> FlextDbtOracleWmsInventoryFact:
         """Create inventory fact from Oracle WMS record."""
         quantity_on_hand = _get_float(record.get("quantityOnHand"), 0.0) or 0.0
@@ -260,7 +260,7 @@ class FlextDbtOracleWmsInventoryFact(FlextConfig):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> dict[str, object]:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "item_id": self.item_id,
@@ -300,7 +300,7 @@ class FlextDbtOracleWmsShipmentFact(FlextConfig):
     @classmethod
     def from_oracle_wms_record(
         cls,
-        record: FlextTypes.Dict,
+        record: dict[str, object],
     ) -> FlextDbtOracleWmsShipmentFact:
         """Create shipment fact from Oracle WMS record."""
         return cls(
@@ -348,7 +348,7 @@ class FlextDbtOracleWmsShipmentFact(FlextConfig):
 
         return FlextResult[None].ok(None)
 
-    def to_dbt_dict(self: object) -> FlextTypes.Dict:
+    def to_dbt_dict(self: object) -> dict[str, object]:
         """Convert to dictionary suitable for DBT processing."""
         return {
             "shipment_id": self.shipment_id,
@@ -380,7 +380,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_items(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[dict[str, object]],
     ) -> list[FlextDbtOracleWmsItemDimension]:
         """Transform Oracle WMS records to item dimensions.
 
@@ -423,7 +423,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_locations(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[dict[str, object]],
     ) -> list[FlextDbtOracleWmsLocationDimension]:
         """Transform Oracle WMS records to location dimensions.
 
@@ -468,7 +468,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_inventory(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[dict[str, object]],
     ) -> list[FlextDbtOracleWmsInventoryFact]:
         """Transform Oracle WMS records to inventory facts.
 
@@ -514,7 +514,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_shipments(
         self,
-        records: list[FlextTypes.Dict],
+        records: list[dict[str, object]],
     ) -> list[FlextDbtOracleWmsShipmentFact]:
         """Transform Oracle WMS records to shipment facts.
 
@@ -559,8 +559,8 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_all_entities(
         self,
-        entity_data: dict[str, list[FlextTypes.Dict]],
-    ) -> dict[str, FlextTypes.List]:
+        entity_data: dict[str, list[dict[str, object]]],
+    ) -> dict[str, list[object]]:
         """Transform all Oracle WMS entities to their respective DBT models.
 
         Args:
@@ -575,7 +575,7 @@ class FlextDbtOracleWmsTransformer:
             list(entity_data.keys()),
         )
 
-        transformed_data: dict[str, FlextTypes.List] = {}
+        transformed_data: dict[str, list[object]] = {}
 
         for entity_name, records in entity_data.items():
             if entity_name == "items":
@@ -609,7 +609,7 @@ ShipmentFact = FlextDbtOracleWmsShipmentFact
 OracleWMSTransformer = FlextDbtOracleWmsTransformer
 
 
-__all__: FlextTypes.StringList = [
+__all__: list[str] = [
     "FlextDbtOracleWmsInventoryFact",
     "FlextDbtOracleWmsItemDimension",
     "FlextDbtOracleWmsLocationDimension",

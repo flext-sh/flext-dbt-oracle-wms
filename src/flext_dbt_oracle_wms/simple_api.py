@@ -14,7 +14,6 @@ from flext_core import (
     FlextLogger,
     FlextResult,
     FlextService,
-    FlextTypes,
 )
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
@@ -97,12 +96,12 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
     def run_oracle_wms_to_dbt_workflow(
         self,
-        inventory_items: FlextTypes.StringList | None = None,
-        shipments: FlextTypes.StringList | None = None,
+        inventory_items: list[str] | None = None,
+        shipments: list[str] | None = None,
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> FlextResult[FlextTypes.Dict]:
+    ) -> FlextResult[dict[str, object]]:
         """Run complete Oracle WMS-to-DBT workflow.
 
         Args:
@@ -124,14 +123,16 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
                 run_transformations=run_transformations,
             )
         except Exception as e:
-            return FlextResult[FlextTypes.Dict].fail(f"Workflow execution failed: {e}")
+            return FlextResult[dict[str, object]].fail(
+                f"Workflow execution failed: {e}"
+            )
 
     def generate_dbt_models_from_wms(
         self,
-        inventory_items: FlextTypes.StringList | None = None,
-        shipments: FlextTypes.StringList | None = None,
+        inventory_items: list[str] | None = None,
+        shipments: list[str] | None = None,
         output_dir: str | None = None,
-    ) -> FlextResult[FlextTypes.Dict]:
+    ) -> FlextResult[dict[str, object]]:
         """Generate DBT models from Oracle WMS data.
 
         Args:
@@ -151,15 +152,16 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
                 output_dir=output_dir,
             )
         except Exception as e:
-            return FlextResult[FlextTypes.Dict].fail(f"Model generation failed: {e}")
+            return FlextResult[dict[str, object]].fail(f"Model generation failed: {e}")
 
     def extract_wms_metadata(
         self,
-        inventory_items: FlextTypes.StringList | None = None,
-        shipments: FlextTypes.StringList | None = None,
+        inventory_items: list[str] | None = None,
+        shipments: list[str] | None = None,
+        *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
-    ) -> FlextResult[FlextTypes.Dict]:
+    ) -> FlextResult[dict[str, object]]:
         """Extract Oracle WMS metadata.
 
         Args:
@@ -181,13 +183,15 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
                 include_shipment_tracking=include_shipment_tracking,
             )
         except Exception as e:
-            return FlextResult[FlextTypes.Dict].fail(f"Metadata extraction failed: {e}")
+            return FlextResult[dict[str, object]].fail(
+                f"Metadata extraction failed: {e}"
+            )
 
     def monitor_dbt_execution(
         self,
         command: str,
         timeout_seconds: int = 300,
-    ) -> FlextResult[FlextTypes.Dict]:
+    ) -> FlextResult[dict[str, object]]:
         """Monitor DBT command execution with metrics.
 
         Args:
@@ -205,7 +209,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
                 timeout_seconds=timeout_seconds,
             )
         except Exception as e:
-            return FlextResult[FlextTypes.Dict].fail(f"Monitoring failed: {e}")
+            return FlextResult[dict[str, object]].fail(f"Monitoring failed: {e}")
 
     def validate_wms_connection(self) -> FlextResult[bool]:
         """Validate Oracle WMS connection.
@@ -223,7 +227,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
     def get_wms_inventory_info(
         self,
         item_id: str,
-    ) -> FlextResult[FlextTypes.Dict]:
+    ) -> FlextResult[dict[str, object]]:
         """Get detailed information about WMS inventory item.
 
         Args:
@@ -237,14 +241,14 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
             self.logger.info(f"Getting WMS inventory info: {item_id}")
             return self.client.get_inventory_info(item_id=item_id)
         except Exception as e:
-            return FlextResult[FlextTypes.Dict].fail(
+            return FlextResult[dict[str, object]].fail(
                 f"Inventory info retrieval failed: {e}"
             )
 
     def get_wms_shipment_info(
         self,
         shipment_id: str,
-    ) -> FlextResult[FlextTypes.Dict]:
+    ) -> FlextResult[dict[str, object]]:
         """Get detailed information about WMS shipment.
 
         Args:
@@ -258,7 +262,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
             self.logger.info(f"Getting WMS shipment info: {shipment_id}")
             return self.client.get_shipment_info(shipment_id=shipment_id)
         except Exception as e:
-            return FlextResult[FlextTypes.Dict].fail(
+            return FlextResult[dict[str, object]].fail(
                 f"Shipment info retrieval failed: {e}"
             )
 

@@ -13,13 +13,12 @@ from flext_core import (
     FlextContainer,
     FlextLogger,
     FlextResult,
-    FlextTypes,
     FlextUtilities,
 )
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsSemanticConstants
 
-__all__: FlextTypes.StringList = ["FlextDbtOracleWmsUtilities"]
+__all__: list[str] = ["FlextDbtOracleWmsUtilities"]
 
 
 class FlextDbtOracleWmsUtilities(FlextUtilities):
@@ -49,14 +48,14 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
         self._container = FlextContainer.get_global()
         self.logger = FlextLogger(__name__)
 
-    def execute(self) -> FlextResult[FlextTypes.Dict]:
+    def execute(self) -> FlextResult[dict[str, object]]:
         """Execute the main DBT Oracle WMS service operation.
 
         Returns:
-            FlextResult[FlextTypes.Dict]: Service status and capabilities.
+            FlextResult[dict[str, object]]: Service status and capabilities.
 
         """
-        return FlextResult[FlextTypes.Dict].ok({
+        return FlextResult[dict[str, object]].ok({
             "status": "operational",
             "service": "flext-dbt-oracle-wms-utilities",
             "capabilities": [
@@ -84,8 +83,8 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: FlextTypes.Dict,
-        ) -> FlextResult[FlextTypes.Dict]:
+            extraction_config: dict[str, object],
+        ) -> FlextResult[dict[str, object]]:
             """Extract Oracle WMS inventory data for analytics.
 
             Args:
@@ -100,7 +99,7 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
                 required_config = ["wms_host", "wms_schema", "date_range"]
                 for config_key in required_config:
                     if config_key not in extraction_config:
-                        return FlextResult[FlextTypes.Dict].fail(
+                        return FlextResult[dict[str, object]].fail(
                             f"Missing WMS config: {config_key}"
                         )
 
@@ -152,17 +151,17 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
                     },
                 }
 
-                return FlextResult[FlextTypes.Dict].ok(inventory_data)
+                return FlextResult[dict[str, object]].ok(inventory_data)
 
             except Exception as e:
-                return FlextResult[FlextTypes.Dict].fail(
+                return FlextResult[dict[str, object]].fail(
                     f"WMS inventory extraction failed: {e}"
                 )
 
         @staticmethod
         def extract_wms_transaction_data(
-            transaction_config: FlextTypes.Dict,
-        ) -> FlextResult[FlextTypes.Dict]:
+            transaction_config: dict[str, object],
+        ) -> FlextResult[dict[str, object]]:
             """Extract Oracle WMS transaction data for operational analytics.
 
             Args:
@@ -174,7 +173,7 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
             """
             try:
                 if not transaction_config.get("transaction_types"):
-                    return FlextResult[FlextTypes.Dict].fail(
+                    return FlextResult[dict[str, object]].fail(
                         "Transaction types must be specified"
                     )
 
@@ -237,10 +236,10 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
                     // len(transaction_data["transaction_summary"]),
                 }
 
-                return FlextResult[FlextTypes.Dict].ok(transaction_data)
+                return FlextResult[dict[str, object]].ok(transaction_data)
 
             except Exception as e:
-                return FlextResult[FlextTypes.Dict].fail(
+                return FlextResult[dict[str, object]].fail(
                     f"WMS transaction extraction failed: {e}"
                 )
 
@@ -249,7 +248,7 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
 
         @staticmethod
         def generate_wms_inventory_dimension(
-            inventory_config: FlextTypes.Dict,
+            inventory_config: dict[str, object],
         ) -> FlextResult[str]:
             """Generate WMS inventory dimension model.
 
@@ -379,7 +378,7 @@ select * from final
 
         @staticmethod
         def generate_wms_location_dimension(
-            location_config: FlextTypes.Dict,
+            location_config: dict[str, object],
         ) -> FlextResult[str]:
             """Generate WMS location dimension model.
 
@@ -476,7 +475,7 @@ where location_id is not null
 
         @staticmethod
         def generate_wms_transaction_fact(
-            fact_config: FlextTypes.Dict,
+            fact_config: dict[str, object],
         ) -> FlextResult[str]:
             """Generate WMS transaction fact table model.
 
@@ -589,7 +588,7 @@ left join {{ ref('dim_user') }} u on t.user_id = u.user_id
 
         @staticmethod
         def generate_wms_inventory_snapshot_fact(
-            snapshot_config: FlextTypes.Dict,
+            snapshot_config: dict[str, object],
         ) -> FlextResult[str]:
             """Generate WMS inventory snapshot fact table.
 
@@ -715,8 +714,8 @@ from inventory_metrics
 
         @staticmethod
         def optimize_wms_query_performance(
-            query_config: FlextTypes.Dict,
-        ) -> FlextResult[FlextTypes.Dict]:
+            query_config: dict[str, object],
+        ) -> FlextResult[dict[str, object]]:
             """Optimize WMS analytical queries for performance.
 
             Args:
@@ -814,17 +813,17 @@ from inventory_metrics
                         "Use Oracle Database Resident Connection Pooling (DRCP)",
                     ])
 
-                return FlextResult[FlextTypes.Dict].ok(optimization_results)
+                return FlextResult[dict[str, object]].ok(optimization_results)
 
             except Exception as e:
-                return FlextResult[FlextTypes.Dict].fail(
+                return FlextResult[dict[str, object]].fail(
                     f"WMS query optimization failed: {e}"
                 )
 
         @staticmethod
         def analyze_wms_data_quality(
-            quality_config: FlextTypes.Dict,
-        ) -> FlextResult[FlextTypes.Dict]:
+            quality_config: dict[str, object],
+        ) -> FlextResult[dict[str, object]]:
             """Analyze WMS data quality for analytics reliability.
 
             Args:
@@ -837,7 +836,7 @@ from inventory_metrics
             try:
                 # Validate quality configuration
                 if not quality_config:
-                    return FlextResult[FlextTypes.Dict].fail(
+                    return FlextResult[dict[str, object]].fail(
                         "Quality configuration cannot be empty"
                     )
 
@@ -946,9 +945,9 @@ from inventory_metrics
                         "estimated_accuracy": "< 90%",
                     }
 
-                return FlextResult[FlextTypes.Dict].ok(quality_analysis)
+                return FlextResult[dict[str, object]].ok(quality_analysis)
 
             except Exception as e:
-                return FlextResult[FlextTypes.Dict].fail(
+                return FlextResult[dict[str, object]].fail(
                     f"WMS data quality analysis failed: {e}"
                 )

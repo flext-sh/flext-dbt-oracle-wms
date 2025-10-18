@@ -38,11 +38,11 @@ class FlextDbtOracleWmsClient:
             config: Configuration for Oracle WMS and DBT operations
 
         """
-        self.config: FlextTypes.Dict = (
+        self.config: dict[str, object] = (
             config or FlextDbtOracleWmsConfig.get_global_instance()
         )
         # Initialize Oracle WMS client using flext-oracle-wms
-        oracle_wms_config: FlextTypes.Dict = self.config.get_oracle_wms_config()
+        oracle_wms_config: dict[str, object] = self.config.get_oracle_wms_config()
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
         self._dbt_service: object | None = None
         FlextDbtOracleWmsClient.logger.info(
@@ -54,7 +54,7 @@ class FlextDbtOracleWmsClient:
         """Get or create DBT service instance."""
         if self._dbt_service is None:
             # Create DBT service with configuration
-            meltano_config: FlextTypes.Dict = self.config.get_meltano_config()
+            meltano_config: dict[str, object] = self.config.get_meltano_config()
             # Suppress unused registry_path warning for future use
             _ = (
                 Path(meltano_config.project_root)
@@ -100,10 +100,10 @@ class FlextDbtOracleWmsClient:
 
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
-        entity_names: FlextTypes.StringList | None = None,
+        entity_names: list[str] | None = None,
         filters: FlextTypes.NestedDict | None = None,
-        model_names: FlextTypes.StringList | None = None,
-    ) -> FlextResult[FlextTypes.Dict]:
+        model_names: list[str] | None = None,
+    ) -> FlextResult[dict[str, object]]:
         """Run full Oracle WMS-to-DBT pipeline.
 
         Args:
@@ -121,7 +121,7 @@ class FlextDbtOracleWmsClient:
             discover_result: FlextResult[object] = self.discover_oracle_wms_entities()
             if discover_result.is_failure:
                 # Convert discovery result to expected format
-                return FlextResult[FlextTypes.Dict].ok(
+                return FlextResult[dict[str, object]].ok(
                     {
                         "discovery_results": discover_result.data,
                         "pipeline_status": "failed_at_discovery",
@@ -135,7 +135,7 @@ class FlextDbtOracleWmsClient:
         # Step 2: Extract data for each entity
         entity_data = {}
         for entity_name in entity_names:
-            entity_filters: FlextTypes.Dict = (
+            entity_filters: dict[str, object] = (
                 filters.get(entity_name, {}) if filters else {}
             )
             extract_result = self.extract_oracle_wms_data(
@@ -144,7 +144,7 @@ class FlextDbtOracleWmsClient:
             )
             if extract_result.is_failure:
                 # Convert extraction result to expected format
-                return FlextResult[FlextTypes.Dict].ok(
+                return FlextResult[dict[str, object]].ok(
                     {
                         "extraction_results": extract_result.data,
                         "pipeline_status": "failed_at_extraction",
@@ -167,7 +167,7 @@ class FlextDbtOracleWmsClient:
         if transform_result.is_failure:
             return transform_result
         # Combine results
-        pipeline_results: FlextTypes.Dict = {
+        pipeline_results: dict[str, object] = {
             "processed_entities": list(entity_data.keys()),
             "total_records": sum(len(records) for records in entity_data.values()),
             "transformation_results": transform_result.data,
@@ -176,7 +176,7 @@ class FlextDbtOracleWmsClient:
         FlextDbtOracleWmsClient.logger.info(
             "Full Oracle WMS-to-DBT pipeline completed successfully"
         )
-        return FlextResult[FlextTypes.Dict].ok(pipeline_results)
+        return FlextResult[dict[str, object]].ok(pipeline_results)
 
     def _prepare_oracle_wms_data_for_dbt(
         self,
@@ -213,23 +213,21 @@ class FlextDbtOracleWmsClient:
 
     def discover_oracle_wms_entities(
         self,
-    ) -> FlextResult[FlextTypes.StringList]:
+    ) -> FlextResult[list[str]]:
         """Discover available Oracle WMS entities."""
         try:
             # Use the Oracle WMS client to discover entities
             # Mock entities discovery for now
             entities = ["company", "facility", "location", "item"]
-            return FlextResult[FlextTypes.StringList].ok(entities)
+            return FlextResult[list[str]].ok(entities)
         except Exception as e:
-            return FlextResult[FlextTypes.StringList].fail(
-                f"Failed to discover entities: {e}"
-            )
+            return FlextResult[list[str]].fail(f"Failed to discover entities: {e}")
 
     def extract_oracle_wms_data(
         self,
         entity_name: str,
-        filters: FlextTypes.Dict,
-    ) -> FlextResult[list[FlextTypes.Dict]]:
+        filters: dict[str, object],
+    ) -> FlextResult[list[dict[str, object]]]:
         """Extract data from Oracle WMS for a specific entity."""
         try:
             # Suppress unused filters parameter warning for future use
@@ -246,8 +244,8 @@ class FlextDbtOracleWmsClient:
     def validate_oracle_wms_data(
         self,
         entity_name: str,
-        records: list[FlextTypes.Dict],
-    ) -> FlextResult[list[FlextTypes.Dict]]:
+        records: list[dict[str, object]],
+    ) -> FlextResult[list[dict[str, object]]]:
         """Validate Oracle WMS data quality."""
         try:
             # Suppress unused entity_name parameter warning for future use
@@ -267,9 +265,9 @@ class FlextDbtOracleWmsClient:
 
     def transform_with_dbt(
         self,
-        entity_data: dict[str, list[FlextTypes.Dict]],
-        model_names: FlextTypes.StringList | None,
-    ) -> FlextResult[FlextTypes.Dict]:
+        entity_data: dict[str, list[dict[str, object]]],
+        model_names: list[str] | None,
+    ) -> FlextResult[dict[str, object]]:
         """Transform data using DBT."""
         try:
             # Suppress unused model_names parameter warning for future use
@@ -287,6 +285,6 @@ class FlextDbtOracleWmsClient:
             )
 
 
-__all__: FlextTypes.StringList = [
+__all__: list[str] = [
     "FlextDbtOracleWmsClient",
 ]

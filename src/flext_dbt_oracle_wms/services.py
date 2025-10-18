@@ -35,7 +35,7 @@ class FlextDbtOracleWmsServices:
                 config: Configuration for Oracle WMS and DBT operations
 
             """
-            self.config: FlextTypes.Dict = (
+            self.config: dict[str, object] = (
                 config or FlextDbtOracleWmsConfig.get_global_instance()
             )
             # Initialize WMS client - placeholder for future implementation
@@ -45,8 +45,8 @@ class FlextDbtOracleWmsServices:
 
         def generate_workflow_recommendations(
             self,
-            entities: list[FlextTypes.Dict] | None = None,
-        ) -> FlextResult[FlextTypes.Dict]:
+            entities: list[dict[str, object]] | None = None,
+        ) -> FlextResult[dict[str, object]]:
             """Generate Oracle WMS workflow recommendations.
 
             Args:
@@ -64,7 +64,7 @@ class FlextDbtOracleWmsServices:
                 # Discover entities if not provided
                 if entities is None:
                     if self.client is None:
-                        return FlextResult[FlextTypes.Dict].fail(
+                        return FlextResult[dict[str, object]].fail(
                             "WMS client not initialized",
                             error_code="CLIENT_NOT_INITIALIZED",
                         )
@@ -72,13 +72,13 @@ class FlextDbtOracleWmsServices:
                         self.client.discover_oracle_wms_entities()
                     )
                     if discovery_result.is_failure:
-                        return FlextResult[FlextTypes.Dict].fail(
+                        return FlextResult[dict[str, object]].fail(
                             discovery_result.error or "Discovery failed",
                         )
                     entities = discovery_result.data or []
 
                 if not entities:
-                    return FlextResult[FlextTypes.Dict].ok(
+                    return FlextResult[dict[str, object]].ok(
                         {
                             "message": "No Oracle WMS entities found for analysis",
                             "recommendations": [],
@@ -86,7 +86,7 @@ class FlextDbtOracleWmsServices:
                     )
 
                 # Analyze entities and generate recommendations
-                recommendations: list[FlextTypes.StringDict] = []
+                recommendations: list[dict[str, str]] = []
 
                 # Analyze entity distribution
                 entity_counts: FlextTypes.IntDict = {}
@@ -138,7 +138,7 @@ class FlextDbtOracleWmsServices:
                         },
                     )
 
-                results: FlextTypes.Dict = {
+                results: dict[str, object] = {
                     "analysis": {
                         "total_entities": "total_entities",
                         "entity_type_distribution": "entity_counts",
@@ -165,13 +165,13 @@ class FlextDbtOracleWmsServices:
                     "Generated %d Oracle WMS workflow recommendations",
                     len(recommendations),
                 )
-                return FlextResult[FlextTypes.Dict].ok(results)
+                return FlextResult[dict[str, object]].ok(results)
 
             except Exception as e:
                 FlextDbtOracleWmsServices.logger.exception(
                     "Unexpected error generating Oracle WMS workflow recommendations",
                 )
-                return FlextResult[FlextTypes.Dict].fail(
+                return FlextResult[dict[str, object]].fail(
                     f"Oracle WMS workflow recommendations generation failed: {e}",
                 )
 
@@ -188,7 +188,7 @@ class FlextDbtOracleWmsServices:
                 config: Configuration for monitoring settings
 
             """
-            self.config: FlextTypes.Dict = config
+            self.config: dict[str, object] = config
             FlextDbtOracleWmsServices.logger.info(
                 "Initialized Oracle WMS DBT monitoring service"
             )
@@ -197,9 +197,9 @@ class FlextDbtOracleWmsServices:
             self,
             workflow_name: str,
             workflow_type: str,
-            entity_names: FlextTypes.StringList | None = None,
+            entity_names: list[str] | None = None,
             additional_data: dict[str, str | int | float] | None = None,
-        ) -> FlextTypes.Dict:
+        ) -> dict[str, object]:
             """Track Oracle WMS workflow execution metrics.
 
             Args:
@@ -217,7 +217,7 @@ class FlextDbtOracleWmsServices:
                 workflow_type,
             )  # Parameters required by API but not used in stub implementation
             # Create tracking info
-            tracking_info: FlextTypes.Dict = {
+            tracking_info: dict[str, object] = {
                 "workflow_name": "workflow_name",
                 "workflow_type": "workflow_type",
                 "start_time": time.time(),
@@ -276,7 +276,7 @@ FlextDbtOracleWmsWorkflowService = FlextDbtOracleWmsServices
 FlextDbtOracleWmsMonitoringService = FlextDbtOracleWmsServices
 
 
-__all__: FlextTypes.StringList = [
+__all__: list[str] = [
     "FlextDbtOracleWmsMonitoringService",
     "FlextDbtOracleWmsServices",
     "FlextDbtOracleWmsWorkflowService",
