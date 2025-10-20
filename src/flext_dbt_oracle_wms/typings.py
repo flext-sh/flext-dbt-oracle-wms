@@ -14,9 +14,83 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import Literal
+from datetime import datetime
+from enum import StrEnum
+from typing import Annotated, Literal
 
 from flext_core import FlextTypes
+
+# =============================================================================
+# DBT ORACLE WMS MODULE-LEVEL TYPE ALIASES
+# =============================================================================
+
+
+# Simple type aliases for dbt Oracle WMS
+EntityId = str
+ProjectName = str
+TimeoutSeconds = int
+TimestampISO = str
+Version = str
+
+type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
+type UpdatedAt = Annotated[datetime, "Timestamp of when entity was last updated"]
+
+# ==============================================================================
+# DBT ORACLE WMS TYPE ALIASES USING CORE TYPES
+# ==============================================================================
+
+# Oracle WMS specific IDs using core types
+type OracleWMSOperationId = EntityId
+type OracleWMSConnectionId = EntityId
+type OracleWMSSchemaId = EntityId
+type OracleWMSQueryId = EntityId
+
+# DBT specific timeout type aliases using core timeout types
+type DBTOracleWMSProjectTimeout = TimeoutSeconds
+type DBTOracleWMSModelTimeout = TimeoutSeconds
+type DBTOracleWMSSourceTimeout = TimeoutSeconds
+type DBTOracleWMSTestTimeout = TimeoutSeconds
+type DBTOracleWMSMacroTimeout = TimeoutSeconds
+type DBTOracleWMSSnapshotTimeout = TimeoutSeconds
+type DBTOracleWMSAnalysisTimeout = TimeoutSeconds
+type DBTOracleWMSCompilationTimeout = TimeoutSeconds
+type DBTOracleWMSExecutionTimeout = TimeoutSeconds
+type DBTOracleWMSDocumentationTimeout = TimeoutSeconds
+
+# ==============================================================================
+# DBT ORACLE WMS ENUMS
+# ==============================================================================
+
+
+class DBTOracleWMSMaterialization(StrEnum):
+    """DBT Oracle WMS materialization types."""
+
+    TABLE = "table"
+    VIEW = "view"
+    INCREMENTAL = "incremental"
+    EPHEMERAL = "ephemeral"
+    SNAPSHOT = "snapshot"
+
+
+class DBTOracleWMSTestType(StrEnum):
+    """DBT Oracle WMS test types."""
+
+    UNIQUE = "unique"
+    NOT_NULL = "not_null"
+    ACCEPTED_VALUES = "accepted_values"
+    RELATIONSHIPS = "relationships"
+    CUSTOM = "custom"
+
+
+class DBTOracleWMSRunStatus(StrEnum):
+    """DBT Oracle WMS run status using StrEnum."""
+
+    SUCCESS = "success"
+    ERROR = "error"
+    SKIPPED = "skipped"
+    RUNNING = "running"
+    QUEUED = "queued"
+
 
 # =============================================================================
 # DBT ORACLE WMS-SPECIFIC TYPE VARIABLES - Domain-specific TypeVars for DBT Oracle WMS operations
@@ -223,11 +297,238 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type WmsAnalyticsConfig = dict[str, bool | str | dict[str, object]]
         type DbtWmsPipelineConfig = dict[str, object]
 
+    # =========================================================================
+    # DBT ORACLE WMS DOMAIN OBJECTS - TypedDict definitions for domain objects
+    # =========================================================================
+
+    class DomainObjects:
+        """DBT Oracle WMS domain object TypedDict definitions."""
+
+        from typing import TypedDict
+
+        class DBTOracleWMSProjectConfiguration(TypedDict):
+            """DBT Oracle WMS project configuration using core types."""
+
+            name: ProjectName
+            version: Version
+            profile: str
+            model_paths: list[str]
+            analysis_paths: list[str]
+            test_paths: list[str]
+            seed_paths: list[str]
+            macro_paths: list[str]
+            snapshot_paths: list[str]
+            target_path: str
+            clean_targets: list[str]
+            require_dbt_version: str
+            dbt_version: str
+            timeout: DBTOracleWMSProjectTimeout
+
+        class DBTOracleWMSSnapshotConfiguration(TypedDict):
+            """DBT Oracle WMS snapshot configuration."""
+
+            name: str
+            target_schema: str
+            target_database: str | None
+            strategy: str
+            unique_key: str
+            updated_at: str | None
+            check_cols: list[str] | None
+            invalidate_hard_deletes: bool
+            meta: dict[str, str]
+            tags: list[str]
+            timeout: DBTOracleWMSSnapshotTimeout
+
+        class DBTOracleWMSAnalysisConfiguration(TypedDict):
+            """DBT Oracle WMS analysis configuration."""
+
+            name: str
+            description: str
+            meta: dict[str, str]
+            tags: list[str]
+            timeout: DBTOracleWMSAnalysisTimeout
+
+        class DBTOracleWMSCompilationConfiguration(TypedDict):
+            """DBT Oracle WMS compilation configuration."""
+
+            project_dir: str
+            profiles_dir: str
+            target: str
+            vars: dict[str, str]
+            full_refresh: bool
+            exclude: list[str] | None
+            select: list[str] | None
+            timeout: DBTOracleWMSCompilationTimeout
+
+        class DBTOracleWMSExecutionConfiguration(TypedDict):
+            """DBT Oracle WMS execution configuration."""
+
+            project_dir: str
+            profiles_dir: str
+            target: str
+            models: list[str] | None
+            exclude: list[str] | None
+            full_refresh: bool
+            fail_fast: bool
+            threads: int
+            vars: dict[str, str]
+            timeout: DBTOracleWMSExecutionTimeout
+
+        class DBTOracleWMSDocumentationConfiguration(TypedDict):
+            """DBT Oracle WMS documentation configuration."""
+
+            project_dir: str
+            profiles_dir: str
+            target: str
+            compile: bool
+            timeout: DBTOracleWMSDocumentationTimeout
+
+        # Domain objects using the configurations above
+        class DBTOracleWMSProject(TypedDict):
+            """DBT Oracle WMS project domain object using core types."""
+
+            id: EntityId
+            name: ProjectName
+            version: Version
+            configuration: DBTOracleWMSProjectConfiguration
+            created_at: CreatedAt
+            updated_at: UpdatedAt
+
+        class DBTOracleWMSModel(TypedDict):
+            """DBT Oracle WMS model domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            name: str
+            configuration: dict[str, object]  # Using dict for model config
+            sql_content: str
+            created_at: CreatedAt
+            updated_at: UpdatedAt
+
+        class DBTOracleWMSSource(TypedDict):
+            """DBT Oracle WMS source domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            name: str
+            configuration: dict[str, object]  # Using dict for source config
+            created_at: CreatedAt
+            updated_at: UpdatedAt
+
+        class DBTOracleWMSTest(TypedDict):
+            """DBT Oracle WMS test domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            model_id: EntityId | None
+            name: str
+            configuration: dict[str, object]  # Using dict for test config
+            sql_content: str | None
+            created_at: CreatedAt
+            updated_at: UpdatedAt
+
+        class DBTOracleWMSMacro(TypedDict):
+            """DBT Oracle WMS macro domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            name: str
+            configuration: dict[str, object]  # Using dict for macro config
+            sql_content: str
+            created_at: CreatedAt
+            updated_at: UpdatedAt
+
+        class DBTOracleWMSSnapshot(TypedDict):
+            """DBT Oracle WMS snapshot domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            name: str
+            configuration: DBTOracleWMSSnapshotConfiguration
+            sql_content: str
+            created_at: CreatedAt
+            updated_at: UpdatedAt
+
+        class DBTOracleWMSAnalysis(TypedDict):
+            """DBT Oracle WMS analysis domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            name: str
+            configuration: DBTOracleWMSAnalysisConfiguration
+            sql_content: str
+            created_at: CreatedAt
+            updated_at: UpdatedAt
+
+        class DBTOracleWMSCompilation(TypedDict):
+            """DBT Oracle WMS compilation domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            configuration: DBTOracleWMSCompilationConfiguration
+            status: DBTOracleWMSRunStatus
+            output: str | None
+            error: str | None
+            created_at: CreatedAt
+            completed_at: UpdatedAt | None
+
+        class DBTOracleWMSExecution(TypedDict):
+            """DBT Oracle WMS execution domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            configuration: DBTOracleWMSExecutionConfiguration
+            status: DBTOracleWMSRunStatus
+            output: str | None
+            error: str | None
+            created_at: CreatedAt
+            completed_at: UpdatedAt | None
+
+        class DBTOracleWMSDocumentation(TypedDict):
+            """DBT Oracle WMS documentation domain object using core types."""
+
+            id: EntityId
+            project_id: EntityId
+            configuration: DBTOracleWMSDocumentationConfiguration
+            status: DBTOracleWMSRunStatus
+            output_path: str | None
+            error: str | None
+            created_at: CreatedAt
+            completed_at: UpdatedAt | None
+
 
 # =============================================================================
 # PUBLIC API EXPORTS - DBT Oracle WMS TypeVars and types
 # =============================================================================
 
 __all__: list[str] = [
+    "CreatedAt",
+    "DBTOracleWMSAnalysisTimeout",
+    "DBTOracleWMSCompilationTimeout",
+    "DBTOracleWMSDocumentationTimeout",
+    "DBTOracleWMSExecutionTimeout",
+    "DBTOracleWMSMacroTimeout",
+    # Enums
+    "DBTOracleWMSMaterialization",
+    "DBTOracleWMSModelTimeout",
+    "DBTOracleWMSProjectTimeout",
+    "DBTOracleWMSRunStatus",
+    "DBTOracleWMSSnapshotTimeout",
+    "DBTOracleWMSSourceTimeout",
+    "DBTOracleWMSTestTimeout",
+    "DBTOracleWMSTestType",
+    # Module-level aliases
+    "EntityId",
+    # Core types
     "FlextDbtOracleWmsTypes",
+    "OracleWMSConnectionId",
+    # Type aliases
+    "OracleWMSOperationId",
+    "OracleWMSQueryId",
+    "OracleWMSSchemaId",
+    "ProjectName",
+    "TimeoutSeconds",
+    "TimestampISO",
+    "UpdatedAt",
+    "Version",
 ]

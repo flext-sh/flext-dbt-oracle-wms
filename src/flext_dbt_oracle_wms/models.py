@@ -81,7 +81,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     def to_sql_file(self) -> FlextResult[str]:
         """Convert model to SQL file content with Oracle WMS optimizations."""
         try:
-            config_block = f"""  # noqa: S608
+            config_block = f"""
 {{{{
   config(
     materialized='{self.materialization}',
@@ -180,7 +180,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a dimension model for WMS entity."""
             try:
-                sql_content = f"""  # noqa: S608
+                sql_content = f"""
 select
     {wms_entity}_key,
     {wms_entity}_id,
@@ -191,7 +191,7 @@ select
     modified_date,
     is_active
 from {{{{ ref('stg_wms_{wms_entity}') }}}}
-"""  # noqa: S608
+"""
 
                 dimension_model = FlextDbtOracleWmsModels(
                     name=f"dim_wms_{wms_entity}",
@@ -264,7 +264,7 @@ from {{{{ ref('stg_wms_{wms_entity}') }}}}
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a fact model for WMS entity."""
             try:
-                sql_content = f"""  # noqa: S608
+                sql_content = f"""
 select
     {wms_entity}_fact_key,
     {wms_entity}_key,
@@ -277,7 +277,7 @@ select
     transaction_date,
     created_timestamp
 from {{{{ ref('int_wms_{wms_entity}') }}}}
-"""  # noqa: S608
+"""
 
                 fact_model = FlextDbtOracleWmsModels(
                     name=f"fact_wms_{wms_entity}",
@@ -368,10 +368,10 @@ from {{{{ ref('int_wms_{wms_entity}') }}}}
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a staging model from Oracle WMS source."""
             try:
-                sql_content = f"""  # noqa: S608
+                sql_content = f"""
 select *
 from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
-"""  # noqa: S608
+"""
 
                 staging_model = FlextDbtOracleWmsModels(
                     name=f"stg_wms_{oracle_source.lower()}",
