@@ -83,13 +83,13 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         try:
             config_block = f"""
 {{{{
-  config(
-    materialized='{self.materialization}',
-    schema='{self.schema_name}',
-    alias='{self.table_name}',
-    oracle_optimizations=True,
-    wms_entity_type='{self.wms_entity_type}'
-  )
+ config(
+ materialized='{self.materialization}',
+ schema='{self.schema_name}',
+ alias='{self.table_name}',
+ oracle_optimizations=True,
+ wms_entity_type='{self.wms_entity_type}'
+ )
 }}}}"""
             content = f"{config_block}\n\n{self.sql_content}"
             return FlextResult[str].ok(content)
@@ -182,14 +182,14 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
             try:
                 sql_content = f"""
 select
-    {wms_entity}_key,
-    {wms_entity}_id,
-    {wms_entity}_name,
-    description,
-    status,
-    created_date,
-    modified_date,
-    is_active
+ {wms_entity}_key,
+ {wms_entity}_id,
+ {wms_entity}_name,
+ description,
+ status,
+ created_date,
+ modified_date,
+ is_active
 from {{{{ ref('stg_wms_{wms_entity}') }}}}
 """
 
@@ -266,16 +266,16 @@ from {{{{ ref('stg_wms_{wms_entity}') }}}}
             try:
                 sql_content = f"""
 select
-    {wms_entity}_fact_key,
-    {wms_entity}_key,
-    location_key,
-    item_key,
-    date_key,
-    quantity,
-    unit_cost,
-    total_value,
-    transaction_date,
-    created_timestamp
+ {wms_entity}_fact_key,
+ {wms_entity}_key,
+ location_key,
+ item_key,
+ date_key,
+ quantity,
+ unit_cost,
+ total_value,
+ transaction_date,
+ created_timestamp
 from {{{{ ref('int_wms_{wms_entity}') }}}}
 """
 
@@ -402,7 +402,7 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
     class Utilities(FlextUtilities):
         """Unified DBT Oracle WMS utilities extending FlextUtilities.
 
-        Provides comprehensive utility classes for DBT Oracle WMS operations:
+        Provides complete utility classes for DBT Oracle WMS operations:
         - Oracle WMS database connection and metadata utilities
         - DBT project management utilities for WMS workflows
         - Oracle WMS-specific data type conversion utilities

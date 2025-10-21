@@ -43,11 +43,11 @@ class FlextDbtOracleWmsProtocols:
                 """Run DBT models with Oracle WMS data sources.
 
                 Args:
-                    models: Specific models to run, or None for all models
-                    config: DBT configuration parameters
+                models: Specific models to run, or None for all models
+                config: DBT configuration parameters
 
                 Returns:
-                    FlextResult[dict[str, object]]: DBT run results or error
+                FlextResult[dict[str, object]]: DBT run results or error
 
                 """
 
@@ -59,11 +59,11 @@ class FlextDbtOracleWmsProtocols:
                 """Test DBT models with Oracle WMS data validation.
 
                 Args:
-                    models: Specific models to test, or None for all models
-                    config: DBT test configuration
+                models: Specific models to test, or None for all models
+                config: DBT test configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: DBT test results or error
+                FlextResult[dict[str, object]]: DBT test results or error
 
                 """
 
@@ -75,11 +75,11 @@ class FlextDbtOracleWmsProtocols:
                 """Compile DBT models for Oracle WMS data processing.
 
                 Args:
-                    models: Specific models to compile, or None for all models
-                    config: DBT compilation configuration
+                models: Specific models to compile, or None for all models
+                config: DBT compilation configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: DBT compilation results or error
+                FlextResult[dict[str, object]]: DBT compilation results or error
 
                 """
 
@@ -87,7 +87,7 @@ class FlextDbtOracleWmsProtocols:
                 """Get DBT manifest with Oracle WMS model definitions.
 
                 Returns:
-                    FlextResult[dict[str, object]]: DBT manifest or error
+                FlextResult[dict[str, object]]: DBT manifest or error
 
                 """
 
@@ -95,10 +95,10 @@ class FlextDbtOracleWmsProtocols:
                 """Validate DBT project configuration for Oracle WMS integration.
 
                 Args:
-                    project_path: Path to DBT project directory
+                project_path: Path to DBT project directory
 
                 Returns:
-                    FlextResult[bool]: Validation status or error
+                FlextResult[bool]: Validation status or error
 
                 """
 
@@ -114,11 +114,11 @@ class FlextDbtOracleWmsProtocols:
                 """Extract inventory data from Oracle WMS for DBT processing.
 
                 Args:
-                    wms_config: Oracle WMS connection configuration
-                    extraction_config: Data extraction parameters
+                wms_config: Oracle WMS connection configuration
+                extraction_config: Data extraction parameters
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Extracted WMS inventory data or error
+                FlextResult[list[dict[str, object]]]: Extracted WMS inventory data or error
 
                 """
 
@@ -130,11 +130,11 @@ class FlextDbtOracleWmsProtocols:
                 """Extract transaction data from Oracle WMS for DBT processing.
 
                 Args:
-                    wms_config: Oracle WMS connection configuration
-                    extraction_config: Transaction extraction parameters
+                wms_config: Oracle WMS connection configuration
+                extraction_config: Transaction extraction parameters
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Extracted WMS transaction data or error
+                FlextResult[list[dict[str, object]]]: Extracted WMS transaction data or error
 
                 """
 
@@ -146,11 +146,11 @@ class FlextDbtOracleWmsProtocols:
                 """Transform Oracle WMS data to DBT-compatible format.
 
                 Args:
-                    wms_data: Raw Oracle WMS data
-                    transformation_config: Transformation parameters
+                wms_data: Raw Oracle WMS data
+                transformation_config: Transformation parameters
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Transformed data or error
+                FlextResult[list[dict[str, object]]]: Transformed data or error
 
                 """
 
@@ -162,11 +162,11 @@ class FlextDbtOracleWmsProtocols:
                 """Validate Oracle WMS data quality for DBT processing.
 
                 Args:
-                    data: Oracle WMS data to validate
-                    quality_rules: Data quality validation rules
+                data: Oracle WMS data to validate
+                quality_rules: Data quality validation rules
 
                 Returns:
-                    FlextResult[dict[str, object]]: Quality validation results or error
+                FlextResult[dict[str, object]]: Quality validation results or error
 
                 """
 
@@ -178,11 +178,11 @@ class FlextDbtOracleWmsProtocols:
                 """Sync Oracle WMS data to data warehouse for DBT processing.
 
                 Args:
-                    wms_data: Oracle WMS data to sync
-                    warehouse_config: Data warehouse configuration
+                wms_data: Oracle WMS data to sync
+                warehouse_config: Data warehouse configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Sync operation results or error
+                FlextResult[dict[str, object]]: Sync operation results or error
 
                 """
 
@@ -198,11 +198,11 @@ class FlextDbtOracleWmsProtocols:
                 """Create inventory dimension model from Oracle WMS inventory data.
 
                 Args:
-                    wms_inventory: Oracle WMS inventory data
-                    dimension_config: Dimension modeling configuration
+                wms_inventory: Oracle WMS inventory data
+                dimension_config: Dimension modeling configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Inventory dimension model or error
+                FlextResult[dict[str, object]]: Inventory dimension model or error
 
                 """
 
@@ -214,11 +214,11 @@ class FlextDbtOracleWmsProtocols:
                 """Create location dimension model from Oracle WMS location data.
 
                 Args:
-                    wms_locations: Oracle WMS location data
-                    dimension_config: Dimension modeling configuration
+                wms_locations: Oracle WMS location data
+                dimension_config: Dimension modeling configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Location dimension model or error
+                FlextResult[dict[str, object]]: Location dimension model or error
 
                 """
 
@@ -230,11 +230,11 @@ class FlextDbtOracleWmsProtocols:
                 """Create warehouse operations models from Oracle WMS operations data.
 
                 Args:
-                    wms_operations: Oracle WMS operations data
-                    modeling_config: Operations modeling configuration
+                wms_operations: Oracle WMS operations data
+                modeling_config: Operations modeling configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Warehouse operations models or error
+                FlextResult[dict[str, object]]: Warehouse operations models or error
 
                 """
 
@@ -246,11 +246,11 @@ class FlextDbtOracleWmsProtocols:
                 """Generate fact tables from Oracle WMS dimensions.
 
                 Args:
-                    dimensions: Oracle WMS dimension models
-                    fact_config: Fact table configuration
+                dimensions: Oracle WMS dimension models
+                fact_config: Fact table configuration
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Generated fact tables or error
+                FlextResult[list[dict[str, object]]]: Generated fact tables or error
 
                 """
 
@@ -266,11 +266,11 @@ class FlextDbtOracleWmsProtocols:
                 """Normalize Oracle WMS inventory data for consistent processing.
 
                 Args:
-                    wms_inventory: Raw Oracle WMS inventory data
-                    normalization_rules: Inventory normalization rules
+                wms_inventory: Raw Oracle WMS inventory data
+                normalization_rules: Inventory normalization rules
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Normalized WMS inventory data or error
+                FlextResult[list[dict[str, object]]]: Normalized WMS inventory data or error
 
                 """
 
@@ -282,11 +282,11 @@ class FlextDbtOracleWmsProtocols:
                 """Process Oracle WMS transaction data for analytics.
 
                 Args:
-                    wms_transactions: Oracle WMS transaction data
-                    processing_config: Transaction processing configuration
+                wms_transactions: Oracle WMS transaction data
+                processing_config: Transaction processing configuration
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Processed transaction data or error
+                FlextResult[list[dict[str, object]]]: Processed transaction data or error
 
                 """
 
@@ -298,11 +298,11 @@ class FlextDbtOracleWmsProtocols:
                 """Apply business rules to Oracle WMS data transformations.
 
                 Args:
-                    data: Oracle WMS data to transform
-                    business_rules: Business transformation rules
+                data: Oracle WMS data to transform
+                business_rules: Business transformation rules
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Transformed data or error
+                FlextResult[list[dict[str, object]]]: Transformed data or error
 
                 """
 
@@ -314,11 +314,11 @@ class FlextDbtOracleWmsProtocols:
                 """Calculate warehouse management KPIs from Oracle WMS data.
 
                 Args:
-                    wms_data: Oracle WMS operational data
-                    kpi_config: KPI calculation configuration
+                wms_data: Oracle WMS operational data
+                kpi_config: KPI calculation configuration
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Calculated WMS KPIs or error
+                FlextResult[list[dict[str, object]]]: Calculated WMS KPIs or error
 
                 """
 
@@ -332,10 +332,10 @@ class FlextDbtOracleWmsProtocols:
                 """Generate DBT macro for Oracle WMS data sources.
 
                 Args:
-                    source_config: Oracle WMS source configuration
+                source_config: Oracle WMS source configuration
 
                 Returns:
-                    FlextResult[str]: Generated DBT macro or error
+                FlextResult[str]: Generated DBT macro or error
 
                 """
 
@@ -345,10 +345,10 @@ class FlextDbtOracleWmsProtocols:
                 """Create DBT test macro for Oracle WMS data validation.
 
                 Args:
-                    test_config: Oracle WMS test configuration
+                test_config: Oracle WMS test configuration
 
                 Returns:
-                    FlextResult[str]: Generated test macro or error
+                FlextResult[str]: Generated test macro or error
 
                 """
 
@@ -358,10 +358,10 @@ class FlextDbtOracleWmsProtocols:
                 """Generate DBT transformation macro for Oracle WMS data.
 
                 Args:
-                    transformation_config: WMS transformation configuration
+                transformation_config: WMS transformation configuration
 
                 Returns:
-                    FlextResult[str]: Generated transformation macro or error
+                FlextResult[str]: Generated transformation macro or error
 
                 """
 
@@ -371,10 +371,10 @@ class FlextDbtOracleWmsProtocols:
                 """Create DBT snapshot macro for Oracle WMS data versioning.
 
                 Args:
-                    snapshot_config: WMS snapshot configuration
+                snapshot_config: WMS snapshot configuration
 
                 Returns:
-                    FlextResult[str]: Generated snapshot macro or error
+                FlextResult[str]: Generated snapshot macro or error
 
                 """
 
@@ -390,11 +390,11 @@ class FlextDbtOracleWmsProtocols:
                 """Validate Oracle WMS inventory accuracy for DBT processing.
 
                 Args:
-                    wms_data: Oracle WMS inventory data to validate
-                    accuracy_rules: Inventory accuracy validation rules
+                wms_data: Oracle WMS inventory data to validate
+                accuracy_rules: Inventory accuracy validation rules
 
                 Returns:
-                    FlextResult[dict[str, object]]: Accuracy validation results or error
+                FlextResult[dict[str, object]]: Accuracy validation results or error
 
                 """
 
@@ -406,11 +406,11 @@ class FlextDbtOracleWmsProtocols:
                 """Check Oracle WMS data completeness for DBT processing.
 
                 Args:
-                    data: Oracle WMS data to check
-                    completeness_config: Completeness validation configuration
+                data: Oracle WMS data to check
+                completeness_config: Completeness validation configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Completeness check results or error
+                FlextResult[dict[str, object]]: Completeness check results or error
 
                 """
 
@@ -422,11 +422,11 @@ class FlextDbtOracleWmsProtocols:
                 """Detect anomalies in Oracle WMS data for quality assurance.
 
                 Args:
-                    data: Oracle WMS data to analyze
-                    anomaly_config: Anomaly detection configuration
+                data: Oracle WMS data to analyze
+                anomaly_config: Anomaly detection configuration
 
                 Returns:
-                    FlextResult[list[dict[str, object]]]: Detected anomalies or error
+                FlextResult[list[dict[str, object]]]: Detected anomalies or error
 
                 """
 
@@ -438,11 +438,11 @@ class FlextDbtOracleWmsProtocols:
                 """Generate data quality report for Oracle WMS DBT processing.
 
                 Args:
-                    quality_results: Quality validation results
-                    report_config: Report generation configuration
+                quality_results: Quality validation results
+                report_config: Report generation configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Quality report or error
+                FlextResult[dict[str, object]]: Quality report or error
 
                 """
 
@@ -458,11 +458,11 @@ class FlextDbtOracleWmsProtocols:
                 """Optimize DBT models for Oracle WMS data processing performance.
 
                 Args:
-                    model_config: DBT model configuration
-                    performance_metrics: Current performance metrics
+                model_config: DBT model configuration
+                performance_metrics: Current performance metrics
 
                 Returns:
-                    FlextResult[dict[str, object]]: Optimization recommendations or error
+                FlextResult[dict[str, object]]: Optimization recommendations or error
 
                 """
 
@@ -474,11 +474,11 @@ class FlextDbtOracleWmsProtocols:
                 """Tune Oracle WMS data extraction for improved performance.
 
                 Args:
-                    extraction_config: WMS data extraction configuration
-                    tuning_config: Extraction tuning parameters
+                extraction_config: WMS data extraction configuration
+                tuning_config: Extraction tuning parameters
 
                 Returns:
-                    FlextResult[dict[str, object]]: Tuned extraction configuration or error
+                FlextResult[dict[str, object]]: Tuned extraction configuration or error
 
                 """
 
@@ -488,10 +488,10 @@ class FlextDbtOracleWmsProtocols:
                 """Monitor DBT performance with Oracle WMS data processing.
 
                 Args:
-                    run_results: DBT run results
+                run_results: DBT run results
 
                 Returns:
-                    FlextResult[dict[str, object]]: Performance metrics or error
+                FlextResult[dict[str, object]]: Performance metrics or error
 
                 """
 
@@ -501,10 +501,10 @@ class FlextDbtOracleWmsProtocols:
                 """Optimize warehouse operations analysis for DBT processing.
 
                 Args:
-                    operations_config: Warehouse operations configuration
+                operations_config: Warehouse operations configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Operations optimization results or error
+                FlextResult[dict[str, object]]: Operations optimization results or error
 
                 """
 
@@ -518,11 +518,11 @@ class FlextDbtOracleWmsProtocols:
                 """Track DBT run metrics for Oracle WMS data processing.
 
                 Args:
-                    run_id: DBT run identifier
-                    metrics: Run metrics data
+                run_id: DBT run identifier
+                metrics: Run metrics data
 
                 Returns:
-                    FlextResult[bool]: Metric tracking success status
+                FlextResult[bool]: Metric tracking success status
 
                 """
 
@@ -532,10 +532,10 @@ class FlextDbtOracleWmsProtocols:
                 """Monitor Oracle WMS data freshness for DBT processing.
 
                 Args:
-                    freshness_config: Data freshness monitoring configuration
+                freshness_config: Data freshness monitoring configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Data freshness status or error
+                FlextResult[dict[str, object]]: Data freshness status or error
 
                 """
 
@@ -543,7 +543,7 @@ class FlextDbtOracleWmsProtocols:
                 """Get DBT Oracle WMS integration health status.
 
                 Returns:
-                    FlextResult[dict[str, object]]: Health status or error
+                FlextResult[dict[str, object]]: Health status or error
 
                 """
 
@@ -553,10 +553,10 @@ class FlextDbtOracleWmsProtocols:
                 """Create monitoring dashboard for DBT Oracle WMS operations.
 
                 Args:
-                    dashboard_config: Dashboard configuration
+                dashboard_config: Dashboard configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Dashboard creation result or error
+                FlextResult[dict[str, object]]: Dashboard creation result or error
 
                 """
 
@@ -566,10 +566,10 @@ class FlextDbtOracleWmsProtocols:
                 """Track inventory management metrics for WMS analytics.
 
                 Args:
-                    inventory_config: Inventory tracking configuration
+                inventory_config: Inventory tracking configuration
 
                 Returns:
-                    FlextResult[dict[str, object]]: Inventory metrics or error
+                FlextResult[dict[str, object]]: Inventory metrics or error
 
                 """
 

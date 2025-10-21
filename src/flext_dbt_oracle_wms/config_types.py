@@ -27,7 +27,7 @@ def _get_default_wms_entities() -> list[str]:
     """Get default WMS entities from flext-oracle-wms API.
 
     Returns:
-      list[str]: List of default WMS entity names.
+    list[str]: List of default WMS entity names.
 
     """
     entities: list[str] = []

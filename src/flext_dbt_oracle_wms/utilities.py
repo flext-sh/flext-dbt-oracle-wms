@@ -24,7 +24,7 @@ __all__: list[str] = ["FlextDbtOracleWmsUtilities"]
 class FlextDbtOracleWmsUtilities(FlextUtilities):
     """Single unified utilities class for DBT Oracle WMS data warehouse operations.
 
-    Provides comprehensive DBT Oracle WMS utilities for warehouse management system integration,
+    Provides complete DBT Oracle WMS utilities for warehouse management system integration,
     DBT model generation for WMS analytics, and Oracle WMS-specific transformations without duplicating functionality.
     Uses FlextDbtOracleWmsModels for all domain-specific data structures.
 
@@ -52,7 +52,7 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
         """Execute the main DBT Oracle WMS service operation.
 
         Returns:
-            FlextResult[dict[str, object]]: Service status and capabilities.
+        FlextResult[dict[str, object]]: Service status and capabilities.
 
         """
         return FlextResult[dict[str, object]].ok({
@@ -88,10 +88,10 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
             """Extract Oracle WMS inventory data for analytics.
 
             Args:
-                extraction_config: WMS extraction configuration
+            extraction_config: WMS extraction configuration
 
             Returns:
-                FlextResult containing WMS inventory data or error
+            FlextResult containing WMS inventory data or error
 
             """
             try:
@@ -165,10 +165,10 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
             """Extract Oracle WMS transaction data for operational analytics.
 
             Args:
-                transaction_config: WMS transaction extraction configuration
+            transaction_config: WMS transaction extraction configuration
 
             Returns:
-                FlextResult containing WMS transaction data or error
+            FlextResult containing WMS transaction data or error
 
             """
             try:
@@ -253,10 +253,10 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
             """Generate WMS inventory dimension model.
 
             Args:
-                inventory_config: Inventory dimension configuration
+            inventory_config: Inventory dimension configuration
 
             Returns:
-                FlextResult containing dimension model SQL or error
+            FlextResult containing dimension model SQL or error
 
             """
             try:
@@ -270,100 +270,100 @@ class FlextDbtOracleWmsUtilities(FlextUtilities):
                 inventory_config.get("materialization", "table")
                 inventory_config.get("enable_partitioning", True)
                 model_sql = """{{
-    config(
-        materialized='table',
-        tags=['wms', 'dimension', 'inventory'],
-        description='WMS Inventory Dimension with SCD Type 2',
-        indexes=[
-            {{'columns': ['item_id'], 'type': 'btree'}},
-            {{'columns': ['location_id'], 'type': 'btree'}},
-            {{'columns': ['effective_date', 'expiration_date'], 'type': 'btree'}}
-        ],
-        partition_by={{'field': 'effective_date', 'data_type': 'date'}}
-    )
+ config(
+ materialized='table',
+ tags=['wms', 'dimension', 'inventory'],
+ description='WMS Inventory Dimension with SCD Type 2',
+ indexes=[
+ {{'columns': ['item_id'], 'type': 'btree'}},
+ {{'columns': ['location_id'], 'type': 'btree'}},
+ {{'columns': ['effective_date', 'expiration_date'], 'type': 'btree'}}
+ ],
+ partition_by={{'field': 'effective_date', 'data_type': 'date'}}
+ )
 }}}}
 
 with inventory_changes as (
-    select
-        item_id,
-        location_id,
-        item_description,
-        location_description,
-        warehouse_id,
-        zone_id,
-        aisle_id,
-        item_category,
-        abc_classification,
-        unit_of_measure,
-        standard_cost,
-        current_quantity,
-        available_quantity,
-        allocated_quantity,
-        last_movement_date,
-        cycle_count_date,
-        effective_date,
-        -- Oracle WMS specific fields
-        lot_number,
-        expiration_date as lot_expiration_date,
-        serial_number,
-        hold_code,
-        qa_status,
-        location_type,
-        location_capacity,
-        pick_sequence,
-        replenishment_flag,
-        row_number() over (
-            partition by item_id, location_id
-            order by effective_date desc
-        ) as current_record_flag
-    from {{ ref('stg_wms_inventory_snapshots') }}
+ select
+ item_id,
+ location_id,
+ item_description,
+ location_description,
+ warehouse_id,
+ zone_id,
+ aisle_id,
+ item_category,
+ abc_classification,
+ unit_of_measure,
+ standard_cost,
+ current_quantity,
+ available_quantity,
+ allocated_quantity,
+ last_movement_date,
+ cycle_count_date,
+ effective_date,
+ -- Oracle WMS specific fields
+ lot_number,
+ expiration_date as lot_expiration_date,
+ serial_number,
+ hold_code,
+ qa_status,
+ location_type,
+ location_capacity,
+ pick_sequence,
+ replenishment_flag,
+ row_number() over (
+ partition by item_id, location_id
+ order by effective_date desc
+ ) as current_record_flag
+ from {{ ref('stg_wms_inventory_snapshots') }}
 ),
 
 final as (
-    select
-        {{ dbt_utils.surrogate_key(['item_id', 'location_id', 'effective_date']) }} as inventory_sk,
-        item_id,
-        location_id,
-        item_description,
-        location_description,
-        warehouse_id,
-        zone_id,
-        aisle_id,
-        item_category,
-        abc_classification,
-        unit_of_measure,
-        standard_cost,
-        current_quantity,
-        available_quantity,
-        allocated_quantity,
-        last_movement_date,
-        cycle_count_date,
-        lot_number,
-        lot_expiration_date,
-        serial_number,
-        hold_code,
-        qa_status,
-        location_type,
-        location_capacity,
-        pick_sequence,
-        replenishment_flag,
-        effective_date,
-        lead(effective_date) over (
-            partition by item_id, location_id
-            order by effective_date
-        ) as expiration_date,
-        case when current_record_flag = 1 then 'Y' else 'N' end as current_flag,
-        -- Oracle WMS business calculations
-        case
-            when available_quantity <= 0 then 'EMPTY'
-            when available_quantity <= 10 then 'LOW'
-            when available_quantity >= location_capacity * 0.9 then 'FULL'
-            else 'NORMAL'
-        end as stock_status,
-        current_quantity * standard_cost as inventory_value,
-        sysdate as created_date,
-        ora_rowscn as version_number
-    from inventory_changes
+ select
+ {{ dbt_utils.surrogate_key(['item_id', 'location_id', 'effective_date']) }} as inventory_sk,
+ item_id,
+ location_id,
+ item_description,
+ location_description,
+ warehouse_id,
+ zone_id,
+ aisle_id,
+ item_category,
+ abc_classification,
+ unit_of_measure,
+ standard_cost,
+ current_quantity,
+ available_quantity,
+ allocated_quantity,
+ last_movement_date,
+ cycle_count_date,
+ lot_number,
+ lot_expiration_date,
+ serial_number,
+ hold_code,
+ qa_status,
+ location_type,
+ location_capacity,
+ pick_sequence,
+ replenishment_flag,
+ effective_date,
+ lead(effective_date) over (
+ partition by item_id, location_id
+ order by effective_date
+ ) as expiration_date,
+ case when current_record_flag = 1 then 'Y' else 'N' end as current_flag,
+ -- Oracle WMS business calculations
+ case
+ when available_quantity <= 0 then 'EMPTY'
+ when available_quantity <= 10 then 'LOW'
+ when available_quantity >= location_capacity * 0.9 then 'FULL'
+ else 'NORMAL'
+ end as stock_status,
+ current_quantity * standard_cost as inventory_value,
+ sysdate as created_date,
+ ora_rowscn as version_number
+ from inventory_changes
 )
 
 select * from final
@@ -383,10 +383,10 @@ select * from final
             """Generate WMS location dimension model.
 
             Args:
-                location_config: Location dimension configuration
+            location_config: Location dimension configuration
 
             Returns:
-                FlextResult containing location dimension SQL or error
+            FlextResult containing location dimension SQL or error
 
             """
             try:
@@ -397,68 +397,68 @@ select * from final
                     )
 
                 model_sql = """{{
-    config(
-        materialized='table',
-        tags=['wms', 'dimension', 'location'],
-        description='WMS Location Dimension with Hierarchy',
-        indexes=[
-            {{'columns': ['location_id'], 'type': 'btree', 'unique': true}},
-            {{'columns': ['warehouse_id', 'zone_id'], 'type': 'btree'}},
-            {{'columns': ['location_type'], 'type': 'btree'}}
-        ]
-    )
+ config(
+ materialized='table',
+ tags=['wms', 'dimension', 'location'],
+ description='WMS Location Dimension with Hierarchy',
+ indexes=[
+ {{'columns': ['location_id'], 'type': 'btree', 'unique': true}},
+ {{'columns': ['warehouse_id', 'zone_id'], 'type': 'btree'}},
+ {{'columns': ['location_type'], 'type': 'btree'}}
+ ]
+ )
 }}}}
 
 select
-    {{ dbt_utils.surrogate_key(['location_id']) }} as location_sk,
-    location_id,
-    location_description,
-    warehouse_id,
-    warehouse_description,
-    zone_id,
-    zone_description,
-    aisle_id,
-    aisle_description,
-    bay_id,
-    level_id,
-    position_id,
-    location_type,
-    location_class,
-    location_capacity,
-    location_weight_capacity,
-    location_cube_capacity,
-    pick_sequence,
-    put_sequence,
-    location_status,
-    x_coordinate,
-    y_coordinate,
-    z_coordinate,
-    -- WMS location hierarchy calculations
-    warehouse_id || '-' || zone_id as warehouse_zone,
-    warehouse_id || '-' || zone_id || '-' || aisle_id as warehouse_zone_aisle,
-    -- Location utilization flags
-    case
-        when location_type in ('PICK', 'FORWARD') then 'ACTIVE_PICK'
-        when location_type in ('RESERVE', 'BULK') then 'RESERVE_STORAGE'
-        when location_type in ('STAGING', 'DOCK') then 'STAGING'
-        when location_type in ('QC', 'HOLD') then 'QUALITY_CONTROL'
-        else 'OTHER'
-    end as location_function,
-    case
-        when location_status = 'AVAILABLE' then 1
-        else 0
-    end as is_available,
-    case
-        when location_type in ('PICK', 'FORWARD') then 1
-        else 0
-    end as is_pick_location,
-    case
-        when location_capacity > 0 then 1
-        else 0
-    end as has_capacity_limit,
-    sysdate as created_date,
-    sysdate as modified_date,
-    ora_rowscn as version_number
+ {{ dbt_utils.surrogate_key(['location_id']) }} as location_sk,
+ location_id,
+ location_description,
+ warehouse_id,
+ warehouse_description,
+ zone_id,
+ zone_description,
+ aisle_id,
+ aisle_description,
+ bay_id,
+ level_id,
+ position_id,
+ location_type,
+ location_class,
+ location_capacity,
+ location_weight_capacity,
+ location_cube_capacity,
+ pick_sequence,
+ put_sequence,
+ location_status,
+ x_coordinate,
+ y_coordinate,
+ z_coordinate,
+ -- WMS location hierarchy calculations
+ warehouse_id || '-' || zone_id as warehouse_zone,
+ warehouse_id || '-' || zone_id || '-' || aisle_id as warehouse_zone_aisle,
+ -- Location utilization flags
+ case
+ when location_type in ('PICK', 'FORWARD') then 'ACTIVE_PICK'
+ when location_type in ('RESERVE', 'BULK') then 'RESERVE_STORAGE'
+ when location_type in ('STAGING', 'DOCK') then 'STAGING'
+ when location_type in ('QC', 'HOLD') then 'QUALITY_CONTROL'
+ else 'OTHER'
+ end as location_function,
+ case
+ when location_status = 'AVAILABLE' then 1
+ else 0
+ end as is_available,
+ case
+ when location_type in ('PICK', 'FORWARD') then 1
+ else 0
+ end as is_pick_location,
+ case
+ when location_capacity > 0 then 1
+ else 0
+ end as has_capacity_limit,
+ sysdate as created_date,
+ sysdate as modified_date,
+ ora_rowscn as version_number
 from {{ ref('stg_wms_locations') }}
 where location_id is not null
 """
@@ -480,10 +480,10 @@ where location_id is not null
             """Generate WMS transaction fact table model.
 
             Args:
-                fact_config: Fact table configuration
+            fact_config: Fact table configuration
 
             Returns:
-                FlextResult containing fact table SQL or error
+            FlextResult containing fact table SQL or error
 
             """
             try:
@@ -492,90 +492,90 @@ where location_id is not null
                     return FlextResult[str].fail("Fact configuration cannot be empty")
 
                 model_sql = """{{
-    config(
-        materialized='incremental',
-        unique_key='transaction_sk',
-        tags=['wms', 'fact', 'transactions'],
-        description='WMS Transaction Fact Table with Business Metrics',
-        indexes=[
-            {{'columns': ['transaction_date_sk'], 'type': 'btree'}},
-            {{'columns': ['item_sk', 'location_sk'], 'type': 'btree'}},
-            {{'columns': ['transaction_type'], 'type': 'btree'}}
-        ],
-        partition_by={{'field': 'transaction_date', 'data_type': 'date'}}
-    )
+ config(
+ materialized='incremental',
+ unique_key='transaction_sk',
+ tags=['wms', 'fact', 'transactions'],
+ description='WMS Transaction Fact Table with Business Metrics',
+ indexes=[
+ {{'columns': ['transaction_date_sk'], 'type': 'btree'}},
+ {{'columns': ['item_sk', 'location_sk'], 'type': 'btree'}},
+ {{'columns': ['transaction_type'], 'type': 'btree'}}
+ ],
+ partition_by={{'field': 'transaction_date', 'data_type': 'date'}}
+ )
 }}}}
 
 select
-    {{ dbt_utils.surrogate_key(['transaction_id']) }} as transaction_sk,
-    t.transaction_id,
-    d.date_sk as transaction_date_sk,
-    i.inventory_sk,
-    l.location_sk,
-    coalesce(dest_l.location_sk, -1) as destination_location_sk,
-    u.user_sk,
-    t.transaction_type,
-    t.transaction_subtype,
-    t.movement_type,
-    t.reason_code,
-    t.reference_document,
-    t.quantity,
-    t.unit_of_measure,
-    t.transaction_value,
-    t.standard_cost * t.quantity as extended_cost,
-    t.processing_time_seconds,
-    t.distance_traveled_feet,
-    -- WMS business metrics
-    case
-        when t.transaction_type = 'PICK' then t.quantity
-        else 0
-    end as picked_quantity,
-    case
-        when t.transaction_type = 'RECEIPT' then t.quantity
-        else 0
-    end as received_quantity,
-    case
-        when t.transaction_type = 'SHIP' then t.quantity
-        else 0
-    end as shipped_quantity,
-    case
-        when t.transaction_type = 'ADJUSTMENT' then abs(t.quantity)
-        else 0
-    end as adjusted_quantity,
-    case
-        when t.transaction_type = 'CYCLE_COUNT' then 1
-        else 0
-    end as cycle_count_flag,
-    case
-        when t.processing_time_seconds <= {{ var('wms_target_processing_time', 300) }} then 1
-        else 0
-    end as within_target_time_flag,
-    case
-        when t.exception_flag = 'Y' or t.reason_code is not null then 1
-        else 0
-    end as has_exception_flag,
-    -- Performance metrics
-    60.0 / nullif(t.processing_time_seconds, 0) as transactions_per_minute,
-    t.quantity / nullif(t.processing_time_seconds, 0) as units_per_second,
-    case
-        when t.distance_traveled_feet > 0 then t.distance_traveled_feet / nullif(t.processing_time_seconds, 0)
-        else 0
-    end as feet_per_second,
-    t.transaction_date,
-    t.transaction_timestamp,
-    t.created_date,
-    ora_rowscn as version_number
+ {{ dbt_utils.surrogate_key(['transaction_id']) }} as transaction_sk,
+ t.transaction_id,
+ d.date_sk as transaction_date_sk,
+ i.inventory_sk,
+ l.location_sk,
+ coalesce(dest_l.location_sk, -1) as destination_location_sk,
+ u.user_sk,
+ t.transaction_type,
+ t.transaction_subtype,
+ t.movement_type,
+ t.reason_code,
+ t.reference_document,
+ t.quantity,
+ t.unit_of_measure,
+ t.transaction_value,
+ t.standard_cost * t.quantity as extended_cost,
+ t.processing_time_seconds,
+ t.distance_traveled_feet,
+ -- WMS business metrics
+ case
+ when t.transaction_type = 'PICK' then t.quantity
+ else 0
+ end as picked_quantity,
+ case
+ when t.transaction_type = 'RECEIPT' then t.quantity
+ else 0
+ end as received_quantity,
+ case
+ when t.transaction_type = 'SHIP' then t.quantity
+ else 0
+ end as shipped_quantity,
+ case
+ when t.transaction_type = 'ADJUSTMENT' then abs(t.quantity)
+ else 0
+ end as adjusted_quantity,
+ case
+ when t.transaction_type = 'CYCLE_COUNT' then 1
+ else 0
+ end as cycle_count_flag,
+ case
+ when t.processing_time_seconds <= {{ var('wms_target_processing_time', 300) }} then 1
+ else 0
+ end as within_target_time_flag,
+ case
+ when t.exception_flag = 'Y' or t.reason_code is not null then 1
+ else 0
+ end as has_exception_flag,
+ -- Performance metrics
+ 60.0 / nullif(t.processing_time_seconds, 0) as transactions_per_minute,
+ t.quantity / nullif(t.processing_time_seconds, 0) as units_per_second,
+ case
+ when t.distance_traveled_feet > 0 then t.distance_traveled_feet / nullif(t.processing_time_seconds, 0)
+ else 0
+ end as feet_per_second,
+ t.transaction_date,
+ t.transaction_timestamp,
+ t.created_date,
+ ora_rowscn as version_number
 from {{ ref('stg_wms_transactions') }} t
 join {{ ref('dim_date') }} d on date(t.transaction_date) = d.date_actual
 join {{ ref('dim_wms_inventory') }} i on t.item_id = i.item_id
-    and t.location_id = i.location_id
-    and t.transaction_date between i.effective_date and coalesce(i.expiration_date, date('2999-12-31'))
+ and t.location_id = i.location_id
+ and t.transaction_date between i.effective_date and coalesce(i.expiration_date, date('2999-12-31'))
 join {{ ref('dim_wms_location') }} l on t.location_id = l.location_id
 left join {{ ref('dim_wms_location') }} dest_l on t.destination_location_id = dest_l.location_id
 left join {{ ref('dim_user') }} u on t.user_id = u.user_id
 
 {% if is_incremental() %}
-    where t.transaction_date > (select max(transaction_date) from {{ this }})
+ where t.transaction_date > (select max(transaction_date) from {{ this }})
 {% endif %}
 """
 
@@ -593,10 +593,10 @@ left join {{ ref('dim_user') }} u on t.user_id = u.user_id
             """Generate WMS inventory snapshot fact table.
 
             Args:
-                snapshot_config: Snapshot fact configuration
+            snapshot_config: Snapshot fact configuration
 
             Returns:
-                FlextResult containing snapshot fact SQL or error
+            FlextResult containing snapshot fact SQL or error
 
             """
             try:
@@ -607,98 +607,98 @@ left join {{ ref('dim_user') }} u on t.user_id = u.user_id
                     )
 
                 model_sql = """{{
-    config(
-        materialized='table',
-        tags=['wms', 'fact', 'inventory_snapshot'],
-        description='WMS Daily Inventory Snapshot Fact',
-        indexes=[
-            {{'columns': ['snapshot_date_sk'], 'type': 'btree'}},
-            {{'columns': ['item_sk', 'location_sk'], 'type': 'btree'}},
-            {{'columns': ['warehouse_id'], 'type': 'btree'}}
-        ],
-        partition_by={{'field': 'snapshot_date', 'data_type': 'date'}}
-    )
+ config(
+ materialized='table',
+ tags=['wms', 'fact', 'inventory_snapshot'],
+ description='WMS Daily Inventory Snapshot Fact',
+ indexes=[
+ {{'columns': ['snapshot_date_sk'], 'type': 'btree'}},
+ {{'columns': ['item_sk', 'location_sk'], 'type': 'btree'}},
+ {{'columns': ['warehouse_id'], 'type': 'btree'}}
+ ],
+ partition_by={{'field': 'snapshot_date', 'data_type': 'date'}}
+ )
 }}}}
 
 with daily_inventory as (
-    select
-        snapshot_date,
-        item_id,
-        location_id,
-        sum(on_hand_quantity) as total_on_hand,
-        sum(available_quantity) as total_available,
-        sum(allocated_quantity) as total_allocated,
-        sum(in_transit_quantity) as total_in_transit,
-        sum(hold_quantity) as total_hold,
-        avg(standard_cost) as avg_standard_cost,
-        count(*) as location_count,
-        min(last_movement_date) as earliest_movement,
-        max(last_movement_date) as latest_movement
-    from {{ ref('stg_wms_inventory_daily_snapshots') }}
-    group by snapshot_date, item_id, location_id
+ select
+ snapshot_date,
+ item_id,
+ location_id,
+ sum(on_hand_quantity) as total_on_hand,
+ sum(available_quantity) as total_available,
+ sum(allocated_quantity) as total_allocated,
+ sum(in_transit_quantity) as total_in_transit,
+ sum(hold_quantity) as total_hold,
+ avg(standard_cost) as avg_standard_cost,
+ count(*) as location_count,
+ min(last_movement_date) as earliest_movement,
+ max(last_movement_date) as latest_movement
+ from {{ ref('stg_wms_inventory_daily_snapshots') }}
+ group by snapshot_date, item_id, location_id
 ),
 
 inventory_metrics as (
-    select
-        s.*,
-        d.date_sk as snapshot_date_sk,
-        i.inventory_sk,
-        l.location_sk,
-        -- Inventory value calculations
-        s.total_on_hand * s.avg_standard_cost as inventory_value,
-        s.total_available * s.avg_standard_cost as available_value,
-        s.total_allocated * s.avg_standard_cost as allocated_value,
-        -- Inventory velocity metrics
-        case
-            when s.latest_movement >= s.snapshot_date - 7 then 'FAST_MOVING'
-            when s.latest_movement >= s.snapshot_date - 30 then 'MEDIUM_MOVING'
-            when s.latest_movement >= s.snapshot_date - 90 then 'SLOW_MOVING'
-            else 'OBSOLETE'
-        end as movement_velocity,
-        case
-            when s.total_available <= 0 then 'STOCKOUT'
-            when s.total_available <= 10 then 'LOW_STOCK'
-            when s.total_available >= l.location_capacity * 0.95 then 'OVERSTOCK'
-            else 'NORMAL'
-        end as stock_level_status,
-        -- Days since last movement
-        s.snapshot_date - s.latest_movement as days_since_movement,
-        -- Inventory turns approximation (daily)
-        case
-            when s.total_on_hand > 0 then 1.0 / s.total_on_hand
-            else 0
-        end as daily_turn_rate
-    from daily_inventory s
-    join {{ ref('dim_date') }} d on s.snapshot_date = d.date_actual
-    join {{ ref('dim_wms_inventory') }} i on s.item_id = i.item_id
-        and s.location_id = i.location_id
-        and s.snapshot_date between i.effective_date and coalesce(i.expiration_date, date('2999-12-31'))
-    join {{ ref('dim_wms_location') }} l on s.location_id = l.location_id
+ select
+ s.*,
+ d.date_sk as snapshot_date_sk,
+ i.inventory_sk,
+ l.location_sk,
+ -- Inventory value calculations
+ s.total_on_hand * s.avg_standard_cost as inventory_value,
+ s.total_available * s.avg_standard_cost as available_value,
+ s.total_allocated * s.avg_standard_cost as allocated_value,
+ -- Inventory velocity metrics
+ case
+ when s.latest_movement >= s.snapshot_date - 7 then 'FAST_MOVING'
+ when s.latest_movement >= s.snapshot_date - 30 then 'MEDIUM_MOVING'
+ when s.latest_movement >= s.snapshot_date - 90 then 'SLOW_MOVING'
+ else 'OBSOLETE'
+ end as movement_velocity,
+ case
+ when s.total_available <= 0 then 'STOCKOUT'
+ when s.total_available <= 10 then 'LOW_STOCK'
+ when s.total_available >= l.location_capacity * 0.95 then 'OVERSTOCK'
+ else 'NORMAL'
+ end as stock_level_status,
+ -- Days since last movement
+ s.snapshot_date - s.latest_movement as days_since_movement,
+ -- Inventory turns approximation (daily)
+ case
+ when s.total_on_hand > 0 then 1.0 / s.total_on_hand
+ else 0
+ end as daily_turn_rate
+ from daily_inventory s
+ join {{ ref('dim_date') }} d on s.snapshot_date = d.date_actual
+ join {{ ref('dim_wms_inventory') }} i on s.item_id = i.item_id
+ and s.location_id = i.location_id
+ and s.snapshot_date between i.effective_date and coalesce(i.expiration_date, date('2999-12-31'))
+ join {{ ref('dim_wms_location') }} l on s.location_id = l.location_id
 )
 
 select
-    {{ dbt_utils.surrogate_key(['snapshot_date_sk', 'inventory_sk', 'location_sk']) }} as inventory_snapshot_sk,
-    snapshot_date_sk,
-    inventory_sk,
-    location_sk,
-    total_on_hand,
-    total_available,
-    total_allocated,
-    total_in_transit,
-    total_hold,
-    location_count,
-    inventory_value,
-    available_value,
-    allocated_value,
-    movement_velocity,
-    stock_level_status,
-    days_since_movement,
-    daily_turn_rate,
-    earliest_movement,
-    latest_movement,
-    snapshot_date,
-    sysdate as created_date,
-    ora_rowscn as version_number
+ {{ dbt_utils.surrogate_key(['snapshot_date_sk', 'inventory_sk', 'location_sk']) }} as inventory_snapshot_sk,
+ snapshot_date_sk,
+ inventory_sk,
+ location_sk,
+ total_on_hand,
+ total_available,
+ total_allocated,
+ total_in_transit,
+ total_hold,
+ location_count,
+ inventory_value,
+ available_value,
+ allocated_value,
+ movement_velocity,
+ stock_level_status,
+ days_since_movement,
+ daily_turn_rate,
+ earliest_movement,
+ latest_movement,
+ snapshot_date,
+ sysdate as created_date,
+ ora_rowscn as version_number
 from inventory_metrics
 """
 
@@ -719,10 +719,10 @@ from inventory_metrics
             """Optimize WMS analytical queries for performance.
 
             Args:
-                query_config: Query optimization configuration
+            query_config: Query optimization configuration
 
             Returns:
-                FlextResult containing optimization recommendations or error
+            FlextResult containing optimization recommendations or error
 
             """
             try:
@@ -827,10 +827,10 @@ from inventory_metrics
             """Analyze WMS data quality for analytics reliability.
 
             Args:
-                quality_config: Data quality analysis configuration
+            quality_config: Data quality analysis configuration
 
             Returns:
-                FlextResult containing quality analysis or error
+            FlextResult containing quality analysis or error
 
             """
             try:

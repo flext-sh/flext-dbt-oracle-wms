@@ -30,20 +30,20 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
     This is the single unified class for the flext-dbt-oracle-wms domain providing
     access to all DBT Oracle WMS domain functionality with centralized patterns.
 
-    **UNIFIED CLASS PATTERN**: One class per module with nested helpers only.
-    **CENTRALIZED APPROACH**: All operations follow centralized patterns:
+    UNIFIED CLASS PATTERN: One class per module with nested helpers only.
+    CENTRALIZED APPROACH: All operations follow centralized patterns:
     - FlextDbtOracleWms.* for DBT Oracle WMS-specific operations
     - Centralized validation through FlextDbtOracleWmsWorkflowService
     - No wrappers, aliases, or fallbacks
     - Direct use of flext-core centralized services
 
-    **FLEXT INTEGRATION**: Complete integration with flext-core patterns:
+    FLEXT INTEGRATION: Complete integration with flext-core patterns:
     - FlextContainer for dependency injection
     - FlextContext for operation context
     - FlextLogger for structured logging
     - FlextResult for railway-oriented error handling
 
-    **PYTHON 3.13+ COMPATIBILITY**: Uses modern patterns and latest type features.
+    PYTHON 3.13+ COMPATIBILITY: Uses modern patterns and latest type features.
     """
 
     def __init__(self, config: FlextDbtOracleWmsConfig | None = None) -> None:
@@ -105,13 +105,13 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         """Run complete Oracle WMS-to-DBT workflow.
 
         Args:
-            inventory_items: List of inventory items to process
-            shipments: List of shipments to process
-            generate_models: Whether to generate DBT models
-            run_transformations: Whether to run transformations
+        inventory_items: List of inventory items to process
+        shipments: List of shipments to process
+        generate_models: Whether to generate DBT models
+        run_transformations: Whether to run transformations
 
         Returns:
-            FlextResult containing workflow results
+        FlextResult containing workflow results
 
         """
         try:
@@ -136,12 +136,12 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         """Generate DBT models from Oracle WMS data.
 
         Args:
-            inventory_items: List of inventory items to process
-            shipments: List of shipments to process
-            output_dir: Output directory for generated models
+        inventory_items: List of inventory items to process
+        shipments: List of shipments to process
+        output_dir: Output directory for generated models
 
         Returns:
-            FlextResult containing model generation results
+        FlextResult containing model generation results
 
         """
         try:
@@ -165,13 +165,13 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         """Extract Oracle WMS metadata.
 
         Args:
-            inventory_items: List of inventory items to process
-            shipments: List of shipments to process
-            include_inventory_details: Whether to include inventory details
-            include_shipment_tracking: Whether to include shipment tracking
+        inventory_items: List of inventory items to process
+        shipments: List of shipments to process
+        include_inventory_details: Whether to include inventory details
+        include_shipment_tracking: Whether to include shipment tracking
 
         Returns:
-            FlextResult containing metadata extraction results
+        FlextResult containing metadata extraction results
 
         """
         try:
@@ -195,11 +195,11 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         """Monitor DBT command execution with metrics.
 
         Args:
-            command: DBT command to execute
-            timeout_seconds: Timeout for command execution
+        command: DBT command to execute
+        timeout_seconds: Timeout for command execution
 
         Returns:
-            FlextResult containing monitoring results
+        FlextResult containing monitoring results
 
         """
         try:
@@ -215,7 +215,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         """Validate Oracle WMS connection.
 
         Returns:
-            FlextResult containing connection validation result
+        FlextResult containing connection validation result
 
         """
         try:
@@ -231,10 +231,10 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         """Get detailed information about WMS inventory item.
 
         Args:
-            item_id: Inventory item identifier
+        item_id: Inventory item identifier
 
         Returns:
-            FlextResult containing inventory item information
+        FlextResult containing inventory item information
 
         """
         try:
@@ -252,10 +252,10 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         """Get detailed information about WMS shipment.
 
         Args:
-            shipment_id: Shipment identifier
+        shipment_id: Shipment identifier
 
         Returns:
-            FlextResult containing shipment information
+        FlextResult containing shipment information
 
         """
         try:

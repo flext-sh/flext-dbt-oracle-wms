@@ -35,7 +35,7 @@ class FlextDbtOracleWmsClient:
         """Initialize DBT Oracle WMS client.
 
         Args:
-            config: Configuration for Oracle WMS and DBT operations
+        config: Configuration for Oracle WMS and DBT operations
 
         """
         self.config: dict[str, object] = (
@@ -73,7 +73,7 @@ class FlextDbtOracleWmsClient:
         """Test Oracle WMS connection and basic functionality.
 
         Returns:
-            FlextResult containing connection status and basic info
+        FlextResult containing connection status and basic info
 
         """
         try:
@@ -107,12 +107,12 @@ class FlextDbtOracleWmsClient:
         """Run full Oracle WMS-to-DBT pipeline.
 
         Args:
-            entity_names: List of Oracle WMS entity names to process
-            filters: Filters per entity
-            model_names: DBT models to run
+        entity_names: List of Oracle WMS entity names to process
+        filters: Filters per entity
+        model_names: DBT models to run
 
         Returns:
-            FlextResult containing complete pipeline results
+        FlextResult containing complete pipeline results
 
         """
         FlextDbtOracleWmsClient.logger.info("Starting full Oracle WMS-to-DBT pipeline")
@@ -187,9 +187,9 @@ class FlextDbtOracleWmsClient:
         Converts Oracle WMS records to format suitable for DBT models using field mappings.
 
         Args:
-            entity_data: Dictionary of entity name -> records
+        entity_data: Dictionary of entity name -> records
         Returns:
-            Dictionary of prepared data for DBT
+        Dictionary of prepared data for DBT
 
         """
         prepared_data = {}

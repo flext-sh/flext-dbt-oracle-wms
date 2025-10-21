@@ -58,7 +58,7 @@ class FlextDbtOracleWmsItemDimension(FlextConfig):
     Represents an item dimension table structure optimized for analytics.
 
     Returns:
-            str | None: Description of return value.
+    str | None: Description of return value.
 
     """
 
@@ -385,10 +385,10 @@ class FlextDbtOracleWmsTransformer:
         """Transform Oracle WMS records to item dimensions.
 
         Args:
-            records: List of Oracle WMS item records
+        records: List of Oracle WMS item records
 
         Returns:
-            List of item dimension models
+        List of item dimension models
 
         """
         logger.info(
@@ -428,10 +428,10 @@ class FlextDbtOracleWmsTransformer:
         """Transform Oracle WMS records to location dimensions.
 
         Args:
-            records: List of Oracle WMS location records
+        records: List of Oracle WMS location records
 
         Returns:
-            List of location dimension models
+        List of location dimension models
 
         """
         logger.info(
@@ -473,10 +473,10 @@ class FlextDbtOracleWmsTransformer:
         """Transform Oracle WMS records to inventory facts.
 
         Args:
-            records: List of Oracle WMS inventory records
+        records: List of Oracle WMS inventory records
 
         Returns:
-            List of inventory fact models
+        List of inventory fact models
 
         """
         logger.info(
@@ -519,10 +519,10 @@ class FlextDbtOracleWmsTransformer:
         """Transform Oracle WMS records to shipment facts.
 
         Args:
-            records: List of Oracle WMS shipment records
+        records: List of Oracle WMS shipment records
 
         Returns:
-            List of shipment fact models
+        List of shipment fact models
 
         """
         logger.info(
@@ -564,10 +564,10 @@ class FlextDbtOracleWmsTransformer:
         """Transform all Oracle WMS entities to their respective DBT models.
 
         Args:
-            entity_data: Dictionary of entity name -> records
+        entity_data: Dictionary of entity name -> records
 
         Returns:
-            Dictionary of entity name -> transformed models
+        Dictionary of entity name -> transformed models
 
         """
         logger.info(

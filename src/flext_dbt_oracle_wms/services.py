@@ -32,7 +32,7 @@ class FlextDbtOracleWmsServices:
             """Initialize workflow service.
 
             Args:
-                config: Configuration for Oracle WMS and DBT operations
+            config: Configuration for Oracle WMS and DBT operations
 
             """
             self.config: dict[str, object] = (
@@ -50,10 +50,10 @@ class FlextDbtOracleWmsServices:
             """Generate Oracle WMS workflow recommendations.
 
             Args:
-                entities: List of WMS entities to analyze, if None will discover
+            entities: List of WMS entities to analyze, if None will discover
 
             Returns:
-                FlextResult containing discovery workflow results
+            FlextResult containing discovery workflow results
 
             """
             try:
@@ -185,7 +185,7 @@ class FlextDbtOracleWmsServices:
             """Initialize monitoring service.
 
             Args:
-                config: Configuration for monitoring settings
+            config: Configuration for monitoring settings
 
             """
             self.config: dict[str, object] = config
@@ -203,13 +203,13 @@ class FlextDbtOracleWmsServices:
             """Track Oracle WMS workflow execution metrics.
 
             Args:
-                workflow_name: Name of the workflow being executed
-                workflow_type: Type of workflow being executed
-                entity_names: Names of entities being processed
-                additional_data: Additional data for tracking
+            workflow_name: Name of the workflow being executed
+            workflow_type: Type of workflow being executed
+            entity_names: Names of entities being processed
+            additional_data: Additional data for tracking
 
             Returns:
-                Dictionary containing execution tracking information
+            Dictionary containing execution tracking information
 
             """
             _ = (
@@ -240,8 +240,8 @@ class FlextDbtOracleWmsServices:
             """Log Oracle WMS workflow completion metrics.
 
             Args:
-                tracking_info: Tracking information from track_workflow_execution
-                result: Workflow execution result
+            tracking_info: Tracking information from track_workflow_execution
+            result: Workflow execution result
 
             """
             end_time = time.time()
