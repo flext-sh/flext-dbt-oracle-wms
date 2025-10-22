@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from pathlib import Path
-from typing import ClassVar, Self
+from typing import ClassVar, Literal, Self
 
 from flext_core import FlextConfig, FlextConstants, FlextResult
 from flext_meltano.config import FlextMeltanoConfig
@@ -93,7 +93,9 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         description="Number of DBT threads",
     )
 
-    dbt_log_level: str = Field(default="info", description="DBT logging level")
+    dbt_log_level: Literal["debug", "info", "warn", "error"] = Field(
+        default="info", description="DBT logging level"
+    )
 
     # Data Quality Settings
     min_quality_threshold: float = Field(
@@ -169,17 +171,6 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         if v.lower() not in valid_targets:
             valid_list = ", ".join(sorted(valid_targets))
             msg = f"Invalid DBT target: {v}. Must be one of: {valid_list}"
-            raise ValueError(msg)
-        return v.lower()
-
-    @field_validator("dbt_log_level")
-    @classmethod
-    def validate_dbt_log_level(cls, v: str) -> str:
-        """Validate DBT log level."""
-        valid_levels = ["debug", "info", "warn", "error"]
-        if v.lower() not in valid_levels:
-            valid_list = ", ".join(valid_levels)
-            msg = f"Invalid DBT log level: {v}. Must be one of: {valid_list}"
             raise ValueError(msg)
         return v.lower()
 

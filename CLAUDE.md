@@ -1624,3 +1624,21 @@ echo "=== DBT ORACLE WMS ECOSYSTEM READY FOR PRODUCTION ==="
 ---
 
 **DBT ORACLE WMS EXCELLENCE PATH**: Follow these Oracle WMS-specific standards precisely, validate WMS dimensional model compilation continuously, ensure proper fact/dimension relationships, optimize Oracle WMS performance patterns, never compromise on WMS business rule validation, integrate seamlessly with Singer tap ecosystem, and ALWAYS use FLEXT ecosystem for Oracle WMS CLI testing with proper configuration hierarchy (ENV → .env → DEFAULT → CLI) and complete flext-oracle-wms + flext-meltano + flext-tap-oracle-wms integration.
+
+---
+
+## Pydantic v2 Compliance Standards
+
+**Status**: ✅ Fully Pydantic v2 Compliant
+**Verified**: October 22, 2025 (Phase 7 Ecosystem Audit)
+
+### Verification
+
+```bash
+make audit-pydantic-v2     # Expected: Status: PASS, Violations: 0
+```
+
+### Reference
+
+- **Complete Guide**: `../flext-core/docs/pydantic-v2-modernization/PYDANTIC_V2_STANDARDS_GUIDE.md`
+- **Phase 7 Report**: `../flext-core/docs/pydantic-v2-modernization/PHASE_7_COMPLETION_REPORT.md`
