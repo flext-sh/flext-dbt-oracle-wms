@@ -187,9 +187,10 @@ class FlextDbtOracleWmsClient:
         Converts Oracle WMS records to format suitable for DBT models using field mappings.
 
         Args:
-        entity_data: Dictionary of entity name -> records
+            entity_data: Dictionary of entity name -> records
+
         Returns:
-        Dictionary of prepared data for DBT
+            Dictionary of prepared data for DBT
 
         """
         prepared_data = {}

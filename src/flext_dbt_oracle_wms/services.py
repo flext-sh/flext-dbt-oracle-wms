@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import time
 
-from flext_core import FlextLogger, FlextResult, FlextTypes
+from flext_core import FlextLogger, FlextResult
 
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
 
@@ -43,6 +43,114 @@ class FlextDbtOracleWmsServices:
                 None  # Will be properly initialized when WMS integration is complete
             )
 
+        def _discover_entities_if_needed(
+            self,
+            entities: list[dict[str, object]] | None,
+        ) -> FlextResult[list[dict[str, object]]]:
+            """Discover entities if not provided."""
+            if entities is not None:
+                return FlextResult.ok(entities)
+
+            if self.client is None:
+                return FlextResult[list[dict[str, object]]].fail(
+                    "WMS client not initialized",
+                    error_code="CLIENT_NOT_INITIALIZED",
+                )
+
+            discovery_result = self.client.discover_oracle_wms_entities()
+            if discovery_result.is_failure:
+                return FlextResult[list[dict[str, object]]].fail(
+                    discovery_result.error or "Discovery failed",
+                )
+
+            return FlextResult.ok(discovery_result.data or [])
+
+        def _analyze_entity_distribution(
+            self,
+            entities: list[dict[str, object]],
+        ) -> dict[str, int]:
+            """Analyze entity type distribution."""
+            entity_counts: dict[str, int] = {}
+            for entity in entities:
+                if isinstance(entity, dict) and "name" in entity:
+                    entity_type = entity["name"]
+                    if isinstance(entity_type, str):
+                        entity_counts[entity_type] = (
+                            entity_counts.get(entity_type, 0) + 1
+                        )
+            return entity_counts
+
+        def _generate_performance_recommendations(
+            self,
+            total_entities: int,
+            entity_counts: dict[str, int],
+        ) -> list[dict[str, str]]:
+            """Generate performance-related recommendations."""
+            recommendations = []
+
+            entity_count_threshold = 20
+            if total_entities > entity_count_threshold:
+                recommendations.append({
+                    "type": "performance",
+                    "priority": "high",
+                    "message": f"Large number of entities ({total_entities}). Consider processing in batches.",
+                    "suggestion": "Use limits parameter to process entities in smaller batches",
+                })
+
+            inventory_threshold = 1000
+            if (
+                "inventory" in entity_counts
+                and entity_counts["inventory"] > inventory_threshold
+            ):
+                recommendations.append({
+                    "type": "oracle_wms_specific",
+                    "priority": "medium",
+                    "message": "Large inventory dataset detected. Consider date-based filtering.",
+                    "suggestion": "Filter inventory by lastMovementDate to reduce data volume",
+                })
+
+            config_threads_threshold = 10
+            if total_entities > config_threads_threshold:
+                recommendations.append({
+                    "type": "configuration",
+                    "priority": "medium",
+                    "message": "Multiple entities detected. Consider performance optimizations.",
+                    "suggestion": f"Increase threads to {min(8, max(4, total_entities // 5))} and page_size to 2000",
+                })
+
+            return recommendations
+
+        def _build_analysis_results(
+            self,
+            total_entities: int,
+            entity_counts: dict[str, int],
+            recommendations: list[dict[str, str]],
+        ) -> dict[str, object]:
+            """Build final analysis results."""
+            config_threads_threshold = 10
+
+            return {
+                "analysis": {
+                    "total_entities": total_entities,
+                    "entity_type_distribution": entity_counts,
+                    "most_common_entity_type": max(
+                        entity_counts,
+                        key=lambda k: entity_counts[k],
+                    )
+                    if entity_counts
+                    else None,
+                },
+                "recommendations": recommendations,
+                "suggested_config": {
+                    "dbt_threads": min(8, max(4, total_entities // 5))
+                    if total_entities > config_threads_threshold
+                    else 4,
+                    "oracle_wms_page_size": 2000
+                    if total_entities > config_threads_threshold
+                    else 1000,
+                },
+            }
+
         def generate_workflow_recommendations(
             self,
             entities: list[dict[str, object]] | None = None,
@@ -50,10 +158,10 @@ class FlextDbtOracleWmsServices:
             """Generate Oracle WMS workflow recommendations.
 
             Args:
-            entities: List of WMS entities to analyze, if None will discover
+                entities: List of WMS entities to analyze, if None will discover
 
             Returns:
-            FlextResult containing discovery workflow results
+                FlextResult containing discovery workflow results
 
             """
             try:
@@ -62,104 +170,28 @@ class FlextDbtOracleWmsServices:
                 )
 
                 # Discover entities if not provided
-                if entities is None:
-                    if self.client is None:
-                        return FlextResult[dict[str, object]].fail(
-                            "WMS client not initialized",
-                            error_code="CLIENT_NOT_INITIALIZED",
-                        )
-                    discovery_result: FlextResult[object] = (
-                        self.client.discover_oracle_wms_entities()
-                    )
-                    if discovery_result.is_failure:
-                        return FlextResult[dict[str, object]].fail(
-                            discovery_result.error or "Discovery failed",
-                        )
-                    entities = discovery_result.data or []
+                entities_result = self._discover_entities_if_needed(entities)
+                if entities_result.is_failure:
+                    return FlextResult[dict[str, object]].fail(entities_result.error)
+
+                entities = entities_result.unwrap()
 
                 if not entities:
-                    return FlextResult[dict[str, object]].ok(
-                        {
-                            "message": "No Oracle WMS entities found for analysis",
-                            "recommendations": [],
-                        },
-                    )
+                    return FlextResult[dict[str, object]].ok({
+                        "message": "No Oracle WMS entities found for analysis",
+                        "recommendations": [],
+                    })
 
                 # Analyze entities and generate recommendations
-                recommendations: list[dict[str, str]] = []
-
-                # Analyze entity distribution
-                entity_counts: FlextTypes.IntDict = {}
-                for entity in entities:
-                    if isinstance(entity, dict) and "name" in entity:
-                        entity_type = entity["name"]
-                        if isinstance(entity_type, str):
-                            entity_counts[entity_type] = (
-                                entity_counts.get(entity_type, 0) + 1
-                            )
-
-                # Performance recommendations
+                entity_counts = self._analyze_entity_distribution(entities)
                 total_entities = len(entities)
-                entity_count_threshold = 20
-                if total_entities > entity_count_threshold:
-                    recommendations.append(
-                        {
-                            "type": "performance",
-                            "priority": "high",
-                            "message": f"Large number of entities ({total_entities}). Consider processing in batches.",
-                            "suggestion": "Use limits parameter to process entities in smaller batches",
-                        },
-                    )
+                recommendations = self._generate_performance_recommendations(
+                    total_entities, entity_counts
+                )
 
-                # Oracle WMS specific recommendations
-                inventory_threshold = 1000
-                if (
-                    "inventory" in entity_counts
-                    and entity_counts["inventory"] > inventory_threshold
-                ):
-                    recommendations.append(
-                        {
-                            "type": "oracle_wms_specific",
-                            "priority": "medium",
-                            "message": "Large inventory dataset detected. Consider date-based filtering.",
-                            "suggestion": "Filter inventory by lastMovementDate to reduce data volume",
-                        },
-                    )
-
-                # Configuration recommendations based on data volume
-                config_threads_threshold = 10
-                if total_entities > config_threads_threshold:
-                    recommendations.append(
-                        {
-                            "type": "configuration",
-                            "priority": "medium",
-                            "message": "Multiple entities detected. Consider performance optimizations.",
-                            "suggestion": f"Increase threads to {min(8, max(4, total_entities // 5))} and page_size to 2000",
-                        },
-                    )
-
-                results: dict[str, object] = {
-                    "analysis": {
-                        "total_entities": "total_entities",
-                        "entity_type_distribution": "entity_counts",
-                        "most_common_entity_type": max(
-                            entity_counts,
-                            key=lambda k: entity_counts[k],
-                        )
-                        if entity_counts
-                        else None,
-                    },
-                    "recommendations": "recommendations",
-                    "suggested_config": {
-                        "dbt_threads": min(8, max(4, total_entities // 5))
-                        if total_entities > config_threads_threshold
-                        else 4,
-                        "oracle_wms_page_size": 2000
-                        if total_entities > config_threads_threshold
-                        else 1000,
-                        "batch_processing": total_entities > entity_count_threshold,
-                    },
-                }
+                results = self._build_analysis_results(
+                    total_entities, entity_counts, recommendations
+                )
 
                 FlextDbtOracleWmsServices.logger.info(
                     "Generated %d Oracle WMS workflow recommendations",

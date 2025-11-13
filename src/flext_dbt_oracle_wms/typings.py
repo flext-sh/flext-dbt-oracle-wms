@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import StrEnum
-from typing import Annotated, Literal
+from typing import Annotated, Literal, TypedDict
 
 from flext_core import FlextTypes
 
@@ -304,85 +304,6 @@ class FlextDbtOracleWmsTypes(FlextTypes):
     class DomainObjects:
         """DBT Oracle WMS domain object TypedDict definitions."""
 
-        from typing import TypedDict
-
-        class DBTOracleWMSProjectConfiguration(TypedDict):
-            """DBT Oracle WMS project configuration using core types."""
-
-            name: ProjectName
-            version: Version
-            profile: str
-            model_paths: list[str]
-            analysis_paths: list[str]
-            test_paths: list[str]
-            seed_paths: list[str]
-            macro_paths: list[str]
-            snapshot_paths: list[str]
-            target_path: str
-            clean_targets: list[str]
-            require_dbt_version: str
-            dbt_version: str
-            timeout: DBTOracleWMSProjectTimeout
-
-        class DBTOracleWMSSnapshotConfiguration(TypedDict):
-            """DBT Oracle WMS snapshot configuration."""
-
-            name: str
-            target_schema: str
-            target_database: str | None
-            strategy: str
-            unique_key: str
-            updated_at: str | None
-            check_cols: list[str] | None
-            invalidate_hard_deletes: bool
-            meta: dict[str, str]
-            tags: list[str]
-            timeout: DBTOracleWMSSnapshotTimeout
-
-        class DBTOracleWMSAnalysisConfiguration(TypedDict):
-            """DBT Oracle WMS analysis configuration."""
-
-            name: str
-            description: str
-            meta: dict[str, str]
-            tags: list[str]
-            timeout: DBTOracleWMSAnalysisTimeout
-
-        class DBTOracleWMSCompilationConfiguration(TypedDict):
-            """DBT Oracle WMS compilation configuration."""
-
-            project_dir: str
-            profiles_dir: str
-            target: str
-            vars: dict[str, str]
-            full_refresh: bool
-            exclude: list[str] | None
-            select: list[str] | None
-            timeout: DBTOracleWMSCompilationTimeout
-
-        class DBTOracleWMSExecutionConfiguration(TypedDict):
-            """DBT Oracle WMS execution configuration."""
-
-            project_dir: str
-            profiles_dir: str
-            target: str
-            models: list[str] | None
-            exclude: list[str] | None
-            full_refresh: bool
-            fail_fast: bool
-            threads: int
-            vars: dict[str, str]
-            timeout: DBTOracleWMSExecutionTimeout
-
-        class DBTOracleWMSDocumentationConfiguration(TypedDict):
-            """DBT Oracle WMS documentation configuration."""
-
-            project_dir: str
-            profiles_dir: str
-            target: str
-            compile: bool
-            timeout: DBTOracleWMSDocumentationTimeout
-
         # Domain objects using the configurations above
         class DBTOracleWMSProject(TypedDict):
             """DBT Oracle WMS project domain object using core types."""
@@ -495,6 +416,63 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             error: str | None
             created_at: CreatedAt
             completed_at: UpdatedAt | None
+
+
+# Moved TypedDict classes to module level to avoid F821 issues
+class DBTOracleWMSProjectConfiguration(TypedDict):
+    """DBT Oracle WMS project configuration using core types."""
+
+    name: ProjectName
+    version: Version
+    profile: str
+    model_paths: list[str]
+    analysis_paths: list[str]
+    test_paths: list[str]
+    seed_paths: list[str]
+    macro_paths: list[str]
+    snapshot_paths: list[str]
+    target_path: str
+    clean_targets: list[str]
+    require_dbt_version: str
+    dbt_version: str
+
+
+class DBTOracleWMSSnapshotConfiguration(TypedDict):
+    """DBT Oracle WMS snapshot configuration using core types."""
+
+    name: str
+    strategy: str
+    unique_key: str
+    updated_at: str
+    dbt_version: str
+
+
+class DBTOracleWMSAnalysisConfiguration(TypedDict):
+    """DBT Oracle WMS analysis configuration using core types."""
+
+    name: str
+    depends_on: list[str]
+
+
+class DBTOracleWMSCompilationConfiguration(TypedDict):
+    """DBT Oracle WMS compilation configuration using core types."""
+
+    name: str
+    depends_on: list[str]
+
+
+class DBTOracleWMSExecutionConfiguration(TypedDict):
+    """DBT Oracle WMS execution configuration using core types."""
+
+    name: str
+    depends_on: list[str]
+
+
+class DBTOracleWMSDocumentationConfiguration(TypedDict):
+    """DBT Oracle WMS documentation configuration using core types."""
+
+    name: str
+    depends_on: list[str]
 
 
 # =============================================================================
