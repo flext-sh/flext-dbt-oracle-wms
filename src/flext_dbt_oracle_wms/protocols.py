@@ -3,13 +3,13 @@
 from typing import Protocol, runtime_checkable
 
 from flext_core import (
-    FlextProtocols,
     FlextResult,
+    p,
 )
 
 
 class FlextDbtOracleWmsProtocols:
-    """DBT Oracle WMS protocols with explicit re-exports from FlextProtocols foundation.
+    """DBT Oracle WMS protocols with explicit re-exports from p foundation.
 
     This class provides protocol definitions for DBT operations with Oracle WMS integration,
     warehouse management data transformation, inventory analytics, and enterprise WMS patterns.
@@ -32,7 +32,7 @@ class FlextDbtOracleWmsProtocols:
         """DBT Oracle WMS domain protocols for warehouse management data transformation and analytics."""
 
         @runtime_checkable
-        class DbtProtocol(FlextProtocols.Service, Protocol):
+        class DbtProtocol(p.Service, Protocol):
             """Protocol for DBT operations with Oracle WMS data."""
 
             def run_dbt_models(
@@ -103,7 +103,7 @@ class FlextDbtOracleWmsProtocols:
                 """
 
         @runtime_checkable
-        class WmsIntegrationProtocol(FlextProtocols.Service, Protocol):
+        class WmsIntegrationProtocol(p.Service, Protocol):
             """Protocol for Oracle WMS data integration operations."""
 
             def extract_wms_inventory_data(
@@ -187,7 +187,7 @@ class FlextDbtOracleWmsProtocols:
                 """
 
         @runtime_checkable
-        class ModelingProtocol(FlextProtocols.Service, Protocol):
+        class ModelingProtocol(p.Service, Protocol):
             """Protocol for Oracle WMS data modeling operations."""
 
             def create_inventory_dimension(
@@ -255,7 +255,7 @@ class FlextDbtOracleWmsProtocols:
                 """
 
         @runtime_checkable
-        class TransformationProtocol(FlextProtocols.Service, Protocol):
+        class TransformationProtocol(p.Service, Protocol):
             """Protocol for Oracle WMS data transformation operations."""
 
             def normalize_wms_inventory_data(
@@ -323,7 +323,7 @@ class FlextDbtOracleWmsProtocols:
                 """
 
         @runtime_checkable
-        class MacroProtocol(FlextProtocols.Service, Protocol):
+        class MacroProtocol(p.Service, Protocol):
             """Protocol for DBT macro operations with Oracle WMS data."""
 
             def generate_wms_source_macro(
@@ -379,7 +379,7 @@ class FlextDbtOracleWmsProtocols:
                 """
 
         @runtime_checkable
-        class QualityProtocol(FlextProtocols.Service, Protocol):
+        class QualityProtocol(p.Service, Protocol):
             """Protocol for Oracle WMS data quality operations."""
 
             def validate_wms_inventory_accuracy(
@@ -447,7 +447,7 @@ class FlextDbtOracleWmsProtocols:
                 """
 
         @runtime_checkable
-        class PerformanceProtocol(FlextProtocols.Service, Protocol):
+        class PerformanceProtocol(p.Service, Protocol):
             """Protocol for DBT Oracle WMS performance optimization operations."""
 
             def optimize_dbt_models(
@@ -509,7 +509,7 @@ class FlextDbtOracleWmsProtocols:
                 """
 
         @runtime_checkable
-        class MonitoringProtocol(FlextProtocols.Service, Protocol):
+        class MonitoringProtocol(p.Service, Protocol):
             """Protocol for DBT Oracle WMS monitoring operations."""
 
             def track_dbt_run_metrics(

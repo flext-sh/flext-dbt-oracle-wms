@@ -10,7 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import override
 
-from flext_core import FlextLogger, FlextResult, FlextTypes
+from flext_core import FlextLogger, FlextResult, t
 from flext_meltano import FlextMeltanoAPI
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
@@ -101,7 +101,7 @@ class FlextDbtOracleWmsClient:
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
         entity_names: list[str] | None = None,
-        filters: FlextTypes.NestedDict | None = None,
+        filters: t.NestedDict | None = None,
         model_names: list[str] | None = None,
     ) -> FlextResult[dict[str, object]]:
         """Run full Oracle WMS-to-DBT pipeline.

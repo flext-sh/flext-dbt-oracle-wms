@@ -13,7 +13,7 @@ from flext_core import (
     FlextContainer,
     FlextLogger,
     FlextResult,
-    FlextUtilities,
+    u,
 )
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsSemanticConstants
@@ -21,7 +21,7 @@ from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsSemanticConstants
 __all__: list[str] = ["FlextDbtOracleWmsUtilities"]
 
 
-class FlextDbtOracleWmsUtilities(FlextUtilities):
+class FlextDbtOracleWmsUtilities(u):
     """Single unified utilities class for DBT Oracle WMS data warehouse operations.
 
     Provides complete DBT Oracle WMS utilities for warehouse management system integration,

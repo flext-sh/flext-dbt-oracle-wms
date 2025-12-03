@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextModels, FlextResult, FlextUtilities
+from flext_core import FlextModels, FlextResult, u
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
@@ -399,8 +399,8 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
                     f"Failed to create staging model: {e}"
                 )
 
-    class Utilities(FlextUtilities):
-        """Unified DBT Oracle WMS utilities extending FlextUtilities.
+    class Utilities(u):
+        """Unified DBT Oracle WMS utilities extending u.
 
         Provides complete utility classes for DBT Oracle WMS operations:
         - Oracle WMS database connection and metadata utilities
