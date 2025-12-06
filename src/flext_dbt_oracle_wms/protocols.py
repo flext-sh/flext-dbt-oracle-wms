@@ -327,7 +327,8 @@ class FlextDbtOracleWmsProtocols:
             """Protocol for DBT macro operations with Oracle WMS data."""
 
             def generate_wms_source_macro(
-                self, source_config: dict[str, object]
+                self,
+                source_config: dict[str, object],
             ) -> FlextResult[str]:
                 """Generate DBT macro for Oracle WMS data sources.
 
@@ -340,7 +341,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def create_wms_test_macro(
-                self, test_config: dict[str, object]
+                self,
+                test_config: dict[str, object],
             ) -> FlextResult[str]:
                 """Create DBT test macro for Oracle WMS data validation.
 
@@ -353,7 +355,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def generate_wms_transformation_macro(
-                self, transformation_config: dict[str, object]
+                self,
+                transformation_config: dict[str, object],
             ) -> FlextResult[str]:
                 """Generate DBT transformation macro for Oracle WMS data.
 
@@ -366,7 +369,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def create_wms_snapshot_macro(
-                self, snapshot_config: dict[str, object]
+                self,
+                snapshot_config: dict[str, object],
             ) -> FlextResult[str]:
                 """Create DBT snapshot macro for Oracle WMS data versioning.
 
@@ -483,7 +487,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def monitor_dbt_performance(
-                self, run_results: dict[str, object]
+                self,
+                run_results: dict[str, object],
             ) -> FlextResult[dict[str, object]]:
                 """Monitor DBT performance with Oracle WMS data processing.
 
@@ -496,7 +501,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def optimize_warehouse_operations(
-                self, operations_config: dict[str, object]
+                self,
+                operations_config: dict[str, object],
             ) -> FlextResult[dict[str, object]]:
                 """Optimize warehouse operations analysis for DBT processing.
 
@@ -513,7 +519,9 @@ class FlextDbtOracleWmsProtocols:
             """Protocol for DBT Oracle WMS monitoring operations."""
 
             def track_dbt_run_metrics(
-                self, run_id: str, metrics: dict[str, object]
+                self,
+                run_id: str,
+                metrics: dict[str, object],
             ) -> FlextResult[bool]:
                 """Track DBT run metrics for Oracle WMS data processing.
 
@@ -527,7 +535,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def monitor_wms_data_freshness(
-                self, freshness_config: dict[str, object]
+                self,
+                freshness_config: dict[str, object],
             ) -> FlextResult[dict[str, object]]:
                 """Monitor Oracle WMS data freshness for DBT processing.
 
@@ -548,7 +557,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def create_monitoring_dashboard(
-                self, dashboard_config: dict[str, object]
+                self,
+                dashboard_config: dict[str, object],
             ) -> FlextResult[dict[str, object]]:
                 """Create monitoring dashboard for DBT Oracle WMS operations.
 
@@ -561,7 +571,8 @@ class FlextDbtOracleWmsProtocols:
                 """
 
             def track_inventory_metrics(
-                self, inventory_config: dict[str, object]
+                self,
+                inventory_config: dict[str, object],
             ) -> FlextResult[dict[str, object]]:
                 """Track inventory management metrics for WMS analytics.
 
@@ -578,38 +589,77 @@ class FlextDbtOracleWmsProtocols:
     # ============================================================================
 
     # DBT operations
-    DbtProtocol = DbtOracleWms.DbtProtocol
+    @runtime_checkable
+    class DbtProtocol(DbtOracleWms.DbtProtocol):
+        """DbtProtocol - real inheritance."""
 
     # WMS integration
-    WmsIntegrationProtocol = DbtOracleWms.WmsIntegrationProtocol
+    @runtime_checkable
+    class WmsIntegrationProtocol(DbtOracleWms.WmsIntegrationProtocol):
+        """WmsIntegrationProtocol - real inheritance."""
 
     # Data modeling
-    ModelingProtocol = DbtOracleWms.ModelingProtocol
+    @runtime_checkable
+    class ModelingProtocol(DbtOracleWms.ModelingProtocol):
+        """ModelingProtocol - real inheritance."""
 
     # Transformations
-    TransformationProtocol = DbtOracleWms.TransformationProtocol
+    @runtime_checkable
+    class TransformationProtocol(DbtOracleWms.TransformationProtocol):
+        """TransformationProtocol - real inheritance."""
 
     # DBT macros
-    MacroProtocol = DbtOracleWms.MacroProtocol
+    @runtime_checkable
+    class MacroProtocol(DbtOracleWms.MacroProtocol):
+        """MacroProtocol - real inheritance."""
 
     # Data quality
-    QualityProtocol = DbtOracleWms.QualityProtocol
+    @runtime_checkable
+    class QualityProtocol(DbtOracleWms.QualityProtocol):
+        """QualityProtocol - real inheritance."""
 
     # Performance optimization
-    PerformanceProtocol = DbtOracleWms.PerformanceProtocol
+    @runtime_checkable
+    class PerformanceProtocol(DbtOracleWms.PerformanceProtocol):
+        """PerformanceProtocol - real inheritance."""
 
     # Monitoring
-    MonitoringProtocol = DbtOracleWms.MonitoringProtocol
+    @runtime_checkable
+    class MonitoringProtocol(DbtOracleWms.MonitoringProtocol):
+        """MonitoringProtocol - real inheritance."""
 
     # Convenience aliases for downstream usage
-    DbtOracleWmsProtocol = DbtOracleWms.DbtProtocol
-    DbtWmsIntegrationProtocol = DbtOracleWms.WmsIntegrationProtocol
-    DbtWmsModelingProtocol = DbtOracleWms.ModelingProtocol
-    DbtWmsTransformationProtocol = DbtOracleWms.TransformationProtocol
-    DbtWmsMacroProtocol = DbtOracleWms.MacroProtocol
-    DbtWmsQualityProtocol = DbtOracleWms.QualityProtocol
-    DbtWmsPerformanceProtocol = DbtOracleWms.PerformanceProtocol
-    DbtWmsMonitoringProtocol = DbtOracleWms.MonitoringProtocol
+    @runtime_checkable
+    class DbtOracleWmsProtocol(DbtOracleWms.DbtProtocol):
+        """DbtOracleWmsProtocol - real inheritance."""
+
+    @runtime_checkable
+    class DbtWmsIntegrationProtocol(DbtOracleWms.WmsIntegrationProtocol):
+        """DbtWmsIntegrationProtocol - real inheritance."""
+
+    @runtime_checkable
+    class DbtWmsModelingProtocol(DbtOracleWms.ModelingProtocol):
+        """DbtWmsModelingProtocol - real inheritance."""
+
+    @runtime_checkable
+    class DbtWmsTransformationProtocol(DbtOracleWms.TransformationProtocol):
+        """DbtWmsTransformationProtocol - real inheritance."""
+
+    @runtime_checkable
+    class DbtWmsMacroProtocol(DbtOracleWms.MacroProtocol):
+        """DbtWmsMacroProtocol - real inheritance."""
+
+    @runtime_checkable
+    class DbtWmsQualityProtocol(DbtOracleWms.QualityProtocol):
+        """DbtWmsQualityProtocol - real inheritance."""
+
+    @runtime_checkable
+    class DbtWmsPerformanceProtocol(DbtOracleWms.PerformanceProtocol):
+        """DbtWmsPerformanceProtocol - real inheritance."""
+
+    @runtime_checkable
+    class DbtWmsMonitoringProtocol(DbtOracleWms.MonitoringProtocol):
+        """DbtWmsMonitoringProtocol - real inheritance."""
 
 
 __all__ = [

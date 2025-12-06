@@ -166,7 +166,7 @@ class FlextDbtOracleWmsServices:
             """
             try:
                 FlextDbtOracleWmsServices.logger.info(
-                    "Generating Oracle WMS workflow recommendations..."
+                    "Generating Oracle WMS workflow recommendations...",
                 )
 
                 # Discover entities if not provided
@@ -186,11 +186,14 @@ class FlextDbtOracleWmsServices:
                 entity_counts = self._analyze_entity_distribution(entities)
                 total_entities = len(entities)
                 recommendations = self._generate_performance_recommendations(
-                    total_entities, entity_counts
+                    total_entities,
+                    entity_counts,
                 )
 
                 results = self._build_analysis_results(
-                    total_entities, entity_counts, recommendations
+                    total_entities,
+                    entity_counts,
+                    recommendations,
                 )
 
                 FlextDbtOracleWmsServices.logger.info(
@@ -222,7 +225,7 @@ class FlextDbtOracleWmsServices:
             """
             self.config: dict[str, object] = config
             FlextDbtOracleWmsServices.logger.info(
-                "Initialized Oracle WMS DBT monitoring service"
+                "Initialized Oracle WMS DBT monitoring service",
             )
 
         def track_workflow_execution(
@@ -299,7 +302,8 @@ class FlextDbtOracleWmsServices:
                 )
             else:
                 FlextDbtOracleWmsServices.logger.error(
-                    "Oracle WMS workflow failed: %s", completion_info
+                    "Oracle WMS workflow failed: %s",
+                    completion_info,
                 )
 
 

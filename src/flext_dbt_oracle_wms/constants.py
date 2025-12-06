@@ -151,12 +151,21 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
 class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
     """DBT Oracle WMS constants with backward compatibility."""
 
-    # Modern semantic access (Primary API) - direct references
-    Core = FlextDbtOracleWmsSemanticConstants.Core
-    Dbt = FlextDbtOracleWmsSemanticConstants.Dbt
-    Entities = FlextDbtOracleWmsSemanticConstants.Entities
-    Processing = FlextDbtOracleWmsSemanticConstants.Processing
-    Configuration = FlextDbtOracleWmsSemanticConstants.Configuration
+    # Modern semantic access (Primary API) - real inheritance classes
+    class Core(FlextDbtOracleWmsSemanticConstants.Core):
+        """Core constants - real inheritance."""
+
+    class Dbt(FlextDbtOracleWmsSemanticConstants.Dbt):
+        """DBT constants - real inheritance."""
+
+    class Entities(FlextDbtOracleWmsSemanticConstants.Entities):
+        """Entities constants - real inheritance."""
+
+    class Processing(FlextDbtOracleWmsSemanticConstants.Processing):
+        """Processing constants - real inheritance."""
+
+    class Configuration(FlextDbtOracleWmsSemanticConstants.Configuration):
+        """Configuration constants - real inheritance."""
 
     # Legacy compatibility - flat access patterns (DEPRECATED - use semantic access)
     # PROJECT_NAME = FlextDbtOracleWmsSemanticConstants.Dbt.PROJECT_NAME  # Disabled: Final override violation
@@ -176,6 +185,8 @@ class DBTOracleWMSEntityTypes:
     """Oracle WMS entity types for DBT models (DEPRECATED - use FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES)."""
 
     # CONSUME from flext-oracle-wms API
+    # Note: These are enum values, not classes - cannot use inheritance
+    # Keep as aliases since enum values cannot be inherited
     INVENTORY = OracleWMSEntityType.INVENTORY
     ORDER = OracleWMSEntityType.ORDER
     SHIPMENT = OracleWMSEntityType.SHIPMENT

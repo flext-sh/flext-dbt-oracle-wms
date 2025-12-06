@@ -120,7 +120,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
             return FlextResult[dict["str", "object"]].ok(schema_entry)
         except Exception as e:
             return FlextResult[dict["str", "object"]].fail(
-                f"Schema entry generation failed: {e}"
+                f"Schema entry generation failed: {e}",
             )
 
     @classmethod
@@ -143,7 +143,8 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
             self.config = config
 
         def generate_wms_dimensional_models(
-            self, wms_entities: list[str]
+            self,
+            wms_entities: list[str],
         ) -> FlextResult[list[FlextDbtOracleWmsModels]]:
             """Generate dimensional models from Oracle WMS entities."""
             dimensional_models: list[FlextDbtOracleWmsModels] = []
@@ -163,7 +164,8 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
             return FlextResult[list[FlextDbtOracleWmsModels]].ok(dimensional_models)
 
         def generate_wms_staging_models(
-            self, oracle_sources: list[str]
+            self,
+            oracle_sources: list[str],
         ) -> FlextResult[list[FlextDbtOracleWmsModels]]:
             """Generate staging models from Oracle WMS sources."""
             staging_models: list[FlextDbtOracleWmsModels] = []
@@ -176,7 +178,8 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
             return FlextResult[list[FlextDbtOracleWmsModels]].ok(staging_models)
 
         def _create_dimension_model(
-            self, wms_entity: str
+            self,
+            wms_entity: str,
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a dimension model for WMS entity."""
             try:
@@ -256,11 +259,12 @@ from {{{{ ref('stg_wms_{wms_entity}') }}}}
 
             except Exception as e:
                 return FlextResult[FlextDbtOracleWmsModels].fail(
-                    f"Failed to create dimension model: {e}"
+                    f"Failed to create dimension model: {e}",
                 )
 
         def _create_fact_model(
-            self, wms_entity: str
+            self,
+            wms_entity: str,
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a fact model for WMS entity."""
             try:
@@ -360,11 +364,12 @@ from {{{{ ref('int_wms_{wms_entity}') }}}}
 
             except Exception as e:
                 return FlextResult[FlextDbtOracleWmsModels].fail(
-                    f"Failed to create fact model: {e}"
+                    f"Failed to create fact model: {e}",
                 )
 
         def _create_staging_model(
-            self, oracle_source: str
+            self,
+            oracle_source: str,
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a staging model from Oracle WMS source."""
             try:
@@ -396,7 +401,7 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
 
             except Exception as e:
                 return FlextResult[FlextDbtOracleWmsModels].fail(
-                    f"Failed to create staging model: {e}"
+                    f"Failed to create staging model: {e}",
                 )
 
     class Utilities(u):
@@ -422,7 +427,7 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
                 """Validate Oracle WMS connection configuration for DBT."""
                 if not config:
                     return FlextResult[dict[str, object]].fail(
-                        "Oracle WMS connection config cannot be empty"
+                        "Oracle WMS connection config cannot be empty",
                     )
 
                 required_fields = [
@@ -437,27 +442,27 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
                 for field in required_fields:
                     if field not in config:
                         return FlextResult[dict[str, object]].fail(
-                            f"Missing required Oracle WMS connection field: {field}"
+                            f"Missing required Oracle WMS connection field: {field}",
                         )
 
                 # Validate port is integer
                 if not isinstance(config.get("port"), int):
                     return FlextResult[dict[str, object]].fail(
-                        "Oracle WMS port must be an integer"
+                        "Oracle WMS port must be an integer",
                     )
 
                 # Validate port range
                 port = config["port"]
                 if not (MIN_PORT_NUMBER <= port <= MAX_PORT_NUMBER):
                     return FlextResult[dict[str, object]].fail(
-                        f"Oracle WMS port must be between {MIN_PORT_NUMBER} and {MAX_PORT_NUMBER}"
+                        f"Oracle WMS port must be between {MIN_PORT_NUMBER} and {MAX_PORT_NUMBER}",
                     )
 
                 # Validate WMS schema format
                 wms_schema = config["wms_schema"]
                 if not wms_schema.upper().startswith("WMS"):
                     return FlextResult[dict[str, object]].fail(
-                        "WMS schema must start with 'WMS'"
+                        "WMS schema must start with 'WMS'",
                     )
 
                 return FlextResult[dict[str, object]].ok(config)

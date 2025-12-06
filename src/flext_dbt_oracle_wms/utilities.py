@@ -100,7 +100,7 @@ class FlextDbtOracleWmsUtilities(u):
                 for config_key in required_config:
                     if config_key not in extraction_config:
                         return FlextResult[dict[str, object]].fail(
-                            f"Missing WMS config: {config_key}"
+                            f"Missing WMS config: {config_key}",
                         )
 
                 # Extract WMS inventory data with business context
@@ -155,7 +155,7 @@ class FlextDbtOracleWmsUtilities(u):
 
             except Exception as e:
                 return FlextResult[dict[str, object]].fail(
-                    f"WMS inventory extraction failed: {e}"
+                    f"WMS inventory extraction failed: {e}",
                 )
 
         @staticmethod
@@ -174,7 +174,7 @@ class FlextDbtOracleWmsUtilities(u):
             try:
                 if not transaction_config.get("transaction_types"):
                     return FlextResult[dict[str, object]].fail(
-                        "Transaction types must be specified"
+                        "Transaction types must be specified",
                     )
 
                 transaction_data = {
@@ -198,7 +198,8 @@ class FlextDbtOracleWmsUtilities(u):
 
                 for trans_type in transaction_types:
                     if trans_type in transaction_config.get(
-                        "transaction_types", transaction_types
+                        "transaction_types",
+                        transaction_types,
                     ):
                         transaction_data["transaction_summary"][trans_type] = {
                             "total_transactions": 5000 + hash(trans_type) % 10000,
@@ -240,7 +241,7 @@ class FlextDbtOracleWmsUtilities(u):
 
             except Exception as e:
                 return FlextResult[dict[str, object]].fail(
-                    f"WMS transaction extraction failed: {e}"
+                    f"WMS transaction extraction failed: {e}",
                 )
 
     class WmsDimensionalModeling:
@@ -263,7 +264,7 @@ class FlextDbtOracleWmsUtilities(u):
                 # Validate inventory configuration
                 if not inventory_config:
                     return FlextResult[str].fail(
-                        "Inventory configuration cannot be empty"
+                        "Inventory configuration cannot be empty",
                     )
 
                 # Use configuration for materialization strategy
@@ -373,7 +374,7 @@ select * from final
 
             except Exception as e:
                 return FlextResult[str].fail(
-                    f"WMS inventory dimension generation failed: {e}"
+                    f"WMS inventory dimension generation failed: {e}",
                 )
 
         @staticmethod
@@ -393,7 +394,7 @@ select * from final
                 # Validate location configuration
                 if not location_config:
                     return FlextResult[str].fail(
-                        "Location configuration cannot be empty"
+                        "Location configuration cannot be empty",
                     )
 
                 model_sql = """{{
@@ -467,7 +468,7 @@ where location_id is not null
 
             except Exception as e:
                 return FlextResult[str].fail(
-                    f"WMS location dimension generation failed: {e}"
+                    f"WMS location dimension generation failed: {e}",
                 )
 
     class WmsFactModeling:
@@ -583,7 +584,7 @@ left join {{ ref('dim_user') }} u on t.user_id = u.user_id
 
             except Exception as e:
                 return FlextResult[str].fail(
-                    f"WMS transaction fact generation failed: {e}"
+                    f"WMS transaction fact generation failed: {e}",
                 )
 
         @staticmethod
@@ -603,7 +604,7 @@ left join {{ ref('dim_user') }} u on t.user_id = u.user_id
                 # Validate snapshot configuration
                 if not snapshot_config:
                     return FlextResult[str].fail(
-                        "Snapshot configuration cannot be empty"
+                        "Snapshot configuration cannot be empty",
                     )
 
                 model_sql = """{{
@@ -706,7 +707,7 @@ from inventory_metrics
 
             except Exception as e:
                 return FlextResult[str].fail(
-                    f"WMS inventory snapshot fact generation failed: {e}"
+                    f"WMS inventory snapshot fact generation failed: {e}",
                 )
 
     class WmsAnalyticsOptimization:
@@ -817,7 +818,7 @@ from inventory_metrics
 
             except Exception as e:
                 return FlextResult[dict[str, object]].fail(
-                    f"WMS query optimization failed: {e}"
+                    f"WMS query optimization failed: {e}",
                 )
 
         @staticmethod
@@ -837,7 +838,7 @@ from inventory_metrics
                 # Validate quality configuration
                 if not quality_config:
                     return FlextResult[dict[str, object]].fail(
-                        "Quality configuration cannot be empty"
+                        "Quality configuration cannot be empty",
                     )
 
                 quality_analysis = {
@@ -869,10 +870,10 @@ from inventory_metrics
                         < FlextDbtOracleWmsSemanticConstants.Processing.HIGH_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
-                            f"Missing data in {dimension}: {100 - score}% incomplete"
+                            f"Missing data in {dimension}: {100 - score}% incomplete",
                         )
                         quality_analysis["improvement_recommendations"].append(
-                            "Implement data validation rules for mandatory WMS fields"
+                            "Implement data validation rules for mandatory WMS fields",
                         )
 
                     elif (
@@ -881,10 +882,10 @@ from inventory_metrics
                         < FlextDbtOracleWmsSemanticConstants.Processing.ACCEPTABLE_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
-                            f"Data accuracy issues in {dimension}"
+                            f"Data accuracy issues in {dimension}",
                         )
                         quality_analysis["improvement_recommendations"].append(
-                            "Implement automated WMS data reconciliation processes"
+                            "Implement automated WMS data reconciliation processes",
                         )
 
                     elif (
@@ -893,10 +894,10 @@ from inventory_metrics
                         < FlextDbtOracleWmsSemanticConstants.Processing.GOOD_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
-                            "Data consistency issues across WMS modules"
+                            "Data consistency issues across WMS modules",
                         )
                         quality_analysis["improvement_recommendations"].append(
-                            "Standardize WMS data formats and reference data"
+                            "Standardize WMS data formats and reference data",
                         )
 
                     elif (
@@ -905,15 +906,15 @@ from inventory_metrics
                         < FlextDbtOracleWmsSemanticConstants.Processing.MINIMUM_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
-                            "WMS data latency issues"
+                            "WMS data latency issues",
                         )
                         quality_analysis["improvement_recommendations"].append(
-                            "Implement real-time or near real-time WMS data feeds"
+                            "Implement real-time or near real-time WMS data feeds",
                         )
 
                 # Calculate overall quality score
                 quality_analysis["overall_score"] = sum(
-                    quality_analysis["dimension_scores"].values()
+                    quality_analysis["dimension_scores"].values(),
                 ) / len(quality_dimensions)
 
                 # Assess business impact
@@ -949,5 +950,5 @@ from inventory_metrics
 
             except Exception as e:
                 return FlextResult[dict[str, object]].fail(
-                    f"WMS data quality analysis failed: {e}"
+                    f"WMS data quality analysis failed: {e}",
                 )

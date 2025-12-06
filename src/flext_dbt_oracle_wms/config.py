@@ -47,7 +47,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     # Oracle WMS Connection Settings - using Field() with proper defaults
     oracle_wms_base_url: str = Field(
-        default="https://your-wms.oraclecloud.com", description="Oracle WMS base URL"
+        default="https://your-wms.oraclecloud.com",
+        description="Oracle WMS base URL",
     )
 
     oracle_wms_username: str = Field(default="", description="Oracle WMS username")
@@ -94,7 +95,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     )
 
     dbt_log_level: Literal["debug", "info", "warn", "error"] = Field(
-        default="info", description="DBT logging level"
+        default="info",
+        description="DBT logging level",
     )
 
     # Data Quality Settings
@@ -106,7 +108,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     )
 
     validate_business_rules_flag: bool = Field(
-        default=True, description="Enable business rules validation"
+        default=True,
+        description="Enable business rules validation",
     )
 
     # Oracle WMS-specific mappings (ClassVar - not configurable)
@@ -253,7 +256,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
         """Get business rule for specific Oracle WMS entity."""
         entity_rules: dict[str, object] = self.oracle_wms_business_rules.get(
-            entity_name, {}
+            entity_name,
+            {},
         )
         return entity_rules.get(rule_name) if isinstance(entity_rules, dict) else None
 
@@ -274,7 +278,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         config_data = {**dev_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
-                project_name="flext-dbt-oracle-wms", **config_data
+                project_name="flext-dbt-oracle-wms",
+                **config_data,
             )
             return FlextResult[Self].ok(instance)
         except Exception as e:
@@ -294,7 +299,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         config_data = {**prod_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
-                project_name="flext-dbt-oracle-wms", **config_data
+                project_name="flext-dbt-oracle-wms",
+                **config_data,
             )
             return FlextResult[Self].ok(instance)
         except Exception as e:
@@ -314,7 +320,8 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         config_data = {**test_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
-                project_name="flext-dbt-oracle-wms", **config_data
+                project_name="flext-dbt-oracle-wms",
+                **config_data,
             )
             return FlextResult[Self].ok(instance)
         except Exception as e:
@@ -322,7 +329,9 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     @classmethod
     def create_for_environment(
-        cls, environment: str, **overrides: object
+        cls,
+        environment: str,
+        **overrides: object,
     ) -> FlextResult[Self]:
         """Create configuration for specific environment."""
         if environment == "production":

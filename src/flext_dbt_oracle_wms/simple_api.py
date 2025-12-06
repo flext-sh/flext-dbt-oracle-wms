@@ -124,7 +124,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
             )
         except Exception as e:
             return FlextResult[dict[str, object]].fail(
-                f"Workflow execution failed: {e}"
+                f"Workflow execution failed: {e}",
             )
 
     def generate_dbt_models_from_wms(
@@ -184,7 +184,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
             )
         except Exception as e:
             return FlextResult[dict[str, object]].fail(
-                f"Metadata extraction failed: {e}"
+                f"Metadata extraction failed: {e}",
             )
 
     def monitor_dbt_execution(
@@ -203,7 +203,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self.logger.info(f"Monitoring DBT execution: {command}")
+            self.logger.info("Monitoring DBT execution: %s", command)
             return self.monitoring_service.monitor_dbt_execution(
                 command=command,
                 timeout_seconds=timeout_seconds,
@@ -238,11 +238,11 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self.logger.info(f"Getting WMS inventory info: {item_id}")
+            self.logger.info("Getting WMS inventory info: %s", item_id)
             return self.client.get_inventory_info(item_id=item_id)
         except Exception as e:
             return FlextResult[dict[str, object]].fail(
-                f"Inventory info retrieval failed: {e}"
+                f"Inventory info retrieval failed: {e}",
             )
 
     def get_wms_shipment_info(
@@ -259,11 +259,11 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
 
         """
         try:
-            self.logger.info(f"Getting WMS shipment info: {shipment_id}")
+            self.logger.info("Getting WMS shipment info: %s", shipment_id)
             return self.client.get_shipment_info(shipment_id=shipment_id)
         except Exception as e:
             return FlextResult[dict[str, object]].fail(
-                f"Shipment info retrieval failed: {e}"
+                f"Shipment info retrieval failed: {e}",
             )
 
 

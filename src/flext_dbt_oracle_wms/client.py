@@ -46,7 +46,8 @@ class FlextDbtOracleWmsClient:
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
         self._dbt_service: object | None = None
         FlextDbtOracleWmsClient.logger.info(
-            "Initialized DBT Oracle WMS client with config: %s", self.config
+            "Initialized DBT Oracle WMS client with config: %s",
+            self.config,
         )
 
     @property
@@ -80,7 +81,7 @@ class FlextDbtOracleWmsClient:
             # Test the Oracle WMS connection
             # Mock connection test for now
             test_result: FlextResult[object] = FlextResult[dict["str", "object"]].ok({
-                "status": "connected"
+                "status": "connected",
             })
             if test_result.is_failure:
                 return FlextResult[dict[str, str | int]].fail(
@@ -153,7 +154,8 @@ class FlextDbtOracleWmsClient:
             records = extract_result.data or []
             # Step 3: Validate data quality
             validate_result: FlextResult[object] = self.validate_oracle_wms_data(
-                entity_name, records
+                entity_name,
+                records,
             )
             if validate_result.is_failure:
                 return FlextResult[dict["str", "object"]].fail(
@@ -162,7 +164,8 @@ class FlextDbtOracleWmsClient:
             entity_data[entity_name] = records
         # Step 4: Transform with DBT
         transform_result: FlextResult[object] = self.transform_with_dbt(
-            entity_data, model_names
+            entity_data,
+            model_names,
         )
         if transform_result.is_failure:
             return transform_result
@@ -174,7 +177,7 @@ class FlextDbtOracleWmsClient:
             "pipeline_status": "completed",
         }
         FlextDbtOracleWmsClient.logger.info(
-            "Full Oracle WMS-to-DBT pipeline completed successfully"
+            "Full Oracle WMS-to-DBT pipeline completed successfully",
         )
         return FlextResult[dict[str, object]].ok(pipeline_results)
 
@@ -261,7 +264,7 @@ class FlextDbtOracleWmsClient:
             return FlextResult[list[dict["str", "object"]]].ok(records)
         except Exception as e:
             return FlextResult[list[dict["str", "object"]]].fail(
-                f"Validation failed: {e}"
+                f"Validation failed: {e}",
             )
 
     def transform_with_dbt(

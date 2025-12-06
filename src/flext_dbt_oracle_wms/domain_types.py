@@ -59,22 +59,56 @@ DBTOracleWMSDocumentationConfiguration = (
     FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSDocumentationConfiguration
 )
 
-DBTOracleWMSProject = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSProject
-DBTOracleWMSModel = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSModel
-DBTOracleWMSSource = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSSource
-DBTOracleWMSTest = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSTest
-DBTOracleWMSMacro = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSMacro
-DBTOracleWMSSnapshot = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSSnapshot
-DBTOracleWMSAnalysis = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSAnalysis
-DBTOracleWMSCompilation = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSCompilation
-DBTOracleWMSExecution = FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSExecution
-DBTOracleWMSDocumentation = (
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSDocumentation
-)
+
+# Domain type classes with real inheritance
+class DBTOracleWMSProject(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSProject):
+    """DBTOracleWMSProject - real inheritance from DomainObjects.DBTOracleWMSProject."""
+
+
+class DBTOracleWMSModel(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSModel):
+    """DBTOracleWMSModel - real inheritance from DomainObjects.DBTOracleWMSModel."""
+
+
+class DBTOracleWMSSource(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSSource):
+    """DBTOracleWMSSource - real inheritance from DomainObjects.DBTOracleWMSSource."""
+
+
+class DBTOracleWMSTest(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSTest):
+    """DBTOracleWMSTest - real inheritance from DomainObjects.DBTOracleWMSTest."""
+
+
+class DBTOracleWMSMacro(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSMacro):
+    """DBTOracleWMSMacro - real inheritance from DomainObjects.DBTOracleWMSMacro."""
+
+
+class DBTOracleWMSSnapshot(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSSnapshot):
+    """DBTOracleWMSSnapshot - real inheritance from DomainObjects.DBTOracleWMSSnapshot."""
+
+
+class DBTOracleWMSAnalysis(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSAnalysis):
+    """DBTOracleWMSAnalysis - real inheritance from DomainObjects.DBTOracleWMSAnalysis."""
+
+
+class DBTOracleWMSCompilation(
+    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSCompilation,
+):
+    """DBTOracleWMSCompilation - real inheritance from DomainObjects.DBTOracleWMSCompilation."""
+
+
+class DBTOracleWMSExecution(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSExecution):
+    """DBTOracleWMSExecution - real inheritance from DomainObjects.DBTOracleWMSExecution."""
+
+
+class DBTOracleWMSDocumentation(
+    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSDocumentation,
+):
+    """DBTOracleWMSDocumentation - real inheritance from DomainObjects.DBTOracleWMSDocumentation."""
+
 
 # ==============================================================================
 # EXPORTS - All types now centralized in typings.py
 # ==============================================================================
+
 
 __all__: list[str] = [
     "CreatedAt",
