@@ -485,7 +485,6 @@ select * from {{ ref('stg_wms__allocation') }}
 - **[Data Model Reference](docs/models/reference.md)** - Complete data model documentation
 - **[Oracle WMS Integration](docs/integration/oracle-wms.md)** - WMS-specific integration guide
 - **[Development Guide](docs/development/guidelines.md)** - Development best practices
-- **[Deployment Guide](docs/deployment/production.md)** - Production deployment guide
 
 ### Generated Documentation
 
@@ -543,7 +542,7 @@ export DBT_ORACLE_WMS_SCHEMA="wms_raw"
 
 ## > Contributing
 
-We welcome contributions! Please see our [Contributing Guide](docs/development/contributing.md) for details.
+We welcome contributions! Please see our [Development Guide](docs/development/guidelines.md) for development best practices.
 
 ### Development Workflow
 
@@ -569,11 +568,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## = Related Projects
 
-- **[flext-core](../flext-core)** - Core business logic and domain models
-- **[flext-tap-oracle-wms](../flext-tap-oracle-wms)** - Singer tap for Oracle WMS data extraction
-- **[flext-target-oracle](../flext-target-oracle)** - Singer target for Oracle database loading
-- **[flext-dbt-oracle](../flext-dbt-oracle)** - Base dbt Oracle transformations
-- **[flext-observability](../flext-observability)** - Monitoring and observability
+- **[flext-core](https://github.com/organization/flext/tree/main/flext-core/)** - Core business logic and domain models
+- **[flext-tap-oracle-wms](https://github.com/organization/flext/tree/main/flext-tap-oracle-wms/)** - Singer tap for Oracle WMS data extraction
+- **[flext-target-oracle](https://github.com/organization/flext/tree/main/flext-target-oracle/)** - Singer target for Oracle database loading
+- **[flext-dbt-oracle](https://github.com/organization/flext/tree/main/flext-dbt-oracle/)** - Base dbt Oracle transformations
+- **[flext-observability](https://github.com/organization/flext/tree/main/flext-observability/)** - Monitoring and observability
 
 ## Configuration
 
@@ -942,15 +941,15 @@ dbt docs serve --port 8080
 
 ### Related Projects
 
-- [../../flext-core/](../../flext-core/) - Foundation library with shared patterns
-- [../../flext-oracle-wms/](../../flext-oracle-wms/) - Oracle WMS connectivity infrastructure
-- [../../flext-tap-oracle-wms/](../../flext-tap-oracle-wms/) - Singer tap for Oracle WMS data extraction
-- [../../flext-target-oracle-wms/](../../flext-target-oracle-wms/) - Singer target for Oracle WMS data loading
+- [flext-core](https://github.com/organization/flext/tree/main/flext-core/) - Foundation library with shared patterns
+- [flext-oracle-wms](https://github.com/organization/flext/tree/main/flext-oracle-wms/) - Oracle WMS connectivity infrastructure
+- [flext-tap-oracle-wms](https://github.com/organization/flext/tree/main/flext-tap-oracle-wms/) - Singer tap for Oracle WMS data extraction
+- [flext-target-oracle-wms](https://github.com/organization/flext/tree/main/flext-target-oracle-wms/) - Singer target for Oracle WMS data loading
 
 ### Ecosystem Integration
 
-- [../../flext-meltano/](../../flext-meltano/) - Orchestration platform
-- [../../flext-observability/](../../flext-observability/) - Monitoring and logging
+- [flext-meltano](https://github.com/organization/flext/tree/main/flext-meltano/) - Orchestration platform
+- [flext-observability](https://github.com/organization/flext/tree/main/flext-observability/) - Monitoring and logging
 
 ---
 

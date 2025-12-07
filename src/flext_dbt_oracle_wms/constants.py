@@ -274,6 +274,8 @@ class FlextWmsConstants(FlextConstants):
     RELAXED_VALIDATION = "relaxed"
 
 
+c = FlextDbtOracleWmsConstants
+
 __all__: list[str] = [
     # Legacy classes (deprecated)
     "DBTOracleWMSDefaults",
@@ -287,4 +289,5 @@ __all__: list[str] = [
     # Modern Semantic Constants (Primary API)
     "FlextDbtOracleWmsSemanticConstants",
     "FlextWmsConstants",
+    "c",
 ]

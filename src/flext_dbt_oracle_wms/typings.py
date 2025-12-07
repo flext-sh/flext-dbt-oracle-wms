@@ -18,7 +18,7 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Annotated, Literal, TypedDict
 
-from flext_core import FlextTypes, t
+from flext_core import FlextTypes
 
 # =============================================================================
 # DBT ORACLE WMS MODULE-LEVEL TYPE ALIASES
@@ -98,7 +98,7 @@ class DBTOracleWMSRunStatus(StrEnum):
 
 
 # DBT Oracle WMS domain TypeVars
-class FlextDbtOracleWmsTypes(t):
+class FlextDbtOracleWmsTypes(FlextTypes):
     """DBT Oracle WMS-specific type definitions extending t.
 
     Domain-specific type system for DBT Oracle WMS data transformation operations.
@@ -526,16 +526,22 @@ t = FlextDbtOracleWmsTypes
 
 __all__ = [
     "CreatedAt",
+    "DBTOracleWMSAnalysisConfiguration",
     "DBTOracleWMSAnalysisTimeout",
+    "DBTOracleWMSCompilationConfiguration",
     "DBTOracleWMSCompilationTimeout",
+    "DBTOracleWMSDocumentationConfiguration",
     "DBTOracleWMSDocumentationTimeout",
+    "DBTOracleWMSExecutionConfiguration",
     "DBTOracleWMSExecutionTimeout",
     "DBTOracleWMSMacroTimeout",
     # Enums
     "DBTOracleWMSMaterialization",
     "DBTOracleWMSModelTimeout",
+    "DBTOracleWMSProjectConfiguration",
     "DBTOracleWMSProjectTimeout",
     "DBTOracleWMSRunStatus",
+    "DBTOracleWMSSnapshotConfiguration",
     "DBTOracleWMSSnapshotTimeout",
     "DBTOracleWMSSourceTimeout",
     "DBTOracleWMSTestTimeout",

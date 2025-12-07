@@ -825,9 +825,9 @@ perf(marts): optimize allocation summary query performance
 
 ### FLEXT Framework
 
-- **[Clean Architecture Guide](../../flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
-- **[Domain-Driven Design](../../flext-core/docs/architecture/domain-driven-design.md)** - DDD implementation patterns
+- **[Clean Architecture Guide](https://github.com/organization/flext/tree/main/flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
+- **[Domain-Driven Design](https://github.com/organization/flext/tree/main/flext-core/docs/guides/domain-driven-design.md)** - DDD implementation patterns
 
 ---
 
-Following these development guidelines ensures consistent, high-quality, and maintainable dbt models for Oracle WMS analytics. For specific implementation examples, see the [Examples](../examples/basic.md) section.
+Following these development guidelines ensures consistent, high-quality, and maintainable dbt models for Oracle WMS analytics.

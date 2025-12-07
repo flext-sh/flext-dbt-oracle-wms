@@ -12,22 +12,26 @@ from __future__ import annotations
 # Re-export domain objects from typings.py
 from flext_dbt_oracle_wms.typings import (
     CreatedAt,
+    DBTOracleWMSAnalysisConfiguration,
     DBTOracleWMSAnalysisTimeout,
+    DBTOracleWMSCompilationConfiguration,
     DBTOracleWMSCompilationTimeout,
+    DBTOracleWMSDocumentationConfiguration,
     DBTOracleWMSDocumentationTimeout,
+    DBTOracleWMSExecutionConfiguration,
     DBTOracleWMSExecutionTimeout,
     DBTOracleWMSMacroTimeout,
     DBTOracleWMSMaterialization,
     DBTOracleWMSModelTimeout,
+    DBTOracleWMSProjectConfiguration,
     DBTOracleWMSProjectTimeout,
     DBTOracleWMSRunStatus,
+    DBTOracleWMSSnapshotConfiguration,
     DBTOracleWMSSnapshotTimeout,
     DBTOracleWMSSourceTimeout,
     DBTOracleWMSTestTimeout,
     DBTOracleWMSTestType,
     EntityId,
-    FlextDbtOracleWmsTypes,
-    FlextDbtOracleWmsTypes as DomainObjects,
     OracleWMSConnectionId,
     OracleWMSOperationId,
     OracleWMSQueryId,
@@ -37,70 +41,54 @@ from flext_dbt_oracle_wms.typings import (
     TimestampISO,
     UpdatedAt,
     Version,
+    t,
 )
 
 # For backward compatibility, expose the TypedDict classes
-DBTOracleWMSProjectConfiguration = (
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSProjectConfiguration
-)
-DBTOracleWMSSnapshotConfiguration = (
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSSnapshotConfiguration
-)
-DBTOracleWMSAnalysisConfiguration = (
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSAnalysisConfiguration
-)
-DBTOracleWMSCompilationConfiguration = (
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSCompilationConfiguration
-)
-DBTOracleWMSExecutionConfiguration = (
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSExecutionConfiguration
-)
-DBTOracleWMSDocumentationConfiguration = (
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSDocumentationConfiguration
-)
+# These are already imported from typings.py above
 
 
 # Domain type classes with real inheritance
-class DBTOracleWMSProject(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSProject):
+class DBTOracleWMSProject(t.DomainObjects.DBTOracleWMSProject):
     """DBTOracleWMSProject - real inheritance from DomainObjects.DBTOracleWMSProject."""
 
 
-class DBTOracleWMSModel(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSModel):
+class DBTOracleWMSModel(t.DomainObjects.DBTOracleWMSModel):
     """DBTOracleWMSModel - real inheritance from DomainObjects.DBTOracleWMSModel."""
 
 
-class DBTOracleWMSSource(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSSource):
+class DBTOracleWMSSource(t.DomainObjects.DBTOracleWMSSource):
     """DBTOracleWMSSource - real inheritance from DomainObjects.DBTOracleWMSSource."""
 
 
-class DBTOracleWMSTest(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSTest):
+class DBTOracleWMSTest(t.DomainObjects.DBTOracleWMSTest):
     """DBTOracleWMSTest - real inheritance from DomainObjects.DBTOracleWMSTest."""
 
 
-class DBTOracleWMSMacro(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSMacro):
+class DBTOracleWMSMacro(t.DomainObjects.DBTOracleWMSMacro):
     """DBTOracleWMSMacro - real inheritance from DomainObjects.DBTOracleWMSMacro."""
 
 
-class DBTOracleWMSSnapshot(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSSnapshot):
+class DBTOracleWMSSnapshot(t.DomainObjects.DBTOracleWMSSnapshot):
     """DBTOracleWMSSnapshot - real inheritance from DomainObjects.DBTOracleWMSSnapshot."""
 
 
-class DBTOracleWMSAnalysis(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSAnalysis):
+class DBTOracleWMSAnalysis(t.DomainObjects.DBTOracleWMSAnalysis):
     """DBTOracleWMSAnalysis - real inheritance from DomainObjects.DBTOracleWMSAnalysis."""
 
 
 class DBTOracleWMSCompilation(
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSCompilation,
+    t.DomainObjects.DBTOracleWMSCompilation,
 ):
     """DBTOracleWMSCompilation - real inheritance from DomainObjects.DBTOracleWMSCompilation."""
 
 
-class DBTOracleWMSExecution(FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSExecution):
+class DBTOracleWMSExecution(t.DomainObjects.DBTOracleWMSExecution):
     """DBTOracleWMSExecution - real inheritance from DomainObjects.DBTOracleWMSExecution."""
 
 
 class DBTOracleWMSDocumentation(
-    FlextDbtOracleWmsTypes.DomainObjects.DBTOracleWMSDocumentation,
+    t.DomainObjects.DBTOracleWMSDocumentation,
 ):
     """DBTOracleWMSDocumentation - real inheritance from DomainObjects.DBTOracleWMSDocumentation."""
 
@@ -143,11 +131,8 @@ __all__: list[str] = [
     "DBTOracleWMSTest",
     "DBTOracleWMSTestTimeout",
     "DBTOracleWMSTestType",
-    "DomainObjects",
     # Module-level aliases
     "EntityId",
-    # Core types
-    "FlextDbtOracleWmsTypes",
     "OracleWMSConnectionId",
     # Type aliases
     "OracleWMSOperationId",
@@ -158,4 +143,6 @@ __all__: list[str] = [
     "TimestampISO",
     "UpdatedAt",
     "Version",
+    # Core types
+    "t",
 ]

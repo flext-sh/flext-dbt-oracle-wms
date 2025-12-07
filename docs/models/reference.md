@@ -539,4 +539,4 @@ dbt docs serve --port 8080
 
 ---
 
-This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](../development/guidelines.md), and for specific use cases, check the [Examples](../examples/basic.md) section.
+This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](../development/guidelines.md).

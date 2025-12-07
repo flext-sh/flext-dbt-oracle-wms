@@ -650,4 +650,4 @@ EXEC DBMS_STATS.GATHER_TABLE_STATS('WMS_SCHEMA', 'ALLOCATION');
 
 ---
 
-This integration guide provides the foundation for connecting FLEXT DBT with Oracle WMS. For implementation examples, see the [Development Guide](../development/guidelines.md).
+This integration guide provides the foundation for connecting FLEXT DBT with Oracle WMS.

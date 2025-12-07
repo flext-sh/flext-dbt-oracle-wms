@@ -539,7 +539,7 @@ Now that you have FLEXT DBT Oracle WMS set up:
 1. **Explore Models** - Check the [Model Reference](../models/reference.md)
 2. **Run Your First Transformation** - Follow the [Quick Start Guide](quickstart.md)
 3. **Understand the Data** - Review [Oracle WMS Integration](../integration/oracle-wms.md)
-4. **Set Up Development** - Read the [Development Guide](../development/setup.md)
+4. **Set Up Development** - Read the [Development Guide](../development/guidelines.md)
 
 ## 📚 Additional Resources
 
