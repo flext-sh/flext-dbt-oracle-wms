@@ -4,58 +4,58 @@
 
 Welcome to the comprehensive documentation for FLEXT DBT Oracle WMS - an enterprise-grade dbt project for Oracle Warehouse Management System data transformations.
 
-## ğŸ"š Documentation Structure
+## ï¿½"ï¿½ Documentation Structure
 
 ### ğŸš€ Getting Started
 
 - **[Setup Guide](getting-started/setup.md)** - Complete installation and configuration
 - **[Quick Start](getting-started/quickstart.md)** - Get running in 10 minutes
-- **[First Models](getting-started/first-models.md)** - Build your first WMS data models
-- **[Configuration](getting-started/configuration.md)** - Environment and profile setup
+- **First Models** - Build your first WMS data models (*Documentation coming soon*)
+- **Configuration** - Environment and profile setup (*Documentation coming soon*)
 
 ### ğŸ—ï¸ Data Models
 
 - **[Model Reference](models/reference.md)** - Complete model documentation
-- **[Staging Models](models/staging.md)** - Raw data standardization
-- **[Mart Models](models/marts.md)** - Business-ready analytics models
-- **[Schema Reference](models/schema.md)** - Database schema documentation
-- **[Data Lineage](models/lineage.md)** - Data flow and dependencies
+- **Staging Models** - Raw data standardization (*Documentation coming soon*)
+- **Mart Models** - Business-ready analytics models (*Documentation coming soon*)
+- **Schema Reference** - Database schema documentation (*Documentation coming soon*)
+- **Data Lineage** - Data flow and dependencies (*Documentation coming soon*)
 
-### ğŸ"Œ Oracle WMS Integration
+### ï¿½"ï¿½ Oracle WMS Integration
 
 - **[WMS Overview](integration/oracle-wms.md)** - Oracle WMS system integration
-- **[Data Sources](integration/data-sources.md)** - WMS tables and entities
-- **[Singer Integration](integration/singer.md)** - flext-tap-oracle-wms setup
-- **[Connection Setup](integration/connection.md)** - Oracle database configuration
+- **Data Sources** - WMS tables and entities (*Documentation coming soon*)
+- **Singer Integration** - flext-tap-oracle-wms setup (*Documentation coming soon*)
+- **Connection Setup** - Oracle database configuration (*Documentation coming soon*)
 
 ### ğŸ› ï¸ Development
 
-- **[Development Setup](development/setup.md)** - Local development environment
+- **Development Setup** - Local development environment (*Documentation coming soon*)
 - **[Model Guidelines](development/guidelines.md)** - dbt development best practices
-- **[Testing Guide](development/testing.md)** - Data quality and model testing
-- **[Code Standards](development/standards.md)** - SQL and Python coding standards
-- **[Contributing](development/contributing.md)** - How to contribute to the project
+- **Testing Guide** - Data quality and model testing (*Documentation coming soon*)
+- **Code Standards** - SQL and Python coding standards (*Documentation coming soon*)
+- **Contributing** - How to contribute to the project (*Documentation coming soon*)
 
 ### ğŸš€ Deployment
 
-- **[Environment Setup](deployment/environments.md)** - Dev, staging, and production
-- **[CI/CD Pipeline](deployment/cicd.md)** - Automated deployment pipeline
-- **[Performance Tuning](deployment/performance.md)** - Optimization strategies
-- **[Monitoring](deployment/monitoring.md)** - Data quality monitoring
+- **Environment Setup** - Dev, staging, and production (*Documentation coming soon*)
+- **CI/CD Pipeline** - Automated deployment pipeline (*Documentation coming soon*)
+- **Performance Tuning** - Optimization strategies (*Documentation coming soon*)
+- **Monitoring** - Data quality monitoring (*Documentation coming soon*)
 
-### ğŸ"Š Business Intelligence
+### ï¿½"ï¿½ Business Intelligence
 
-- **[Dashboard Models](bi/dashboards.md)** - BI-ready data models
-- **[KPI Definitions](bi/kpis.md)** - Key performance indicators
-- **[Reporting Guide](bi/reporting.md)** - Business reporting patterns
-- **[Tableau Integration](bi/tableau.md)** - Tableau-specific setup
+- **Dashboard Models** - BI-ready data models (*Documentation coming soon*)
+- **KPI Definitions** - Key performance indicators (*Documentation coming soon*)
+- **Reporting Guide** - Business reporting patterns (*Documentation coming soon*)
+- **Tableau Integration** - Tableau-specific setup (*Documentation coming soon*)
 
-### ğŸ"– Examples
+### ï¿½"ï¿½ Examples
 
-- **[Basic Examples](examples/basic.md)** - Simple model examples
-- **[Advanced Patterns](examples/advanced.md)** - Complex transformation patterns
-- **[Use Cases](examples/use-cases.md)** - Real-world implementation examples
-- **[Troubleshooting](examples/troubleshooting.md)** - Common issues and solutions
+- **Basic Examples** - Simple model examples (*Documentation coming soon*)
+- **Advanced Patterns** - Complex transformation patterns (*Documentation coming soon*)
+- **Use Cases** - Real-world implementation examples (*Documentation coming soon*)
+- **Troubleshooting** - Common issues and solutions (*Documentation coming soon*)
 
 ## ğŸ¯ Quick Navigation
 
@@ -67,21 +67,21 @@ Welcome to the comprehensive documentation for FLEXT DBT Oracle WMS - an enterpr
 
 ### For Developers
 
-1. Setup **[Development Environment](development/setup.md)**
+1. Setup **Development Environment** (*Documentation coming soon*)
 2. Review **[Model Guidelines](development/guidelines.md)**
-3. Follow **[Testing Guide](development/testing.md)**
+3. Follow **Testing Guide** (*Documentation coming soon*)
 
 ### For Data Analysts
 
-1. Review **[Business Models](models/marts.md)**
-2. Check **[KPI Definitions](bi/kpis.md)**
-3. Explore **[Dashboard Models](bi/dashboards.md)**
+1. Review **Business Models** (*Documentation coming soon*)
+2. Check **KPI Definitions** (*Documentation coming soon*)
+3. Explore **Dashboard Models** (*Documentation coming soon*)
 
 ### For Operations
 
-1. Setup **[Environment Configuration](deployment/environments.md)**
-2. Configure **[CI/CD Pipeline](deployment/cicd.md)**
-3. Monitor **[Data Quality](deployment/monitoring.md)**
+1. Setup **Environment Configuration** (*Documentation coming soon*)
+2. Configure **CI/CD Pipeline** (*Documentation coming soon*)
+3. Monitor **Data Quality** (*Documentation coming soon*)
 
 ## ğŸ› ï¸ Technology Stack
 
@@ -107,64 +107,64 @@ Welcome to the comprehensive documentation for FLEXT DBT Oracle WMS - an enterpr
 - **Data Quality** - Enterprise-grade validation and testing
 - **Performance** - Optimized for large-scale warehouse data
 
-## ğŸ"Š Project Architecture
+## ï¿½"ï¿½ Project Architecture
 
 ### Data Flow Architecture
 
 ```
-Oracle WMS â†' Singer Tap â†' Raw Tables â†' dbt Models â†' Analytics
+Oracle WMS ï¿½' Singer Tap ï¿½' Raw Tables ï¿½' dbt Models ï¿½' Analytics
 
 Data Layers:
-â"Œâ"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"
-â"‚                    Business Intelligence                â"‚
-â"‚     (Tableau, Power BI, Looker, Custom Dashboards)    â"‚
-â""â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"¬â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"˜
-                      â"‚
-â"Œâ"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â–¼â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"
-â"‚                   Marts Layer                           â"‚
-â"‚  â€¢ Operational (Real-time dashboards)                  â"‚
-â"‚  â€¢ Analytical (Historical analysis)                    â"‚
-â"‚  â€¢ Metrics (KPIs and executive dashboards)             â"‚
-â""â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"¬â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"˜
-                      â"‚
-â"Œâ"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â–¼â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"
-â"‚                 Staging Layer                           â"‚
-â"‚  â€¢ Data standardization and cleansing                  â"‚
-â"‚  â€¢ Type casting and null handling                      â"‚
-â"‚  â€¢ Business rule application                           â"‚
-â""â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"¬â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"˜
-                      â"‚
-â"Œâ"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â–¼â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"
-â"‚                  Raw Data Layer                         â"‚
-â"‚  â€¢ Oracle WMS tables via Singer tap                    â"‚
-â"‚  â€¢ Minimal transformation, original structure          â"‚
-â""â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"˜
+ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
+ï¿½"ï¿½                    Business Intelligence                ï¿½"ï¿½
+ï¿½"ï¿½     (Tableau, Power BI, Looker, Custom Dashboards)    ï¿½"ï¿½
+ï¿½""ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
+                      ï¿½"ï¿½
+ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½â–¼ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
+ï¿½"ï¿½                   Marts Layer                           ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Operational (Real-time dashboards)                  ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Analytical (Historical analysis)                    ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Metrics (KPIs and executive dashboards)             ï¿½"ï¿½
+ï¿½""ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
+                      ï¿½"ï¿½
+ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½â–¼ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
+ï¿½"ï¿½                 Staging Layer                           ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Data standardization and cleansing                  ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Type casting and null handling                      ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Business rule application                           ï¿½"ï¿½
+ï¿½""ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
+                      ï¿½"ï¿½
+ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½â–¼ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
+ï¿½"ï¿½                  Raw Data Layer                         ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Oracle WMS tables via Singer tap                    ï¿½"ï¿½
+ï¿½"ï¿½  â€¢ Minimal transformation, original structure          ï¿½"ï¿½
+ï¿½""ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½
 ```
 
 ### Model Organization
 
 ```
 models/
-â"œâ"€â"€ staging/                    # ğŸ"µ Data Standardization
-â"‚   â"œâ"€â"€ _sources.yml           # Source definitions
-â"‚   â"œâ"€â"€ stg_wms__allocation.sql # Allocation standardization
-â"‚   â"œâ"€â"€ stg_wms__inventory.sql  # Inventory standardization
-â"‚   â"œâ"€â"€ stg_wms__order_hdr.sql  # Order header standardization
-â"‚   â""â"€â"€ stg_wms__order_dtl.sql  # Order detail standardization
-â"‚
-â"œâ"€â"€ marts/                      # ğŸŸ¢ Business-Ready Models
-â"‚   â"œâ"€â"€ operational/            # Real-time operational metrics
-â"‚   â"‚   â""â"€â"€ opr_wms__allocation_summary.sql
-â"‚   â"œâ"€â"€ analytical/             # Historical analysis models
-â"‚   â"‚   â""â"€â"€ ana_wms__inventory_analysis.sql
-â"‚   â""â"€â"€ metrics/                # KPI and dashboard models
-â"‚       â""â"€â"€ met_wms__kpi_dashboard.sql
-â"‚
-â""â"€â"€ analyses/                   # ğŸŸ¡ Ad-hoc Analysis
-    â""â"€â"€ inventory_deep_dive.sql
+ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ staging/                    # ï¿½"ï¿½ Data Standardization
+ï¿½"ï¿½   ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ _sources.yml           # Source definitions
+ï¿½"ï¿½   ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ stg_wms__allocation.sql # Allocation standardization
+ï¿½"ï¿½   ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ stg_wms__inventory.sql  # Inventory standardization
+ï¿½"ï¿½   ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ stg_wms__order_hdr.sql  # Order header standardization
+ï¿½"ï¿½   ï¿½""ï¿½"ï¿½ï¿½"ï¿½ stg_wms__order_dtl.sql  # Order detail standardization
+ï¿½"ï¿½
+ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ marts/                      # ğŸŸ¢ Business-Ready Models
+ï¿½"ï¿½   ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ operational/            # Real-time operational metrics
+ï¿½"ï¿½   ï¿½"ï¿½   ï¿½""ï¿½"ï¿½ï¿½"ï¿½ opr_wms__allocation_summary.sql
+ï¿½"ï¿½   ï¿½"ï¿½ï¿½"ï¿½ï¿½"ï¿½ analytical/             # Historical analysis models
+ï¿½"ï¿½   ï¿½"ï¿½   ï¿½""ï¿½"ï¿½ï¿½"ï¿½ ana_wms__inventory_analysis.sql
+ï¿½"ï¿½   ï¿½""ï¿½"ï¿½ï¿½"ï¿½ metrics/                # KPI and dashboard models
+ï¿½"ï¿½       ï¿½""ï¿½"ï¿½ï¿½"ï¿½ met_wms__kpi_dashboard.sql
+ï¿½"ï¿½
+ï¿½""ï¿½"ï¿½ï¿½"ï¿½ analyses/                   # ğŸŸ¡ Ad-hoc Analysis
+    ï¿½""ï¿½"ï¿½ï¿½"ï¿½ inventory_deep_dive.sql
 ```
 
-## ğŸ"ˆ Oracle WMS Domain Model
+## ï¿½"ï¿½ Oracle WMS Domain Model
 
 ### Core Business Entities
 
@@ -237,7 +237,7 @@ models/
 - **Data Retention** - Archive strategies for historical data
 - **Query Optimization** - SQL performance tuning
 
-## ğŸ"Š Business Impact
+## ï¿½"ï¿½ Business Impact
 
 ### Operational Benefits
 
@@ -264,11 +264,11 @@ models/
 
 ### Contributing
 
-- **[Contributing Guide](development/contributing.md)** - How to contribute
-- **[Development Setup](development/setup.md)** - Local development
-- **[Code Standards](development/standards.md)** - Coding conventions
+- **Contributing Guide** - How to contribute (*Documentation coming soon*)
+- **Development Setup** - Local development (*Documentation coming soon*)
+- **Code Standards** - Coding conventions (*Documentation coming soon*)
 
-## ğŸ"ˆ Roadmap
+## ï¿½"ï¿½ Roadmap
 
 ### Current Version (v0.7.0)
 
@@ -279,14 +279,14 @@ models/
 
 ### Upcoming Features
 
-- ğŸ"„ Real-time streaming integration
-- ğŸ"„ Advanced ML analytics models
-- ğŸ"„ Multi-tenant architecture support
-- ğŸ"„ Enhanced monitoring dashboard
-- ğŸ"„ Automated data governance
+- ï¿½"ï¿½ Real-time streaming integration
+- ï¿½"ï¿½ Advanced ML analytics models
+- ï¿½"ï¿½ Multi-tenant architecture support
+- ï¿½"ï¿½ Enhanced monitoring dashboard
+- ï¿½"ï¿½ Automated data governance
 
 ---
 
-**Need Help?** Check our [Troubleshooting Guide](examples/troubleshooting.md) or [open an issue](https://github.com/flext-sh/flext/issues).
+**Need Help?** Check our Troubleshooting Guide (*Documentation coming soon*) or [open an issue](https://github.com/flext-sh/flext/issues).
 
 **Ready to Start?** Jump to the [Setup Guide](getting-started/setup.md)!

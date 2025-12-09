@@ -11,7 +11,7 @@ from typing import Final
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
+from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m, m_dbt_oracle_wms
 from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsMonitoringService,
@@ -41,4 +41,6 @@ __all__ = [
     "FlextDbtOracleWmsWorkflowService",
     "__version__",
     "__version_info__",
+    "m",
+    "m_dbt_oracle_wms",
 ]

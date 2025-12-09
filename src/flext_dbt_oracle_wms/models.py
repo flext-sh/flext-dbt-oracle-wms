@@ -8,7 +8,8 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextModels, FlextResult, u
+from flext_core import FlextModels, FlextResult
+from flext_core.utilities import u
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
@@ -33,6 +34,14 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     Immutable representation of a generated DBT model with Oracle WMS-specific metadata
     and integrated warehouse management functionality following FLEXT unified class pattern.
     """
+
+    def __init_subclass__(cls, **kwargs: object) -> None:
+        """Warn when FlextDbtOracleWmsModels is subclassed directly."""
+        super().__init_subclass__(**kwargs)
+        u.Deprecation.warn_once(
+            f"subclass:{cls.__name__}",
+            "Subclassing FlextDbtOracleWmsModels is deprecated. Use FlextModels.DbtOracleWms instead.",
+        )
 
     name: str
     dbt_model_type: str  # "staging", intermediate, marts, "dimensional"
@@ -468,4 +477,8 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
                 return FlextResult[dict[str, object]].ok(config)
 
 
-__all__ = ["FlextDbtOracleWmsModels"]
+# Short aliases
+m = FlextDbtOracleWmsModels
+m_dbt_oracle_wms = FlextDbtOracleWmsModels
+
+__all__ = ["FlextDbtOracleWmsModels", "m", "m_dbt_oracle_wms"]

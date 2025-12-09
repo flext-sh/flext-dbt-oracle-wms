@@ -59,13 +59,13 @@ class FlextDbtOracleWmsConfig(FlextConfig):
     )
 
     oracle_wms_timeout: int = Field(
-        default=FlextDbtOracleWmsConstants.Processing.DEFAULT_BATCH_SIZE,
+        default=FlextDbtOracleWmsConstants.DbtOracleWmsProcessing.DEFAULT_BATCH_SIZE,
         ge=1,
         description="Oracle WMS timeout in seconds",
     )
 
     oracle_wms_page_size: int = Field(
-        default=FlextDbtOracleWmsConstants.Processing.DEFAULT_BATCH_SIZE,
+        default=FlextDbtOracleWmsConstants.DbtOracleWmsProcessing.DEFAULT_BATCH_SIZE,
         ge=1,
         description="Oracle WMS page size",
     )
@@ -101,7 +101,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     # Data Quality Settings
     min_quality_threshold: float = Field(
-        default=FlextDbtOracleWmsConstants.Processing.DATA_QUALITY_THRESHOLD,
+        default=FlextDbtOracleWmsConstants.DbtOracleWmsProcessing.DATA_QUALITY_THRESHOLD,
         ge=0.0,
         le=1.0,
         description="Minimum data quality threshold",
@@ -141,7 +141,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         },
         "shipment_validation": {
             "required_fields": ["shipmentId", "orderId", "carrier"],
-            "status_hierarchy": FlextDbtOracleWmsConstants.Processing.PROCESSING_STATUSES,
+            "status_hierarchy": FlextDbtOracleWmsConstants.DbtOracleWmsProcessing.PROCESSING_STATUSES,
         },
         "location_constraints": {
             "allow_negative_inventory": False,

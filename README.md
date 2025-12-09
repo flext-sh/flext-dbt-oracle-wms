@@ -8,7 +8,7 @@ dbt project for Oracle Warehouse Management System (WMS) data transformations an
 
 FLEXT dbt Oracle WMS provides data transformations, dimensional modeling, and advanced analytics for Oracle WMS environments. The project transforms raw Oracle WMS data from Singer taps into business-ready analytical models with real-time operational metrics and historical trend analysis.
 
-> For verified project capabilities and accurate status information, see [ACTUAL_CAPABILITIES.md](../../ACTUAL_CAPABILITIES.md)
+> For verified project capabilities and accurate status information, see the [Development Guide](docs/development/guidelines.md).
 
 ### Key Features
 

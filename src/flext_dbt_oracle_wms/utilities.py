@@ -767,7 +767,7 @@ from inventory_metrics
                 # Data volume-based optimizations
                 if (
                     data_volume
-                    > FlextDbtOracleWmsSemanticConstants.Processing.HIGH_VOLUME_THRESHOLD
+                    > FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.HIGH_VOLUME_THRESHOLD
                 ):  # > 100GB daily
                     optimization_results["optimization_level"] = "enterprise"
                     optimization_results["recommendations"].extend([
@@ -785,7 +785,7 @@ from inventory_metrics
 
                 elif (
                     data_volume
-                    > FlextDbtOracleWmsSemanticConstants.Processing.MEDIUM_VOLUME_THRESHOLD
+                    > FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.MEDIUM_VOLUME_THRESHOLD
                 ):  # > 10GB daily
                     optimization_results["optimization_level"] = "advanced"
                     optimization_results["recommendations"].extend([
@@ -804,7 +804,7 @@ from inventory_metrics
                 # Query frequency-based optimizations
                 if (
                     query_frequency
-                    > FlextDbtOracleWmsSemanticConstants.Processing.HIGH_FREQUENCY_THRESHOLD
+                    > FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.HIGH_FREQUENCY_THRESHOLD
                 ):  # > 1000 queries/hour
                     optimization_results["implementation_priority"] = "high"
                     optimization_results["recommendations"].extend([
@@ -867,7 +867,7 @@ from inventory_metrics
                     if (
                         dimension == "completeness"
                         and score
-                        < FlextDbtOracleWmsSemanticConstants.Processing.HIGH_QUALITY_THRESHOLD
+                        < FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.HIGH_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
                             f"Missing data in {dimension}: {100 - score}% incomplete",
@@ -879,7 +879,7 @@ from inventory_metrics
                     elif (
                         dimension == "accuracy"
                         and score
-                        < FlextDbtOracleWmsSemanticConstants.Processing.ACCEPTABLE_QUALITY_THRESHOLD
+                        < FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.ACCEPTABLE_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
                             f"Data accuracy issues in {dimension}",
@@ -891,7 +891,7 @@ from inventory_metrics
                     elif (
                         dimension == "consistency"
                         and score
-                        < FlextDbtOracleWmsSemanticConstants.Processing.GOOD_QUALITY_THRESHOLD
+                        < FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.GOOD_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
                             "Data consistency issues across WMS modules",
@@ -903,7 +903,7 @@ from inventory_metrics
                     elif (
                         dimension == "timeliness"
                         and score
-                        < FlextDbtOracleWmsSemanticConstants.Processing.MINIMUM_QUALITY_THRESHOLD
+                        < FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.MINIMUM_QUALITY_THRESHOLD
                     ):
                         quality_analysis["data_issues"].append(
                             "WMS data latency issues",
@@ -920,7 +920,7 @@ from inventory_metrics
                 # Assess business impact
                 if (
                     quality_analysis["overall_score"]
-                    >= FlextDbtOracleWmsSemanticConstants.Processing.HIGH_QUALITY_THRESHOLD
+                    >= FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.HIGH_QUALITY_THRESHOLD
                 ):
                     quality_analysis["business_impact"] = {
                         "risk_level": "LOW",
@@ -930,7 +930,7 @@ from inventory_metrics
                     }
                 elif (
                     quality_analysis["overall_score"]
-                    >= FlextDbtOracleWmsSemanticConstants.Processing.LOW_QUALITY_THRESHOLD
+                    >= FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.LOW_QUALITY_THRESHOLD
                 ):
                     quality_analysis["business_impact"] = {
                         "risk_level": "MEDIUM",

@@ -2,12 +2,11 @@
 
 from typing import Protocol, runtime_checkable
 
-from flext_core.protocols import FlextProtocols
-from flext_db_oracle.protocols import FlextDbOracleProtocols
-from flext_meltano.protocols import FlextMeltanoProtocols
+from flext_db_oracle.protocols import FlextDbOracleProtocols as p_db_oracle
+from flext_meltano.protocols import FlextMeltanoProtocols as p_meltano
 
 
-class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
+class FlextDbtOracleWmsProtocols(p_meltano, p_db_oracle):
     """DBT Oracle WMS protocols extending Oracle and Meltano protocols.
 
     Extends both FlextDbOracleProtocols and FlextMeltanoProtocols via multiple inheritance
@@ -16,22 +15,41 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
     Architecture:
     - EXTENDS: FlextDbOracleProtocols (inherits .Database.* protocols)
     - EXTENDS: FlextMeltanoProtocols (inherits .Meltano.* protocols)
-    - ADDS: DBT Oracle WMS-specific protocols in DbtOracleWms namespace
+    - ADDS: DBT Oracle WMS-specific protocols in Dbt.OracleWms namespace
     - PROVIDES: Root-level alias `p` for convenient access
+
+    Usage:
+    from flext_dbt_oracle_wms.protocols import p
+
+    # Foundation protocols (inherited)
+    result: p.Result[str]
+    service: p.Service[str]
+
+    # Oracle protocols (inherited)
+    connection: p.Database.ConnectionProtocol
+
+    # Meltano protocols (inherited)
+    dbt: p.Meltano.DbtProtocol
+
+    # DBT Oracle WMS-specific protocols
+    dbt_protocol: p.Dbt.OracleWms.DbtProtocol
     """
 
-    class DbtOracleWms:
-        """DBT Oracle WMS domain protocols for warehouse management data transformation and analytics."""
+    class Dbt:
+        """DBT domain protocols."""
 
-        @runtime_checkable
-        class DbtProtocol(FlextDbOracleProtocols.Database.Service[object], Protocol):
-            """Protocol for DBT operations with Oracle WMS data."""
+        class OracleWms:
+            """DBT Oracle WMS domain protocols for warehouse management data transformation and analytics."""
+
+            @runtime_checkable
+            class DbtProtocol(p_db_oracle.Service[object], Protocol):
+                """Protocol for DBT operations with Oracle WMS data."""
 
             def run_dbt_models(
                 self,
                 models: list[str] | None = None,
                 config: dict[str, object] | None = None,
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Run DBT models with Oracle WMS data sources.
 
                 Args:
@@ -42,13 +60,12 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 r[dict[str, object]]: DBT run results or error
 
                 """
-                ...
 
             def test_dbt_models(
                 self,
                 models: list[str] | None = None,
                 config: dict[str, object] | None = None,
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Test DBT models with Oracle WMS data validation.
 
                 Args:
@@ -59,13 +76,12 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 r[dict[str, object]]: DBT test results or error
 
                 """
-                ...
 
             def compile_dbt_models(
                 self,
                 models: list[str] | None = None,
                 config: dict[str, object] | None = None,
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Compile DBT models for Oracle WMS data processing.
 
                 Args:
@@ -76,20 +92,16 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 r[dict[str, object]]: DBT compilation results or error
 
                 """
-                ...
 
-            def get_dbt_manifest(self) -> FlextProtocols.Result[dict[str, object]]:
+            def get_dbt_manifest(self) -> p_meltano.Result[dict[str, object]]:
                 """Get DBT manifest with Oracle WMS model definitions.
 
                 Returns:
                 r[dict[str, object]]: DBT manifest or error
 
                 """
-                ...
 
-            def validate_dbt_project(
-                self, project_path: str
-            ) -> FlextProtocols.Result[bool]:
+            def validate_dbt_project(self, project_path: str) -> p_meltano.Result[bool]:
                 """Validate DBT project configuration for Oracle WMS integration.
 
                 Args:
@@ -99,19 +111,16 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 r[bool]: Validation status or error
 
                 """
-                ...
 
         @runtime_checkable
-        class WmsIntegrationProtocol(
-            FlextDbOracleProtocols.Database.Service[object], Protocol
-        ):
+        class WmsIntegrationProtocol(p_db_oracle.Service[object], Protocol):
             """Protocol for Oracle WMS data integration operations."""
 
             def extract_wms_inventory_data(
                 self,
                 wms_config: dict[str, object],
                 extraction_config: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Extract inventory data from Oracle WMS for DBT processing.
 
                 Args:
@@ -128,7 +137,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 wms_config: dict[str, object],
                 extraction_config: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Extract transaction data from Oracle WMS for DBT processing.
 
                 Args:
@@ -145,7 +154,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 wms_data: list[dict[str, object]],
                 transformation_config: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Transform Oracle WMS data to DBT-compatible format.
 
                 Args:
@@ -162,7 +171,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 data: list[dict[str, object]],
                 quality_rules: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Validate Oracle WMS data quality for DBT processing.
 
                 Args:
@@ -179,7 +188,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 wms_data: list[dict[str, object]],
                 warehouse_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Sync Oracle WMS data to data warehouse for DBT processing.
 
                 Args:
@@ -193,16 +202,14 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 ...
 
         @runtime_checkable
-        class ModelingProtocol(
-            FlextDbOracleProtocols.Database.Service[object], Protocol
-        ):
+        class ModelingProtocol(p_db_oracle.Service[object], Protocol):
             """Protocol for Oracle WMS data modeling operations."""
 
             def create_inventory_dimension(
                 self,
                 wms_inventory: list[dict[str, object]],
                 dimension_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Create inventory dimension model from Oracle WMS inventory data.
 
                 Args:
@@ -219,7 +226,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 wms_locations: list[dict[str, object]],
                 dimension_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Create location dimension model from Oracle WMS location data.
 
                 Args:
@@ -236,7 +243,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 wms_operations: list[dict[str, object]],
                 modeling_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Create warehouse operations models from Oracle WMS operations data.
 
                 Args:
@@ -253,7 +260,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 dimensions: list[dict[str, object]],
                 fact_config: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Generate fact tables from Oracle WMS dimensions.
 
                 Args:
@@ -267,16 +274,14 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 ...
 
         @runtime_checkable
-        class TransformationProtocol(
-            FlextDbOracleProtocols.Database.Service[object], Protocol
-        ):
+        class TransformationProtocol(p_db_oracle.Service[object], Protocol):
             """Protocol for Oracle WMS data transformation operations."""
 
             def normalize_wms_inventory_data(
                 self,
                 wms_inventory: list[dict[str, object]],
                 normalization_rules: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Normalize Oracle WMS inventory data for consistent processing.
 
                 Args:
@@ -293,7 +298,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 wms_transactions: list[dict[str, object]],
                 processing_config: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Process Oracle WMS transaction data for analytics.
 
                 Args:
@@ -310,7 +315,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 data: list[dict[str, object]],
                 business_rules: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Apply business rules to Oracle WMS data transformations.
 
                 Args:
@@ -327,7 +332,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 wms_data: list[dict[str, object]],
                 kpi_config: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Calculate warehouse management KPIs from Oracle WMS data.
 
                 Args:
@@ -341,13 +346,13 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 ...
 
         @runtime_checkable
-        class MacroProtocol(FlextDbOracleProtocols.Database.Service[object], Protocol):
+        class MacroProtocol(p_db_oracle.Service[object], Protocol):
             """Protocol for DBT macro operations with Oracle WMS data."""
 
             def generate_wms_source_macro(
                 self,
                 source_config: dict[str, object],
-            ) -> FlextProtocols.Result[str]:
+            ) -> p_meltano.Result[str]:
                 """Generate DBT macro for Oracle WMS data sources.
 
                 Args:
@@ -362,7 +367,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def create_wms_test_macro(
                 self,
                 test_config: dict[str, object],
-            ) -> FlextProtocols.Result[str]:
+            ) -> p_meltano.Result[str]:
                 """Create DBT test macro for Oracle WMS data validation.
 
                 Args:
@@ -377,7 +382,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def generate_wms_transformation_macro(
                 self,
                 transformation_config: dict[str, object],
-            ) -> FlextProtocols.Result[str]:
+            ) -> p_meltano.Result[str]:
                 """Generate DBT transformation macro for Oracle WMS data.
 
                 Args:
@@ -392,7 +397,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def create_wms_snapshot_macro(
                 self,
                 snapshot_config: dict[str, object],
-            ) -> FlextProtocols.Result[str]:
+            ) -> p_meltano.Result[str]:
                 """Create DBT snapshot macro for Oracle WMS data versioning.
 
                 Args:
@@ -405,16 +410,14 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 ...
 
         @runtime_checkable
-        class QualityProtocol(
-            FlextDbOracleProtocols.Database.Service[object], Protocol
-        ):
+        class QualityProtocol(p_db_oracle.Service[object], Protocol):
             """Protocol for Oracle WMS data quality operations."""
 
             def validate_wms_inventory_accuracy(
                 self,
                 wms_data: list[dict[str, object]],
                 accuracy_rules: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Validate Oracle WMS inventory accuracy for DBT processing.
 
                 Args:
@@ -431,7 +434,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 data: list[dict[str, object]],
                 completeness_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Check Oracle WMS data completeness for DBT processing.
 
                 Args:
@@ -448,7 +451,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 data: list[dict[str, object]],
                 anomaly_config: dict[str, object],
-            ) -> FlextProtocols.Result[list[dict[str, object]]]:
+            ) -> p_meltano.Result[list[dict[str, object]]]:
                 """Detect anomalies in Oracle WMS data for quality assurance.
 
                 Args:
@@ -465,7 +468,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 quality_results: list[dict[str, object]],
                 report_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Generate data quality report for Oracle WMS DBT processing.
 
                 Args:
@@ -479,16 +482,14 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 ...
 
         @runtime_checkable
-        class PerformanceProtocol(
-            FlextDbOracleProtocols.Database.Service[object], Protocol
-        ):
+        class PerformanceProtocol(p_db_oracle.Service[object], Protocol):
             """Protocol for DBT Oracle WMS performance optimization operations."""
 
             def optimize_dbt_models(
                 self,
                 model_config: dict[str, object],
                 performance_metrics: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Optimize DBT models for Oracle WMS data processing performance.
 
                 Args:
@@ -505,7 +506,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 self,
                 extraction_config: dict[str, object],
                 tuning_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Tune Oracle WMS data extraction for improved performance.
 
                 Args:
@@ -521,7 +522,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def monitor_dbt_performance(
                 self,
                 run_results: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Monitor DBT performance with Oracle WMS data processing.
 
                 Args:
@@ -536,7 +537,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def optimize_warehouse_operations(
                 self,
                 operations_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Optimize warehouse operations analysis for DBT processing.
 
                 Args:
@@ -549,16 +550,14 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 ...
 
         @runtime_checkable
-        class MonitoringProtocol(
-            FlextDbOracleProtocols.Database.Service[object], Protocol
-        ):
+        class MonitoringProtocol(p_db_oracle.Service[object], Protocol):
             """Protocol for DBT Oracle WMS monitoring operations."""
 
             def track_dbt_run_metrics(
                 self,
                 run_id: str,
                 metrics: dict[str, object],
-            ) -> FlextProtocols.Result[bool]:
+            ) -> p_meltano.Result[bool]:
                 """Track DBT run metrics for Oracle WMS data processing.
 
                 Args:
@@ -574,7 +573,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def monitor_wms_data_freshness(
                 self,
                 freshness_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Monitor Oracle WMS data freshness for DBT processing.
 
                 Args:
@@ -586,7 +585,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
                 """
                 ...
 
-            def get_health_status(self) -> FlextProtocols.Result[dict[str, object]]:
+            def get_health_status(self) -> p_meltano.Result[dict[str, object]]:
                 """Get DBT Oracle WMS integration health status.
 
                 Returns:
@@ -598,7 +597,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def create_monitoring_dashboard(
                 self,
                 dashboard_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Create monitoring dashboard for DBT Oracle WMS operations.
 
                 Args:
@@ -613,7 +612,7 @@ class FlextDbtOracleWmsProtocols(FlextDbOracleProtocols, FlextMeltanoProtocols):
             def track_inventory_metrics(
                 self,
                 inventory_config: dict[str, object],
-            ) -> FlextProtocols.Result[dict[str, object]]:
+            ) -> p_meltano.Result[dict[str, object]]:
                 """Track inventory management metrics for WMS analytics.
 
                 Args:
