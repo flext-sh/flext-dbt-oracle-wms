@@ -55,20 +55,18 @@ class FlextDbtOracleWmsUtilities(u):
         FlextResult[dict[str, object]]: Service status and capabilities.
 
         """
-        return FlextResult[dict[str, object]].ok(
-            {
-                "status": "operational",
-                "service": "flext-dbt-oracle-wms-utilities",
-                "capabilities": [
-                    "wms_data_extraction",
-                    "wms_dimensional_modeling",
-                    "dbt_model_generation",
-                    "wms_analytics_optimization",
-                    "inventory_analytics",
-                    "warehouse_performance_analysis",
-                ],
-            }
-        )
+        return FlextResult[dict[str, object]].ok({
+            "status": "operational",
+            "service": "flext-dbt-oracle-wms-utilities",
+            "capabilities": [
+                "wms_data_extraction",
+                "wms_dimensional_modeling",
+                "dbt_model_generation",
+                "wms_analytics_optimization",
+                "inventory_analytics",
+                "warehouse_performance_analysis",
+            ],
+        })
 
     @property
     def logger(self) -> FlextLogger:
@@ -118,17 +116,14 @@ class FlextDbtOracleWmsUtilities(u):
 
                 # Simulate WMS inventory extraction
                 for location_type in ["PICK", "RESERVE", "STAGING", "SHIPPING"]:
-                    inventory_data["inventory_records"].append(
-                        {
-                            "location_type": location_type,
-                            "total_items": 1000 + hash(location_type) % 5000,
-                            "total_quantity": 50000 + hash(location_type) % 100000,
-                            "total_value": 1000000 + hash(location_type) % 5000000,
-                            "last_cycle_count": "2025-01-09",
-                            "accuracy_percentage": 98.5
-                            + (hash(location_type) % 30) / 10,
-                        }
-                    )
+                    inventory_data["inventory_records"].append({
+                        "location_type": location_type,
+                        "total_items": 1000 + hash(location_type) % 5000,
+                        "total_quantity": 50000 + hash(location_type) % 100000,
+                        "total_value": 1000000 + hash(location_type) % 5000000,
+                        "last_cycle_count": "2025-01-09",
+                        "accuracy_percentage": 98.5 + (hash(location_type) % 30) / 10,
+                    })
 
                 # Extract location hierarchy for dimensional modeling
                 inventory_data["location_hierarchy"] = {
@@ -746,34 +741,28 @@ from inventory_metrics
 
                 # Optimization recommendations based on query patterns
                 if "inventory" in query_type.lower():
-                    optimization_results["recommendations"].extend(
-                        [
-                            "Partition inventory fact tables by date for temporal queries",
-                            "Create composite indexes on (item_id, location_id, effective_date)",
-                            "Use Oracle materialized views for frequently accessed inventory summaries",
-                            "Implement incremental refresh strategy for inventory snapshots",
-                        ]
-                    )
+                    optimization_results["recommendations"].extend([
+                        "Partition inventory fact tables by date for temporal queries",
+                        "Create composite indexes on (item_id, location_id, effective_date)",
+                        "Use Oracle materialized views for frequently accessed inventory summaries",
+                        "Implement incremental refresh strategy for inventory snapshots",
+                    ])
 
                 if "transaction" in query_type.lower():
-                    optimization_results["recommendations"].extend(
-                        [
-                            "Partition transaction fact by transaction_date with sub-partitioning by warehouse",
-                            "Create bitmap indexes on transaction_type and movement_type",
-                            "Use Oracle parallel query for large transaction aggregations",
-                            "Implement result cache for frequent transaction summaries",
-                        ]
-                    )
+                    optimization_results["recommendations"].extend([
+                        "Partition transaction fact by transaction_date with sub-partitioning by warehouse",
+                        "Create bitmap indexes on transaction_type and movement_type",
+                        "Use Oracle parallel query for large transaction aggregations",
+                        "Implement result cache for frequent transaction summaries",
+                    ])
 
                 if "performance" in query_type.lower():
-                    optimization_results["recommendations"].extend(
-                        [
-                            "Use Oracle analytical functions for performance calculations",
-                            "Create specialized indexes for time-based performance queries",
-                            "Implement Oracle In-Memory for hot performance data",
-                            "Use Oracle hints for optimal execution plans",
-                        ]
-                    )
+                    optimization_results["recommendations"].extend([
+                        "Use Oracle analytical functions for performance calculations",
+                        "Create specialized indexes for time-based performance queries",
+                        "Implement Oracle In-Memory for hot performance data",
+                        "Use Oracle hints for optimal execution plans",
+                    ])
 
                 # Data volume-based optimizations
                 if (
@@ -781,14 +770,12 @@ from inventory_metrics
                     > FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.HIGH_VOLUME_THRESHOLD
                 ):  # > 100GB daily
                     optimization_results["optimization_level"] = "enterprise"
-                    optimization_results["recommendations"].extend(
-                        [
-                            "Implement Oracle Exadata optimization features",
-                            "Use Oracle compression for historical WMS data",
-                            "Implement Oracle partitioning with interval partitions",
-                            "Consider Oracle Real Application Clusters (RAC) for scalability",
-                        ]
-                    )
+                    optimization_results["recommendations"].extend([
+                        "Implement Oracle Exadata optimization features",
+                        "Use Oracle compression for historical WMS data",
+                        "Implement Oracle partitioning with interval partitions",
+                        "Consider Oracle Real Application Clusters (RAC) for scalability",
+                    ])
                     optimization_results["estimated_improvement"][
                         "query_performance"
                     ] = "40-60% faster"
@@ -801,14 +788,12 @@ from inventory_metrics
                     > FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.MEDIUM_VOLUME_THRESHOLD
                 ):  # > 10GB daily
                     optimization_results["optimization_level"] = "advanced"
-                    optimization_results["recommendations"].extend(
-                        [
-                            "Use Oracle advanced compression",
-                            "Implement Oracle automatic indexing",
-                            "Use Oracle SQL Plan Management",
-                            "Implement Oracle Database In-Memory for active data",
-                        ]
-                    )
+                    optimization_results["recommendations"].extend([
+                        "Use Oracle advanced compression",
+                        "Implement Oracle automatic indexing",
+                        "Use Oracle SQL Plan Management",
+                        "Implement Oracle Database In-Memory for active data",
+                    ])
                     optimization_results["estimated_improvement"][
                         "query_performance"
                     ] = "25-40% faster"
@@ -822,14 +807,12 @@ from inventory_metrics
                     > FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing.HIGH_FREQUENCY_THRESHOLD
                 ):  # > 1000 queries/hour
                     optimization_results["implementation_priority"] = "high"
-                    optimization_results["recommendations"].extend(
-                        [
-                            "Implement Oracle connection pooling",
-                            "Use Oracle prepared statements and bind variables",
-                            "Implement Oracle Result Cache",
-                            "Use Oracle Database Resident Connection Pooling (DRCP)",
-                        ]
-                    )
+                    optimization_results["recommendations"].extend([
+                        "Implement Oracle connection pooling",
+                        "Use Oracle prepared statements and bind variables",
+                        "Implement Oracle Result Cache",
+                        "Use Oracle Database Resident Connection Pooling (DRCP)",
+                    ])
 
                 return FlextResult[dict[str, object]].ok(optimization_results)
 
