@@ -90,33 +90,39 @@ class FlextDbtOracleWmsServices:
 
             entity_count_threshold = 20
             if total_entities > entity_count_threshold:
-                recommendations.append({
-                    "type": "performance",
-                    "priority": "high",
-                    "message": f"Large number of entities ({total_entities}). Consider processing in batches.",
-                    "suggestion": "Use limits parameter to process entities in smaller batches",
-                })
+                recommendations.append(
+                    {
+                        "type": "performance",
+                        "priority": "high",
+                        "message": f"Large number of entities ({total_entities}). Consider processing in batches.",
+                        "suggestion": "Use limits parameter to process entities in smaller batches",
+                    }
+                )
 
             inventory_threshold = 1000
             if (
                 "inventory" in entity_counts
                 and entity_counts["inventory"] > inventory_threshold
             ):
-                recommendations.append({
-                    "type": "oracle_wms_specific",
-                    "priority": "medium",
-                    "message": "Large inventory dataset detected. Consider date-based filtering.",
-                    "suggestion": "Filter inventory by lastMovementDate to reduce data volume",
-                })
+                recommendations.append(
+                    {
+                        "type": "oracle_wms_specific",
+                        "priority": "medium",
+                        "message": "Large inventory dataset detected. Consider date-based filtering.",
+                        "suggestion": "Filter inventory by lastMovementDate to reduce data volume",
+                    }
+                )
 
             config_threads_threshold = 10
             if total_entities > config_threads_threshold:
-                recommendations.append({
-                    "type": "configuration",
-                    "priority": "medium",
-                    "message": "Multiple entities detected. Consider performance optimizations.",
-                    "suggestion": f"Increase threads to {min(8, max(4, total_entities // 5))} and page_size to 2000",
-                })
+                recommendations.append(
+                    {
+                        "type": "configuration",
+                        "priority": "medium",
+                        "message": "Multiple entities detected. Consider performance optimizations.",
+                        "suggestion": f"Increase threads to {min(8, max(4, total_entities // 5))} and page_size to 2000",
+                    }
+                )
 
             return recommendations
 
@@ -177,10 +183,12 @@ class FlextDbtOracleWmsServices:
                 entities = entities_result.unwrap()
 
                 if not entities:
-                    return FlextResult[dict[str, object]].ok({
-                        "message": "No Oracle WMS entities found for analysis",
-                        "recommendations": [],
-                    })
+                    return FlextResult[dict[str, object]].ok(
+                        {
+                            "message": "No Oracle WMS entities found for analysis",
+                            "recommendations": [],
+                        }
+                    )
 
                 # Analyze entities and generate recommendations
                 entity_counts = self._analyze_entity_distribution(entities)

@@ -80,9 +80,11 @@ class FlextDbtOracleWmsClient:
         try:
             # Test the Oracle WMS connection
             # Mock connection test for now
-            test_result: FlextResult[object] = FlextResult[dict["str", "object"]].ok({
-                "status": "connected",
-            })
+            test_result: FlextResult[object] = FlextResult[dict["str", "object"]].ok(
+                {
+                    "status": "connected",
+                }
+            )
             if test_result.is_failure:
                 return FlextResult[dict[str, str | int]].fail(
                     f"Connection test failed: {test_result.error}",

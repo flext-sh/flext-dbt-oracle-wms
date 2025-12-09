@@ -10,52 +10,52 @@ Welcome to the comprehensive documentation for FLEXT DBT Oracle WMS - an enterpr
 
 - **[Setup Guide](getting-started/setup.md)** - Complete installation and configuration
 - **[Quick Start](getting-started/quickstart.md)** - Get running in 10 minutes
-- **First Models** - Build your first WMS data models (*Documentation coming soon*)
-- **Configuration** - Environment and profile setup (*Documentation coming soon*)
+- **First Models** - Build your first WMS data models (_Documentation coming soon_)
+- **Configuration** - Environment and profile setup (_Documentation coming soon_)
 
 ### 🏗️ Data Models
 
 - **[Model Reference](models/reference.md)** - Complete model documentation
-- **Staging Models** - Raw data standardization (*Documentation coming soon*)
-- **Mart Models** - Business-ready analytics models (*Documentation coming soon*)
-- **Schema Reference** - Database schema documentation (*Documentation coming soon*)
-- **Data Lineage** - Data flow and dependencies (*Documentation coming soon*)
+- **Staging Models** - Raw data standardization (_Documentation coming soon_)
+- **Mart Models** - Business-ready analytics models (_Documentation coming soon_)
+- **Schema Reference** - Database schema documentation (_Documentation coming soon_)
+- **Data Lineage** - Data flow and dependencies (_Documentation coming soon_)
 
 ### �"� Oracle WMS Integration
 
 - **[WMS Overview](integration/oracle-wms.md)** - Oracle WMS system integration
-- **Data Sources** - WMS tables and entities (*Documentation coming soon*)
-- **Singer Integration** - flext-tap-oracle-wms setup (*Documentation coming soon*)
-- **Connection Setup** - Oracle database configuration (*Documentation coming soon*)
+- **Data Sources** - WMS tables and entities (_Documentation coming soon_)
+- **Singer Integration** - flext-tap-oracle-wms setup (_Documentation coming soon_)
+- **Connection Setup** - Oracle database configuration (_Documentation coming soon_)
 
 ### 🛠️ Development
 
-- **Development Setup** - Local development environment (*Documentation coming soon*)
+- **Development Setup** - Local development environment (_Documentation coming soon_)
 - **[Model Guidelines](development/guidelines.md)** - dbt development best practices
-- **Testing Guide** - Data quality and model testing (*Documentation coming soon*)
-- **Code Standards** - SQL and Python coding standards (*Documentation coming soon*)
-- **Contributing** - How to contribute to the project (*Documentation coming soon*)
+- **Testing Guide** - Data quality and model testing (_Documentation coming soon_)
+- **Code Standards** - SQL and Python coding standards (_Documentation coming soon_)
+- **Contributing** - How to contribute to the project (_Documentation coming soon_)
 
 ### 🚀 Deployment
 
-- **Environment Setup** - Dev, staging, and production (*Documentation coming soon*)
-- **CI/CD Pipeline** - Automated deployment pipeline (*Documentation coming soon*)
-- **Performance Tuning** - Optimization strategies (*Documentation coming soon*)
-- **Monitoring** - Data quality monitoring (*Documentation coming soon*)
+- **Environment Setup** - Dev, staging, and production (_Documentation coming soon_)
+- **CI/CD Pipeline** - Automated deployment pipeline (_Documentation coming soon_)
+- **Performance Tuning** - Optimization strategies (_Documentation coming soon_)
+- **Monitoring** - Data quality monitoring (_Documentation coming soon_)
 
 ### �"� Business Intelligence
 
-- **Dashboard Models** - BI-ready data models (*Documentation coming soon*)
-- **KPI Definitions** - Key performance indicators (*Documentation coming soon*)
-- **Reporting Guide** - Business reporting patterns (*Documentation coming soon*)
-- **Tableau Integration** - Tableau-specific setup (*Documentation coming soon*)
+- **Dashboard Models** - BI-ready data models (_Documentation coming soon_)
+- **KPI Definitions** - Key performance indicators (_Documentation coming soon_)
+- **Reporting Guide** - Business reporting patterns (_Documentation coming soon_)
+- **Tableau Integration** - Tableau-specific setup (_Documentation coming soon_)
 
 ### �"� Examples
 
-- **Basic Examples** - Simple model examples (*Documentation coming soon*)
-- **Advanced Patterns** - Complex transformation patterns (*Documentation coming soon*)
-- **Use Cases** - Real-world implementation examples (*Documentation coming soon*)
-- **Troubleshooting** - Common issues and solutions (*Documentation coming soon*)
+- **Basic Examples** - Simple model examples (_Documentation coming soon_)
+- **Advanced Patterns** - Complex transformation patterns (_Documentation coming soon_)
+- **Use Cases** - Real-world implementation examples (_Documentation coming soon_)
+- **Troubleshooting** - Common issues and solutions (_Documentation coming soon_)
 
 ## 🎯 Quick Navigation
 
@@ -67,21 +67,21 @@ Welcome to the comprehensive documentation for FLEXT DBT Oracle WMS - an enterpr
 
 ### For Developers
 
-1. Setup **Development Environment** (*Documentation coming soon*)
+1. Setup **Development Environment** (_Documentation coming soon_)
 2. Review **[Model Guidelines](development/guidelines.md)**
-3. Follow **Testing Guide** (*Documentation coming soon*)
+3. Follow **Testing Guide** (_Documentation coming soon_)
 
 ### For Data Analysts
 
-1. Review **Business Models** (*Documentation coming soon*)
-2. Check **KPI Definitions** (*Documentation coming soon*)
-3. Explore **Dashboard Models** (*Documentation coming soon*)
+1. Review **Business Models** (_Documentation coming soon_)
+2. Check **KPI Definitions** (_Documentation coming soon_)
+3. Explore **Dashboard Models** (_Documentation coming soon_)
 
 ### For Operations
 
-1. Setup **Environment Configuration** (*Documentation coming soon*)
-2. Configure **CI/CD Pipeline** (*Documentation coming soon*)
-3. Monitor **Data Quality** (*Documentation coming soon*)
+1. Setup **Environment Configuration** (_Documentation coming soon_)
+2. Configure **CI/CD Pipeline** (_Documentation coming soon_)
+3. Monitor **Data Quality** (_Documentation coming soon_)
 
 ## 🛠️ Technology Stack
 
@@ -264,9 +264,9 @@ models/
 
 ### Contributing
 
-- **Contributing Guide** - How to contribute (*Documentation coming soon*)
-- **Development Setup** - Local development (*Documentation coming soon*)
-- **Code Standards** - Coding conventions (*Documentation coming soon*)
+- **Contributing Guide** - How to contribute (_Documentation coming soon_)
+- **Development Setup** - Local development (_Documentation coming soon_)
+- **Code Standards** - Coding conventions (_Documentation coming soon_)
 
 ## �"� Roadmap
 
@@ -287,6 +287,6 @@ models/
 
 ---
 
-**Need Help?** Check our Troubleshooting Guide (*Documentation coming soon*) or [open an issue](https://github.com/flext-sh/flext/issues).
+**Need Help?** Check our Troubleshooting Guide (_Documentation coming soon_) or [open an issue](https://github.com/flext-sh/flext/issues).
 
 **Ready to Start?** Jump to the [Setup Guide](getting-started/setup.md)!
