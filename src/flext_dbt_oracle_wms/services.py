@@ -174,7 +174,7 @@ class FlextDbtOracleWmsServices:
                 if entities_result.is_failure:
                     return FlextResult[dict[str, object]].fail(entities_result.error)
 
-                entities = entities_result.unwrap()
+                entities = entities_result.value
 
                 if not entities:
                     return FlextResult[dict[str, object]].ok({

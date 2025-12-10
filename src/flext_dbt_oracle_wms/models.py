@@ -162,13 +162,13 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
                 # Generate dimension model
                 dim_result = self._create_dimension_model(wms_entity)
                 if dim_result.is_success:
-                    dimensional_models.append(dim_result.unwrap())
+                    dimensional_models.append(dim_result.value)
 
                 # Generate fact model if applicable
                 if wms_entity in {"inventory", "allocation", "order"}:
                     fact_result = self._create_fact_model(wms_entity)
                     if fact_result.is_success:
-                        dimensional_models.append(fact_result.unwrap())
+                        dimensional_models.append(fact_result.value)
 
             return FlextResult[list[FlextDbtOracleWmsModels]].ok(dimensional_models)
 
@@ -182,7 +182,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
             for oracle_source in oracle_sources:
                 model_result = self._create_staging_model(oracle_source)
                 if model_result.is_success:
-                    staging_models.append(model_result.unwrap())
+                    staging_models.append(model_result.value)
 
             return FlextResult[list[FlextDbtOracleWmsModels]].ok(staging_models)
 

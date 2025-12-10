@@ -20,43 +20,6 @@ from typing import Annotated, Literal, TypedDict
 
 from flext_core import FlextTypes
 
-# =============================================================================
-# DBT ORACLE WMS MODULE-LEVEL TYPE ALIASES
-# =============================================================================
-
-
-# Simple type aliases for dbt Oracle WMS
-EntityId = str
-ProjectName = str
-TimeoutSeconds = int
-TimestampISO = str
-Version = str
-
-type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
-type UpdatedAt = Annotated[datetime, "Timestamp of when entity was last updated"]
-
-# ==============================================================================
-# DBT ORACLE WMS TYPE ALIASES USING CORE TYPES
-# ==============================================================================
-
-# Oracle WMS specific IDs using core types
-type OracleWMSOperationId = EntityId
-type OracleWMSConnectionId = EntityId
-type OracleWMSSchemaId = EntityId
-type OracleWMSQueryId = EntityId
-
-# DBT specific timeout type aliases using core timeout types
-type DBTOracleWMSProjectTimeout = TimeoutSeconds
-type DBTOracleWMSModelTimeout = TimeoutSeconds
-type DBTOracleWMSSourceTimeout = TimeoutSeconds
-type DBTOracleWMSTestTimeout = TimeoutSeconds
-type DBTOracleWMSMacroTimeout = TimeoutSeconds
-type DBTOracleWMSSnapshotTimeout = TimeoutSeconds
-type DBTOracleWMSAnalysisTimeout = TimeoutSeconds
-type DBTOracleWMSCompilationTimeout = TimeoutSeconds
-type DBTOracleWMSExecutionTimeout = TimeoutSeconds
-type DBTOracleWMSDocumentationTimeout = TimeoutSeconds
-
 # ==============================================================================
 # DBT ORACLE WMS ENUMS
 # ==============================================================================
@@ -105,6 +68,51 @@ class FlextDbtOracleWmsTypes(FlextTypes):
     Contains ONLY complex DBT Oracle WMS-specific types, no simple aliases.
     Uses Python 3.13+ type syntax and patterns.
     """
+
+    # =========================================================================
+    # BASE TYPES - Foundational type aliases for DBT Oracle WMS
+    # =========================================================================
+
+    class Base:
+        """Foundational type aliases for DBT Oracle WMS domain."""
+
+        type EntityId = str
+        type ProjectName = str
+        type TimeoutSeconds = int
+        type TimestampISO = str
+        type Version = str
+        type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
+        type UpdatedAt = Annotated[datetime, "Timestamp of when entity was last updated"]
+
+    # =========================================================================
+    # ORACLE WMS ID TYPES - Oracle WMS specific identifiers
+    # =========================================================================
+
+    class Ids:
+        """Oracle WMS specific ID type aliases."""
+
+        type OracleWMSOperationId = str
+        type OracleWMSConnectionId = str
+        type OracleWMSSchemaId = str
+        type OracleWMSQueryId = str
+
+    # =========================================================================
+    # TIMEOUT TYPES - DBT Oracle WMS operation timeouts
+    # =========================================================================
+
+    class Timeouts:
+        """DBT Oracle WMS timeout type aliases."""
+
+        type DBTOracleWMSProjectTimeout = int
+        type DBTOracleWMSModelTimeout = int
+        type DBTOracleWMSSourceTimeout = int
+        type DBTOracleWMSTestTimeout = int
+        type DBTOracleWMSMacroTimeout = int
+        type DBTOracleWMSSnapshotTimeout = int
+        type DBTOracleWMSAnalysisTimeout = int
+        type DBTOracleWMSCompilationTimeout = int
+        type DBTOracleWMSExecutionTimeout = int
+        type DBTOracleWMSDocumentationTimeout = int
 
     # =========================================================================
     # DBT PROJECT TYPES - DBT project configuration types for Oracle WMS
@@ -519,6 +527,37 @@ t = FlextDbtOracleWmsTypes
 # - t.DbtOracleWms.* for DBT Oracle WMS-specific types
 # - t.Project.* for project types
 # - t.Core.* for core types (inherited from parent)
+
+# =============================================================================
+# MODULE-LEVEL RE-EXPORTS - For backward compatibility with TypedDict classes
+# =============================================================================
+
+# Base types re-exports
+EntityId = t.Base.EntityId
+ProjectName = t.Base.ProjectName
+TimeoutSeconds = t.Base.TimeoutSeconds
+TimestampISO = t.Base.TimestampISO
+Version = t.Base.Version
+CreatedAt = t.Base.CreatedAt
+UpdatedAt = t.Base.UpdatedAt
+
+# ID types re-exports
+OracleWMSOperationId = t.Ids.OracleWMSOperationId
+OracleWMSConnectionId = t.Ids.OracleWMSConnectionId
+OracleWMSSchemaId = t.Ids.OracleWMSSchemaId
+OracleWMSQueryId = t.Ids.OracleWMSQueryId
+
+# Timeout types re-exports
+DBTOracleWMSProjectTimeout = t.Timeouts.DBTOracleWMSProjectTimeout
+DBTOracleWMSModelTimeout = t.Timeouts.DBTOracleWMSModelTimeout
+DBTOracleWMSSourceTimeout = t.Timeouts.DBTOracleWMSSourceTimeout
+DBTOracleWMSTestTimeout = t.Timeouts.DBTOracleWMSTestTimeout
+DBTOracleWMSMacroTimeout = t.Timeouts.DBTOracleWMSMacroTimeout
+DBTOracleWMSSnapshotTimeout = t.Timeouts.DBTOracleWMSSnapshotTimeout
+DBTOracleWMSAnalysisTimeout = t.Timeouts.DBTOracleWMSAnalysisTimeout
+DBTOracleWMSCompilationTimeout = t.Timeouts.DBTOracleWMSCompilationTimeout
+DBTOracleWMSExecutionTimeout = t.Timeouts.DBTOracleWMSExecutionTimeout
+DBTOracleWMSDocumentationTimeout = t.Timeouts.DBTOracleWMSDocumentationTimeout
 
 # =============================================================================
 # PUBLIC API EXPORTS - DBT Oracle WMS TypeVars and types
