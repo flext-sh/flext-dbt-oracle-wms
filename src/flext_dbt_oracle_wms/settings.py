@@ -10,20 +10,20 @@ from __future__ import annotations
 from pathlib import Path
 from typing import ClassVar, Literal, Self
 
-from flext_core import FlextConfig, FlextConstants, FlextResult
-from flext_meltano.config import FlextMeltanoConfig
-from flext_oracle_wms.config import FlextOracleWmsConfig
+from flext_core import FlextConstants, FlextResult, FlextSettings
+from flext_meltano.settings import FlextMeltanoSettings
+from flext_oracle_wms.config import FlextOracleWmsSettings
 from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import SettingsConfigDict
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 
-class FlextDbtOracleWmsConfig(FlextConfig):
+class FlextDbtOracleWmsSettings(FlextSettings):
     """Configuration for DBT Oracle WMS transformations.
 
     Follows standardized [Project]Config pattern:
-    - Extends FlextConfig from flext-core
+    - Extends FlextSettings from flext-core
     - Uses SecretStr for sensitive data
     - All defaults from FlextConstants
     - Proper Pydantic 2 validation
@@ -204,9 +204,9 @@ class FlextDbtOracleWmsConfig(FlextConfig):
         return self
 
     # Configuration helper methods
-    def get_oracle_wms_config(self) -> FlextOracleWmsConfig:
+    def get_oracle_wms_config(self) -> FlextOracleWmsSettings:
         """Get Oracle WMS configuration for flext-oracle-wms integration."""
-        return FlextOracleWmsConfig(
+        return FlextOracleWmsSettings(
             base_url=self.oracle_wms_base_url,
             username=self.oracle_wms_username,
             password=self.oracle_wms_password.get_secret_value(),
@@ -215,9 +215,9 @@ class FlextDbtOracleWmsConfig(FlextConfig):
             environment=self.oracle_wms_environment,
         )
 
-    def get_meltano_config(self) -> FlextMeltanoConfig:
+    def get_meltano_config(self) -> FlextMeltanoSettings:
         """Get Meltano configuration for flext-meltano integration."""
-        return FlextMeltanoConfig(
+        return FlextMeltanoSettings(
             project_root=Path(self.dbt_project_dir),
             environment=self.dbt_target,
             dbt_project_dir=self.dbt_project_dir,
@@ -344,7 +344,7 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
     @classmethod
     def get_global_instance(cls) -> Self:
-        """Get the global singleton instance using enhanced FlextConfig pattern."""
+        """Get the global singleton instance using enhanced FlextSettings pattern."""
         return cls.get_or_create_shared_instance(project_name="flext-dbt-oracle-wms")
 
     @classmethod
@@ -354,5 +354,5 @@ class FlextDbtOracleWmsConfig(FlextConfig):
 
 
 __all__: list[str] = [
-    "FlextDbtOracleWmsConfig",
+    "FlextDbtOracleWmsSettings",
 ]

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
-from flext_core import FlextConfig
+from flext_core import FlextSettings
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as WmsConstants,
 )
@@ -37,7 +37,7 @@ def _get_default_wms_entities() -> list[str]:
     return entities
 
 
-class FlextDBTOracleWMSConfig(FlextConfig):
+class FlextDBTOracleWMSSettings(FlextSettings):
     """FLEXT DBT Oracle WMS configuration using core types."""
 
     project_name: ProjectName = Field(
@@ -135,5 +135,5 @@ __all__: list[str] = [
     "DBTOracleWMSSourceConfiguration",
     "DBTOracleWMSTestConfiguration",
     # Main configuration classes
-    "FlextDBTOracleWMSConfig",
+    "FlextDBTOracleWMSSettings",
 ]

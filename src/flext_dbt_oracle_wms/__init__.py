@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import Final
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
+from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m, m_dbt_oracle_wms
 from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 from flext_dbt_oracle_wms.services import (
@@ -32,10 +32,10 @@ __all__ = [
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsAPI",
     "FlextDbtOracleWmsClient",
-    "FlextDbtOracleWmsConfig",
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsMonitoringService",
     "FlextDbtOracleWmsProtocols",
+    "FlextDbtOracleWmsSettings",
     "FlextDbtOracleWmsUtilities",
     "FlextDbtOracleWmsVersion",
     "FlextDbtOracleWmsWorkflowService",

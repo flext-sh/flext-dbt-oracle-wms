@@ -14,7 +14,7 @@ from flext_cli import FlextCli, FlextCliModels
 from flext_core import FlextLogger, FlextResult
 
 from flext_dbt_oracle_wms import (
-    FlextDbtOracleWmsConfig,
+    FlextDbtOracleWmsSettings,
     FlextDbtOracleWmsWorkflowService,
 )
 
@@ -28,7 +28,7 @@ class FlextDbtOracleWmsCliService:
     def __init__(self: object) -> None:
         """Initialize CLI service with flext-cli patterns."""
         self._cli_api = FlextCli()
-        self._config: dict[str, object] = FlextCliModels.FlextCliConfig()
+        self._config: dict[str, object] = FlextCliModels.FlextCliSettings()
 
     def handle_discover(
         self,
@@ -36,7 +36,7 @@ class FlextDbtOracleWmsCliService:
     ) -> FlextResult[str]:
         """Handle discover command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
+            config: dict[str, object] = FlextDbtOracleWmsSettings.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             result: FlextResult[object] = (
@@ -58,7 +58,7 @@ class FlextDbtOracleWmsCliService:
     def handle_extract(self, args: dict[str, object] | None = None) -> FlextResult[str]:
         """Handle extract command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
+            config: dict[str, object] = FlextDbtOracleWmsSettings.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse entities from args if provided
@@ -87,7 +87,7 @@ class FlextDbtOracleWmsCliService:
     ) -> FlextResult[str]:
         """Handle pipeline command using flext-cli output."""
         try:
-            config: dict[str, object] = FlextDbtOracleWmsConfig.get_global_instance()
+            config: dict[str, object] = FlextDbtOracleWmsSettings.get_global_instance()
             workflow_service = FlextDbtOracleWmsWorkflowService(config)
 
             # Parse parameters from args if provided

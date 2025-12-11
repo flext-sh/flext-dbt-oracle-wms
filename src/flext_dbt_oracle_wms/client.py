@@ -14,7 +14,7 @@ from flext_core import FlextLogger, FlextResult, t
 from flext_meltano import FlextMeltanoAPI
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
+from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsClient:
@@ -30,7 +30,7 @@ class FlextDbtOracleWmsClient:
     @override
     def __init__(
         self,
-        config: FlextDbtOracleWmsConfig | None = None,
+        config: FlextDbtOracleWmsSettings | None = None,
     ) -> None:
         """Initialize DBT Oracle WMS client.
 
@@ -39,7 +39,7 @@ class FlextDbtOracleWmsClient:
 
         """
         self.config: dict[str, object] = (
-            config or FlextDbtOracleWmsConfig.get_global_instance()
+            config or FlextDbtOracleWmsSettings.get_global_instance()
         )
         # Initialize Oracle WMS client using flext-oracle-wms
         oracle_wms_config: dict[str, object] = self.config.get_oracle_wms_config()

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextConfig, FlextLogger, FlextResult
+from flext_core import FlextLogger, FlextResult, FlextSettings
 from flext_oracle_wms import FlextOracleWmsEntity
 
 logger = FlextLogger(__name__)
@@ -52,7 +52,7 @@ def _get_bool(value: object, *, default: bool = False) -> bool:
     return default
 
 
-class FlextDbtOracleWmsItemDimension(FlextConfig):
+class FlextDbtOracleWmsItemDimension(FlextSettings):
     """Item dimension model for DBT Oracle WMS transformations.
 
     Represents an item dimension table structure optimized for analytics.
@@ -124,7 +124,7 @@ class FlextDbtOracleWmsItemDimension(FlextConfig):
         }
 
 
-class FlextDbtOracleWmsLocationDimension(FlextConfig):
+class FlextDbtOracleWmsLocationDimension(FlextSettings):
     """Location dimension model for DBT Oracle WMS transformations.
 
     Represents a location dimension table structure optimized for analytics.
@@ -200,7 +200,7 @@ class FlextDbtOracleWmsLocationDimension(FlextConfig):
         }
 
 
-class FlextDbtOracleWmsInventoryFact(FlextConfig):
+class FlextDbtOracleWmsInventoryFact(FlextSettings):
     """Inventory fact model for DBT Oracle WMS transformations.
 
     Represents inventory levels as fact table optimized for analytics.
@@ -277,7 +277,7 @@ class FlextDbtOracleWmsInventoryFact(FlextConfig):
         }
 
 
-class FlextDbtOracleWmsShipmentFact(FlextConfig):
+class FlextDbtOracleWmsShipmentFact(FlextSettings):
     """Shipment fact model for DBT Oracle WMS transformations.
 
     Represents shipments as fact table optimized for analytics.

@@ -17,14 +17,14 @@ from flext_core import (
 )
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
+from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsMonitoringService,
     FlextDbtOracleWmsWorkflowService,
 )
 
 
-class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
+class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
     """Unified DBT Oracle WMS facade with complete FLEXT ecosystem integration.
 
     This is the single unified class for the flext-dbt-oracle-wms domain providing
@@ -46,10 +46,10 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
     PYTHON 3.13+ COMPATIBILITY: Uses modern patterns and latest type features.
     """
 
-    def __init__(self, config: FlextDbtOracleWmsConfig | None = None) -> None:
+    def __init__(self, config: FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__()
-        self._config = config or FlextDbtOracleWmsConfig()
+        self._config = config or FlextDbtOracleWmsSettings()
         self._client: FlextDbtOracleWmsClient | None = None
         self._workflow_service: FlextDbtOracleWmsWorkflowService | None = None
         self._monitoring_service: FlextDbtOracleWmsMonitoringService | None = None
@@ -86,7 +86,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsConfig]):
         return self._monitoring_service
 
     @property
-    def config(self) -> FlextDbtOracleWmsConfig:
+    def config(self) -> FlextDbtOracleWmsSettings:
         """Get the current configuration."""
         return self._config
 

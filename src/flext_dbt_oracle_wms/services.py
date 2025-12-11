@@ -9,7 +9,7 @@ import time
 
 from flext_core import FlextLogger, FlextResult
 
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsConfig
+from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsServices:
@@ -27,7 +27,7 @@ class FlextDbtOracleWmsServices:
 
         def __init__(
             self,
-            config: FlextDbtOracleWmsConfig | None = None,
+            config: FlextDbtOracleWmsSettings | None = None,
         ) -> None:
             """Initialize workflow service.
 
@@ -36,7 +36,7 @@ class FlextDbtOracleWmsServices:
 
             """
             self.config: dict[str, object] = (
-                config or FlextDbtOracleWmsConfig.get_global_instance()
+                config or FlextDbtOracleWmsSettings.get_global_instance()
             )
             # Initialize WMS client - placeholder for future implementation
             self.client = (
@@ -215,7 +215,7 @@ class FlextDbtOracleWmsServices:
 
         def __init__(
             self,
-            config: FlextDbtOracleWmsConfig,
+            config: FlextDbtOracleWmsSettings,
         ) -> None:
             """Initialize monitoring service.
 
