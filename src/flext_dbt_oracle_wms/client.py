@@ -14,7 +14,7 @@ from flext_core import FlextLogger, FlextResult, t
 from flext_meltano import FlextMeltanoAPI
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsClient:
