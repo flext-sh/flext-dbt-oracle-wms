@@ -10,13 +10,13 @@ from __future__ import annotations
 from typing import Final
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m, m_dbt_oracle_wms
 from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsMonitoringService,
     FlextDbtOracleWmsWorkflowService,
 )
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms, FlextDbtOracleWmsAPI
 from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities
 from flext_dbt_oracle_wms.version import VERSION, FlextDbtOracleWmsVersion
