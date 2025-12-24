@@ -10,9 +10,9 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Final, Literal
 
-from flext_core import FlextConstants
 from flext_oracle_wms.constants import FlextOracleWmsConstants
 
+from flext import FlextConstants
 from flext_dbt_oracle_wms.__version__ import __version__
 
 
@@ -66,6 +66,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
             RELATIONSHIPS = "relationships"
             ACCEPTED_VALUES = "accepted_values"
             DATA_QUALITY = "data_quality"
+            CUSTOM = "custom"
 
         # Generate list from StrEnum for backward compatibility
         TEST_TYPES: Final[tuple[str, ...]] = tuple(
@@ -239,6 +240,19 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
             COMPLETED = "completed"
             FAILED = "failed"
 
+        class RunStatus(StrEnum):
+            """DBT run status values.
+
+            DRY Pattern: This StrEnum is the single source of truth for run statuses.
+            All run status-related constants and Literal types MUST reference this enum.
+            """
+
+            SUCCESS = "success"
+            ERROR = "error"
+            SKIPPED = "skipped"
+            RUNNING = "running"
+            QUEUED = "queued"
+
         # Generate list from StrEnum for backward compatibility
         PROCESSING_STATUSES: Final[tuple[str, ...]] = tuple(
             member.value for member in ProcessingStatus.__members__.values()
@@ -274,6 +288,14 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
             ValidationMode.RELAXED,
         ]
 
+        type RunStatusLiteral = Literal[
+            RunStatus.SUCCESS,
+            RunStatus.ERROR,
+            RunStatus.SKIPPED,
+            RunStatus.RUNNING,
+            RunStatus.QUEUED,
+        ]
+
     class Configuration:
         """Configuration management constants."""
 
@@ -301,7 +323,7 @@ class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
         """Entities constants - real inheritance."""
 
     class DbtOracleWmsProcessing(
-        FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing
+        FlextDbtOracleWmsSemanticConstants.DbtOracleWmsProcessing,
     ):
         """Processing constants - real inheritance.
 

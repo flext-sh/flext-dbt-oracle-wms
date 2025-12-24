@@ -15,45 +15,18 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from datetime import datetime
-from enum import StrEnum
 from typing import Annotated, Literal, TypedDict
 
-from flext_core import FlextTypes
+from flext import FlextTypes
+from flext_dbt_oracle_wms.constants import c
 
 # ==============================================================================
-# DBT ORACLE WMS ENUMS
+# DBT ORACLE WMS ENUMS - Aliases from constants.py (single source of truth)
 # ==============================================================================
 
-
-class DBTOracleWMSMaterialization(StrEnum):
-    """DBT Oracle WMS materialization types."""
-
-    TABLE = "table"
-    VIEW = "view"
-    INCREMENTAL = "incremental"
-    EPHEMERAL = "ephemeral"
-    SNAPSHOT = "snapshot"
-
-
-class DBTOracleWMSTestType(StrEnum):
-    """DBT Oracle WMS test types."""
-
-    UNIQUE = "unique"
-    NOT_NULL = "not_null"
-    ACCEPTED_VALUES = "accepted_values"
-    RELATIONSHIPS = "relationships"
-    CUSTOM = "custom"
-
-
-class DBTOracleWMSRunStatus(StrEnum):
-    """DBT Oracle WMS run status using StrEnum."""
-
-    SUCCESS = "success"
-    ERROR = "error"
-    SKIPPED = "skipped"
-    RUNNING = "running"
-    QUEUED = "queued"
-
+DBTOracleWMSMaterialization = c.Dbt.Materialization
+DBTOracleWMSTestType = c.Dbt.TestType
+DBTOracleWMSRunStatus = c.DbtOracleWmsProcessing.RunStatus
 
 # =============================================================================
 # DBT ORACLE WMS-SPECIFIC TYPE VARIABLES - Domain-specific TypeVars for DBT Oracle WMS operations
@@ -83,7 +56,7 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type Version = str
         type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
         type UpdatedAt = Annotated[
-            datetime, "Timestamp of when entity was last updated"
+            datetime, "Timestamp of when entity was last updated",
         ]
 
     # =========================================================================
@@ -152,7 +125,7 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """Oracle WMS data complex types."""
 
         type InventoryData = dict[
-            str, str | int | float | dict[str, FlextTypes.JsonValue]
+            str, str | int | float | dict[str, FlextTypes.JsonValue],
         ]
         type LocationData = dict[str, str | list[str] | dict[str, FlextTypes.JsonValue]]
         type AllocationData = dict[str, str | int | bool | dict[str, object]]
@@ -197,7 +170,7 @@ class FlextDbtOracleWmsTypes(FlextTypes):
 
         type InventoryRules = dict[str, bool | str | float | dict[str, object]]
         type AllocationRules = dict[
-            str, str | int | bool | dict[str, FlextTypes.JsonValue]
+            str, str | int | bool | dict[str, FlextTypes.JsonValue],
         ]
         type PickingRules = dict[str, str | list[str] | dict[str, object]]
         type ReceivingRules = dict[str, bool | str | dict[str, FlextTypes.JsonValue]]
@@ -244,7 +217,7 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type QueryAdapter = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type SchemaAdapter = dict[str, str | list[str] | dict[str, object]]
         type TransactionAdapter = dict[
-            str, bool | str | dict[str, FlextTypes.JsonValue]
+            str, bool | str | dict[str, FlextTypes.JsonValue],
         ]
         type WmsAdapter = dict[str, str | int | dict[str, object]]
 

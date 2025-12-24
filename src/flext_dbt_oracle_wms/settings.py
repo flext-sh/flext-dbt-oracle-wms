@@ -10,12 +10,12 @@ from __future__ import annotations
 from pathlib import Path
 from typing import ClassVar, Literal, Self
 
-from flext_core import FlextConstants, FlextResult, FlextSettings
 from flext_meltano.settings import FlextMeltanoSettings
 from flext_oracle_wms.config import FlextOracleWmsSettings
 from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import SettingsConfigDict
 
+from flext import FlextConstants, FlextResult, FlextSettings
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 

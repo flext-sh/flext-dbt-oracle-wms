@@ -7,8 +7,7 @@ from __future__ import annotations
 
 import time
 
-from flext_core import FlextLogger, FlextResult
-
+from flext import FlextLogger, FlextResult
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 
 

@@ -11,8 +11,8 @@ import sys
 from typing import override
 
 from flext_cli import FlextCli, FlextCliModels
-from flext_core import FlextLogger, FlextResult
 
+from flext import FlextLogger, FlextResult
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsSettings,
     FlextDbtOracleWmsWorkflowService,

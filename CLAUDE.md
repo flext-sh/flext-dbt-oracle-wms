@@ -15,6 +15,7 @@
 **Python**: 3.13+
 
 **CRITICAL INTEGRATION DEPENDENCIES**:
+
 - **flext-meltano**: MANDATORY for ALL DBT operations (ZERO TOLERANCE for direct dbt imports)
 - **flext-oracle-wms**: MANDATORY for ALL Oracle WMS operations (ZERO TOLERANCE for bypassing WMS domain)
 - **flext-db-oracle**: MANDATORY for ALL Oracle Database operations (ZERO TOLERANCE for direct SQLAlchemy/oracledb imports)
@@ -63,6 +64,7 @@ if result.is_success:
 ### ZERO TOLERANCE Policies
 
 **ABSOLUTELY FORBIDDEN**:
+
 - ❌ Direct dbt imports (use flext-meltano)
 - ❌ Direct Oracle WMS operations (use flext-oracle-wms)
 - ❌ Direct SQLAlchemy/oracledb imports (use flext-db-oracle)
@@ -71,6 +73,7 @@ if result.is_success:
 - ❌ Type ignores or `Any` types
 
 **MANDATORY**:
+
 - ✅ Use `FlextResult[T]` for all operations
 - ✅ Use flext-meltano for DBT operations
 - ✅ Use flext-oracle-wms for WMS operations
@@ -82,6 +85,7 @@ if result.is_success:
 ---
 
 **See Also**:
+
 - [Workspace Standards](../CLAUDE.md)
 - [flext-core Patterns](../flext-core/CLAUDE.md)
 - [flext-oracle-wms Patterns](../flext-oracle-wms/CLAUDE.md)
