@@ -17,7 +17,8 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Annotated, Literal, TypedDict
 
-from flext import FlextTypes
+from flext_core import FlextTypes
+
 from flext_dbt_oracle_wms.constants import c
 
 # ==============================================================================
@@ -56,7 +57,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type Version = str
         type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
         type UpdatedAt = Annotated[
-            datetime, "Timestamp of when entity was last updated",
+            datetime,
+            "Timestamp of when entity was last updated",
         ]
 
     # =========================================================================
@@ -125,7 +127,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """Oracle WMS data complex types."""
 
         type InventoryData = dict[
-            str, str | int | float | dict[str, FlextTypes.JsonValue],
+            str,
+            str | int | float | dict[str, FlextTypes.JsonValue],
         ]
         type LocationData = dict[str, str | list[str] | dict[str, FlextTypes.JsonValue]]
         type AllocationData = dict[str, str | int | bool | dict[str, object]]
@@ -170,7 +173,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
 
         type InventoryRules = dict[str, bool | str | float | dict[str, object]]
         type AllocationRules = dict[
-            str, str | int | bool | dict[str, FlextTypes.JsonValue],
+            str,
+            str | int | bool | dict[str, FlextTypes.JsonValue],
         ]
         type PickingRules = dict[str, str | list[str] | dict[str, object]]
         type ReceivingRules = dict[str, bool | str | dict[str, FlextTypes.JsonValue]]
@@ -217,7 +221,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type QueryAdapter = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type SchemaAdapter = dict[str, str | list[str] | dict[str, object]]
         type TransactionAdapter = dict[
-            str, bool | str | dict[str, FlextTypes.JsonValue],
+            str,
+            bool | str | dict[str, FlextTypes.JsonValue],
         ]
         type WmsAdapter = dict[str, str | int | dict[str, object]]
 

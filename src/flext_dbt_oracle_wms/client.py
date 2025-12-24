@@ -10,10 +10,10 @@ from __future__ import annotations
 from pathlib import Path
 from typing import override
 
+from flext_core import FlextLogger, FlextResult, t
 from flext_meltano import FlextMeltanoAPI
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
-from flext import FlextLogger, FlextResult, t
 from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 
 

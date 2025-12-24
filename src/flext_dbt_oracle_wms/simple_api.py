@@ -8,7 +8,7 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 
 from __future__ import annotations
 
-from flext import FlextContainer,
+from flext_core import  FlextContainer,
     FlextContext,
     FlextLogger,
     FlextResult,

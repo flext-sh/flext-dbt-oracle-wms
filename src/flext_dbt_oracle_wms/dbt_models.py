@@ -7,9 +7,8 @@ from __future__ import annotations
 
 from typing import override
 
+from flext_core import FlextLogger, FlextResult, FlextSettings
 from flext_oracle_wms import FlextOracleWmsEntity
-
-from flext import FlextLogger, FlextResult, FlextSettings
 
 logger = FlextLogger(__name__)
 

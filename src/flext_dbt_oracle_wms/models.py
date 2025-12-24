@@ -8,9 +8,9 @@ from __future__ import annotations
 
 from typing import override
 
+from flext_core import FlextModels, FlextResult
 from flext_core.utilities import u
 
-from flext import FlextModels, FlextResult
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
 
 # Constants for magic values
