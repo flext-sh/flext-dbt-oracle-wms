@@ -9,10 +9,12 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from flext_core import  FlextContainer,
+from flext_core import (
+    FlextContainer,
     FlextLogger,
     FlextResult,
-    u
+    u,
+)
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsSemanticConstants
 

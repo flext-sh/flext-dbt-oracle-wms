@@ -11,10 +11,10 @@ from pathlib import Path
 from typing import override
 
 from flext_core import FlextLogger, FlextResult, t
-from flext_meltano import FlextMeltanoAPI
+from flext_meltano import FlextMeltano
 from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
 
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsClient:
@@ -62,7 +62,7 @@ class FlextDbtOracleWmsClient:
                 if getattr(meltano_config, "project_root", None)
                 else None
             )
-            self._dbt_service = FlextMeltanoAPI()
+            self._dbt_service = FlextMeltano()
         return self._dbt_service
 
     @property

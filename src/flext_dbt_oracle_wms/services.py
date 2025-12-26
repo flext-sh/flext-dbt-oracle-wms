@@ -9,7 +9,7 @@ import time
 
 from flext_core import FlextLogger, FlextResult
 
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsServices:

@@ -8,18 +8,20 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 
 from __future__ import annotations
 
-from flext_core import  FlextContainer,
+from flext_core import (
+    FlextContainer,
     FlextContext,
     FlextLogger,
     FlextResult,
-    FlextService
+    FlextService,
+)
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.config import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsMonitoringService,
     FlextDbtOracleWmsWorkflowService,
 )
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
