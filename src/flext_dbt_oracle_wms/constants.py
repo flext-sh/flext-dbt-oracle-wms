@@ -209,6 +209,12 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
         DEFAULT_BATCH_SIZE: Final[int] = 1000  # Default batch size for WMS operations
         INCREMENTAL_LOOKBACK_DAYS: Final[int] = 7
 
+        # WMS-specific performance constants (from utilities.py)
+        WMS_DEFAULT_BATCH_SIZE: Final[int] = 2000
+        WMS_MAX_TRANSACTION_SIZE: Final[int] = 50000
+        WMS_ANALYSIS_WINDOW_DAYS: Final[int] = 90
+        WMS_PERFORMANCE_THRESHOLD_MS: Final[int] = 5000
+
         # Data quality thresholds
         DATA_QUALITY_THRESHOLD: Final[float] = 0.95
         HIGH_QUALITY_THRESHOLD: Final[int] = 95  # High quality score threshold

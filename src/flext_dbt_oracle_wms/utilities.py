@@ -7,8 +7,6 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import ClassVar
-
 from flext_core import (
     FlextContainer,
     FlextLogger,
@@ -36,12 +34,6 @@ class FlextDbtOracleWmsUtilities(u):
     - Oracle WMS performance optimization for reporting
     - WMS business rule validation and data quality
     """
-
-    # Oracle WMS constants
-    WMS_DEFAULT_BATCH_SIZE: ClassVar[int] = 2000
-    WMS_MAX_TRANSACTION_SIZE: ClassVar[int] = 50000
-    WMS_ANALYSIS_WINDOW_DAYS: ClassVar[int] = 90
-    WMS_PERFORMANCE_THRESHOLD_MS: ClassVar[int] = 5000
 
     def __init__(self) -> None:
         """Initialize FlextDbtOracleWmsUtilities service."""
