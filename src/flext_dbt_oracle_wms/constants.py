@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Final, Literal
 
-from flext_core import FlextConstants
+from flext_core import FlextConstants, FlextTypes as t
 from flext_oracle_wms.constants import FlextOracleWmsConstants
 
 from flext_dbt_oracle_wms.__version__ import __version__
@@ -299,7 +299,7 @@ class FlextDbtOracleWmsSemanticConstants(FlextConstants):
     class Configuration:
         """Configuration management constants."""
 
-        DEFAULT_CONFIG: Final[dict[str, object]] = {
+        DEFAULT_CONFIG: Final[dict[str, t.GeneralValueType]] = {
             "project_name": "flext_dbt_oracle_wms",
             "profile": "flext_oracle_wms",
             "schema_prefix": "wms",

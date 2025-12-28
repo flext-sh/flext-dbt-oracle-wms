@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Literal, TypedDict
 
-from flext_core import FlextSettings
+from flext_core import FlextSettings, FlextTypes as t
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as WmsConstants,
 )
@@ -98,7 +98,7 @@ class DBTOracleWMSSourceConfiguration(TypedDict):
 
     name: NonEmptyStr
     schema: NonEmptyStr
-    tables: list[dict[str, object]]
+    tables: list[dict[str, t.GeneralValueType]]
 
 
 class DBTOracleWMSTestConfiguration(TypedDict):
@@ -120,7 +120,7 @@ class DBTOracleWMSProfileConfiguration(TypedDict):
     """DBT profile configuration using core types."""
 
     target: NonEmptyStr
-    outputs: dict[str, object]
+    outputs: dict[str, t.GeneralValueType]
 
 
 # ==============================================================================

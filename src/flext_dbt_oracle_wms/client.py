@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from pathlib import Path
-from typing import override
+from typing import cast, override
 
 from flext_core import FlextLogger, FlextResult, t
 from flext_meltano import FlextMeltano
@@ -38,24 +38,22 @@ class FlextDbtOracleWmsClient:
         config: Configuration for Oracle WMS and DBT operations
 
         """
-        self.config: dict[str, object] = (
-            config or FlextDbtOracleWmsSettings.get_global_instance()
-        )
+        self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
         # Initialize Oracle WMS client using flext-oracle-wms
-        oracle_wms_config: dict[str, object] = self.config.get_oracle_wms_config()
+        oracle_wms_config = self.config.get_oracle_wms_config()
         self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
-        self._dbt_service: object | None = None
+        self._dbt_service: FlextMeltano | None = None
         FlextDbtOracleWmsClient.logger.info(
             "Initialized DBT Oracle WMS client with config: %s",
             self.config,
         )
 
     @property
-    def dbt_service(self: object) -> object:
+    def dbt_service(self) -> FlextMeltano:
         """Get or create DBT service instance."""
         if self._dbt_service is None:
             # Create DBT service with configuration
-            meltano_config: dict[str, object] = self.config.get_meltano_config()
+            meltano_config = self.config.get_meltano_config()
             # Suppress unused registry_path warning for future use
             _ = (
                 Path(meltano_config.project_root)
@@ -66,9 +64,9 @@ class FlextDbtOracleWmsClient:
         return self._dbt_service
 
     @property
-    def oracle_wms_client(self: object) -> FlextOracleWmsClient:
+    def oracle_wms_client(self) -> FlextOracleWmsClient:
         """Get Oracle WMS client instance."""
-        return self._oracle_wms_client
+        return cast("FlextOracleWmsClient", self._oracle_wms_client)
 
     def test_oracle_wms_connection(self) -> FlextResult[dict[str, str | int]]:
         """Test Oracle WMS connection and basic functionality.
@@ -104,7 +102,7 @@ class FlextDbtOracleWmsClient:
         entity_names: list[str] | None = None,
         filters: t.NestedDict | None = None,
         model_names: list[str] | None = None,
-    ) -> FlextResult[dict[str, object]]:
+    ) -> FlextResult[dict[str, t.GeneralValueType]]:
         """Run full Oracle WMS-to-DBT pipeline.
 
         Args:
@@ -122,7 +120,7 @@ class FlextDbtOracleWmsClient:
             discover_result: FlextResult[object] = self.discover_oracle_wms_entities()
             if discover_result.is_failure:
                 # Convert discovery result to expected format
-                return FlextResult[dict[str, object]].ok(
+                return FlextResult[dict[str, t.GeneralValueType]].ok(
                     {
                         "discovery_results": discover_result.data,
                         "pipeline_status": "failed_at_discovery",
@@ -136,7 +134,7 @@ class FlextDbtOracleWmsClient:
         # Step 2: Extract data for each entity
         entity_data = {}
         for entity_name in entity_names:
-            entity_filters: dict[str, object] = (
+            entity_filters: dict[str, t.GeneralValueType] = (
                 filters.get(entity_name, {}) if filters else {}
             )
             extract_result = self.extract_oracle_wms_data(
@@ -145,7 +143,7 @@ class FlextDbtOracleWmsClient:
             )
             if extract_result.is_failure:
                 # Convert extraction result to expected format
-                return FlextResult[dict[str, object]].ok(
+                return FlextResult[dict[str, t.GeneralValueType]].ok(
                     {
                         "extraction_results": extract_result.data,
                         "pipeline_status": "failed_at_extraction",
@@ -170,7 +168,7 @@ class FlextDbtOracleWmsClient:
         if transform_result.is_failure:
             return transform_result
         # Combine results
-        pipeline_results: dict[str, object] = {
+        pipeline_results: dict[str, t.GeneralValueType] = {
             "processed_entities": list(entity_data.keys()),
             "total_records": sum(len(records) for records in entity_data.values()),
             "transformation_results": transform_result.data,
@@ -179,7 +177,7 @@ class FlextDbtOracleWmsClient:
         FlextDbtOracleWmsClient.logger.info(
             "Full Oracle WMS-to-DBT pipeline completed successfully",
         )
-        return FlextResult[dict[str, object]].ok(pipeline_results)
+        return FlextResult[dict[str, t.GeneralValueType]].ok(pipeline_results)
 
     def _prepare_oracle_wms_data_for_dbt(
         self,
@@ -230,8 +228,8 @@ class FlextDbtOracleWmsClient:
     def extract_oracle_wms_data(
         self,
         entity_name: str,
-        filters: dict[str, object],
-    ) -> FlextResult[list[dict[str, object]]]:
+        filters: dict[str, t.GeneralValueType],
+    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
         """Extract data from Oracle WMS for a specific entity."""
         try:
             # Suppress unused filters parameter warning for future use
@@ -248,8 +246,8 @@ class FlextDbtOracleWmsClient:
     def validate_oracle_wms_data(
         self,
         entity_name: str,
-        records: list[dict[str, object]],
-    ) -> FlextResult[list[dict[str, object]]]:
+        records: list[dict[str, t.GeneralValueType]],
+    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
         """Validate Oracle WMS data quality."""
         try:
             # Suppress unused entity_name parameter warning for future use
@@ -269,9 +267,9 @@ class FlextDbtOracleWmsClient:
 
     def transform_with_dbt(
         self,
-        entity_data: dict[str, list[dict[str, object]]],
+        entity_data: dict[str, list[dict[str, t.GeneralValueType]]],
         model_names: list[str] | None,
-    ) -> FlextResult[dict[str, object]]:
+    ) -> FlextResult[dict[str, t.GeneralValueType]]:
         """Transform data using DBT."""
         try:
             # Suppress unused model_names parameter warning for future use

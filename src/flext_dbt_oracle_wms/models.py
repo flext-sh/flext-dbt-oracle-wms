@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextModels, FlextResult
+from flext_core import FlextModels, FlextResult, FlextTypes as t
 from flext_core.utilities import u
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
@@ -48,7 +48,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     wms_entity_type: str  # inventory, location, allocation, order, item
     schema_name: str
     table_name: str
-    columns: list[dict[str, object]]
+    columns: list[dict[str, t.GeneralValueType]]
     materialization: str
     sql_content: str
     description: str
@@ -105,10 +105,10 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         except Exception as e:
             return FlextResult[str].fail(f"SQL file generation failed: {e}")
 
-    def to_schema_entry(self) -> FlextResult[dict[str, object]]:
+    def to_schema_entry(self) -> FlextResult[dict[str, t.GeneralValueType]]:
         """Convert model to schema.yml entry with WMS metadata."""
         try:
-            schema_entry: dict[str, object] = {
+            schema_entry: dict[str, t.GeneralValueType] = {
                 "name": self.name,
                 "description": self.description,
                 "meta": {
@@ -135,7 +135,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     @classmethod
     def create_generator(
         cls,
-        config: dict[str, object],
+        config: dict[str, t.GeneralValueType],
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a WMS model generator instance."""
         return cls.ModelGenerator(config)
@@ -146,7 +146,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         @override
         def __init__(
             self,
-            config: dict[str, object],
+            config: dict[str, t.GeneralValueType],
         ) -> None:
             """Initialize the Oracle WMS model generator."""
             self.config = config
@@ -432,10 +432,10 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
             @staticmethod
             def validate_oracle_wms_connection_config(
                 config: dict,
-            ) -> FlextResult[dict[str, object]]:
+            ) -> FlextResult[dict[str, t.GeneralValueType]]:
                 """Validate Oracle WMS connection configuration for DBT."""
                 if not config:
-                    return FlextResult[dict[str, object]].fail(
+                    return FlextResult[dict[str, t.GeneralValueType]].fail(
                         "Oracle WMS connection config cannot be empty",
                     )
 
@@ -450,31 +450,31 @@ from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}
 
                 for field in required_fields:
                     if field not in config:
-                        return FlextResult[dict[str, object]].fail(
+                        return FlextResult[dict[str, t.GeneralValueType]].fail(
                             f"Missing required Oracle WMS connection field: {field}",
                         )
 
                 # Validate port is integer
                 if not isinstance(config.get("port"), int):
-                    return FlextResult[dict[str, object]].fail(
+                    return FlextResult[dict[str, t.GeneralValueType]].fail(
                         "Oracle WMS port must be an integer",
                     )
 
                 # Validate port range
                 port = config["port"]
                 if not (MIN_PORT_NUMBER <= port <= MAX_PORT_NUMBER):
-                    return FlextResult[dict[str, object]].fail(
+                    return FlextResult[dict[str, t.GeneralValueType]].fail(
                         f"Oracle WMS port must be between {MIN_PORT_NUMBER} and {MAX_PORT_NUMBER}",
                     )
 
                 # Validate WMS schema format
                 wms_schema = config["wms_schema"]
                 if not wms_schema.upper().startswith("WMS"):
-                    return FlextResult[dict[str, object]].fail(
+                    return FlextResult[dict[str, t.GeneralValueType]].fail(
                         "WMS schema must start with 'WMS'",
                     )
 
-                return FlextResult[dict[str, object]].ok(config)
+                return FlextResult[dict[str, t.GeneralValueType]].ok(config)
 
 
 # Short aliases

@@ -10,7 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import ClassVar, Literal, Self
 
-from flext_core import FlextConstants, FlextResult, FlextSettings
+from flext_core import FlextConstants, FlextResult, FlextSettings, FlextTypes as t
 from flext_meltano.settings import FlextMeltanoSettings
 from flext_oracle_wms.settings import FlextOracleWmsSettings
 from pydantic import Field, SecretStr, field_validator, model_validator
@@ -133,7 +133,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         "receiptId": "receipt_id",
     }
 
-    oracle_wms_business_rules: ClassVar[dict[str, object]] = {
+    oracle_wms_business_rules: ClassVar[dict[str, t.GeneralValueType]] = {
         "inventory_thresholds": {
             "min_quantity": 0,
             "max_quantity": 999999,
@@ -224,7 +224,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             dbt_profiles_dir=self.dbt_profiles_dir,
         )
 
-    def get_oracle_wms_quality_config(self) -> dict[str, object]:
+    def get_oracle_wms_quality_config(self) -> dict[str, t.GeneralValueType]:
         """Get data quality configuration for Oracle WMS validation."""
         return {
             "min_quality_threshold": self.min_quality_threshold,
@@ -255,9 +255,11 @@ class FlextDbtOracleWmsSettings(FlextSettings):
 
     def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
         """Get business rule for specific Oracle WMS entity."""
-        entity_rules: dict[str, object] = self.oracle_wms_business_rules.get(
-            entity_name,
-            {},
+        entity_rules: dict[str, t.GeneralValueType] = (
+            self.oracle_wms_business_rules.get(
+                entity_name,
+                {},
+            )
         )
         return entity_rules.get(rule_name) if isinstance(entity_rules, dict) else None
 
