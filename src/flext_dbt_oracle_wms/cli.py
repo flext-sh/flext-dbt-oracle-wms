@@ -25,7 +25,7 @@ class FlextDbtOracleWmsCliService:
     """FLEXT DBT Oracle WMS CLI service using flext-cli foundation exclusively."""
 
     @override
-    def __init__(self: object) -> None:
+    def __init__(self) -> None:
         """Initialize CLI service with flext-cli patterns."""
         self._cli_api = FlextCli()
         self._config: dict[str, t.GeneralValueType] = FlextCliModels.FlextCliSettings()
