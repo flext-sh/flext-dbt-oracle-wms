@@ -65,7 +65,7 @@ class FlextDbtOracleWmsTypes(FlextTypes):
     # ORACLE WMS ID TYPES - Oracle WMS specific identifiers
     # =========================================================================
 
-    class Ids:
+    class DbtOracleWms:
         """Oracle WMS specific ID type aliases."""
 
         type OracleWMSOperationId = str
@@ -342,23 +342,6 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             str, bool | str | dict[str, FlextTypes.GeneralValueType]
         ]
         type DbtWmsPipelineConfig = dict[str, FlextTypes.GeneralValueType]
-
-    class DbtOracleWms:
-        """DBT Oracle WMS types namespace for cross-project access.
-
-        Provides organized access to all DBT Oracle WMS types for other FLEXT projects.
-        Usage: Other projects can reference `t.DbtOracleWms.WmsData.*`, `t.DbtOracleWms.Project.*`, etc.
-        This enables consistent namespace patterns for cross-project type access.
-
-        Examples:
-            from flext_dbt_oracle_wms.typings import t
-            config: t.DbtOracleWms.Project.DbtOracleWmsProjectConfig = ...
-            data: t.DbtOracleWms.WmsData.InventoryData = ...
-
-        Note: Namespace composition via inheritance - no aliases needed.
-        Access parent namespaces directly through inheritance.
-
-        """
 
     # =========================================================================
     # DBT ORACLE WMS DOMAIN OBJECTS - TypedDict definitions for domain objects

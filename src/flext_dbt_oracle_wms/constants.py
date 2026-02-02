@@ -19,7 +19,7 @@ from flext_dbt_oracle_wms.__version__ import __version__
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):
     """DBT Oracle WMS semantic constants extending FlextConstants."""
 
-    class Core:
+    class DbtOracleWms:
         """Core DBT Oracle WMS system constants."""
 
         NAME: Final[str] = "flext-dbt-oracle-wms"

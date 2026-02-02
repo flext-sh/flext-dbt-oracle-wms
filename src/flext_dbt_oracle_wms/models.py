@@ -140,7 +140,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         """Create a WMS model generator instance."""
         return cls.ModelGenerator(config)
 
-    class ModelGenerator:
+    class DbtOracleWms:
         """Internal model generator class for DBT Oracle WMS models."""
 
         @override

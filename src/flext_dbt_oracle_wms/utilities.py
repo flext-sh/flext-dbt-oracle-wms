@@ -71,7 +71,7 @@ class FlextDbtOracleWmsUtilities(u):
         """Get container instance."""
         return self._container
 
-    class WmsDataExtraction:
+    class DbtOracleWms:
         """Oracle WMS data extraction utilities for analytics."""
 
         @staticmethod

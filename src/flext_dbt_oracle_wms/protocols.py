@@ -41,7 +41,7 @@ class FlextDbtOracleWmsProtocols(p_meltano, p_db_oracle):
     dbt_protocol: p.Dbt.OracleWms.DbtProtocol
     """
 
-    class Dbt:
+    class DbtOracleWms:
         """DBT domain protocols."""
 
         class OracleWms:
