@@ -15,9 +15,10 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Annotated, Literal, TypedDict
+from typing import Annotated, Literal
 
 from flext_core import FlextTypes
+from pydantic import BaseModel, ConfigDict
 
 from flext_dbt_oracle_wms.constants import c
 
@@ -348,11 +349,13 @@ class FlextDbtOracleWmsTypes(FlextTypes):
     # =========================================================================
 
     class DomainObjects:
-        """DBT Oracle WMS domain object TypedDict definitions."""
+        """DBT Oracle WMS domain object Pydantic model definitions."""
 
         # Domain objects using the configurations above
-        class DBTOracleWMSProject(TypedDict):
+        class DBTOracleWMSProject(BaseModel):
             """DBT Oracle WMS project domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             name: ProjectName
@@ -361,8 +364,10 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             created_at: CreatedAt
             updated_at: UpdatedAt
 
-        class DBTOracleWMSModel(TypedDict):
+        class DBTOracleWMSModel(BaseModel):
             """DBT Oracle WMS model domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
@@ -374,8 +379,10 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             created_at: CreatedAt
             updated_at: UpdatedAt
 
-        class DBTOracleWMSSource(TypedDict):
+        class DBTOracleWMSSource(BaseModel):
             """DBT Oracle WMS source domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
@@ -386,22 +393,26 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             created_at: CreatedAt
             updated_at: UpdatedAt
 
-        class DBTOracleWMSTest(TypedDict):
+        class DBTOracleWMSTest(BaseModel):
             """DBT Oracle WMS test domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
-            model_id: EntityId | None
+            model_id: EntityId | None = None
             name: str
             configuration: dict[
                 str, FlextTypes.GeneralValueType
             ]  # Using dict for test config
-            sql_content: str | None
+            sql_content: str | None = None
             created_at: CreatedAt
             updated_at: UpdatedAt
 
-        class DBTOracleWMSMacro(TypedDict):
+        class DBTOracleWMSMacro(BaseModel):
             """DBT Oracle WMS macro domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
@@ -413,8 +424,10 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             created_at: CreatedAt
             updated_at: UpdatedAt
 
-        class DBTOracleWMSSnapshot(TypedDict):
+        class DBTOracleWMSSnapshot(BaseModel):
             """DBT Oracle WMS snapshot domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
@@ -424,8 +437,10 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             created_at: CreatedAt
             updated_at: UpdatedAt
 
-        class DBTOracleWMSAnalysis(TypedDict):
+        class DBTOracleWMSAnalysis(BaseModel):
             """DBT Oracle WMS analysis domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
@@ -435,46 +450,54 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             created_at: CreatedAt
             updated_at: UpdatedAt
 
-        class DBTOracleWMSCompilation(TypedDict):
+        class DBTOracleWMSCompilation(BaseModel):
             """DBT Oracle WMS compilation domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
             configuration: DBTOracleWMSCompilationConfiguration
             status: DBTOracleWMSRunStatus
-            output: str | None
-            error: str | None
+            output: str | None = None
+            error: str | None = None
             created_at: CreatedAt
-            completed_at: UpdatedAt | None
+            completed_at: UpdatedAt | None = None
 
-        class DBTOracleWMSExecution(TypedDict):
+        class DBTOracleWMSExecution(BaseModel):
             """DBT Oracle WMS execution domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
             configuration: DBTOracleWMSExecutionConfiguration
             status: DBTOracleWMSRunStatus
-            output: str | None
-            error: str | None
+            output: str | None = None
+            error: str | None = None
             created_at: CreatedAt
-            completed_at: UpdatedAt | None
+            completed_at: UpdatedAt | None = None
 
-        class DBTOracleWMSDocumentation(TypedDict):
+        class DBTOracleWMSDocumentation(BaseModel):
             """DBT Oracle WMS documentation domain object using core types."""
+
+            model_config = ConfigDict(frozen=False, extra="forbid")
 
             id: EntityId
             project_id: EntityId
             configuration: DBTOracleWMSDocumentationConfiguration
             status: DBTOracleWMSRunStatus
-            output_path: str | None
-            error: str | None
+            output_path: str | None = None
+            error: str | None = None
             created_at: CreatedAt
-            completed_at: UpdatedAt | None
+            completed_at: UpdatedAt | None = None
 
 
-# Moved TypedDict classes to module level to avoid F821 issues
-class DBTOracleWMSProjectConfiguration(TypedDict):
+# Moved Pydantic model classes to module level to avoid F821 issues
+class DBTOracleWMSProjectConfiguration(BaseModel):
     """DBT Oracle WMS project configuration using core types."""
+
+    model_config = ConfigDict(frozen=False, extra="forbid")
 
     name: ProjectName
     version: Version
@@ -491,8 +514,10 @@ class DBTOracleWMSProjectConfiguration(TypedDict):
     dbt_version: str
 
 
-class DBTOracleWMSSnapshotConfiguration(TypedDict):
+class DBTOracleWMSSnapshotConfiguration(BaseModel):
     """DBT Oracle WMS snapshot configuration using core types."""
+
+    model_config = ConfigDict(frozen=False, extra="forbid")
 
     name: str
     strategy: str
@@ -501,29 +526,37 @@ class DBTOracleWMSSnapshotConfiguration(TypedDict):
     dbt_version: str
 
 
-class DBTOracleWMSAnalysisConfiguration(TypedDict):
+class DBTOracleWMSAnalysisConfiguration(BaseModel):
     """DBT Oracle WMS analysis configuration using core types."""
 
+    model_config = ConfigDict(frozen=False, extra="forbid")
+
     name: str
     depends_on: list[str]
 
 
-class DBTOracleWMSCompilationConfiguration(TypedDict):
+class DBTOracleWMSCompilationConfiguration(BaseModel):
     """DBT Oracle WMS compilation configuration using core types."""
 
+    model_config = ConfigDict(frozen=False, extra="forbid")
+
     name: str
     depends_on: list[str]
 
 
-class DBTOracleWMSExecutionConfiguration(TypedDict):
+class DBTOracleWMSExecutionConfiguration(BaseModel):
     """DBT Oracle WMS execution configuration using core types."""
 
+    model_config = ConfigDict(frozen=False, extra="forbid")
+
     name: str
     depends_on: list[str]
 
 
-class DBTOracleWMSDocumentationConfiguration(TypedDict):
+class DBTOracleWMSDocumentationConfiguration(BaseModel):
     """DBT Oracle WMS documentation configuration using core types."""
+
+    model_config = ConfigDict(frozen=False, extra="forbid")
 
     name: str
     depends_on: list[str]
@@ -553,10 +586,10 @@ CreatedAt = t.Base.CreatedAt
 UpdatedAt = t.Base.UpdatedAt
 
 # ID types re-exports
-OracleWMSOperationId = t.Ids.OracleWMSOperationId
-OracleWMSConnectionId = t.Ids.OracleWMSConnectionId
-OracleWMSSchemaId = t.Ids.OracleWMSSchemaId
-OracleWMSQueryId = t.Ids.OracleWMSQueryId
+OracleWMSOperationId = t.DbtOracleWms.OracleWMSOperationId
+OracleWMSConnectionId = t.DbtOracleWms.OracleWMSConnectionId
+OracleWMSSchemaId = t.DbtOracleWms.OracleWMSSchemaId
+OracleWMSQueryId = t.DbtOracleWms.OracleWMSQueryId
 
 # Timeout types re-exports
 DBTOracleWMSProjectTimeout = t.Timeouts.DBTOracleWMSProjectTimeout

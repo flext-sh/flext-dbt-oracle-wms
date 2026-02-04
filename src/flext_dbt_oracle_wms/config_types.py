@@ -7,13 +7,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import Literal, TypedDict
+from typing import Literal
 
 from flext_core import FlextSettings, FlextTypes as t
 from flext_oracle_wms.wms_constants import (
     FlextOracleWmsSemanticConstants as WmsConstants,
 )
-from pydantic import Field
+from pydantic import BaseModel, ConfigDict, Field
 
 # Simple type aliases for dbt Oracle WMS
 NonEmptyStr = str
@@ -76,48 +76,60 @@ class FlextDBTOracleWMSSettings(FlextSettings):
     enable_lineage_tracking: bool = Field(default=True)
 
 
-# DBT Oracle WMS TypedDicts using unified core types
-class DBTOracleWMSConfiguration(TypedDict):
+# DBT Oracle WMS Pydantic Models using unified core types
+class DBTOracleWMSConfiguration(BaseModel):
     """DBT Oracle WMS configuration using core types."""
+
+    model_config = ConfigDict(frozen=False, extra="forbid")
 
     project_name: ProjectName
     version: Version
     profile: NonEmptyStr
 
 
-class DBTOracleWMSModelConfiguration(TypedDict):
+class DBTOracleWMSModelConfiguration(BaseModel):
     """DBT model configuration using core types."""
 
+    model_config = ConfigDict(frozen=False, extra="forbid")
+
     materialized: Literal["table", "view", "incremental"]
-    schema: NonEmptyStr
+    schema_name: NonEmptyStr = Field(alias="schema")
     tags: list[NonEmptyStr]
 
 
-class DBTOracleWMSSourceConfiguration(TypedDict):
+class DBTOracleWMSSourceConfiguration(BaseModel):
     """DBT source configuration using core types."""
 
+    model_config = ConfigDict(frozen=False, extra="forbid")
+
     name: NonEmptyStr
-    schema: NonEmptyStr
+    schema_name: NonEmptyStr = Field(alias="schema")
     tables: list[dict[str, t.GeneralValueType]]
 
 
-class DBTOracleWMSTestConfiguration(TypedDict):
+class DBTOracleWMSTestConfiguration(BaseModel):
     """DBT test configuration using core types."""
 
+    model_config = ConfigDict(frozen=False, extra="forbid")
+
     store_failures: bool
-    schema: NonEmptyStr
+    schema_name: NonEmptyStr = Field(alias="schema")
 
 
-class DBTOracleWMSMacroConfiguration(TypedDict):
+class DBTOracleWMSMacroConfiguration(BaseModel):
     """DBT macro configuration using core types."""
+
+    model_config = ConfigDict(frozen=False, extra="forbid")
 
     name: NonEmptyStr
     description: NonEmptyStr
     arguments: list[NonEmptyStr]
 
 
-class DBTOracleWMSProfileConfiguration(TypedDict):
+class DBTOracleWMSProfileConfiguration(BaseModel):
     """DBT profile configuration using core types."""
+
+    model_config = ConfigDict(frozen=False, extra="forbid")
 
     target: NonEmptyStr
     outputs: dict[str, t.GeneralValueType]
