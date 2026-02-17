@@ -224,7 +224,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Validating Oracle WMS connection")
-            return FlextResult[bool].ok(True)
+            return FlextResult[bool].ok(value=True)
         except Exception as e:
             return FlextResult[bool].fail(f"Connection validation failed: {e}")
 

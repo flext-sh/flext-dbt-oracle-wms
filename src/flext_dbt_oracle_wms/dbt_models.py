@@ -94,18 +94,18 @@ class FlextDbtOracleWmsItemDimension(FlextSettings):
             modified_date=_get_str(record.get("modifiedDate")),
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self) -> FlextResult[bool]:
         """Validate item dimension business rules."""
         if not self.item_id or not self.item_number:
-            return FlextResult[None].fail("Item ID and item number are required")
+            return FlextResult[bool].fail("Item ID and item number are required")
 
         if self.unit_cost is not None and self.unit_cost < 0:
-            return FlextResult[None].fail("Unit cost cannot be negative")
+            return FlextResult[bool].fail("Unit cost cannot be negative")
 
         if self.weight is not None and self.weight < 0:
-            return FlextResult[None].fail("Weight cannot be negative")
+            return FlextResult[bool].fail("Weight cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextResult[bool].ok(value=True)
 
     def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
         """Convert to dictionary suitable for DBT processing."""
@@ -168,17 +168,17 @@ class FlextDbtOracleWmsLocationDimension(FlextSettings):
             modified_date=_get_str(record.get("modifiedDate")),
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self) -> FlextResult[bool]:
         """Validate location dimension business rules."""
         if not self.location_id or not self.location_name or not self.facility_id:
-            return FlextResult[None].fail(
+            return FlextResult[bool].fail(
                 "Location ID, name, and facility ID are required",
             )
 
         if self.capacity is not None and self.capacity < 0:
-            return FlextResult[None].fail("Capacity cannot be negative")
+            return FlextResult[bool].fail("Capacity cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextResult[bool].ok(value=True)
 
     def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
         """Convert to dictionary suitable for DBT processing."""
@@ -245,20 +245,20 @@ class FlextDbtOracleWmsInventoryFact(FlextSettings):
             total_value=total_value,
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self) -> FlextResult[bool]:
         """Validate inventory fact business rules."""
         if not self.item_id or not self.location_id or not self.facility_id:
-            return FlextResult[None].fail(
+            return FlextResult[bool].fail(
                 "Item ID, location ID, and facility ID are required",
             )
 
         if self.quantity_on_hand < 0:
-            return FlextResult[None].fail("Quantity on hand cannot be negative")
+            return FlextResult[bool].fail("Quantity on hand cannot be negative")
 
         if self.quantity_available is not None and self.quantity_available < 0:
-            return FlextResult[None].fail("Quantity available cannot be negative")
+            return FlextResult[bool].fail("Quantity available cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextResult[bool].ok(value=True)
 
     def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
         """Convert to dictionary suitable for DBT processing."""
@@ -320,10 +320,10 @@ class FlextDbtOracleWmsShipmentFact(FlextSettings):
             freight_cost=_get_float(record.get("freightCost")),
         )
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self) -> FlextResult[bool]:
         """Validate shipment fact business rules."""
         if not self.shipment_id or not self.order_id or not self.facility_id:
-            return FlextResult[None].fail(
+            return FlextResult[bool].fail(
                 "Shipment ID, order ID, and facility ID are required",
             )
 
@@ -336,17 +336,17 @@ class FlextDbtOracleWmsShipmentFact(FlextSettings):
             "CANCELLED",
         ]
         if self.shipment_status not in valid_statuses:
-            return FlextResult[None].fail(
+            return FlextResult[bool].fail(
                 f"Invalid shipment status: {self.shipment_status}",
             )
 
         if self.total_weight is not None and self.total_weight < 0:
-            return FlextResult[None].fail("Total weight cannot be negative")
+            return FlextResult[bool].fail("Total weight cannot be negative")
 
         if self.freight_cost is not None and self.freight_cost < 0:
-            return FlextResult[None].fail("Freight cost cannot be negative")
+            return FlextResult[bool].fail("Freight cost cannot be negative")
 
-        return FlextResult[None].ok(None)
+        return FlextResult[bool].ok(value=True)
 
     def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
         """Convert to dictionary suitable for DBT processing."""

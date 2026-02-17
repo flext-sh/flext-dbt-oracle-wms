@@ -56,28 +56,28 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
     dependencies: list[str]
     wms_business_rules: list[str]
 
-    def validate_business_rules(self) -> FlextResult[None]:
+    def validate_business_rules(self) -> FlextResult[bool]:
         """Validate DBT Oracle WMS model business rules."""
         try:
             if not self.name.strip():
-                return FlextResult[None].fail("Model name cannot be empty")
+                return FlextResult[bool].fail("Model name cannot be empty")
             if (
                 self.dbt_model_type
                 not in FlextDbtOracleWmsConstants.Dbt.MATERIALIZATIONS
             ):
-                return FlextResult[None].fail("Invalid model_type")
+                return FlextResult[bool].fail("Invalid model_type")
             if (
                 self.wms_entity_type
                 not in FlextDbtOracleWmsConstants.Entities.WMS_ENTITIES
             ):
-                return FlextResult[None].fail("Invalid WMS entity type")
+                return FlextResult[bool].fail("Invalid WMS entity type")
             if not self.schema_name.strip() or not self.table_name.strip():
-                return FlextResult[None].fail("Schema and table names cannot be empty")
+                return FlextResult[bool].fail("Schema and table names cannot be empty")
             if not self.sql_content.strip():
-                return FlextResult[None].fail("SQL content cannot be empty")
-            return FlextResult[None].ok(None)
+                return FlextResult[bool].fail("SQL content cannot be empty")
+            return FlextResult[bool].ok(value=True)
         except Exception as e:
-            return FlextResult[None].fail(f"Business rule validation failed: {e}")
+            return FlextResult[bool].fail(f"Business rule validation failed: {e}")
 
     def get_file_path(self) -> str:
         """Get the file path for this DBT Oracle WMS model."""
