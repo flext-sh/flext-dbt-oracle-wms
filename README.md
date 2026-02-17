@@ -7,6 +7,8 @@
 
 **FLEXT-DBT-Oracle-WMS** is a purpose-built analytics suite for Oracle Warehouse Management Systems (WMS). It integrates deeply with `flext-dbt-oracle` to deliver comprehensive reporting on inventory, fulfillment, and warehouse operations.
 
+Part of the [FLEXT](https://github.com/flext/flext) ecosystem.
+
 ## 🚀 Key Features
 
 - **Pre-Built Domain Models**: Turn-key data models for essential WMS entities:
