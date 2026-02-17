@@ -100,7 +100,7 @@ class FlextDbtOracleWmsClient:
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
         entity_names: list[str] | None = None,
-        filters: t.NestedDict | None = None,
+        filters: dict[str, t.GeneralValueType] | None = None,
         model_names: list[str] | None = None,
     ) -> FlextResult[dict[str, t.GeneralValueType]]:
         """Run full Oracle WMS-to-DBT pipeline.
