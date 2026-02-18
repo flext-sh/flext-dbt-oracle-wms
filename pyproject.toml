@@ -53,6 +53,14 @@
     [project.scripts]
         flext-dbt-oracle-wms = "flext_dbt_oracle_wms.cli:main"
 
+    [tool.pyrefly]
+        search-path = [
+            "../typings",
+            "../typings/generated",
+            "src",
+            "tests",
+        ]
+
 [tool.ruff]
     extend = "../ruff-shared.toml"
 
