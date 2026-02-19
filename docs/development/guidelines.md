@@ -1,5 +1,40 @@
 # Development Guidelines
 
+
+<!-- TOC START -->
+- [🏗️ Architecture Principles](#-architecture-principles)
+  - [Clean Architecture Application](#clean-architecture-application)
+  - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
+- [📁 Project Structure Standards](#-project-structure-standards)
+  - [Directory Organization](#directory-organization)
+  - [File Naming Conventions](#file-naming-conventions)
+- [🎯 Model Development Standards](#-model-development-standards)
+  - [Model Configuration](#model-configuration)
+  - [SQL Code Standards](#sql-code-standards)
+  - [Business Logic Implementation](#business-logic-implementation)
+- [🧪 Testing Standards](#-testing-standards)
+  - [Test Categories](#test-categories)
+  - [Test Execution Strategy](#test-execution-strategy)
+- [📊 Documentation Standards](#-documentation-standards)
+  - [Model Documentation](#model-documentation)
+  - [Documentation Generation](#documentation-generation)
+- [Allocation Business Rules](#allocation-business-rules)
+  - [Quantity Validation](#quantity-validation)
+  - [Status Progression](#status-progression)
+  - [Wave Assignment](#wave-assignment)
+- [🚀 Performance Optimization](#-performance-optimization)
+  - [Oracle-Specific Optimizations](#oracle-specific-optimizations)
+  - [Model Performance Guidelines](#model-performance-guidelines)
+- [🔄 Development Workflow](#-development-workflow)
+  - [Local Development Process](#local-development-process)
+  - [Git Workflow](#git-workflow)
+  - [Code Review Guidelines](#code-review-guidelines)
+- [📚 Additional Resources](#-additional-resources)
+  - [dbt Resources](#dbt-resources)
+  - [Oracle WMS Resources](#oracle-wms-resources)
+  - [FLEXT Framework](#flext-framework)
+<!-- TOC END -->
+
 **Best Practices for FLEXT DBT Oracle WMS Development**
 
 This guide establishes development standards and best practices for creating and maintaining dbt models in the FLEXT DBT Oracle WMS project.

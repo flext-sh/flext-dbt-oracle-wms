@@ -1,5 +1,47 @@
 # FLEXT DBT Oracle WMS Documentation
 
+
+<!-- TOC START -->
+- [�"� Documentation Structure](#-documentation-structure)
+  - [🚀 Getting Started](#-getting-started)
+  - [🏗️ Data Models](#-data-models)
+  - [�"� Oracle WMS Integration](#-oracle-wms-integration)
+  - [🛠️ Development](#-development)
+  - [🚀 Deployment](#-deployment)
+  - [�"� Business Intelligence](#-business-intelligence)
+  - [�"� Examples](#-examples)
+- [🎯 Quick Navigation](#-quick-navigation)
+  - [For New Users](#for-new-users)
+  - [For Developers](#for-developers)
+  - [For Data Analysts](#for-data-analysts)
+  - [For Operations](#for-operations)
+- [🛠️ Technology Stack](#-technology-stack)
+  - [Core Technologies](#core-technologies)
+  - [dbt Components](#dbt-components)
+  - [Oracle WMS Integration](#oracle-wms-integration)
+- [�"� Project Architecture](#-project-architecture)
+  - [Data Flow Architecture](#data-flow-architecture)
+  - [Model Organization](#model-organization)
+- [�"� Oracle WMS Domain Model](#-oracle-wms-domain-model)
+  - [Core Business Entities](#core-business-entities)
+  - [Key Performance Indicators](#key-performance-indicators)
+- [🧪 Data Quality Framework](#-data-quality-framework)
+  - [Testing Strategy](#testing-strategy)
+  - [Quality Thresholds](#quality-thresholds)
+- [🚀 Performance Optimization](#-performance-optimization)
+  - [Optimization Strategies](#optimization-strategies)
+  - [Scaling Considerations](#scaling-considerations)
+- [�"� Business Impact](#-business-impact)
+  - [Operational Benefits](#operational-benefits)
+  - [Strategic Benefits](#strategic-benefits)
+- [🤝 Community & Support](#-community-support)
+  - [Getting Help](#getting-help)
+  - [Contributing](#contributing)
+- [�"� Roadmap](#-roadmap)
+  - [Current Version (v0.7.0)](#current-version-v070)
+  - [Upcoming Features](#upcoming-features)
+<!-- TOC END -->
+
 **Enterprise Oracle WMS Data Transformations Documentation Hub**
 
 Welcome to the comprehensive documentation for FLEXT DBT Oracle WMS - an enterprise-grade dbt project for Oracle Warehouse Management System data transformations.

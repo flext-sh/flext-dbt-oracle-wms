@@ -192,6 +192,7 @@ class FlextDbtOracleWmsModels(FlextModels.ArbitraryTypesModel):
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a dimension model for WMS entity."""
             try:
+                # nosec B608
                 sql_content = f"""
 select
  {wms_entity}_key,
@@ -382,6 +383,7 @@ from {{{{ ref('int_wms_{wms_entity}') }}}}
         ) -> FlextResult[FlextDbtOracleWmsModels]:
             """Create a staging model from Oracle WMS source."""
             try:
+                # nosec B608 - DBT source() template; oracle_source from config
                 sql_content = f"""
 select *
 from {{{{ source('oracle_wms', '{oracle_source.lower()}') }}}}

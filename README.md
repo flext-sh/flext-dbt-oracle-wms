@@ -1,5 +1,18 @@
 # FLEXT-DBT-Oracle-WMS
 
+
+<!-- TOC START -->
+- [🚀 Key Features](#-key-features)
+- [📦 Installation](#-installation)
+- [🛠️ Usage](#-usage)
+  - [Analyze Inventory Health](#analyze-inventory-health)
+  - [Track Labor Productivity](#track-labor-productivity)
+  - [Fulfillment Performance](#fulfillment-performance)
+- [🏗️ Architecture](#-architecture)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+<!-- TOC END -->
+
 [![dbt 1.6+](https://img.shields.io/badge/dbt-1.6+-orange.svg)](https://getdbt.com)
 [![Oracle WMS](https://img.shields.io/badge/Oracle-WMS-red.svg)](https://www.oracle.com/scm/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
