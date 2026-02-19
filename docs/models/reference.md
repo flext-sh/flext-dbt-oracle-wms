@@ -1,34 +1,35 @@
 # Model Reference
 
-
 <!-- TOC START -->
-- [📊 Model Architecture Overview](#-model-architecture-overview)
-- [🔵 Staging Models](#-staging-models)
+
+- [📊 Model Architecture Overview](#model-architecture-overview)
+- [🔵 Staging Models](#staging-models)
   - [stg_wms\_\_allocation](#stgwmsallocation)
   - [stg_wms\_\_inventory](#stgwmsinventory)
   - [stg_wms\_\_order_hdr](#stgwmsorderhdr)
   - [stg_wms\_\_order_dtl](#stgwmsorderdtl)
-- [🟢 Mart Models](#-mart-models)
+- [🟢 Mart Models](#mart-models)
   - [marts/operational/opr_wms\_\_allocation_summary](#martsoperationaloprwmsallocationsummary)
   - [marts/analytical/ana_wms\_\_inventory_analysis](#martsanalyticalanawmsinventoryanalysis)
   - [marts/metrics/met_wms\_\_kpi_dashboard](#martsmetricsmetwmskpidashboard)
-- [🔗 Model Dependencies](#-model-dependencies)
+- [🔗 Model Dependencies](#model-dependencies)
   - [Dependency Graph](#dependency-graph)
-- [📈 Performance Considerations](#-performance-considerations)
+- [📈 Performance Considerations](#performance-considerations)
   - [Materialization Strategy](#materialization-strategy)
   - [Incremental Processing](#incremental-processing)
   - [Partitioning Strategy](#partitioning-strategy)
-- [🧪 Testing Strategy](#-testing-strategy)
+- [🧪 Testing Strategy](#testing-strategy)
   - [Data Quality Tests](#data-quality-tests)
   - [Performance Tests](#performance-tests)
-- [📊 Usage Patterns](#-usage-patterns)
+- [📊 Usage Patterns](#usage-patterns)
   - [Common Query Patterns](#common-query-patterns)
-- [🔄 Data Refresh Strategy](#-data-refresh-strategy)
+- [🔄 Data Refresh Strategy](#data-refresh-strategy)
   - [Refresh Schedule](#refresh-schedule)
   - [Refresh Commands](#refresh-commands)
-- [📚 Documentation](#-documentation)
+- [📚 Documentation](#documentation)
   - [Model Documentation](#model-documentation)
   - [Automated Documentation Generation](#automated-documentation-generation)
+
 <!-- TOC END -->
 
 **Complete Data Model Documentation for FLEXT DBT Oracle WMS**
@@ -73,8 +74,8 @@ Staging models standardize and cleanse raw Oracle WMS data for downstream consum
 
 **Purpose**: Standardizes Oracle WMS allocation data for pick and pack operations.
 
-**Materialization**: View  
-**Schema**: `wms_staging`  
+**Materialization**: View\
+**Schema**: `wms_staging`\
 **Tags**: `["staging", "allocation", "oracle_wms"]`
 
 #### Columns
@@ -142,8 +143,8 @@ ORDER BY task_sequence_number;
 
 **Purpose**: Standardizes Oracle WMS inventory position data.
 
-**Materialization**: View  
-**Schema**: `wms_staging`  
+**Materialization**: View\
+**Schema**: `wms_staging`\
 **Tags**: `["staging", "inventory", "oracle_wms"]`
 
 #### Key Features
@@ -192,8 +193,8 @@ END as inventory_classification
 
 **Purpose**: Standardizes Oracle WMS order header information.
 
-**Materialization**: View  
-**Schema**: `wms_staging`  
+**Materialization**: View\
+**Schema**: `wms_staging`\
 **Tags**: `["staging", "orders", "oracle_wms"]`
 
 #### Key Features
@@ -207,8 +208,8 @@ END as inventory_classification
 
 **Purpose**: Standardizes Oracle WMS order detail/line information.
 
-**Materialization**: View  
-**Schema**: `wms_staging`  
+**Materialization**: View\
+**Schema**: `wms_staging`\
 **Tags**: `["staging", "orders", "oracle_wms"]`
 
 #### Key Features
@@ -226,8 +227,8 @@ Mart models provide business-ready data for analytics and reporting.
 
 **Purpose**: Real-time allocation summary for operational dashboards.
 
-**Materialization**: Table  
-**Schema**: `wms_marts`  
+**Materialization**: Table\
+**Schema**: `wms_marts`\
 **Tags**: `["marts", "operational", "allocation", "real_time"]`
 
 #### Features
@@ -239,13 +240,13 @@ Mart models provide business-ready data for analytics and reporting.
 
 #### Key Metrics
 
-| Metric                | Description               | Calculation                                   |
-| --------------------- | ------------------------- | --------------------------------------------- |
-| `total_allocations`   | Total allocations in wave | COUNT(\*)                                     |
-| `picked_allocations`  | Completed picks           | COUNT() WHERE picked_timestamp IS NOT NULL    |
-| `pick_rate_percent`   | Pick completion rate      | picked_allocations / total_allocations \* 100 |
-| `avg_pick_time`       | Average time per pick     | AVG(picked_timestamp - created_timestamp)     |
-| `pending_allocations` | Outstanding picks         | total_allocations - picked_allocations        |
+| Metric                | Description               | Calculation                                  |
+| --------------------- | ------------------------- | -------------------------------------------- |
+| `total_allocations`   | Total allocations in wave | COUNT(\*)                                    |
+| `picked_allocations`  | Completed picks           | COUNT() WHERE picked_timestamp IS NOT NULL   |
+| `pick_rate_percent`   | Pick completion rate      | picked_allocations / total_allocations * 100 |
+| `avg_pick_time`       | Average time per pick     | AVG(picked_timestamp - created_timestamp)    |
+| `pending_allocations` | Outstanding picks         | total_allocations - picked_allocations       |
 
 #### Usage Example
 
@@ -270,8 +271,8 @@ ORDER BY pick_rate_percent ASC;
 
 **Purpose**: Historical inventory analysis for strategic planning.
 
-**Materialization**: Table  
-**Schema**: `wms_marts`  
+**Materialization**: Table\
+**Schema**: `wms_marts`\
 **Tags**: `["marts", "analytical", "inventory", "historical"]`
 
 #### Features
@@ -292,8 +293,8 @@ ORDER BY pick_rate_percent ASC;
 
 **Purpose**: Executive KPI dashboard for warehouse performance.
 
-**Materialization**: View  
-**Schema**: `wms_metrics`  
+**Materialization**: View\
+**Schema**: `wms_metrics`\
 **Tags**: `["metrics", "kpi", "dashboard", "executive"]`
 
 #### Key Performance Indicators
@@ -568,6 +569,6 @@ dbt docs generate --include-sources --include-performance
 dbt docs serve --port 8080
 ```
 
----
+______________________________________________________________________
 
 This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](../development/guidelines.md).

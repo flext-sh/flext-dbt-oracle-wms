@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from flext_dbt_oracle_wms.__version__ import __version__, __version_info__
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m, m_dbt_oracle_wms
 from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
@@ -18,8 +19,6 @@ from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms, FlextDbtOracleWmsAPI
 from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities
 
-# Version info imported from __version__.py
-
 __all__ = [
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsAPI",
@@ -29,7 +28,6 @@ __all__ = [
     "FlextDbtOracleWmsProtocols",
     "FlextDbtOracleWmsSettings",
     "FlextDbtOracleWmsUtilities",
-    "FlextDbtOracleWmsVersion",
     "FlextDbtOracleWmsWorkflowService",
     "__version__",
     "__version_info__",

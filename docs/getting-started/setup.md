@@ -1,40 +1,41 @@
 # Setup Guide
 
-
 <!-- TOC START -->
-- [📋 Prerequisites](#-prerequisites)
+
+- [📋 Prerequisites](#prerequisites)
   - [System Requirements](#system-requirements)
   - [Oracle WMS Requirements](#oracle-wms-requirements)
-- [🚀 Installation](#-installation)
+- [🚀 Installation](#installation)
   - [1. Clone the Repository](#1-clone-the-repository)
   - [2. Python Environment Setup](#2-python-environment-setup)
   - [3. Oracle Client Setup](#3-oracle-client-setup)
   - [4. dbt Installation and Setup](#4-dbt-installation-and-setup)
-- [⚙️ Configuration](#-configuration)
+- [⚙️ Configuration](#configuration)
   - [1. dbt Profile Configuration](#1-dbt-profile-configuration)
   - [2. Environment Variables](#2-environment-variables)
   - [3. Project Configuration](#3-project-configuration)
-- [🔍 Verification](#-verification)
+- [🔍 Verification](#verification)
   - [1. Test Database Connection](#1-test-database-connection)
   - [2. Install dbt Dependencies](#2-install-dbt-dependencies)
   - [3. Verify Project Structure](#3-verify-project-structure)
   - [4. Test Model Compilation](#4-test-model-compilation)
-- [🎯 Quick Validation](#-quick-validation)
+- [🎯 Quick Validation](#quick-validation)
   - [1. Run a Simple Model](#1-run-a-simple-model)
   - [2. Run Basic Tests](#2-run-basic-tests)
   - [3. Generate Documentation](#3-generate-documentation)
-- [🔧 Oracle WMS Data Setup](#-oracle-wms-data-setup)
+- [🔧 Oracle WMS Data Setup](#oracle-wms-data-setup)
   - [1. Source Data Validation](#1-source-data-validation)
   - [2. Singer Tap Setup (Optional)](#2-singer-tap-setup-optional)
-- [🛠️ Development Setup](#-development-setup)
+- [🛠️ Development Setup](#development-setup)
   - [1. Pre-commit Hooks](#1-pre-commit-hooks)
   - [2. IDE Configuration](#2-ide-configuration)
   - [3. Quality Checks](#3-quality-checks)
-- [🐛 Troubleshooting](#-troubleshooting)
+- [🐛 Troubleshooting](#troubleshooting)
   - [Common Issues](#common-issues)
   - [Getting Help](#getting-help)
-- [✅ Next Steps](#-next-steps)
-- [📚 Additional Resources](#-additional-resources)
+- [✅ Next Steps](#next-steps)
+- [📚 Additional Resources](#additional-resources)
+
 <!-- TOC END -->
 
 **Complete Installation and Configuration for FLEXT DBT Oracle WMS**
@@ -574,9 +575,9 @@ dbt run --fail-fast --threads 1
 Now that you have FLEXT DBT Oracle WMS set up:
 
 1. **Explore Models** - Check the [Model Reference](../models/reference.md)
-2. **Run Your First Transformation** - Follow the [Quick Start Guide](quickstart.md)
-3. **Understand the Data** - Review [Oracle WMS Integration](../integration/oracle-wms.md)
-4. **Set Up Development** - Read the [Development Guide](../development/guidelines.md)
+1. **Run Your First Transformation** - Follow the [Quick Start Guide](quickstart.md)
+1. **Understand the Data** - Review [Oracle WMS Integration](../integration/oracle-wms.md)
+1. **Set Up Development** - Read the [Development Guide](../development/guidelines.md)
 
 ## 📚 Additional Resources
 
@@ -585,6 +586,6 @@ Now that you have FLEXT DBT Oracle WMS set up:
 - **[Singer Protocol](https://hub.meltano.com/singer/spec)** - Data extraction standards
 - **[Oracle WMS Documentation](https://docs.oracle.com/en/industries/food-beverage/wms/)** - Oracle WMS reference
 
----
+______________________________________________________________________
 
 **Installation Complete!** 🎉 You're ready to start transforming Oracle WMS data with dbt.

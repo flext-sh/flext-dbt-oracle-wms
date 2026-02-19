@@ -1,14 +1,15 @@
 <!-- Generated from docs/guides/security.md for flext-dbt-oracle-wms. -->
+
 <!-- Source of truth: workspace docs/guides/. -->
 
 # flext-dbt-oracle-wms - Security Guide
 
 > Project profile: `flext-dbt-oracle-wms`
 
-
-
 <!-- TOC START -->
+
 - No sections found
+
 <!-- TOC END -->
 
 Security practices are governed by project-specific policies and central architecture ADRs.

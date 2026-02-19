@@ -1,41 +1,42 @@
 # Quick Start Guide
 
-
 <!-- TOC START -->
-- [🚀 Prerequisites Check](#-prerequisites-check)
-- [⚡ Quick Installation](#-quick-installation)
+
+- [🚀 Prerequisites Check](#prerequisites-check)
+- [⚡ Quick Installation](#quick-installation)
   - [1. Clone and Setup (2 minutes)](#1-clone-and-setup-2-minutes)
   - [2. Configure Oracle Connection (3 minutes)](#2-configure-oracle-connection-3-minutes)
   - [3. Setup dbt Profile (2 minutes)](#3-setup-dbt-profile-2-minutes)
   - [4. Test Connection (1 minute)](#4-test-connection-1-minute)
   - [5. Run Your First Models (2 minutes)](#5-run-your-first-models-2-minutes)
-- [🎯 Quick Validation](#-quick-validation)
+- [🎯 Quick Validation](#quick-validation)
   - [Check Your Data](#check-your-data)
   - [Verify Model Count](#verify-model-count)
-- [📊 Quick Dashboard](#-quick-dashboard)
+- [📊 Quick Dashboard](#quick-dashboard)
   - [Generate Documentation](#generate-documentation)
   - [Key Views to Check](#key-views-to-check)
-- [🧪 Quick Quality Check](#-quick-quality-check)
-- [🎨 Common First Tasks](#-common-first-tasks)
+- [🧪 Quick Quality Check](#quick-quality-check)
+- [🎨 Common First Tasks](#common-first-tasks)
   - [1. Explore Staging Data](#1-explore-staging-data)
   - [2. Build Operational Marts](#2-build-operational-marts)
   - [3. Generate KPI Models](#3-generate-kpi-models)
-- [🚨 Quick Troubleshooting](#-quick-troubleshooting)
+- [🚨 Quick Troubleshooting](#quick-troubleshooting)
   - [Connection Issues](#connection-issues)
   - [Model Compilation Issues](#model-compilation-issues)
   - [Data Issues](#data-issues)
-- [🎯 Next Steps](#-next-steps)
+- [🎯 Next Steps](#next-steps)
   - [Immediate Actions (Next 30 minutes)](#immediate-actions-next-30-minutes)
   - [This Week](#this-week)
   - [This Month](#this-month)
-- [📚 Key Resources](#-key-resources)
+- [📚 Key Resources](#key-resources)
   - [Essential Documentation](#essential-documentation)
   - [Common Commands](#common-commands)
   - [Configuration Files](#configuration-files)
-- [🎉 Success Checklist](#-success-checklist)
-- [🆘 Getting Stuck](#-getting-stuck)
+- [🎉 Success Checklist](#success-checklist)
+- [🆘 Getting Stuck](#getting-stuck)
   - [Common Issues](#common-issues)
   - [Get Help](#get-help)
+
 <!-- TOC END -->
 
 **Get FLEXT DBT Oracle WMS running in 10 minutes**
@@ -175,8 +176,8 @@ dbt docs serve --port 8080
 ### Key Views to Check
 
 1. **Data Lineage** - See model dependencies
-2. **Column Details** - Review data types and descriptions
-3. **Model Performance** - Check execution times
+1. **Column Details** - Review data types and descriptions
+1. **Model Performance** - Check execution times
 
 ## 🧪 Quick Quality Check
 
@@ -245,20 +246,20 @@ dbt test --select stg_wms__allocation
 ### Immediate Actions (Next 30 minutes)
 
 1. **Explore Models** - Check [Model Reference](../models/reference.md)
-2. **Review Data Quality** - Run `dbt test` and investigate failures
-3. **Check Performance** - Monitor model execution times
+1. **Review Data Quality** - Run `dbt test` and investigate failures
+1. **Check Performance** - Monitor model execution times
 
 ### This Week
 
 1. **Configure Environments** - Setup staging and production profiles
-2. **Customize Models** - Modify models for your specific WMS configuration
-3. **Setup Monitoring** - Configure data quality alerts
+1. **Customize Models** - Modify models for your specific WMS configuration
+1. **Setup Monitoring** - Configure data quality alerts
 
 ### This Month
 
 1. **Build Custom Analytics** - Create business-specific marts
-2. **Integrate BI Tools** - Connect Tableau/Power BI
-3. **Setup CI/CD** - Automate deployment pipeline
+1. **Integrate BI Tools** - Connect Tableau/Power BI
+1. **Setup CI/CD** - Automate deployment pipeline
 
 ## 📚 Key Resources
 
@@ -304,9 +305,9 @@ After completing this guide, you should have:
 ### Common Issues
 
 1. **Oracle Client not found** - Install Oracle Instant Client
-2. **Connection timeout** - Check Oracle host/port/service
-3. **Permission denied** - Verify Oracle user permissions
-4. **Model compilation error** - Check table/column names in Oracle
+1. **Connection timeout** - Check Oracle host/port/service
+1. **Permission denied** - Verify Oracle user permissions
+1. **Model compilation error** - Check table/column names in Oracle
 
 ### Get Help
 
@@ -315,6 +316,6 @@ After completing this guide, you should have:
 - **Compile Check** - `dbt compile` for SQL issues
 - **Documentation** - [Troubleshooting Guide](../examples/troubleshooting.md)
 
----
+______________________________________________________________________
 
 **Congratulations!** 🎉 You now have FLEXT DBT Oracle WMS running locally. Ready for the next level? Check out the [Development Guide](../development/guidelines.md).

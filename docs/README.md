@@ -1,45 +1,46 @@
 # FLEXT DBT Oracle WMS Documentation
 
-
 <!-- TOC START -->
-- [�"� Documentation Structure](#-documentation-structure)
-  - [🚀 Getting Started](#-getting-started)
-  - [🏗️ Data Models](#-data-models)
-  - [�"� Oracle WMS Integration](#-oracle-wms-integration)
-  - [🛠️ Development](#-development)
-  - [🚀 Deployment](#-deployment)
-  - [�"� Business Intelligence](#-business-intelligence)
-  - [�"� Examples](#-examples)
-- [🎯 Quick Navigation](#-quick-navigation)
+
+- [�"� Documentation Structure](#documentation-structure)
+  - [🚀 Getting Started](#getting-started)
+  - [🏗️ Data Models](#data-models)
+  - [�"� Oracle WMS Integration](#oracle-wms-integration)
+  - [🛠️ Development](#development)
+  - [🚀 Deployment](#deployment)
+  - [�"� Business Intelligence](#business-intelligence)
+  - [�"� Examples](#examples)
+- [🎯 Quick Navigation](#quick-navigation)
   - [For New Users](#for-new-users)
   - [For Developers](#for-developers)
   - [For Data Analysts](#for-data-analysts)
   - [For Operations](#for-operations)
-- [🛠️ Technology Stack](#-technology-stack)
+- [🛠️ Technology Stack](#technology-stack)
   - [Core Technologies](#core-technologies)
   - [dbt Components](#dbt-components)
   - [Oracle WMS Integration](#oracle-wms-integration)
-- [�"� Project Architecture](#-project-architecture)
+- [�"� Project Architecture](#project-architecture)
   - [Data Flow Architecture](#data-flow-architecture)
   - [Model Organization](#model-organization)
-- [�"� Oracle WMS Domain Model](#-oracle-wms-domain-model)
+- [�"� Oracle WMS Domain Model](#oracle-wms-domain-model)
   - [Core Business Entities](#core-business-entities)
   - [Key Performance Indicators](#key-performance-indicators)
-- [🧪 Data Quality Framework](#-data-quality-framework)
+- [🧪 Data Quality Framework](#data-quality-framework)
   - [Testing Strategy](#testing-strategy)
   - [Quality Thresholds](#quality-thresholds)
-- [🚀 Performance Optimization](#-performance-optimization)
+- [🚀 Performance Optimization](#performance-optimization)
   - [Optimization Strategies](#optimization-strategies)
   - [Scaling Considerations](#scaling-considerations)
-- [�"� Business Impact](#-business-impact)
+- [�"� Business Impact](#business-impact)
   - [Operational Benefits](#operational-benefits)
   - [Strategic Benefits](#strategic-benefits)
-- [🤝 Community & Support](#-community-support)
+- [🤝 Community & Support](#community-support)
   - [Getting Help](#getting-help)
   - [Contributing](#contributing)
-- [�"� Roadmap](#-roadmap)
+- [�"� Roadmap](#roadmap)
   - [Current Version (v0.7.0)](#current-version-v070)
   - [Upcoming Features](#upcoming-features)
+
 <!-- TOC END -->
 
 **Enterprise Oracle WMS Data Transformations Documentation Hub**
@@ -104,26 +105,26 @@ Welcome to the comprehensive documentation for FLEXT DBT Oracle WMS - an enterpr
 ### For New Users
 
 1. Start with **[Setup Guide](getting-started/setup.md)**
-2. Follow **[Quick Start](getting-started/quickstart.md)**
-3. Explore **[Model Reference](models/reference.md)**
+1. Follow **[Quick Start](getting-started/quickstart.md)**
+1. Explore **[Model Reference](models/reference.md)**
 
 ### For Developers
 
 1. Setup **Development Environment** (_Documentation coming soon_)
-2. Review **[Model Guidelines](development/guidelines.md)**
-3. Follow **Testing Guide** (_Documentation coming soon_)
+1. Review **[Model Guidelines](development/guidelines.md)**
+1. Follow **Testing Guide** (_Documentation coming soon_)
 
 ### For Data Analysts
 
 1. Review **Business Models** (_Documentation coming soon_)
-2. Check **KPI Definitions** (_Documentation coming soon_)
-3. Explore **Dashboard Models** (_Documentation coming soon_)
+1. Check **KPI Definitions** (_Documentation coming soon_)
+1. Explore **Dashboard Models** (_Documentation coming soon_)
 
 ### For Operations
 
 1. Setup **Environment Configuration** (_Documentation coming soon_)
-2. Configure **CI/CD Pipeline** (_Documentation coming soon_)
-3. Monitor **Data Quality** (_Documentation coming soon_)
+1. Configure **CI/CD Pipeline** (_Documentation coming soon_)
+1. Monitor **Data Quality** (_Documentation coming soon_)
 
 ## 🛠️ Technology Stack
 
@@ -261,7 +262,7 @@ models/
 - **Completeness**: 95%+ required fields populated
 - **Accuracy**: 98%+ data matches source system
 - **Consistency**: 90%+ cross-model data alignment
-- **Timeliness**: <4 hour data freshness requirement
+- **Timeliness**: \<4 hour data freshness requirement
 
 ## 🚀 Performance Optimization
 
@@ -327,7 +328,7 @@ models/
 - �"� Enhanced monitoring dashboard
 - �"� Automated data governance
 
----
+______________________________________________________________________
 
 **Need Help?** Check our Troubleshooting Guide (_Documentation coming soon_) or [open an issue](https://github.com/flext-sh/flext/issues).
 

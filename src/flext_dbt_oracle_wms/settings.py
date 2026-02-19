@@ -255,13 +255,10 @@ class FlextDbtOracleWmsSettings(FlextSettings):
 
     def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
         """Get business rule for specific Oracle WMS entity."""
-        entity_rules: dict[str, t.GeneralValueType] = (
-            self.oracle_wms_business_rules.get(
-                entity_name,
-                {},
-            )
-        )
-        return entity_rules.get(rule_name) if isinstance(entity_rules, dict) else None
+        entity_rules = self.oracle_wms_business_rules.get(entity_name)
+        if isinstance(entity_rules, dict):
+            return entity_rules.get(rule_name)
+        return None
 
     def get_required_fields(self, entity_name: str) -> list[str]:
         """Get required fields for specific Oracle WMS entity."""

@@ -1,38 +1,39 @@
 # Development Guidelines
 
-
 <!-- TOC START -->
-- [🏗️ Architecture Principles](#-architecture-principles)
+
+- [🏗️ Architecture Principles](#architecture-principles)
   - [Clean Architecture Application](#clean-architecture-application)
   - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
-- [📁 Project Structure Standards](#-project-structure-standards)
+- [📁 Project Structure Standards](#project-structure-standards)
   - [Directory Organization](#directory-organization)
   - [File Naming Conventions](#file-naming-conventions)
-- [🎯 Model Development Standards](#-model-development-standards)
+- [🎯 Model Development Standards](#model-development-standards)
   - [Model Configuration](#model-configuration)
   - [SQL Code Standards](#sql-code-standards)
   - [Business Logic Implementation](#business-logic-implementation)
-- [🧪 Testing Standards](#-testing-standards)
+- [🧪 Testing Standards](#testing-standards)
   - [Test Categories](#test-categories)
   - [Test Execution Strategy](#test-execution-strategy)
-- [📊 Documentation Standards](#-documentation-standards)
+- [📊 Documentation Standards](#documentation-standards)
   - [Model Documentation](#model-documentation)
   - [Documentation Generation](#documentation-generation)
 - [Allocation Business Rules](#allocation-business-rules)
   - [Quantity Validation](#quantity-validation)
   - [Status Progression](#status-progression)
   - [Wave Assignment](#wave-assignment)
-- [🚀 Performance Optimization](#-performance-optimization)
+- [🚀 Performance Optimization](#performance-optimization)
   - [Oracle-Specific Optimizations](#oracle-specific-optimizations)
   - [Model Performance Guidelines](#model-performance-guidelines)
-- [🔄 Development Workflow](#-development-workflow)
+- [🔄 Development Workflow](#development-workflow)
   - [Local Development Process](#local-development-process)
   - [Git Workflow](#git-workflow)
   - [Code Review Guidelines](#code-review-guidelines)
-- [📚 Additional Resources](#-additional-resources)
+- [📚 Additional Resources](#additional-resources)
   - [dbt Resources](#dbt-resources)
   - [Oracle WMS Resources](#oracle-wms-resources)
   - [FLEXT Framework](#flext-framework)
+
 <!-- TOC END -->
 
 **Best Practices for FLEXT DBT Oracle WMS Development**
@@ -840,10 +841,10 @@ perf(marts): optimize allocation summary query performance
 #### **Review Focus Areas**
 
 1. **Business Accuracy** - Verify WMS business logic
-2. **Data Quality** - Check validation rules and error handling
-3. **Performance** - Review query efficiency and materialization
-4. **Maintainability** - Assess code clarity and documentation
-5. **Testing** - Ensure comprehensive test coverage
+1. **Data Quality** - Check validation rules and error handling
+1. **Performance** - Review query efficiency and materialization
+1. **Maintainability** - Assess code clarity and documentation
+1. **Testing** - Ensure comprehensive test coverage
 
 ## 📚 Additional Resources
 
@@ -863,6 +864,6 @@ perf(marts): optimize allocation summary query performance
 - **[Clean Architecture Guide](https://github.com/organization/flext/tree/main/flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
 - **[Domain-Driven Design](https://github.com/organization/flext/tree/main/flext-core/docs/guides/domain-driven-design.md)** - DDD implementation patterns
 
----
+______________________________________________________________________
 
 Following these development guidelines ensures consistent, high-quality, and maintainable dbt models for Oracle WMS analytics.

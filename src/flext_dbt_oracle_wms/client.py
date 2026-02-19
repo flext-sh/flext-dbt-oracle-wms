@@ -1,101 +1,69 @@
-"""DBT client for Oracle WMS.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
-"""
+"""Client orchestration for Oracle WMS to DBT workflows."""
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import cast, override
+from flext_core import FlextLogger, FlextResult, FlextTypes as t
 
-from flext_core import FlextLogger, FlextResult, t
-from flext_meltano import FlextMeltano
-from flext_oracle_wms import FlextOracleWmsClient, create_oracle_wms_client
+from .settings import FlextDbtOracleWmsSettings
 
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
+logger = FlextLogger(__name__)
 
 
 class FlextDbtOracleWmsClient:
-    """DBT client for Oracle WMS data transformations.
+    """DBT Oracle WMS client with typed extraction and transform stubs."""
 
-    Provides unified interface for Oracle WMS data extraction, validation,
-    and DBT transformation operations using maximum composition from flext-oracle-wms.
-    """
-
-    # Shared logger for all DBT Oracle WMS client operations
-    logger = FlextLogger(__name__)
-
-    @override
-    def __init__(
-        self,
-        config: FlextDbtOracleWmsSettings | None = None,
-    ) -> None:
-        """Initialize DBT Oracle WMS client.
-
-        Args:
-        config: Configuration for Oracle WMS and DBT operations
-
-        """
+    def __init__(self, config: FlextDbtOracleWmsSettings | None = None) -> None:
+        """Initialize client with explicit or global settings."""
         self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
-        # Initialize Oracle WMS client using flext-oracle-wms
-        oracle_wms_config = self.config.get_oracle_wms_config()
-        self._oracle_wms_client = create_oracle_wms_client(oracle_wms_config)
-        self._dbt_service: FlextMeltano | None = None
-        FlextDbtOracleWmsClient.logger.info(
-            "Initialized DBT Oracle WMS client with config: %s",
-            self.config,
-        )
 
-    @property
-    def dbt_service(self) -> FlextMeltano:
-        """Get or create DBT service instance."""
-        if self._dbt_service is None:
-            # Create DBT service with configuration
-            meltano_config = self.config.get_meltano_config()
-            # Suppress unused registry_path warning for future use
-            _ = (
-                Path(meltano_config.project_root)
-                if getattr(meltano_config, "project_root", None)
-                else None
+    def test_oracle_wms_connection(self) -> FlextResult[dict[str, t.GeneralValueType]]:
+        """Return simple connection health status."""
+        return FlextResult[dict[str, t.GeneralValueType]].ok({
+            "status": "connected",
+            "environment": self.config.oracle_wms_environment,
+            "base_url": self.config.oracle_wms_base_url,
+        })
+
+    def discover_oracle_wms_entities(self) -> FlextResult[list[str]]:
+        """Return the configured Oracle WMS entities."""
+        entities = list(self.config.required_fields_per_entity.keys())
+        return FlextResult[list[str]].ok(entities)
+
+    def extract_oracle_wms_data(
+        self,
+        entity_name: str,
+        filters: dict[str, t.GeneralValueType] | None = None,
+    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
+        """Return sample records for a requested entity."""
+        _ = filters
+        return FlextResult[list[dict[str, t.GeneralValueType]]].ok([
+            {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"}
+        ])
+
+    def validate_oracle_wms_data(
+        self,
+        entity_name: str,
+        records: list[dict[str, t.GeneralValueType]],
+    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
+        """Validate records list for a specific entity."""
+        _ = entity_name
+        if not records:
+            return FlextResult[list[dict[str, t.GeneralValueType]]].fail(
+                "No records to validate",
             )
-            self._dbt_service = FlextMeltano()
-        return self._dbt_service
+        return FlextResult[list[dict[str, t.GeneralValueType]]].ok(records)
 
-    @property
-    def oracle_wms_client(self) -> FlextOracleWmsClient:
-        """Get Oracle WMS client instance."""
-        return cast("FlextOracleWmsClient", self._oracle_wms_client)
-
-    def test_oracle_wms_connection(self) -> FlextResult[dict[str, str | int]]:
-        """Test Oracle WMS connection and basic functionality.
-
-        Returns:
-        FlextResult containing connection status and basic info
-
-        """
-        try:
-            # Test the Oracle WMS connection
-            # Mock connection test for now
-            test_result: FlextResult[object] = FlextResult[dict["str", "object"]].ok({
-                "status": "connected",
-            })
-            if test_result.is_failure:
-                return FlextResult[dict[str, str | int]].fail(
-                    f"Connection test failed: {test_result.error}",
-                )
-
-            # Return connection status
-            return FlextResult[dict[str, str | int]].ok(
-                {
-                    "status": "connected",
-                    "timestamp": "2025-01-01T00:00:00Z",
-                    "entities_count": 0,
-                },
-            )
-        except Exception as e:
-            return FlextResult[dict[str, str | int]].fail(f"Connection test error: {e}")
+    def transform_with_dbt(
+        self,
+        entity_data: dict[str, list[dict[str, t.GeneralValueType]]],
+        model_names: list[str] | None,
+    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+        """Return transformation summary for provided entities."""
+        return FlextResult[dict[str, t.GeneralValueType]].ok({
+            "transformed_tables": list(entity_data.keys()),
+            "requested_models": model_names or [],
+            "status": "success",
+        })
 
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
@@ -103,190 +71,46 @@ class FlextDbtOracleWmsClient:
         filters: dict[str, t.GeneralValueType] | None = None,
         model_names: list[str] | None = None,
     ) -> FlextResult[dict[str, t.GeneralValueType]]:
-        """Run full Oracle WMS-to-DBT pipeline.
+        """Run discover, extract, validate, and transform pipeline."""
+        entities_result = (
+            FlextResult[list[str]].ok(entity_names)
+            if entity_names is not None
+            else self.discover_oracle_wms_entities()
+        )
+        if entities_result.is_failure or entities_result.value is None:
+            return FlextResult[dict[str, t.GeneralValueType]].fail(
+                entities_result.error or "Entity discovery failed",
+            )
 
-        Args:
-        entity_names: List of Oracle WMS entity names to process
-        filters: Filters per entity
-        model_names: DBT models to run
-
-        Returns:
-        FlextResult containing complete pipeline results
-
-        """
-        FlextDbtOracleWmsClient.logger.info("Starting full Oracle WMS-to-DBT pipeline")
-        # Step 1: Discover entities if not specified
-        if entity_names is None:
-            discover_result: FlextResult[object] = self.discover_oracle_wms_entities()
-            if discover_result.is_failure:
-                # Convert discovery result to expected format
-                return FlextResult[dict[str, t.GeneralValueType]].ok(
-                    {
-                        "discovery_results": discover_result.data,
-                        "pipeline_status": "failed_at_discovery",
-                    },
+        extracted: dict[str, list[dict[str, t.GeneralValueType]]] = {}
+        for entity_name in entities_result.value:
+            extract_result = self.extract_oracle_wms_data(entity_name, filters)
+            if extract_result.is_failure or extract_result.value is None:
+                return FlextResult[dict[str, t.GeneralValueType]].fail(
+                    extract_result.error or "Extraction failed",
                 )
-            entities = discover_result.data or []
-            entity_names = []
-            for entity in entities:
-                if isinstance(entity, str):
-                    entity_names.append(entity)
-        # Step 2: Extract data for each entity
-        entity_data = {}
-        for entity_name in entity_names:
-            entity_filters: dict[str, t.GeneralValueType] = (
-                filters.get(entity_name, {}) if filters else {}
+            validate_result = self.validate_oracle_wms_data(
+                entity_name, extract_result.value
             )
-            extract_result = self.extract_oracle_wms_data(
-                entity_name,
-                entity_filters,
-            )
-            if extract_result.is_failure:
-                # Convert extraction result to expected format
-                return FlextResult[dict[str, t.GeneralValueType]].ok(
-                    {
-                        "extraction_results": extract_result.data,
-                        "pipeline_status": "failed_at_extraction",
-                    },
-                )
-            records = extract_result.data or []
-            # Step 3: Validate data quality
-            validate_result: FlextResult[object] = self.validate_oracle_wms_data(
-                entity_name,
-                records,
-            )
-            if validate_result.is_failure:
-                return FlextResult[dict["str", "object"]].fail(
+            if validate_result.is_failure or validate_result.value is None:
+                return FlextResult[dict[str, t.GeneralValueType]].fail(
                     validate_result.error or "Validation failed",
                 )
-            entity_data[entity_name] = records
-        # Step 4: Transform with DBT
-        transform_result: FlextResult[object] = self.transform_with_dbt(
-            entity_data,
-            model_names,
-        )
-        if transform_result.is_failure:
-            return transform_result
-        # Combine results
-        pipeline_results: dict[str, t.GeneralValueType] = {
-            "processed_entities": list(entity_data.keys()),
-            "total_records": sum(len(records) for records in entity_data.values()),
-            "transformation_results": transform_result.data,
+            extracted[entity_name] = validate_result.value
+
+        transform_result = self.transform_with_dbt(extracted, model_names)
+        if transform_result.is_failure or transform_result.value is None:
+            return FlextResult[dict[str, t.GeneralValueType]].fail(
+                transform_result.error or "Transformation failed",
+            )
+
+        logger.info("Completed Oracle WMS to DBT pipeline")
+        return FlextResult[dict[str, t.GeneralValueType]].ok({
+            "processed_entities": list(extracted.keys()),
+            "total_records": sum(len(records) for records in extracted.values()),
+            "transformation_results": transform_result.value,
             "pipeline_status": "completed",
-        }
-        FlextDbtOracleWmsClient.logger.info(
-            "Full Oracle WMS-to-DBT pipeline completed successfully",
-        )
-        return FlextResult[dict[str, t.GeneralValueType]].ok(pipeline_results)
-
-    def _prepare_oracle_wms_data_for_dbt(
-        self,
-        entity_data: dict[str, list[dict[str, str | int, float] | bool]],
-    ) -> dict[str, list[dict[str, str | int, float] | bool]]:
-        """Prepare Oracle WMS data for DBT processing.
-
-        Converts Oracle WMS records to format suitable for DBT models using field mappings.
-
-        Args:
-            entity_data: Dictionary of entity name -> records
-
-        Returns:
-            Dictionary of prepared data for DBT
-
-        """
-        prepared_data = {}
-        for entity_name, records in entity_data.items():
-            # Get DBT table name for entity
-            table_name = self.config.get_entity_dbt_mapping(entity_name)
-            # Convert records using field mapping
-            mapped_records = []
-            for record in records:
-                mapped_record = {}
-                for oracle_field, value in record.items():
-                    dbt_field = self.config.get_field_dbt_mapping(oracle_field)
-                    mapped_record[dbt_field] = value
-                mapped_records.append(mapped_record)
-            prepared_data[table_name] = mapped_records
-        FlextDbtOracleWmsClient.logger.debug(
-            "Prepared Oracle WMS data for DBT: %s",
-            {k: len(v) for k, v in prepared_data.items()},
-        )
-        return prepared_data
-
-    def discover_oracle_wms_entities(
-        self,
-    ) -> FlextResult[list[str]]:
-        """Discover available Oracle WMS entities."""
-        try:
-            # Use the Oracle WMS client to discover entities
-            # Mock entities discovery for now
-            entities = ["company", "facility", "location", "item"]
-            return FlextResult[list[str]].ok(entities)
-        except Exception as e:
-            return FlextResult[list[str]].fail(f"Failed to discover entities: {e}")
-
-    def extract_oracle_wms_data(
-        self,
-        entity_name: str,
-        filters: dict[str, t.GeneralValueType],
-    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
-        """Extract data from Oracle WMS for a specific entity."""
-        try:
-            # Suppress unused filters parameter warning for future use
-            _ = filters
-            # Use the Oracle WMS client to extract data
-            # Mock data extraction for now
-            data = [{"id": 1, "name": f"sample_{entity_name}"}]
-            return FlextResult[list[dict["str", "object"]]].ok(data)
-        except Exception as e:
-            return FlextResult[list[dict["str", "object"]]].fail(
-                f"Failed to extract data: {e}",
-            )
-
-    def validate_oracle_wms_data(
-        self,
-        entity_name: str,
-        records: list[dict[str, t.GeneralValueType]],
-    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
-        """Validate Oracle WMS data quality."""
-        try:
-            # Suppress unused entity_name parameter warning for future use
-            _ = entity_name
-            # Basic validation - check that records are not empty
-            if not records:
-                return FlextResult[list[dict["str", "object"]]].fail(
-                    "No records to validate",
-                )
-
-            # Return validated records
-            return FlextResult[list[dict["str", "object"]]].ok(records)
-        except Exception as e:
-            return FlextResult[list[dict["str", "object"]]].fail(
-                f"Validation failed: {e}",
-            )
-
-    def transform_with_dbt(
-        self,
-        entity_data: dict[str, list[dict[str, t.GeneralValueType]]],
-        model_names: list[str] | None,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
-        """Transform data using DBT."""
-        try:
-            # Suppress unused model_names parameter warning for future use
-            _ = model_names
-            # Use the DBT service to transform data
-            # Mock DBT transformation for now
-            result = {
-                "transformed_tables": list(entity_data.keys()),
-                "status": "success",
-            }
-            return FlextResult[dict["str", "object"]].ok(result)
-        except Exception as e:
-            return FlextResult[dict["str", "object"]].fail(
-                f"DBT transformation failed: {e}",
-            )
+        })
 
 
-__all__: list[str] = [
-    "FlextDbtOracleWmsClient",
-]
+__all__ = ["FlextDbtOracleWmsClient"]
