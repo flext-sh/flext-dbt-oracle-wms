@@ -1,8 +1,5 @@
 # flext-dbt-oracle-wms - Oracle WMS dbt Package
 PROJECT_NAME := flext-dbt-oracle-wms
-COV_DIR := flext_dbt_oracle_wms
-MIN_COVERAGE := 90
-
 include ../base.mk
 
 # === PROJECT-SPECIFIC TARGETS ===
