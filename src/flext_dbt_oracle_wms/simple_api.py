@@ -277,10 +277,6 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             )
 
 
-# Alias for backward compatibility
-FlextDbtOracleWmsAPI = FlextDbtOracleWms
-
 __all__ = [
     "FlextDbtOracleWms",
-    "FlextDbtOracleWmsAPI",
 ]

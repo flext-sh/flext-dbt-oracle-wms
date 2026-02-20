@@ -16,12 +16,11 @@ from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsWorkflowService,
 )
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms, FlextDbtOracleWmsAPI
+from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities
 
 __all__ = [
     "FlextDbtOracleWms",
-    "FlextDbtOracleWmsAPI",
     "FlextDbtOracleWmsClient",
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsMonitoringService",
