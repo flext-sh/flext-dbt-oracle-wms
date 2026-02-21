@@ -77,7 +77,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     )
 
     oracle_wms_environment: str = Field(
-        default=FlextDbtOracleWmsConstants.Configuration.DEFAULT_CONFIG["profile"],
+        default=FlextDbtOracleWmsConstants.Dbt.PROFILE,
         description="Oracle WMS environment",
     )
 
@@ -265,16 +265,51 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         return self.required_fields_per_entity.get(entity_name, [])
 
     @classmethod
-    def create_for_development(cls, **overrides: object) -> FlextResult[Self]:
+    def get_or_create_shared_instance(
+        cls,
+        project_name: str | None = None,
+        **overrides: t.GeneralValueType,
+    ) -> Self:
+        """Get or create a shared singleton settings instance."""
+        _ = project_name
+        if cls not in cls._instances:
+            with cls._lock:
+                if cls not in cls._instances:
+                    cls._instances[cls] = cls(**overrides)
+
+        raw_instance = cls._instances[cls]
+        if not isinstance(raw_instance, cls):
+            msg = f"Singleton instance is not of expected type {cls.__name__}"
+            raise TypeError(msg)
+
+        if overrides:
+            for key, value in overrides.items():
+                if key in cls.model_fields:
+                    setattr(raw_instance, key, value)
+
+        return raw_instance
+
+    @classmethod
+    def reset_shared_instance(cls, project_name: str | None = None) -> None:
+        """Reset the shared singleton settings instance."""
+        _ = project_name
+        with cls._lock:
+            cls._instances.pop(cls, None)
+
+    @classmethod
+    def create_for_development(
+        cls,
+        **overrides: t.GeneralValueType,
+    ) -> FlextResult[Self]:
         """Create configuration optimized for development environment."""
-        dev_config = {
+        dev_config: dict[str, t.GeneralValueType] = {
             "dbt_target": "development",
             "dbt_threads": 2,
             "oracle_wms_environment": "dev",
             "validate_business_rules_flag": False,
             "min_quality_threshold": 0.5,  # Lower threshold for dev
         }
-        config_data = {**dev_config, **overrides}
+        config_data: dict[str, t.GeneralValueType] = {**dev_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms",
@@ -285,9 +320,12 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             return FlextResult[Self].fail(f"Development config creation failed: {e}")
 
     @classmethod
-    def create_for_production(cls, **overrides: object) -> FlextResult[Self]:
+    def create_for_production(
+        cls,
+        **overrides: t.GeneralValueType,
+    ) -> FlextResult[Self]:
         """Create configuration optimized for production environment."""
-        prod_config = {
+        prod_config: dict[str, t.GeneralValueType] = {
             "dbt_target": "production",
             "dbt_threads": 8,
             "oracle_wms_environment": "prod",
@@ -295,7 +333,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             "min_quality_threshold": 0.95,  # Higher threshold for prod
             "oracle_wms_max_retries": 5,
         }
-        config_data = {**prod_config, **overrides}
+        config_data: dict[str, t.GeneralValueType] = {**prod_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms",
@@ -306,9 +344,12 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             return FlextResult[Self].fail(f"Production config creation failed: {e}")
 
     @classmethod
-    def create_for_testing(cls, **overrides: object) -> FlextResult[Self]:
+    def create_for_testing(
+        cls,
+        **overrides: t.GeneralValueType,
+    ) -> FlextResult[Self]:
         """Create configuration optimized for testing environment."""
-        test_config = {
+        test_config: dict[str, t.GeneralValueType] = {
             "dbt_target": "test",
             "dbt_threads": 1,
             "oracle_wms_environment": "test",
@@ -316,7 +357,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             "min_quality_threshold": 0.8,
             "oracle_wms_max_retries": 1,
         }
-        config_data = {**test_config, **overrides}
+        config_data: dict[str, t.GeneralValueType] = {**test_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms",
@@ -330,7 +371,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     def create_for_environment(
         cls,
         environment: str,
-        **overrides: object,
+        **overrides: t.GeneralValueType,
     ) -> FlextResult[Self]:
         """Create configuration for specific environment."""
         if environment == "production":

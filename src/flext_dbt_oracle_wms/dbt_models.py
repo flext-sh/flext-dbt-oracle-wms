@@ -68,14 +68,16 @@ class FlextDbtOracleWmsTransformer:
         for record in records:
             item_id = record.get("itemId")
             item_number = record.get("itemNumber")
+            raw_item_description = record.get("itemDescription")
+            item_description = (
+                raw_item_description if isinstance(raw_item_description, str) else None
+            )
             if isinstance(item_id, str) and isinstance(item_number, str):
                 transformed.append(
                     FlextDbtOracleWmsItemDimension(
                         item_id=item_id,
                         item_number=item_number,
-                        item_description=record.get("itemDescription")
-                        if isinstance(record.get("itemDescription"), str)
-                        else None,
+                        item_description=item_description,
                     )
                 )
         return transformed
