@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 
-from flext_core import FlextLogger, FlextResult, FlextTypes as t
+from flext_core import FlextLogger, FlextResult, t
 
 from .client import FlextDbtOracleWmsClient
 

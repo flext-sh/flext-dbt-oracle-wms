@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from flext_core import FlextSettings, FlextTypes as t
+from flext_core import FlextSettings, t
 from pydantic import BaseModel, ConfigDict, Field
 
 

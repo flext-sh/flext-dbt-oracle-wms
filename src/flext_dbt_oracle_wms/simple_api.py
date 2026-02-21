@@ -11,7 +11,7 @@ from __future__ import annotations
 from flext_core import (
     FlextResult,
     FlextService,
-    FlextTypes as t,
+    t,
 )
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient

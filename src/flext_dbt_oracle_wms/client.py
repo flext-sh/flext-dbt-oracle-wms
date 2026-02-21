@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from flext_core import FlextLogger, FlextResult, FlextTypes as t
+from flext_core import FlextLogger, FlextResult, t
 
 from .settings import FlextDbtOracleWmsSettings
 

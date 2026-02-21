@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Final
 
-from flext_core import FlextConstants, FlextTypes as t
+from flext_core import FlextConstants, t
 
 
 class FlextDbtOracleWmsSemanticConstants(FlextConstants):
