@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from flext_dbt_oracle_wms.__version__ import __version__, __version_info__
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m, m_dbt_oracle_wms
+from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m
 from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 from flext_dbt_oracle_wms.services import (
     FlextDbtOracleWmsMonitoringService,
@@ -31,5 +31,4 @@ __all__ = [
     "__version__",
     "__version_info__",
     "m",
-    "m_dbt_oracle_wms",
 ]

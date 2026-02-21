@@ -76,6 +76,5 @@ class FlextDbtOracleWmsModels(FlextModels):
 
 
 m = FlextDbtOracleWmsModels
-m_dbt_oracle_wms = FlextDbtOracleWmsModels
 
-__all__ = ["FlextDbtOracleWmsModels", "m", "m_dbt_oracle_wms"]
+__all__ = ["FlextDbtOracleWmsModels", "m"]
