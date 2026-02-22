@@ -9,8 +9,9 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 from flext_tests.protocols import FlextTestsProtocols
+
+from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 
 
 class TestsFlextDbtOracleWmsProtocols(FlextTestsProtocols, FlextDbtOracleWmsProtocols):
@@ -22,7 +23,7 @@ class TestsFlextDbtOracleWmsProtocols(FlextTestsProtocols, FlextDbtOracleWmsProt
     - tp.DbtOracleWms.* (from FlextDbtOracleWmsProtocols)
     """
 
-    class Tests:
+    class Tests(FlextTestsProtocols.Tests):
         """Project-specific test protocols.
 
         Extends FlextTestsProtocols.Tests with DbtOracleWms-specific protocols.

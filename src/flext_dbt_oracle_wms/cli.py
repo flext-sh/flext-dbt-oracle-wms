@@ -16,6 +16,7 @@ class FlextDbtOracleWmsCliService:
 
     def __init__(self) -> None:
         """Initialize CLI service with a DBT Oracle WMS client."""
+        super().__init__()
         self._client = FlextDbtOracleWmsClient()
 
     def handle_discover(

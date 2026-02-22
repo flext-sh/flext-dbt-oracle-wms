@@ -33,6 +33,10 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     Uses composition to integrate flext-oracle-wms and flext-meltano configurations.
     """
 
+    def __init__(self, **kwargs: t.GeneralValueType) -> None:
+        """Initialize with typed constructor to satisfy strict type checking."""
+        super().__init__(**kwargs)
+
     model_config = SettingsConfigDict(
         env_prefix="FLEXT_DBT_ORACLE_WMS_",
         case_sensitive=False,
@@ -210,8 +214,8 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             base_url=self.oracle_wms_base_url,
             username=self.oracle_wms_username,
             password=self.oracle_wms_password.get_secret_value(),
-            timeout=float(self.oracle_wms_timeout),
-            max_retries=int(self.oracle_wms_max_retries),
+            timeout=int(self.oracle_wms_timeout),
+            retry_attempts=int(self.oracle_wms_max_retries),
             environment=self.oracle_wms_environment,
         )
 
@@ -220,8 +224,6 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         return FlextMeltanoSettings(
             project_root=Path(self.dbt_project_dir),
             environment=self.dbt_target,
-            dbt_project_dir=self.dbt_project_dir,
-            dbt_profiles_dir=self.dbt_profiles_dir,
         )
 
     def get_oracle_wms_quality_config(self) -> dict[str, t.GeneralValueType]:
@@ -275,7 +277,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         if cls not in cls._instances:
             with cls._lock:
                 if cls not in cls._instances:
-                    cls._instances[cls] = cls(**overrides)
+                    cls._instances[cls] = cls()
 
         raw_instance = cls._instances[cls]
         if not isinstance(raw_instance, cls):
@@ -294,7 +296,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         """Reset the shared singleton settings instance."""
         _ = project_name
         with cls._lock:
-            cls._instances.pop(cls, None)
+            _ = cls._instances.pop(cls, None)
 
     @classmethod
     def create_for_development(

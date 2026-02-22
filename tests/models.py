@@ -9,8 +9,9 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 from flext_tests.models import FlextTestsModels
+
+from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 
 
 class TestsFlextDbtOracleWmsModels(FlextTestsModels, FlextDbtOracleWmsModels):
@@ -26,7 +27,7 @@ class TestsFlextDbtOracleWmsModels(FlextTestsModels, FlextDbtOracleWmsModels):
     - m.* (production models via alternative alias)
     """
 
-    class Tests:
+    class Tests(FlextTestsModels.Tests):
         """Project-specific test fixtures namespace."""
 
         class DbtOracleWms:

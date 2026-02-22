@@ -14,6 +14,7 @@ class FlextDbtOracleWmsClient:
 
     def __init__(self, config: FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize client with explicit or global settings."""
+        super().__init__()
         self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
 
     def test_oracle_wms_connection(self) -> FlextResult[dict[str, t.GeneralValueType]]:
@@ -77,38 +78,40 @@ class FlextDbtOracleWmsClient:
             if entity_names is not None
             else self.discover_oracle_wms_entities()
         )
-        if entities_result.is_failure or entities_result.value is None:
+        if entities_result.is_failure:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 entities_result.error or "Entity discovery failed",
             )
+        entity_list = entities_result.value
 
         extracted: dict[str, list[dict[str, t.GeneralValueType]]] = {}
-        for entity_name in entities_result.value:
+        for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
-            if extract_result.is_failure or extract_result.value is None:
+            if extract_result.is_failure:
                 return FlextResult[dict[str, t.GeneralValueType]].fail(
                     extract_result.error or "Extraction failed",
                 )
             validate_result = self.validate_oracle_wms_data(
                 entity_name, extract_result.value
             )
-            if validate_result.is_failure or validate_result.value is None:
+            if validate_result.is_failure:
                 return FlextResult[dict[str, t.GeneralValueType]].fail(
                     validate_result.error or "Validation failed",
                 )
             extracted[entity_name] = validate_result.value
 
         transform_result = self.transform_with_dbt(extracted, model_names)
-        if transform_result.is_failure or transform_result.value is None:
+        if transform_result.is_failure:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 transform_result.error or "Transformation failed",
             )
 
         logger.info("Completed Oracle WMS to DBT pipeline")
+        tr_val = transform_result.value
         return FlextResult[dict[str, t.GeneralValueType]].ok({
             "processed_entities": list(extracted.keys()),
             "total_records": sum(len(records) for records in extracted.values()),
-            "transformation_results": transform_result.value,
+            "transformation_results": tr_val,
             "pipeline_status": "completed",
         })
 

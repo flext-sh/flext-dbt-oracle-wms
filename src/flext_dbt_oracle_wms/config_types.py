@@ -16,6 +16,10 @@ class FlextDBTOracleWMSSettings(FlextSettings):
     profile: str = Field(default="flext_oracle_wms")
     wms_entities: list[str] = Field(default_factory=lambda: ["inventory", "location"])
 
+    def __init__(self, **kwargs: t.GeneralValueType) -> None:
+        """Initialize with typed constructor to satisfy strict type checking."""
+        super().__init__(**kwargs)
+
 
 class DBTOracleWMSConfiguration(BaseModel):
     """Top-level DBT Oracle WMS configuration payload."""

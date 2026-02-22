@@ -15,6 +15,7 @@ class FlextDbtOracleWmsServices:
 
     def __init__(self, config: FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize service state and default settings."""
+        super().__init__()
         self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
 
     def generate_workflow_recommendations(

@@ -43,6 +43,7 @@ class FlextDbtOracleWmsModels(FlextModels):
 
         def __init__(self, config: dict[str, t.GeneralValueType]) -> None:
             """Store generation config for later model creation."""
+            super().__init__()
             self.config = config
 
         def generate_wms_staging_models(
@@ -51,17 +52,17 @@ class FlextDbtOracleWmsModels(FlextModels):
         ) -> FlextResult[list[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
-                FlextDbtOracleWmsModels.DbtModel(
-                    name=f"stg_wms_{source}",
-                    dbt_model_type="staging",
-                    wms_entity_type=source,
-                    schema_name="wms_staging",
-                    table_name=f"stg_{source}",
-                    materialization=FlextDbtOracleWmsConstants.Dbt.Materialization.VIEW.value,
-                    sql_content=f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
-                    description=f"Staging model for {source}",
-                    oracle_source=source,
-                )
+                FlextDbtOracleWmsModels.DbtModel.model_validate({
+                    "name": f"stg_wms_{source}",
+                    "dbt_model_type": "staging",
+                    "wms_entity_type": source,
+                    "schema_name": "wms_staging",
+                    "table_name": f"stg_{source}",
+                    "materialization": FlextDbtOracleWmsConstants.Dbt.Materialization.VIEW.value,
+                    "sql_content": f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
+                    "description": f"Staging model for {source}",
+                    "oracle_source": source,
+                })
                 for source in oracle_sources
             ]
             return FlextResult[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
