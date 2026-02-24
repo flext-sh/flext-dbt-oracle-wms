@@ -5,10 +5,12 @@ from __future__ import annotations
 import sys
 
 from flext_core import FlextLogger, FlextResult, t
+from pydantic import TypeAdapter, ValidationError
 
 from .client import FlextDbtOracleWmsClient
 
 logger = FlextLogger(__name__)
+_STRING_ADAPTER = TypeAdapter(str)
 
 
 class FlextDbtOracleWmsCliService:
@@ -37,8 +39,12 @@ class FlextDbtOracleWmsCliService:
         entity = "inventory"
         if args is not None:
             entity_value = args.get("entity")
-            if isinstance(entity_value, str) and entity_value:
-                entity = entity_value
+            try:
+                validated_entity = _STRING_ADAPTER.validate_python(entity_value).strip()
+            except ValidationError:
+                validated_entity = ""
+            if validated_entity:
+                entity = validated_entity
         result = self._client.extract_oracle_wms_data(entity, None)
         if result.is_failure:
             return FlextResult[str].fail(result.error or "Extract failed")

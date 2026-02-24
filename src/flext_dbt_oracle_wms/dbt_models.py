@@ -3,7 +3,15 @@
 from __future__ import annotations
 
 from flext_core import FlextResult, t
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
+
+
+class _RawItemRecord(BaseModel):
+    """Validated raw Oracle WMS item payload."""
+
+    itemId: str
+    itemNumber: str
+    itemDescription: str | None = None
 
 
 class FlextDbtOracleWmsItemDimension(BaseModel):
@@ -66,20 +74,17 @@ class FlextDbtOracleWmsTransformer:
         """Transform records into item dimensions."""
         transformed: list[FlextDbtOracleWmsItemDimension] = []
         for record in records:
-            item_id = record.get("itemId")
-            item_number = record.get("itemNumber")
-            raw_item_description = record.get("itemDescription")
-            item_description = (
-                raw_item_description if isinstance(raw_item_description, str) else None
-            )
-            if isinstance(item_id, str) and isinstance(item_number, str):
-                transformed.append(
-                    FlextDbtOracleWmsItemDimension(
-                        item_id=item_id,
-                        item_number=item_number,
-                        item_description=item_description,
-                    )
+            try:
+                raw_record = _RawItemRecord.model_validate(record)
+            except ValidationError:
+                continue
+            transformed.append(
+                FlextDbtOracleWmsItemDimension(
+                    item_id=raw_record.itemId,
+                    item_number=raw_record.itemNumber,
+                    item_description=raw_record.itemDescription,
                 )
+            )
         return transformed
 
     def transform_all_entities(

@@ -13,10 +13,19 @@ from typing import ClassVar, Literal, Self
 from flext_core import FlextConstants, FlextResult, FlextSettings, t
 from flext_meltano.settings import FlextMeltanoSettings
 from flext_oracle_wms.settings import FlextOracleWmsSettings
-from pydantic import Field, SecretStr, field_validator, model_validator
+from pydantic import (
+    Field,
+    SecretStr,
+    TypeAdapter,
+    ValidationError,
+    field_validator,
+    model_validator,
+)
 from pydantic_settings import SettingsConfigDict
 
 from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
+
+_STRING_ADAPTER = TypeAdapter(str)
 
 
 class FlextDbtOracleWmsSettings(FlextSettings):
@@ -250,17 +259,26 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             self.oracle_wms_username,
             bool(self.oracle_wms_password.get_secret_value()),
         ]
-        return all(
-            field.strip() if isinstance(field, str) else field
-            for field in required_fields
-        )
+        return all(self._has_required_value(field) for field in required_fields)
+
+    @staticmethod
+    def _has_required_value(field: object) -> bool:
+        """Normalize required field values for connection validation."""
+        try:
+            return bool(_STRING_ADAPTER.validate_python(field).strip())
+        except ValidationError:
+            return bool(field)
 
     def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
         """Get business rule for specific Oracle WMS entity."""
         entity_rules = self.oracle_wms_business_rules.get(entity_name)
-        if isinstance(entity_rules, dict):
-            return entity_rules.get(rule_name)
-        return None
+        if entity_rules is None:
+            return None
+        try:
+            validated_rules = t.Dict.model_validate(entity_rules)
+        except ValidationError:
+            return None
+        return validated_rules.get(rule_name)
 
     def get_required_fields(self, entity_name: str) -> list[str]:
         """Get required fields for specific Oracle WMS entity."""
@@ -280,16 +298,18 @@ class FlextDbtOracleWmsSettings(FlextSettings):
                     cls._instances[cls] = cls()
 
         raw_instance = cls._instances[cls]
-        if not isinstance(raw_instance, cls):
+        try:
+            validated_instance = cls.model_validate(raw_instance)
+        except ValidationError as exc:
             msg = f"Singleton instance is not of expected type {cls.__name__}"
-            raise TypeError(msg)
+            raise TypeError(msg) from exc
 
         if overrides:
             for key, value in overrides.items():
                 if key in cls.model_fields:
-                    setattr(raw_instance, key, value)
+                    setattr(validated_instance, key, value)
 
-        return raw_instance
+        return validated_instance
 
     @classmethod
     def reset_shared_instance(cls, project_name: str | None = None) -> None:

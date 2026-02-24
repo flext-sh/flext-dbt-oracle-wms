@@ -6,6 +6,9 @@ from typing import Protocol, runtime_checkable
 
 from flext_core import FlextResult, t
 
+type WmsPayload = t.Dict
+type WmsPayloadList = list[t.Dict]
+
 
 class FlextDbtOracleWmsProtocols:
     """Namespace for DBT Oracle WMS protocol contracts."""
@@ -20,16 +23,16 @@ class FlextDbtOracleWmsProtocols:
             def run_dbt_models(
                 self,
                 models: list[str] | None = None,
-                config: dict[str, t.GeneralValueType] | None = None,
-            ) -> FlextResult[dict[str, t.GeneralValueType]]:
+                config: WmsPayload | None = None,
+            ) -> FlextResult[WmsPayload]:
                 """Run DBT models and return execution metadata."""
                 ...
 
             def test_dbt_models(
                 self,
                 models: list[str] | None = None,
-                config: dict[str, t.GeneralValueType] | None = None,
-            ) -> FlextResult[dict[str, t.GeneralValueType]]:
+                config: WmsPayload | None = None,
+            ) -> FlextResult[WmsPayload]:
                 """Run DBT tests and return status metadata."""
                 ...
 
@@ -39,9 +42,9 @@ class FlextDbtOracleWmsProtocols:
 
             def extract_wms_inventory_data(
                 self,
-                wms_config: dict[str, t.GeneralValueType],
-                extraction_config: dict[str, t.GeneralValueType],
-            ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
+                wms_config: WmsPayload,
+                extraction_config: WmsPayload,
+            ) -> FlextResult[WmsPayloadList]:
                 """Extract inventory records from Oracle WMS."""
                 ...
 
