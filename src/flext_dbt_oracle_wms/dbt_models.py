@@ -5,15 +5,17 @@ from __future__ import annotations
 from collections.abc import Mapping
 
 from flext_core import FlextResult, t
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 
 class _RawItemRecord(BaseModel):
     """Validated raw Oracle WMS item payload."""
 
-    itemId: str
-    itemNumber: str
-    itemDescription: str | None = None
+    model_config = ConfigDict(populate_by_name=True)
+
+    item_id: str = Field(alias="itemId")
+    item_number: str = Field(alias="itemNumber")
+    item_description: str | None = Field(default=None, alias="itemDescription")
 
 
 class FlextDbtOracleWmsItemDimension(BaseModel):
@@ -82,9 +84,9 @@ class FlextDbtOracleWmsTransformer:
                 continue
             transformed.append(
                 FlextDbtOracleWmsItemDimension(
-                    item_id=raw_record.itemId,
-                    item_number=raw_record.itemNumber,
-                    item_description=raw_record.itemDescription,
+                    item_id=raw_record.item_id,
+                    item_number=raw_record.item_number,
+                    item_description=raw_record.item_description,
                 )
             )
         return transformed
