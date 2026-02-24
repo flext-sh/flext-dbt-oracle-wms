@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from flext_core import FlextModels, FlextResult, t
 from pydantic import Field
 
@@ -41,7 +43,7 @@ class FlextDbtOracleWmsModels(FlextModels):
     class ModelGenerator:
         """Generator for lightweight DBT model objects."""
 
-        def __init__(self, config: dict[str, t.GeneralValueType]) -> None:
+        def __init__(self, config: Mapping[str, t.GeneralValueType]) -> None:
             """Store generation config for later model creation."""
             super().__init__()
             self.config = config
@@ -70,7 +72,7 @@ class FlextDbtOracleWmsModels(FlextModels):
     @classmethod
     def create_generator(
         cls,
-        config: dict[str, t.GeneralValueType],
+        config: Mapping[str, t.GeneralValueType],
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a model generator with explicit configuration."""
         return cls.ModelGenerator(config)

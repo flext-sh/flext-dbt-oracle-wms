@@ -8,6 +8,8 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from flext_core import (
     FlextResult,
     FlextService,
@@ -97,7 +99,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Run complete Oracle WMS-to-DBT workflow.
 
         Args:
@@ -129,7 +131,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         inventory_items: list[str] | None = None,
         shipments: list[str] | None = None,
         output_dir: str | None = None,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Generate DBT models from Oracle WMS data.
 
         Args:
@@ -161,7 +163,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Extract Oracle WMS metadata.
 
         Args:
@@ -192,7 +194,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         self,
         command: str,
         timeout_seconds: int = 300,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Monitor DBT command execution with metrics.
 
         Args:
@@ -231,7 +233,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
     def get_wms_inventory_info(
         self,
         item_id: str,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Get detailed information about WMS inventory item.
 
         Args:
@@ -255,7 +257,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
     def get_wms_shipment_info(
         self,
         shipment_id: str,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Get detailed information about WMS shipment.
 
         Args:

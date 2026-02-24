@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from flext_core import FlextResult, t
 
 
@@ -13,8 +15,8 @@ class FlextDbtOracleWmsUtilities:
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: dict[str, t.GeneralValueType],
-        ) -> FlextResult[dict[str, t.GeneralValueType]]:
+            extraction_config: Mapping[str, t.GeneralValueType],
+        ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
             """Return basic extraction metadata for inventory loads."""
             return FlextResult[dict[str, t.GeneralValueType]].ok({
                 "extraction_config": extraction_config,
@@ -26,7 +28,7 @@ class FlextDbtOracleWmsUtilities:
 
         @staticmethod
         def generate_wms_inventory_dimension(
-            inventory_config: dict[str, t.GeneralValueType],
+            inventory_config: Mapping[str, t.GeneralValueType],
         ) -> FlextResult[str]:
             """Generate SQL for inventory dimension model."""
             _ = inventory_config

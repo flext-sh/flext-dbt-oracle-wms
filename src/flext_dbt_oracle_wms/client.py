@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
+
 from flext_core import FlextLogger, FlextResult, t
 
 from .settings import FlextDbtOracleWmsSettings
@@ -17,7 +19,9 @@ class FlextDbtOracleWmsClient:
         super().__init__()
         self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
 
-    def test_oracle_wms_connection(self) -> FlextResult[dict[str, t.GeneralValueType]]:
+    def test_oracle_wms_connection(
+        self,
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Return simple connection health status."""
         return FlextResult[dict[str, t.GeneralValueType]].ok({
             "status": "connected",
@@ -33,8 +37,8 @@ class FlextDbtOracleWmsClient:
     def extract_oracle_wms_data(
         self,
         entity_name: str,
-        filters: dict[str, t.GeneralValueType] | None = None,
-    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
+        filters: Mapping[str, t.GeneralValueType] | None = None,
+    ) -> FlextResult[Sequence[Mapping[str, t.GeneralValueType]]]:
         """Return sample records for a requested entity."""
         _ = filters
         return FlextResult[list[dict[str, t.GeneralValueType]]].ok([
@@ -44,8 +48,8 @@ class FlextDbtOracleWmsClient:
     def validate_oracle_wms_data(
         self,
         entity_name: str,
-        records: list[dict[str, t.GeneralValueType]],
-    ) -> FlextResult[list[dict[str, t.GeneralValueType]]]:
+        records: Sequence[Mapping[str, t.GeneralValueType]],
+    ) -> FlextResult[Sequence[Mapping[str, t.GeneralValueType]]]:
         """Validate records list for a specific entity."""
         _ = entity_name
         if not records:
@@ -56,9 +60,9 @@ class FlextDbtOracleWmsClient:
 
     def transform_with_dbt(
         self,
-        entity_data: dict[str, list[dict[str, t.GeneralValueType]]],
+        entity_data: Mapping[str, Sequence[Mapping[str, t.GeneralValueType]]],
         model_names: list[str] | None,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Return transformation summary for provided entities."""
         return FlextResult[dict[str, t.GeneralValueType]].ok({
             "transformed_tables": list(entity_data.keys()),
@@ -69,9 +73,9 @@ class FlextDbtOracleWmsClient:
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
         entity_names: list[str] | None = None,
-        filters: dict[str, t.GeneralValueType] | None = None,
+        filters: Mapping[str, t.GeneralValueType] | None = None,
         model_names: list[str] | None = None,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Run discover, extract, validate, and transform pipeline."""
         entities_result = (
             FlextResult[list[str]].ok(entity_names)
@@ -98,7 +102,7 @@ class FlextDbtOracleWmsClient:
                 return FlextResult[dict[str, t.GeneralValueType]].fail(
                     validate_result.error or "Validation failed",
                 )
-            extracted[entity_name] = validate_result.value
+            extracted[entity_name] = [dict(record) for record in validate_result.value]
 
         transform_result = self.transform_with_dbt(extracted, model_names)
         if transform_result.is_failure:

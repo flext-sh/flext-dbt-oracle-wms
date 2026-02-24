@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from flext_core import FlextResult, t
 from pydantic import BaseModel, Field, ValidationError
 
@@ -21,7 +23,7 @@ class FlextDbtOracleWmsItemDimension(BaseModel):
     item_number: str
     item_description: str | None = None
 
-    def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
+    def to_dbt_dict(self) -> Mapping[str, t.GeneralValueType]:
         """Serialize item dimension to DBT dictionary format."""
         return self.model_dump()
 
@@ -33,7 +35,7 @@ class FlextDbtOracleWmsLocationDimension(BaseModel):
     location_name: str
     facility_id: str
 
-    def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
+    def to_dbt_dict(self) -> Mapping[str, t.GeneralValueType]:
         """Serialize location dimension to DBT dictionary format."""
         return self.model_dump()
 
@@ -46,7 +48,7 @@ class FlextDbtOracleWmsInventoryFact(BaseModel):
     facility_id: str
     quantity_on_hand: float = Field(default=0.0)
 
-    def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
+    def to_dbt_dict(self) -> Mapping[str, t.GeneralValueType]:
         """Serialize inventory fact to DBT dictionary format."""
         return self.model_dump()
 
@@ -59,7 +61,7 @@ class FlextDbtOracleWmsShipmentFact(BaseModel):
     facility_id: str
     shipment_status: str = "CREATED"
 
-    def to_dbt_dict(self) -> dict[str, t.GeneralValueType]:
+    def to_dbt_dict(self) -> Mapping[str, t.GeneralValueType]:
         """Serialize shipment fact to DBT dictionary format."""
         return self.model_dump()
 
@@ -69,7 +71,7 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_items(
         self,
-        records: list[dict[str, t.GeneralValueType]],
+        records: list[Mapping[str, t.GeneralValueType]],
     ) -> list[FlextDbtOracleWmsItemDimension]:
         """Transform records into item dimensions."""
         transformed: list[FlextDbtOracleWmsItemDimension] = []
@@ -89,15 +91,15 @@ class FlextDbtOracleWmsTransformer:
 
     def transform_all_entities(
         self,
-        entity_data: dict[str, list[dict[str, t.GeneralValueType]]],
-    ) -> dict[str, list[t.GeneralValueType]]:
+        entity_data: Mapping[str, list[Mapping[str, t.GeneralValueType]]],
+    ) -> Mapping[str, list[t.GeneralValueType]]:
         """Transform supported entity sets into DBT payloads."""
         items = self.transform_items(entity_data.get("items", []))
         return {"items": [item.to_dbt_dict() for item in items]}
 
     def validate_business_rules(
         self,
-        records: list[dict[str, t.GeneralValueType]],
+        records: list[Mapping[str, t.GeneralValueType]],
     ) -> FlextResult[bool]:
         """Validate that at least one record is present."""
         if not records:

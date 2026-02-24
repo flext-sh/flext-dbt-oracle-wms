@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from flext_core import FlextLogger, FlextResult, t
 
 from .settings import FlextDbtOracleWmsSettings
@@ -20,8 +22,8 @@ class FlextDbtOracleWmsServices:
 
     def generate_workflow_recommendations(
         self,
-        entities: list[dict[str, t.GeneralValueType]] | None = None,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+        entities: list[Mapping[str, t.GeneralValueType]] | None = None,
+    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
         total = len(entity_list)
@@ -48,8 +50,8 @@ class FlextDbtOracleWmsServices:
         workflow_name: str,
         workflow_type: str,
         entity_names: list[str] | None = None,
-        additional_data: dict[str, str | int | float] | None = None,
-    ) -> dict[str, t.GeneralValueType]:
+        additional_data: Mapping[str, str | int | float] | None = None,
+    ) -> Mapping[str, t.GeneralValueType]:
         """Return tracking payload for workflow instrumentation."""
         logger.info("Tracking workflow execution")
         return {
@@ -63,8 +65,8 @@ class FlextDbtOracleWmsServices:
 
     def log_workflow_completion(
         self,
-        tracking_info: dict[str, t.GeneralValueType],
-        result: FlextResult[dict[str, t.GeneralValueType]],
+        tracking_info: Mapping[str, t.GeneralValueType],
+        result: FlextResult[Mapping[str, t.GeneralValueType]],
     ) -> None:
         """Log workflow completion status."""
         logger.info(

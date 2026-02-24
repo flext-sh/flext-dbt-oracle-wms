@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from pathlib import Path
 from typing import ClassVar, Literal, Self
 
@@ -235,7 +236,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             environment=self.dbt_target,
         )
 
-    def get_oracle_wms_quality_config(self) -> dict[str, t.GeneralValueType]:
+    def get_oracle_wms_quality_config(self) -> Mapping[str, t.GeneralValueType]:
         """Get data quality configuration for Oracle WMS validation."""
         return {
             "min_quality_threshold": self.min_quality_threshold,
