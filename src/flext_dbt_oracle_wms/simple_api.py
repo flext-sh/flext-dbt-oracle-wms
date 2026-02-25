@@ -121,7 +121,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 "inventory_processed": len(inventory_items) if inventory_items else 0,
                 "shipments_processed": len(shipments) if shipments else 0,
             })
-        except Exception as e:
+        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 f"Workflow execution failed: {e}",
             )
@@ -151,7 +151,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 "shipments": len(shipments) if shipments else 0,
                 "output_dir": str(output_dir),
             })
-        except Exception as e:
+        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 f"Model generation failed: {e}"
             )
@@ -185,7 +185,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 "inventory_count": len(inventory_items) if inventory_items else 0,
                 "shipment_count": len(shipments) if shipments else 0,
             })
-        except Exception as e:
+        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 f"Metadata extraction failed: {e}",
             )
@@ -212,7 +212,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 "command": command,
                 "timeout": timeout_seconds,
             })
-        except Exception as e:
+        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 f"Monitoring failed: {e}"
             )
@@ -227,7 +227,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         try:
             self.logger.info("Validating Oracle WMS connection")
             return FlextResult[bool].ok(value=True)
-        except Exception as e:
+        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
             return FlextResult[bool].fail(f"Connection validation failed: {e}")
 
     def get_wms_inventory_info(
@@ -249,7 +249,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 "item_id": item_id,
                 "status": "info_retrieved",
             })
-        except Exception as e:
+        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 f"Inventory info retrieval failed: {e}",
             )
@@ -273,7 +273,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 "shipment_id": shipment_id,
                 "status": "info_retrieved",
             })
-        except Exception as e:
+        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
                 f"Shipment info retrieval failed: {e}",
             )

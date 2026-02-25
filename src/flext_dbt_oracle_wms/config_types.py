@@ -12,7 +12,7 @@ class FlextDBTOracleWMSSettings(FlextSettings):
     """Minimal settings model for DBT Oracle WMS configuration."""
 
     project_name: str = Field(default="flext-dbt-oracle-wms")
-    version: str = Field(default="0.10.0-dev")
+    version: str = Field(default="0.12.0")
     profile: str = Field(default="flext_oracle_wms")
     wms_entities: list[str] = Field(default_factory=lambda: ["inventory", "location"])
 
