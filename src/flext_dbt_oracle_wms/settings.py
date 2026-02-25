@@ -339,7 +339,15 @@ class FlextDbtOracleWmsSettings(FlextSettings):
                 **config_data,
             )
             return FlextResult[Self].ok(instance)
-        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
             return FlextResult[Self].fail(f"Development config creation failed: {e}")
 
     @classmethod
@@ -363,7 +371,15 @@ class FlextDbtOracleWmsSettings(FlextSettings):
                 **config_data,
             )
             return FlextResult[Self].ok(instance)
-        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
             return FlextResult[Self].fail(f"Production config creation failed: {e}")
 
     @classmethod
@@ -387,7 +403,15 @@ class FlextDbtOracleWmsSettings(FlextSettings):
                 **config_data,
             )
             return FlextResult[Self].ok(instance)
-        except (ValueError, TypeError, KeyError, AttributeError, OSError, RuntimeError, ImportError) as e:
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
             return FlextResult[Self].fail(f"Testing config creation failed: {e}")
 
     @classmethod
