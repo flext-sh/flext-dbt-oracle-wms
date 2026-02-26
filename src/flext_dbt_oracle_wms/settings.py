@@ -302,7 +302,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         try:
             validated_instance = cls.model_validate(raw_instance)
         except ValidationError as exc:
-            msg = f"Singleton instance is not of expected type {cls.__name__}"
+            msg = f"Singleton instance is not of expected type {cls}"
             raise TypeError(msg) from exc
 
         if overrides:
