@@ -586,6 +586,6 @@ Now that you have FLEXT DBT Oracle WMS set up:
 - **[Singer Protocol](https://hub.meltano.com/singer/spec)** - Data extraction standards
 - **[Oracle WMS Documentation](https://docs.oracle.com/en/industries/food-beverage/wms/)** - Oracle WMS reference
 
-______________________________________________________________________
+---
 
 **Installation Complete!** 🎉 You're ready to start transforming Oracle WMS data with dbt.

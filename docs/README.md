@@ -328,7 +328,7 @@ models/
 - �"� Enhanced monitoring dashboard
 - �"� Automated data governance
 
-______________________________________________________________________
+---
 
 **Need Help?** Check our Troubleshooting Guide (_Documentation coming soon_) or [open an issue](https://github.com/flext-sh/flext/issues).
 

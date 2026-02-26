@@ -240,13 +240,13 @@ Mart models provide business-ready data for analytics and reporting.
 
 #### Key Metrics
 
-| Metric                | Description               | Calculation                                  |
-| --------------------- | ------------------------- | -------------------------------------------- |
-| `total_allocations`   | Total allocations in wave | COUNT(\*)                                    |
-| `picked_allocations`  | Completed picks           | COUNT() WHERE picked_timestamp IS NOT NULL   |
-| `pick_rate_percent`   | Pick completion rate      | picked_allocations / total_allocations * 100 |
-| `avg_pick_time`       | Average time per pick     | AVG(picked_timestamp - created_timestamp)    |
-| `pending_allocations` | Outstanding picks         | total_allocations - picked_allocations       |
+| Metric                | Description               | Calculation                                   |
+| --------------------- | ------------------------- | --------------------------------------------- |
+| `total_allocations`   | Total allocations in wave | COUNT(\*)                                     |
+| `picked_allocations`  | Completed picks           | COUNT() WHERE picked_timestamp IS NOT NULL    |
+| `pick_rate_percent`   | Pick completion rate      | picked_allocations / total_allocations \* 100 |
+| `avg_pick_time`       | Average time per pick     | AVG(picked_timestamp - created_timestamp)     |
+| `pending_allocations` | Outstanding picks         | total_allocations - picked_allocations        |
 
 #### Usage Example
 
@@ -569,6 +569,6 @@ dbt docs generate --include-sources --include-performance
 dbt docs serve --port 8080
 ```
 
-______________________________________________________________________
+---
 
 This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](../development/guidelines.md).
