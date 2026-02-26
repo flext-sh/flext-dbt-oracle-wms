@@ -679,6 +679,6 @@ EXEC DBMS_STATS.GATHER_TABLE_STATS('WMS_SCHEMA', 'ALLOCATION');
 - **[Singer Oracle Tap](https://hub.meltano.com/extractors/tap-oracle)**
 - **[Oracle Performance Tuning](https://docs.oracle.com/en/database/oracle/oracle-database/21/tgdba/)**
 
----
+______________________________________________________________________
 
 This integration guide provides the foundation for connecting FLEXT DBT with Oracle WMS.

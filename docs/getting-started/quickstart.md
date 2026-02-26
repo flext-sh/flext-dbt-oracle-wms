@@ -316,6 +316,6 @@ After completing this guide, you should have:
 - **Compile Check** - `dbt compile` for SQL issues
 - **Documentation** - [Troubleshooting Guide](../examples/troubleshooting.md)
 
----
+______________________________________________________________________
 
 **Congratulations!** 🎉 You now have FLEXT DBT Oracle WMS running locally. Ready for the next level? Check out the [Development Guide](../development/guidelines.md).

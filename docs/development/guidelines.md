@@ -864,6 +864,6 @@ perf(marts): optimize allocation summary query performance
 - **[Clean Architecture Guide](https://github.com/organization/flext/tree/main/flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
 - **[Domain-Driven Design](https://github.com/organization/flext/tree/main/flext-core/docs/guides/domain-driven-design.md)** - DDD implementation patterns
 
----
+______________________________________________________________________
 
 Following these development guidelines ensures consistent, high-quality, and maintainable dbt models for Oracle WMS analytics.
