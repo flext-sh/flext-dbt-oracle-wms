@@ -8,6 +8,8 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 
 from __future__ import annotations
 
+from typing import override
+
 from collections.abc import Mapping
 
 from flext_core import (
@@ -84,6 +86,8 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         return self._monitoring_service
 
     @property
+    @override
+
     def config(self) -> FlextDbtOracleWmsSettings:
         """Get the current configuration."""
         return self._wms_config

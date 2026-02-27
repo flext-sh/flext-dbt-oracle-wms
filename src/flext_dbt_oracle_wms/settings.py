@@ -7,6 +7,8 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from typing import override
+
 from collections.abc import Mapping
 from pathlib import Path
 from typing import ClassVar, Literal, Self
@@ -430,11 +432,15 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         return FlextResult[Self].fail(f"Unknown environment: {environment}")
 
     @classmethod
+    @override
+
     def get_global_instance(cls) -> Self:
         """Get the global singleton instance using enhanced FlextSettings pattern."""
         return cls.get_or_create_shared_instance(project_name="flext-dbt-oracle-wms")
 
     @classmethod
+    @override
+
     def reset_global_instance(cls) -> None:
         """Reset the global instance (mainly for testing)."""
         cls.reset_shared_instance(project_name="flext-dbt-oracle-wms")
