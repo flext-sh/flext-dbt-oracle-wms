@@ -8,8 +8,6 @@ Copyright (c) 2025 FLEXT Contributors SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-# Import all types from the centralized typings.py module
-# Re-export domain objects from typings.py
 from flext_dbt_oracle_wms.typings import (
     CreatedAt,
     DBTOracleWMSAnalysisConfiguration,
