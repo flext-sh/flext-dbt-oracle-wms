@@ -2,7 +2,6 @@
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
-
 """
 
 from __future__ import annotations
@@ -12,7 +11,7 @@ from pathlib import Path
 from typing import ClassVar, Literal, Self, override
 
 from flext_core import FlextConstants, FlextResult, FlextSettings, t
-from flext_meltano.settings import FlextMeltanoSettings
+from flext_meltano import FlextMeltanoSettings
 from flext_oracle_wms.settings import FlextOracleWmsSettings
 from pydantic import (
     Field,
@@ -57,6 +56,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         use_enum_values=True,
         str_strip_whitespace=True,
         validate_default=True,
+        # frozen=False,
     )
 
     # Oracle WMS Connection Settings - using Field() with proper defaults
@@ -187,7 +187,9 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     @classmethod
     def validate_oracle_wms_environment(cls, v: str) -> str:
         """Validate Oracle WMS environment."""
-        valid_environments = {member.value for member in c.DbtOracleWms.OracleWmsEnvironments}
+        valid_environments = {
+            member.value for member in c.DbtOracleWms.OracleWmsEnvironments
+        }
         if v.lower() not in valid_environments:
             valid_list = ", ".join(sorted(valid_environments))
             msg = f"Invalid Oracle WMS environment: {v}. Must be one of: {valid_list}"
@@ -262,7 +264,9 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         except ValidationError:
             return bool(field)
 
-    def get_business_rule(self, entity_name: str, rule_name: str) -> t.GeneralValueType | None:
+    def get_business_rule(
+        self, entity_name: str, rule_name: str
+    ) -> t.GeneralValueType | None:
         """Get business rule for specific Oracle WMS entity."""
         entity_rules = self.oracle_wms_business_rules.get(entity_name)
         if entity_rules is None:
@@ -434,6 +438,6 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         cls.reset_shared_instance(project_name="flext-dbt-oracle-wms")
 
 
-__all__: list[str] = [
+__all__ = [
     "FlextDbtOracleWmsSettings",
 ]

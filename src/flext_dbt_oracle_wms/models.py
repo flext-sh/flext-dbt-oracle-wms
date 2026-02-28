@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 
 from flext_core import FlextResult, t
-from flext_meltano.models import FlextMeltanoModels
+from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
 

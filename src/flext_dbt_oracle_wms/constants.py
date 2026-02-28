@@ -6,7 +6,7 @@ from enum import StrEnum
 from typing import Final
 
 from flext_core import t
-from flext_meltano.constants import FlextMeltanoConstants
+from flext_meltano import FlextMeltanoConstants
 from flext_oracle_wms.constants import FlextOracleWmsConstants
 
 
