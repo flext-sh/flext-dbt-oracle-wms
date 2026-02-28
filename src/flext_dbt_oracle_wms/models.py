@@ -23,7 +23,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         wms_entity_type: str
         schema_name: str
         table_name: str
-        columns: list[dict[str, t.GeneralValueType]] = Field(default_factory=list)
+        columns: list[dict[str, object]] = Field(default=[])
         materialization: str
         sql_content: str
         description: str
