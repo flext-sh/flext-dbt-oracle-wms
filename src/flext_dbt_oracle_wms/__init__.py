@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from flext_core import cleanup_submodule_namespace, lazy_getattr
+from flext_core._utilities.lazy import cleanup_submodule_namespace, lazy_getattr
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms.__version__ import __version__, __version_info__
@@ -22,7 +22,10 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsModels,
         FlextDbtOracleWmsModels as m,
     )
-    from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
+    from flext_dbt_oracle_wms.protocols import (
+        FlextDbtOracleWmsProtocols,
+        FlextDbtOracleWmsProtocols as p,
+    )
     from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.typings import (
@@ -48,6 +51,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
     "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
     "m": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
+    "p": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
     "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
     "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
 }
@@ -65,6 +69,7 @@ __all__ = [
     "__version_info__",
     "c",
     "m",
+    "p",
     "t",
     "u",
 ]
