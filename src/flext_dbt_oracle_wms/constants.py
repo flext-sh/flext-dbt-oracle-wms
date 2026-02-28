@@ -128,10 +128,6 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants)
             PROD = "prod"
             PRODUCTION = "production"
 
-    # Class-level aliases for backward compatibility and direct access
-    DbtOracleWmsProcessing = DbtOracleWms.DbtOracleWmsProcessing
-    Dbt = DbtOracleWms.Dbt
-
 
 c = FlextDbtOracleWmsConstants
 

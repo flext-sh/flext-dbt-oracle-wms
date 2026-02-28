@@ -9,41 +9,8 @@ Copyright (c) 2025 FLEXT Contributors SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from flext_dbt_oracle_wms.typings import (
-    CreatedAt,
-    DBTOracleWMSAnalysisConfiguration,
-    DBTOracleWMSAnalysisTimeout,
-    DBTOracleWMSCompilationConfiguration,
-    DBTOracleWMSCompilationTimeout,
-    DBTOracleWMSDocumentationConfiguration,
-    DBTOracleWMSDocumentationTimeout,
-    DBTOracleWMSExecutionConfiguration,
-    DBTOracleWMSExecutionTimeout,
-    DBTOracleWMSMacroTimeout,
-    DBTOracleWMSMaterialization,
-    DBTOracleWMSModelTimeout,
-    DBTOracleWMSProjectConfiguration,
-    DBTOracleWMSProjectTimeout,
-    DBTOracleWMSRunStatus,
-    DBTOracleWMSSnapshotConfiguration,
-    DBTOracleWMSSnapshotTimeout,
-    DBTOracleWMSSourceTimeout,
-    DBTOracleWMSTestTimeout,
-    DBTOracleWMSTestType,
-    EntityId,
-    OracleWMSConnectionId,
-    OracleWMSOperationId,
-    OracleWMSQueryId,
-    OracleWMSSchemaId,
-    ProjectName,
-    TimeoutSeconds,
-    TimestampISO,
-    UpdatedAt,
-    Version,
     t,
 )
-
-# For backward compatibility, expose the TypedDict classes
-# These are already imported from typings.py above
 
 
 # Domain type classes with real inheritance
@@ -97,50 +64,15 @@ class DBTOracleWMSDocumentation(
 
 
 __all__: list[str] = [
-    "CreatedAt",
-    # Domain objects
     "DBTOracleWMSAnalysis",
-    "DBTOracleWMSAnalysisConfiguration",
-    "DBTOracleWMSAnalysisTimeout",
     "DBTOracleWMSCompilation",
-    "DBTOracleWMSCompilationConfiguration",
-    "DBTOracleWMSCompilationTimeout",
     "DBTOracleWMSDocumentation",
-    "DBTOracleWMSDocumentationConfiguration",
-    "DBTOracleWMSDocumentationTimeout",
     "DBTOracleWMSExecution",
-    "DBTOracleWMSExecutionConfiguration",
-    "DBTOracleWMSExecutionTimeout",
     "DBTOracleWMSMacro",
-    "DBTOracleWMSMacroTimeout",
-    # Enums
-    "DBTOracleWMSMaterialization",
     "DBTOracleWMSModel",
-    "DBTOracleWMSModelTimeout",
     "DBTOracleWMSProject",
-    "DBTOracleWMSProjectConfiguration",
-    "DBTOracleWMSProjectTimeout",
-    "DBTOracleWMSRunStatus",
     "DBTOracleWMSSnapshot",
-    "DBTOracleWMSSnapshotConfiguration",
-    "DBTOracleWMSSnapshotTimeout",
     "DBTOracleWMSSource",
-    "DBTOracleWMSSourceTimeout",
     "DBTOracleWMSTest",
-    "DBTOracleWMSTestTimeout",
-    "DBTOracleWMSTestType",
-    # Module-level aliases
-    "EntityId",
-    "OracleWMSConnectionId",
-    # Type aliases
-    "OracleWMSOperationId",
-    "OracleWMSQueryId",
-    "OracleWMSSchemaId",
-    "ProjectName",
-    "TimeoutSeconds",
-    "TimestampISO",
-    "UpdatedAt",
-    "Version",
-    # Core types
     "t",
 ]
