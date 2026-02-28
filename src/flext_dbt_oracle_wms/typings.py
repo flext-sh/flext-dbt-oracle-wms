@@ -100,15 +100,18 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """DBT Oracle WMS project complex types."""
 
         type ProjectConfiguration = dict[
-            str, FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType]
+            str,
+            FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType],
         ]
         type ModelConfiguration = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type SourceConfiguration = dict[
-            str, str | list[dict[str, FlextTypes.GeneralValueType]]
+            str,
+            str | list[dict[str, FlextTypes.GeneralValueType]],
         ]
         type ProfileConfiguration = dict[str, FlextTypes.GeneralValueType]
         type MacroConfiguration = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | dict[str, FlextTypes.GeneralValueType],
         ]
         type TestConfiguration = dict[str, str | bool | list[str]]
 
@@ -120,17 +123,21 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """Oracle WMS connection complex types."""
 
         type ConnectionConfig = dict[
-            str, str | int | bool | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | int | bool | dict[str, FlextTypes.GeneralValueType],
         ]
         type DatabaseConnection = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type PoolingConfig = dict[
-            str, int | bool | dict[str, FlextTypes.GeneralValueType]
+            str,
+            int | bool | dict[str, FlextTypes.GeneralValueType],
         ]
         type SecurityConfig = dict[
-            str, bool | str | dict[str, FlextTypes.GeneralValueType]
+            str,
+            bool | str | dict[str, FlextTypes.GeneralValueType],
         ]
         type SessionConfig = dict[
-            str, str | int | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | int | dict[str, FlextTypes.GeneralValueType],
         ]
         type TimeoutConfig = dict[str, int | float]
 
@@ -147,12 +154,14 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         ]
         type LocationData = dict[str, str | list[str] | dict[str, FlextTypes.JsonValue]]
         type AllocationData = dict[
-            str, str | int | bool | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | int | bool | dict[str, FlextTypes.GeneralValueType],
         ]
         type OrderData = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
         type TaskData = dict[str, str | int | dict[str, FlextTypes.JsonValue]]
         type ShipmentData = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | list[str] | dict[str, FlextTypes.GeneralValueType],
         ]
 
     # =========================================================================
@@ -163,11 +172,13 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """DBT Oracle WMS transformation complex types."""
 
         type TransformationConfig = dict[
-            str, FlextTypes.JsonValue | dict[str, FlextTypes.GeneralValueType]
+            str,
+            FlextTypes.JsonValue | dict[str, FlextTypes.GeneralValueType],
         ]
         type WmsTransformation = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type DataValidation = dict[
-            str, bool | str | list[str] | dict[str, FlextTypes.GeneralValueType]
+            str,
+            bool | str | list[str] | dict[str, FlextTypes.GeneralValueType],
         ]
         type MaterializationConfig = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type OutputFormat = dict[str, str | dict[str, FlextTypes.GeneralValueType]]
@@ -183,11 +194,13 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type DimensionModel = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
         type FactModel = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type BridgeModel = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | list[str] | dict[str, FlextTypes.GeneralValueType],
         ]
         type StarSchema = dict[str, list[dict[str, FlextTypes.JsonValue]]]
         type ScdConfiguration = dict[
-            str, str | bool | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | bool | dict[str, FlextTypes.GeneralValueType],
         ]
         type GrainDefinition = dict[str, str | list[str]]
 
@@ -199,18 +212,21 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """WMS business logic complex types."""
 
         type InventoryRules = dict[
-            str, bool | str | float | dict[str, FlextTypes.GeneralValueType]
+            str,
+            bool | str | float | dict[str, FlextTypes.GeneralValueType],
         ]
         type AllocationRules = dict[
             str,
             str | int | bool | dict[str, FlextTypes.JsonValue],
         ]
         type PickingRules = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | list[str] | dict[str, FlextTypes.GeneralValueType],
         ]
         type ReceivingRules = dict[str, bool | str | dict[str, FlextTypes.JsonValue]]
         type ShippingRules = dict[
-            str, str | int | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | int | dict[str, FlextTypes.GeneralValueType],
         ]
         type QualityRules = dict[str, bool | float | dict[str, FlextTypes.JsonValue]]
 
@@ -223,17 +239,21 @@ class FlextDbtOracleWmsTypes(FlextTypes):
 
         type ModelDefinition = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type ModelExecution = dict[
-            str, str | bool | int | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | bool | int | dict[str, FlextTypes.GeneralValueType],
         ]
         type ModelDependency = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | list[str] | dict[str, FlextTypes.GeneralValueType],
         ]
         type ModelTest = dict[str, str | bool | dict[str, FlextTypes.JsonValue]]
         type ModelDocumentation = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | dict[str, FlextTypes.GeneralValueType],
         ]
         type ModelMaterialization = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | dict[str, FlextTypes.GeneralValueType],
         ]
 
     # =========================================================================
@@ -245,11 +265,13 @@ class FlextDbtOracleWmsTypes(FlextTypes):
 
         type SourceDefinition = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type SourceConnection = dict[
-            str, FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType]
+            str,
+            FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType],
         ]
         type SourceTable = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
         type SourceFreshness = dict[
-            str, str | int | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | int | dict[str, FlextTypes.GeneralValueType],
         ]
         type SourceTest = dict[str, str | bool | list[str]]
         type SourceSchema = dict[str, str | dict[str, FlextTypes.JsonValue]]
@@ -262,14 +284,17 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """Oracle WMS adapter complex types."""
 
         type AdapterConfiguration = dict[
-            str, FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType]
+            str,
+            FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType],
         ]
         type ConnectionAdapter = dict[
-            str, str | int | bool | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | int | bool | dict[str, FlextTypes.GeneralValueType],
         ]
         type QueryAdapter = dict[str, str | dict[str, FlextTypes.JsonValue]]
         type SchemaAdapter = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | list[str] | dict[str, FlextTypes.GeneralValueType],
         ]
         type TransactionAdapter = dict[
             str,
@@ -285,15 +310,18 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         """Oracle WMS performance optimization complex types."""
 
         type PartitionStrategy = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | list[str] | dict[str, FlextTypes.GeneralValueType],
         ]
         type IndexStrategy = dict[str, str | bool | dict[str, FlextTypes.JsonValue]]
         type MaterializationStrategy = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
+            str,
+            str | dict[str, FlextTypes.GeneralValueType],
         ]
         type CacheStrategy = dict[str, bool | int | dict[str, FlextTypes.JsonValue]]
         type ParallelProcessing = dict[
-            str, int | bool | dict[str, FlextTypes.GeneralValueType]
+            str,
+            int | bool | dict[str, FlextTypes.GeneralValueType],
         ]
         type OracleHints = dict[str, str | list[str]]
 
@@ -340,7 +368,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type DbtOracleWmsProjectConfig = dict[str, FlextTypes.GeneralValueType]
         type WmsTransformConfig = dict[str, str | int | bool | list[str]]
         type WmsAnalyticsConfig = dict[
-            str, bool | str | dict[str, FlextTypes.GeneralValueType]
+            str,
+            bool | str | dict[str, FlextTypes.GeneralValueType],
         ]
         type DbtWmsPipelineConfig = dict[str, FlextTypes.GeneralValueType]
 
@@ -373,7 +402,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             project_id: FlextDbtOracleWmsTypes.Base.EntityId
             name: str
             configuration: dict[
-                str, FlextTypes.GeneralValueType
+                str,
+                FlextTypes.GeneralValueType,
             ]  # Using dict for model config
             sql_content: str
             created_at: FlextDbtOracleWmsTypes.Base.CreatedAt
@@ -388,7 +418,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             project_id: FlextDbtOracleWmsTypes.Base.EntityId
             name: str
             configuration: dict[
-                str, FlextTypes.GeneralValueType
+                str,
+                FlextTypes.GeneralValueType,
             ]  # Using dict for source config
             created_at: FlextDbtOracleWmsTypes.Base.CreatedAt
             updated_at: FlextDbtOracleWmsTypes.Base.UpdatedAt
@@ -403,7 +434,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             model_id: FlextDbtOracleWmsTypes.Base.EntityId | None = None
             name: str
             configuration: dict[
-                str, FlextTypes.GeneralValueType
+                str,
+                FlextTypes.GeneralValueType,
             ]  # Using dict for test config
             sql_content: str | None = None
             created_at: FlextDbtOracleWmsTypes.Base.CreatedAt
@@ -418,7 +450,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             project_id: FlextDbtOracleWmsTypes.Base.EntityId
             name: str
             configuration: dict[
-                str, FlextTypes.GeneralValueType
+                str,
+                FlextTypes.GeneralValueType,
             ]  # Using dict for macro config
             sql_content: str
             created_at: FlextDbtOracleWmsTypes.Base.CreatedAt

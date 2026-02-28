@@ -168,7 +168,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Model generation failed: {e}"
+                f"Model generation failed: {e}",
             )
 
     def extract_wms_metadata(
@@ -245,7 +245,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Monitoring failed: {e}"
+                f"Monitoring failed: {e}",
             )
 
     def validate_wms_connection(self) -> FlextResult[bool]:

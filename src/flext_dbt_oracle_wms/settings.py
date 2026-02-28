@@ -265,7 +265,9 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             return bool(field)
 
     def get_business_rule(
-        self, entity_name: str, rule_name: str
+        self,
+        entity_name: str,
+        rule_name: str,
     ) -> t.GeneralValueType | None:
         """Get business rule for specific Oracle WMS entity."""
         entity_rules = self.oracle_wms_business_rules.get(entity_name)

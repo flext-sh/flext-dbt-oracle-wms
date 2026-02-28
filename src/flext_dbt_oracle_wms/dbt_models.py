@@ -87,7 +87,7 @@ class FlextDbtOracleWmsTransformer:
                     item_id=raw_record.item_id,
                     item_number=raw_record.item_number,
                     item_description=raw_record.item_description,
-                )
+                ),
             )
         return transformed
 

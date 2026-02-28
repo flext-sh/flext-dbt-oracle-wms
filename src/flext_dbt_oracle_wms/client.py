@@ -42,7 +42,7 @@ class FlextDbtOracleWmsClient:
         """Return sample records for a requested entity."""
         _ = filters
         return FlextResult[list[dict[str, t.GeneralValueType]]].ok([
-            {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"}
+            {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"},
         ])
 
     def validate_oracle_wms_data(
@@ -96,7 +96,8 @@ class FlextDbtOracleWmsClient:
                     extract_result.error or "Extraction failed",
                 )
             validate_result = self.validate_oracle_wms_data(
-                entity_name, extract_result.value
+                entity_name,
+                extract_result.value,
             )
             if validate_result.is_failure:
                 return FlextResult[dict[str, t.GeneralValueType]].fail(
