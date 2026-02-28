@@ -255,14 +255,14 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         return all(self._has_required_value(field) for field in required_fields)
 
     @staticmethod
-    def _has_required_value(field: object) -> bool:
+    def _has_required_value(field: t.GeneralValueType) -> bool:
         """Normalize required field values for connection validation."""
         try:
             return bool(_STRING_ADAPTER.validate_python(field).strip())
         except ValidationError:
             return bool(field)
 
-    def get_business_rule(self, entity_name: str, rule_name: str) -> object | None:
+    def get_business_rule(self, entity_name: str, rule_name: str) -> t.GeneralValueType | None:
         """Get business rule for specific Oracle WMS entity."""
         entity_rules = self.oracle_wms_business_rules.get(entity_name)
         if entity_rules is None:
