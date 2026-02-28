@@ -37,7 +37,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                 return FlextResult[bool].fail("Model name cannot be empty")
             if (
                 self.materialization
-                not in FlextDbtOracleWmsConstants.Dbt.MATERIALIZATIONS
+                not in FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.MATERIALIZATIONS
             ):
                 return FlextResult[bool].fail("Invalid materialization")
             return FlextResult[bool].ok(True)
@@ -62,7 +62,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                     "wms_entity_type": source,
                     "schema_name": "wms_staging",
                     "table_name": f"stg_{source}",
-                    "materialization": FlextDbtOracleWmsConstants.Dbt.Materialization.VIEW.value,
+                    "materialization": FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.Materialization.VIEW.value,
                     "sql_content": f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
                     "description": f"Staging model for {source}",
                     "oracle_source": source,
