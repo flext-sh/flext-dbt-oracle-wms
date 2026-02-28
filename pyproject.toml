@@ -31,9 +31,9 @@ classifiers = [
 ]
 dependencies = [
   "click>=8.2.1",
-  "flext-core @ file://../flext-core",
-  "flext-meltano @ file://../flext-meltano",
-  "flext-oracle-wms @ file://../flext-oracle-wms",
+  "flext-core @ file:../flext-core",
+  "flext-meltano @ file:../flext-meltano",
+  "flext-oracle-wms @ file:../flext-oracle-wms",
   "pydantic>=2.12.3",
   "pydantic-core>=2.41.4",
 ]
