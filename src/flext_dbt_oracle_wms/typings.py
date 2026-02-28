@@ -18,6 +18,8 @@ from datetime import datetime
 from typing import Annotated, Literal
 
 from flext_core import FlextTypes
+from flext_meltano import FlextMeltanoTypes
+from flext_oracle_wms import FlextOracleWmsTypes
 from pydantic import BaseModel, ConfigDict
 
 from flext_dbt_oracle_wms.constants import c
@@ -36,7 +38,7 @@ type DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
 
 
 # DBT Oracle WMS domain TypeVars
-class FlextDbtOracleWmsTypes(FlextTypes):
+class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     """DBT Oracle WMS-specific type definitions extending t.
 
     Domain-specific type system for DBT Oracle WMS data transformation operations.

@@ -25,7 +25,14 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
     from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
-    from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities as u
+    from flext_dbt_oracle_wms.typings import (
+        FlextDbtOracleWmsTypes,
+        FlextDbtOracleWmsTypes as t,
+    )
+    from flext_dbt_oracle_wms.utilities import (
+        FlextDbtOracleWmsUtilities,
+        FlextDbtOracleWmsUtilities as u,
+    )
 
 # Lazy import mapping: export_name -> (module_path, attr_name)
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
@@ -35,10 +42,13 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "FlextDbtOracleWmsModels": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
     "FlextDbtOracleWmsProtocols": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
     "FlextDbtOracleWmsSettings": ("flext_dbt_oracle_wms.settings", "FlextDbtOracleWmsSettings"),
+    "FlextDbtOracleWmsTypes": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
+    "FlextDbtOracleWmsUtilities": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
     "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
     "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
     "m": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
+    "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
     "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
 }
 
@@ -48,13 +58,14 @@ __all__ = [
     "FlextDbtOracleWmsConstants",
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsProtocols",
-    "FlextDbtOracleWmsServices",
     "FlextDbtOracleWmsSettings",
+    "FlextDbtOracleWmsTypes",
     "FlextDbtOracleWmsUtilities",
     "__version__",
     "__version_info__",
     "c",
     "m",
+    "t",
     "u",
 ]
 
