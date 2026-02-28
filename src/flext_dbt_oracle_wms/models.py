@@ -4,16 +4,18 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import FlextModels, FlextResult, t
+from flext_core import FlextResult, t
+from flext_meltano.models import FlextMeltanoModels
+from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
 
 from .constants import FlextDbtOracleWmsConstants
 
 
-class FlextDbtOracleWmsModels(FlextModels):
+class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     """Pydantic model namespace for DBT Oracle WMS objects."""
 
-    class DbtModel(FlextModels.ArbitraryTypesModel):
+    class DbtModel(FlextMeltanoModels.ArbitraryTypesModel):
         """Single DBT model metadata payload."""
 
         name: str
