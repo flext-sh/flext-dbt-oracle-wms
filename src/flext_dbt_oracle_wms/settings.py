@@ -24,7 +24,7 @@ from pydantic import (
 )
 from pydantic_settings import SettingsConfigDict
 
-from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants
+from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants, c
 
 _STRING_ADAPTER = TypeAdapter(str)
 
@@ -91,7 +91,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     )
 
     oracle_wms_environment: str = Field(
-        default=FlextDbtOracleWmsConstants.Dbt.PROFILE,
+        default="dev",
         description="Oracle WMS environment",
     )
 
@@ -176,15 +176,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     @classmethod
     def validate_dbt_target(cls, v: str) -> str:
         """Validate DBT target environment."""
-        valid_targets = {
-            "dev",
-            "development",
-            "staging",
-            "prod",
-            "production",
-            "test",
-            "local",
-        }
+        valid_targets = {member.value for member in c.DbtOracleWms.DbtTargets}
         if v.lower() not in valid_targets:
             valid_list = ", ".join(sorted(valid_targets))
             msg = f"Invalid DBT target: {v}. Must be one of: {valid_list}"
@@ -195,7 +187,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     @classmethod
     def validate_oracle_wms_environment(cls, v: str) -> str:
         """Validate Oracle WMS environment."""
-        valid_environments = {"dev", "test", "staging", "prod", "production"}
+        valid_environments = {member.value for member in c.DbtOracleWms.OracleWmsEnvironments}
         if v.lower() not in valid_environments:
             valid_list = ", ".join(sorted(valid_environments))
             msg = f"Invalid Oracle WMS environment: {v}. Must be one of: {valid_list}"

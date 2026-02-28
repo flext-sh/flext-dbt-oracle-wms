@@ -108,6 +108,30 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants)
                 "data_quality_threshold": 0.95,
             }
 
+        class DbtTargets(StrEnum):
+            """Valid DBT target environments."""
+
+            DEV = "dev"
+            DEVELOPMENT = "development"
+            STAGING = "staging"
+            PROD = "prod"
+            PRODUCTION = "production"
+            TEST = "test"
+            LOCAL = "local"
+
+        class OracleWmsEnvironments(StrEnum):
+            """Valid Oracle WMS environments."""
+
+            DEV = "dev"
+            TEST = "test"
+            STAGING = "staging"
+            PROD = "prod"
+            PRODUCTION = "production"
+
+    # Class-level aliases for backward compatibility and direct access
+    DbtOracleWmsProcessing = DbtOracleWms.DbtOracleWmsProcessing
+    Dbt = DbtOracleWms.Dbt
+
 
 c = FlextDbtOracleWmsConstants
 
