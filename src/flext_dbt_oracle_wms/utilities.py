@@ -5,9 +5,11 @@ from __future__ import annotations
 from collections.abc import Mapping
 
 from flext_core import FlextResult, t
+from flext_meltano import FlextMeltanoUtilities
+from flext_oracle_wms import FlextOracleWmsUtilities
 
 
-class FlextDbtOracleWmsUtilities:
+class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities):
     """Namespace with utility helpers for extraction and modeling."""
 
     class DbtOracleWms:
@@ -35,4 +37,7 @@ class FlextDbtOracleWmsUtilities:
             return FlextResult[str].ok("select * from {{ ref('stg_wms_inventory') }}")
 
 
-__all__ = ["FlextDbtOracleWmsUtilities"]
+__all__ = ["FlextDbtOracleWmsUtilities", "u"]
+
+
+u = FlextDbtOracleWmsUtilities

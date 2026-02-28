@@ -40,7 +40,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "FlextDbtOracleWmsMonitoringService": ("flext_dbt_oracle_wms.services", "FlextDbtOracleWmsMonitoringService"),
     "FlextDbtOracleWmsProtocols": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
     "FlextDbtOracleWmsSettings": ("flext_dbt_oracle_wms.settings", "FlextDbtOracleWmsSettings"),
-    "FlextDbtOracleWmsUtilities": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
+    "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
     "FlextDbtOracleWmsWorkflowService": ("flext_dbt_oracle_wms.services", "FlextDbtOracleWmsWorkflowService"),
     "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
@@ -62,6 +62,7 @@ __all__ = [
     "__version_info__",
     "c",
     "m",
+    "u",
 ]
 
 
