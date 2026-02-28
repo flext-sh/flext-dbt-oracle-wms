@@ -23,10 +23,7 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsModels as m,
     )
     from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
-    from flext_dbt_oracle_wms.services import (
-        FlextDbtOracleWmsMonitoringService,
-        FlextDbtOracleWmsWorkflowService,
-    )
+    from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
     from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities
@@ -46,10 +43,6 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "flext_dbt_oracle_wms.models",
         "FlextDbtOracleWmsModels",
     ),
-    "FlextDbtOracleWmsMonitoringService": (
-        "flext_dbt_oracle_wms.services",
-        "FlextDbtOracleWmsMonitoringService",
-    ),
     "FlextDbtOracleWmsProtocols": (
         "flext_dbt_oracle_wms.protocols",
         "FlextDbtOracleWmsProtocols",
@@ -59,10 +52,6 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "FlextDbtOracleWmsSettings",
     ),
     "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
-    "FlextDbtOracleWmsWorkflowService": (
-        "flext_dbt_oracle_wms.services",
-        "FlextDbtOracleWmsWorkflowService",
-    ),
     "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
     "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
@@ -74,11 +63,10 @@ __all__ = [
     "FlextDbtOracleWmsClient",
     "FlextDbtOracleWmsConstants",
     "FlextDbtOracleWmsModels",
-    "FlextDbtOracleWmsMonitoringService",
     "FlextDbtOracleWmsProtocols",
+    "FlextDbtOracleWmsServices",
     "FlextDbtOracleWmsSettings",
     "FlextDbtOracleWmsUtilities",
-    "FlextDbtOracleWmsWorkflowService",
     "__version__",
     "__version_info__",
     "c",

@@ -109,21 +109,10 @@ class FlextDbtOracleWmsTransformer:
         return FlextResult[bool].ok(True)
 
 
-ItemDimension = FlextDbtOracleWmsItemDimension
-LocationDimension = FlextDbtOracleWmsLocationDimension
-InventoryFact = FlextDbtOracleWmsInventoryFact
-ShipmentFact = FlextDbtOracleWmsShipmentFact
-OracleWMSTransformer = FlextDbtOracleWmsTransformer
-
 __all__ = [
     "FlextDbtOracleWmsInventoryFact",
     "FlextDbtOracleWmsItemDimension",
     "FlextDbtOracleWmsLocationDimension",
     "FlextDbtOracleWmsShipmentFact",
     "FlextDbtOracleWmsTransformer",
-    "InventoryFact",
-    "ItemDimension",
-    "LocationDimension",
-    "OracleWMSTransformer",
-    "ShipmentFact",
 ]

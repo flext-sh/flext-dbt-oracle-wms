@@ -18,10 +18,7 @@ from flext_core import (
 )
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.services import (
-    FlextDbtOracleWmsMonitoringService,
-    FlextDbtOracleWmsWorkflowService,
-)
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
 
@@ -54,8 +51,8 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             config or FlextDbtOracleWmsSettings()
         )
         self._client: FlextDbtOracleWmsClient | None = None
-        self._workflow_service: FlextDbtOracleWmsWorkflowService | None = None
-        self._monitoring_service: FlextDbtOracleWmsMonitoringService | None = None
+        self._workflow_service: FlextDbtOracleWmsServices | None = None
+        self._monitoring_service: FlextDbtOracleWmsServices | None = None
         # Note: container, context, and logger are provided automatically by FlextService
 
     @classmethod
@@ -71,17 +68,17 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         return self._client
 
     @property
-    def workflow_service(self) -> FlextDbtOracleWmsWorkflowService:
+    def workflow_service(self) -> FlextDbtOracleWmsServices:
         """Get the workflow service instance."""
         if self._workflow_service is None:
-            self._workflow_service = FlextDbtOracleWmsWorkflowService()
+            self._workflow_service = FlextDbtOracleWmsServices()
         return self._workflow_service
 
     @property
-    def monitoring_service(self) -> FlextDbtOracleWmsMonitoringService:
+    def monitoring_service(self) -> FlextDbtOracleWmsServices:
         """Get the monitoring service instance."""
         if self._monitoring_service is None:
-            self._monitoring_service = FlextDbtOracleWmsMonitoringService()
+            self._monitoring_service = FlextDbtOracleWmsServices()
         return self._monitoring_service
 
     @property
