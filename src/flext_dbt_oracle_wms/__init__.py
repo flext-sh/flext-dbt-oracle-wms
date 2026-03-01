@@ -40,13 +40,34 @@ if TYPE_CHECKING:
 # Lazy import mapping: export_name -> (module_path, attr_name)
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "FlextDbtOracleWms": ("flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"),
-    "FlextDbtOracleWmsClient": ("flext_dbt_oracle_wms.client", "FlextDbtOracleWmsClient"),
-    "FlextDbtOracleWmsConstants": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
-    "FlextDbtOracleWmsModels": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
-    "FlextDbtOracleWmsProtocols": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
-    "FlextDbtOracleWmsSettings": ("flext_dbt_oracle_wms.settings", "FlextDbtOracleWmsSettings"),
-    "FlextDbtOracleWmsTypes": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
-    "FlextDbtOracleWmsUtilities": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
+    "FlextDbtOracleWmsClient": (
+        "flext_dbt_oracle_wms.client",
+        "FlextDbtOracleWmsClient",
+    ),
+    "FlextDbtOracleWmsConstants": (
+        "flext_dbt_oracle_wms.constants",
+        "FlextDbtOracleWmsConstants",
+    ),
+    "FlextDbtOracleWmsModels": (
+        "flext_dbt_oracle_wms.models",
+        "FlextDbtOracleWmsModels",
+    ),
+    "FlextDbtOracleWmsProtocols": (
+        "flext_dbt_oracle_wms.protocols",
+        "FlextDbtOracleWmsProtocols",
+    ),
+    "FlextDbtOracleWmsSettings": (
+        "flext_dbt_oracle_wms.settings",
+        "FlextDbtOracleWmsSettings",
+    ),
+    "FlextDbtOracleWmsTypes": (
+        "flext_dbt_oracle_wms.typings",
+        "FlextDbtOracleWmsTypes",
+    ),
+    "FlextDbtOracleWmsUtilities": (
+        "flext_dbt_oracle_wms.utilities",
+        "FlextDbtOracleWmsUtilities",
+    ),
     "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
     "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
