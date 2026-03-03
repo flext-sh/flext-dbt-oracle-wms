@@ -10,7 +10,7 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import ClassVar, Literal, Self, override
 
-from flext_core import FlextConstants, FlextResult, FlextSettings, t
+from flext_core import FlextConstants, FlextResult, FlextSettings, m, t
 from flext_meltano import FlextMeltanoSettings
 from flext_oracle_wms.settings import FlextOracleWmsSettings
 from pydantic import (
