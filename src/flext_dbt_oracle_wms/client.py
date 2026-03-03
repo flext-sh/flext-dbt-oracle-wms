@@ -21,9 +21,9 @@ class FlextDbtOracleWmsClient:
 
     def test_oracle_wms_connection(
         self,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Return simple connection health status."""
-        return FlextResult[dict[str, t.GeneralValueType]].ok({
+        return FlextResult[dict[str, t.ContainerValue]].ok({
             "status": "connected",
             "environment": self.config.oracle_wms_environment,
             "base_url": self.config.oracle_wms_base_url,
@@ -37,34 +37,34 @@ class FlextDbtOracleWmsClient:
     def extract_oracle_wms_data(
         self,
         entity_name: str,
-        filters: Mapping[str, t.GeneralValueType] | None = None,
-    ) -> FlextResult[Sequence[Mapping[str, t.GeneralValueType]]]:
+        filters: Mapping[str, t.ContainerValue] | None = None,
+    ) -> FlextResult[Sequence[Mapping[str, t.ContainerValue]]]:
         """Return sample records for a requested entity."""
         _ = filters
-        return FlextResult[list[dict[str, t.GeneralValueType]]].ok([
+        return FlextResult[list[dict[str, t.ContainerValue]]].ok([
             {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"},
         ])
 
     def validate_oracle_wms_data(
         self,
         entity_name: str,
-        records: Sequence[Mapping[str, t.GeneralValueType]],
-    ) -> FlextResult[Sequence[Mapping[str, t.GeneralValueType]]]:
+        records: Sequence[Mapping[str, t.ContainerValue]],
+    ) -> FlextResult[Sequence[Mapping[str, t.ContainerValue]]]:
         """Validate records list for a specific entity."""
         _ = entity_name
         if not records:
-            return FlextResult[list[dict[str, t.GeneralValueType]]].fail(
+            return FlextResult[list[dict[str, t.ContainerValue]]].fail(
                 "No records to validate",
             )
-        return FlextResult[list[dict[str, t.GeneralValueType]]].ok(records)
+        return FlextResult[list[dict[str, t.ContainerValue]]].ok(records)
 
     def transform_with_dbt(
         self,
-        entity_data: Mapping[str, Sequence[Mapping[str, t.GeneralValueType]]],
+        entity_data: Mapping[str, Sequence[Mapping[str, t.ContainerValue]]],
         model_names: list[str] | None,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Return transformation summary for provided entities."""
-        return FlextResult[dict[str, t.GeneralValueType]].ok({
+        return FlextResult[dict[str, t.ContainerValue]].ok({
             "transformed_tables": list(entity_data.keys()),
             "requested_models": model_names or [],
             "status": "success",
@@ -73,9 +73,9 @@ class FlextDbtOracleWmsClient:
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
         entity_names: list[str] | None = None,
-        filters: Mapping[str, t.GeneralValueType] | None = None,
+        filters: Mapping[str, t.ContainerValue] | None = None,
         model_names: list[str] | None = None,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Run discover, extract, validate, and transform pipeline."""
         entities_result = (
             FlextResult[list[str]].ok(entity_names)
@@ -83,16 +83,16 @@ class FlextDbtOracleWmsClient:
             else self.discover_oracle_wms_entities()
         )
         if entities_result.is_failure:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 entities_result.error or "Entity discovery failed",
             )
         entity_list = entities_result.value
 
-        extracted: dict[str, list[dict[str, t.GeneralValueType]]] = {}
+        extracted: dict[str, list[dict[str, t.ContainerValue]]] = {}
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.is_failure:
-                return FlextResult[dict[str, t.GeneralValueType]].fail(
+                return FlextResult[dict[str, t.ContainerValue]].fail(
                     extract_result.error or "Extraction failed",
                 )
             validate_result = self.validate_oracle_wms_data(
@@ -100,20 +100,20 @@ class FlextDbtOracleWmsClient:
                 extract_result.value,
             )
             if validate_result.is_failure:
-                return FlextResult[dict[str, t.GeneralValueType]].fail(
+                return FlextResult[dict[str, t.ContainerValue]].fail(
                     validate_result.error or "Validation failed",
                 )
             extracted[entity_name] = [dict(record) for record in validate_result.value]
 
         transform_result = self.transform_with_dbt(extracted, model_names)
         if transform_result.is_failure:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 transform_result.error or "Transformation failed",
             )
 
         logger.info("Completed Oracle WMS to DBT pipeline")
         tr_val = transform_result.value
-        return FlextResult[dict[str, t.GeneralValueType]].ok({
+        return FlextResult[dict[str, t.ContainerValue]].ok({
             "processed_entities": list(extracted.keys()),
             "total_records": sum(len(records) for records in extracted.values()),
             "transformation_results": tr_val,

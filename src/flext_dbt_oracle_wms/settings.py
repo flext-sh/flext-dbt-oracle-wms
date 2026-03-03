@@ -42,7 +42,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     Uses composition to integrate flext-oracle-wms and flext-meltano configurations.
     """
 
-    def __init__(self, **kwargs: t.GeneralValueType) -> None:
+    def __init__(self, **kwargs: t.ContainerValue) -> None:
         """Initialize with typed constructor to satisfy strict type checking."""
         super().__init__(**kwargs)
 
@@ -147,7 +147,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         "receiptId": "receipt_id",
     }
 
-    oracle_wms_business_rules: ClassVar[dict[str, t.GeneralValueType]] = {
+    oracle_wms_business_rules: ClassVar[dict[str, t.ContainerValue]] = {
         "inventory_thresholds": {
             "min_quantity": 0,
             "max_quantity": 999999,
@@ -230,7 +230,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             environment=self.dbt_target,
         )
 
-    def get_oracle_wms_quality_config(self) -> Mapping[str, t.GeneralValueType]:
+    def get_oracle_wms_quality_config(self) -> Mapping[str, t.ContainerValue]:
         """Get data quality configuration for Oracle WMS validation."""
         return {
             "min_quality_threshold": self.min_quality_threshold,
@@ -257,7 +257,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         return all(self._has_required_value(field) for field in required_fields)
 
     @staticmethod
-    def _has_required_value(field: t.GeneralValueType) -> bool:
+    def _has_required_value(field: t.ContainerValue) -> bool:
         """Normalize required field values for connection validation."""
         try:
             return bool(_STRING_ADAPTER.validate_python(field).strip())
@@ -268,13 +268,13 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         self,
         entity_name: str,
         rule_name: str,
-    ) -> t.GeneralValueType | None:
+    ) -> t.ContainerValue | None:
         """Get business rule for specific Oracle WMS entity."""
         entity_rules = self.oracle_wms_business_rules.get(entity_name)
         if entity_rules is None:
             return None
         try:
-            validated_rules = t.Dict.model_validate(entity_rules)
+            validated_rules = m.Dict.model_validate(entity_rules)
         except ValidationError:
             return None
         return validated_rules.get(rule_name)
@@ -287,7 +287,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     def get_or_create_shared_instance(
         cls,
         project_name: str | None = None,
-        **overrides: t.GeneralValueType,
+        **overrides: t.ContainerValue,
     ) -> Self:
         """Get or create a shared singleton settings instance."""
         _ = project_name
@@ -320,17 +320,17 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     @classmethod
     def create_for_development(
         cls,
-        **overrides: t.GeneralValueType,
+        **overrides: t.ContainerValue,
     ) -> FlextResult[Self]:
         """Create configuration optimized for development environment."""
-        dev_config: dict[str, t.GeneralValueType] = {
+        dev_config: dict[str, t.ContainerValue] = {
             "dbt_target": "development",
             "dbt_threads": 2,
             "oracle_wms_environment": "dev",
             "validate_business_rules_flag": False,
             "min_quality_threshold": 0.5,  # Lower threshold for dev
         }
-        config_data: dict[str, t.GeneralValueType] = {**dev_config, **overrides}
+        config_data: dict[str, t.ContainerValue] = {**dev_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms",
@@ -351,10 +351,10 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     @classmethod
     def create_for_production(
         cls,
-        **overrides: t.GeneralValueType,
+        **overrides: t.ContainerValue,
     ) -> FlextResult[Self]:
         """Create configuration optimized for production environment."""
-        prod_config: dict[str, t.GeneralValueType] = {
+        prod_config: dict[str, t.ContainerValue] = {
             "dbt_target": "production",
             "dbt_threads": 8,
             "oracle_wms_environment": "prod",
@@ -362,7 +362,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             "min_quality_threshold": 0.95,  # Higher threshold for prod
             "oracle_wms_max_retries": 5,
         }
-        config_data: dict[str, t.GeneralValueType] = {**prod_config, **overrides}
+        config_data: dict[str, t.ContainerValue] = {**prod_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms",
@@ -383,10 +383,10 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     @classmethod
     def create_for_testing(
         cls,
-        **overrides: t.GeneralValueType,
+        **overrides: t.ContainerValue,
     ) -> FlextResult[Self]:
         """Create configuration optimized for testing environment."""
-        test_config: dict[str, t.GeneralValueType] = {
+        test_config: dict[str, t.ContainerValue] = {
             "dbt_target": "test",
             "dbt_threads": 1,
             "oracle_wms_environment": "test",
@@ -394,7 +394,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             "min_quality_threshold": 0.8,
             "oracle_wms_max_retries": 1,
         }
-        config_data: dict[str, t.GeneralValueType] = {**test_config, **overrides}
+        config_data: dict[str, t.ContainerValue] = {**test_config, **overrides}
         try:
             instance = cls.get_or_create_shared_instance(
                 project_name="flext-dbt-oracle-wms",
@@ -416,7 +416,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     def create_for_environment(
         cls,
         environment: str,
-        **overrides: t.GeneralValueType,
+        **overrides: t.ContainerValue,
     ) -> FlextResult[Self]:
         """Create configuration for specific environment."""
         if environment == "production":

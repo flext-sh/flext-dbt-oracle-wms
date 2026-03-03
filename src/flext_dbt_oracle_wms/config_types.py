@@ -16,7 +16,7 @@ class FlextDBTOracleWMSSettings(FlextSettings):
     profile: str = Field(default="flext_oracle_wms")
     wms_entities: list[str] = Field(default_factory=lambda: ["inventory", "location"])
 
-    def __init__(self, **kwargs: t.GeneralValueType) -> None:
+    def __init__(self, **kwargs: t.ContainerValue) -> None:
         """Initialize with typed constructor to satisfy strict type checking."""
         super().__init__(**kwargs)
 
@@ -45,7 +45,7 @@ class DBTOracleWMSSourceConfiguration(BaseModel):
     model_config = ConfigDict(frozen=False, extra="forbid")
     name: str
     schema_name: str = Field(alias="schema")
-    tables: list[dict[str, t.GeneralValueType]]
+    tables: list[dict[str, t.ContainerValue]]
 
 
 class DBTOracleWMSTestConfiguration(BaseModel):
@@ -70,7 +70,7 @@ class DBTOracleWMSProfileConfiguration(BaseModel):
 
     model_config = ConfigDict(frozen=False, extra="forbid")
     target: str
-    outputs: dict[str, t.GeneralValueType]
+    outputs: dict[str, t.ContainerValue]
 
 
 __all__ = [

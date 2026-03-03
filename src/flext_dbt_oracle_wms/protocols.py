@@ -8,8 +8,8 @@ from flext_core import FlextResult, t
 from flext_meltano import FlextMeltanoProtocols
 from flext_oracle_wms.protocols import FlextOracleWmsProtocols
 
-type WmsPayload = t.Dict
-type WmsPayloadList = list[t.Dict]
+type WmsPayload = m.Dict
+type WmsPayloadList = list[m.Dict]
 
 
 class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):

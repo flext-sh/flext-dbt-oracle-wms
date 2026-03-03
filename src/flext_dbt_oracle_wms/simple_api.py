@@ -98,7 +98,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Run complete Oracle WMS-to-DBT workflow.
 
         Args:
@@ -113,7 +113,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Running Oracle WMS-to-DBT workflow")
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return FlextResult[dict[str, t.ContainerValue]].ok({
                 "status": "completed",
                 "generate_models": generate_models,
                 "run_transformations": run_transformations,
@@ -129,7 +129,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 f"Workflow execution failed: {e}",
             )
 
@@ -138,7 +138,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         inventory_items: list[str] | None = None,
         shipments: list[str] | None = None,
         output_dir: str | None = None,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Generate DBT models from Oracle WMS data.
 
         Args:
@@ -152,7 +152,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Generating DBT models from Oracle WMS")
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return FlextResult[dict[str, t.ContainerValue]].ok({
                 "status": "models_generated",
                 "inventory_items": len(inventory_items) if inventory_items else 0,
                 "shipments": len(shipments) if shipments else 0,
@@ -167,7 +167,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 f"Model generation failed: {e}",
             )
 
@@ -178,7 +178,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Extract Oracle WMS metadata.
 
         Args:
@@ -193,7 +193,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Extracting Oracle WMS metadata")
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return FlextResult[dict[str, t.ContainerValue]].ok({
                 "status": "metadata_extracted",
                 "include_inventory_details": include_inventory_details,
                 "include_shipment_tracking": include_shipment_tracking,
@@ -209,7 +209,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 f"Metadata extraction failed: {e}",
             )
 
@@ -217,7 +217,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         self,
         command: str,
         timeout_seconds: int = 300,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Monitor DBT command execution with metrics.
 
         Args:
@@ -230,7 +230,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Monitoring DBT execution: %s", command)
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return FlextResult[dict[str, t.ContainerValue]].ok({
                 "status": "monitored",
                 "command": command,
                 "timeout": timeout_seconds,
@@ -244,7 +244,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 f"Monitoring failed: {e}",
             )
 
@@ -272,7 +272,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
     def get_wms_inventory_info(
         self,
         item_id: str,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Get detailed information about WMS inventory item.
 
         Args:
@@ -284,7 +284,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Getting WMS inventory info: %s", item_id)
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return FlextResult[dict[str, t.ContainerValue]].ok({
                 "item_id": item_id,
                 "status": "info_retrieved",
             })
@@ -297,14 +297,14 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 f"Inventory info retrieval failed: {e}",
             )
 
     def get_wms_shipment_info(
         self,
         shipment_id: str,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Get detailed information about WMS shipment.
 
         Args:
@@ -316,7 +316,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Getting WMS shipment info: %s", shipment_id)
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return FlextResult[dict[str, t.ContainerValue]].ok({
                 "shipment_id": shipment_id,
                 "status": "info_retrieved",
             })
@@ -329,7 +329,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
+            return FlextResult[dict[str, t.ContainerValue]].fail(
                 f"Shipment info retrieval failed: {e}",
             )
 

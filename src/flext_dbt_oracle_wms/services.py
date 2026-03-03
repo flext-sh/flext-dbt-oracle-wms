@@ -22,19 +22,19 @@ class FlextDbtOracleWmsServices:
 
     def generate_workflow_recommendations(
         self,
-        entities: list[Mapping[str, t.GeneralValueType]] | None = None,
-    ) -> FlextResult[Mapping[str, t.GeneralValueType]]:
+        entities: list[Mapping[str, t.ContainerValue]] | None = None,
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
         total = len(entity_list)
-        recommendations: list[dict[str, t.GeneralValueType]] = []
+        recommendations: list[dict[str, t.ContainerValue]] = []
         if total > PERFORMANCE_RECOMMENDATION_THRESHOLD:
             recommendations.append({
                 "type": "performance",
                 "priority": "high",
                 "message": "Process entities in smaller batches",
             })
-        return FlextResult[dict[str, t.GeneralValueType]].ok({
+        return FlextResult[dict[str, t.ContainerValue]].ok({
             "analysis": {
                 "total_entities": total,
             },
@@ -51,7 +51,7 @@ class FlextDbtOracleWmsServices:
         workflow_type: str,
         entity_names: list[str] | None = None,
         additional_data: Mapping[str, str | int | float] | None = None,
-    ) -> Mapping[str, t.GeneralValueType]:
+    ) -> Mapping[str, t.ContainerValue]:
         """Return tracking payload for workflow instrumentation."""
         logger.info("Tracking workflow execution")
         return {
@@ -65,8 +65,8 @@ class FlextDbtOracleWmsServices:
 
     def log_workflow_completion(
         self,
-        tracking_info: Mapping[str, t.GeneralValueType],
-        result: FlextResult[Mapping[str, t.GeneralValueType]],
+        tracking_info: Mapping[str, t.ContainerValue],
+        result: FlextResult[Mapping[str, t.ContainerValue]],
     ) -> None:
         """Log workflow completion status."""
         logger.info(

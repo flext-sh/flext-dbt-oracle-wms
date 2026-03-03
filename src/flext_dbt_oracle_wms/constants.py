@@ -99,7 +99,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants)
         class Configuration:
             """Default runtime configuration values."""
 
-            DEFAULT_CONFIG: Final[dict[str, t.GeneralValueType]] = {
+            DEFAULT_CONFIG: Final[dict[str, t.ContainerValue]] = {
                 "project_name": "flext_dbt_oracle_wms",
                 "profile": "flext_oracle_wms",
                 "schema_prefix": "wms",

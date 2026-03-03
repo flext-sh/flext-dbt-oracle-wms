@@ -45,7 +45,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     class ModelGenerator:
         """Generator for lightweight DBT model objects."""
 
-        def __init__(self, config: Mapping[str, t.GeneralValueType]) -> None:
+        def __init__(self, config: Mapping[str, t.ContainerValue]) -> None:
             """Store generation config for later model creation."""
             super().__init__()
             self.config = config
@@ -74,7 +74,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     @classmethod
     def create_generator(
         cls,
-        config: Mapping[str, t.GeneralValueType],
+        config: Mapping[str, t.ContainerValue],
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a model generator with explicit configuration."""
         return cls.ModelGenerator(config)

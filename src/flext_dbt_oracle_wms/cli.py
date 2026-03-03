@@ -24,7 +24,7 @@ class FlextDbtOracleWmsCliService:
 
     def handle_discover(
         self,
-        _args: Mapping[str, t.GeneralValueType] | None = None,
+        _args: Mapping[str, t.ContainerValue] | None = None,
     ) -> FlextResult[str]:
         """Handle discover command."""
         result = self._client.discover_oracle_wms_entities()
@@ -34,7 +34,7 @@ class FlextDbtOracleWmsCliService:
 
     def handle_extract(
         self,
-        args: Mapping[str, t.GeneralValueType] | None = None,
+        args: Mapping[str, t.ContainerValue] | None = None,
     ) -> FlextResult[str]:
         """Handle extract command."""
         entity = "inventory"
@@ -53,7 +53,7 @@ class FlextDbtOracleWmsCliService:
 
     def handle_pipeline(
         self,
-        _args: Mapping[str, t.GeneralValueType] | None = None,
+        _args: Mapping[str, t.ContainerValue] | None = None,
     ) -> FlextResult[str]:
         """Handle full pipeline command."""
         result = self._client.run_full_oracle_wms_to_dbt_pipeline()
@@ -63,7 +63,7 @@ class FlextDbtOracleWmsCliService:
 
     def handle_info(
         self,
-        _args: Mapping[str, t.GeneralValueType] | None = None,
+        _args: Mapping[str, t.ContainerValue] | None = None,
     ) -> FlextResult[str]:
         """Handle package info command."""
         return FlextResult[str].ok("FLEXT DBT Oracle WMS")
