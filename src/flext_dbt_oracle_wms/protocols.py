@@ -8,8 +8,8 @@ from flext_core import FlextResult, t
 from flext_meltano import FlextMeltanoProtocols
 from flext_oracle_wms.protocols import FlextOracleWmsProtocols
 
-type WmsPayload = m.Dict
-type WmsPayloadList = list[m.Dict]
+
+
 
 
 class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):
@@ -25,16 +25,16 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
             def run_dbt_models(
                 self,
                 models: list[str] | None = None,
-                config: WmsPayload | None = None,
-            ) -> FlextResult[WmsPayload]:
+                config: m.Dict | None = None,
+            ) -> FlextResult[m.Dict]:
                 """Run DBT models and return execution metadata."""
                 ...
 
             def test_dbt_models(
                 self,
                 models: list[str] | None = None,
-                config: WmsPayload | None = None,
-            ) -> FlextResult[WmsPayload]:
+                config: m.Dict | None = None,
+            ) -> FlextResult[m.Dict]:
                 """Run DBT tests and return status metadata."""
                 ...
 
@@ -44,9 +44,9 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
 
             def extract_wms_inventory_data(
                 self,
-                wms_config: WmsPayload,
-                extraction_config: WmsPayload,
-            ) -> FlextResult[WmsPayloadList]:
+                wms_config: m.Dict,
+                extraction_config: m.Dict,
+            ) -> FlextResult[list[m.Dict]]:
                 """Extract inventory records from Oracle WMS."""
                 ...
 
