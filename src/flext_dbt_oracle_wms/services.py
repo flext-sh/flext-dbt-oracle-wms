@@ -34,7 +34,7 @@ class FlextDbtOracleWmsServices:
                 "priority": "high",
                 "message": "Process entities in smaller batches",
             })
-        return FlextResult[dict[str, t.ContainerValue]].ok({
+        return FlextResult[t.ConfigurationMapping].ok({
             "analysis": {
                 "total_entities": total,
             },

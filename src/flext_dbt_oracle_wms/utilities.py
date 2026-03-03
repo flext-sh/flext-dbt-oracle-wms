@@ -20,7 +20,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
             extraction_config: Mapping[str, t.ContainerValue],
         ) -> FlextResult[Mapping[str, t.ContainerValue]]:
             """Return basic extraction metadata for inventory loads."""
-            return FlextResult[dict[str, t.ContainerValue]].ok({
+            return FlextResult[t.ConfigurationMapping].ok({
                 "extraction_config": extraction_config,
                 "inventory_records": [],
             })
