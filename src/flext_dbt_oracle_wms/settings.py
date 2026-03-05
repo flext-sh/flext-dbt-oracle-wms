@@ -28,6 +28,7 @@ from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants, c
 _STRING_ADAPTER = TypeAdapter(str)
 
 
+@FlextSettings.auto_register("dbt_oracle_wms")
 class FlextDbtOracleWmsSettings(FlextSettings):
     """Configuration for DBT Oracle WMS transformations.
 
