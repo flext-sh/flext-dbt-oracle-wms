@@ -45,6 +45,20 @@ class FlextDbtOracleWmsServices:
             },
         })
 
+    def log_workflow_completion(
+        self,
+        tracking_info: Mapping[str, t.ContainerValue],
+        result: FlextResult[Mapping[str, t.ContainerValue]],
+    ) -> None:
+        """Log workflow completion status."""
+        logger.info(
+            "Workflow completion",
+            extra={
+                "tracking_id": tracking_info.get("tracking_id"),
+                "is_success": result.is_success,
+            },
+        )
+
     def track_workflow_execution(
         self,
         workflow_name: str,
@@ -62,20 +76,6 @@ class FlextDbtOracleWmsServices:
             "tracking_id": f"{workflow_name}:{workflow_type}",
             "status": "running",
         }
-
-    def log_workflow_completion(
-        self,
-        tracking_info: Mapping[str, t.ContainerValue],
-        result: FlextResult[Mapping[str, t.ContainerValue]],
-    ) -> None:
-        """Log workflow completion status."""
-        logger.info(
-            "Workflow completion",
-            extra={
-                "tracking_id": tracking_info.get("tracking_id"),
-                "is_success": result.is_success,
-            },
-        )
 
 
 __all__ = [

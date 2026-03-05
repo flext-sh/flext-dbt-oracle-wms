@@ -71,6 +71,14 @@ class FlextDbtOracleWmsShipmentFact(BaseModel):
 class FlextDbtOracleWmsTransformer:
     """Transformer converting raw entity data to DBT model payloads."""
 
+    def transform_all_entities(
+        self,
+        entity_data: Mapping[str, list[Mapping[str, t.ContainerValue]]],
+    ) -> Mapping[str, list[t.ContainerValue]]:
+        """Transform supported entity sets into DBT payloads."""
+        items = self.transform_items(entity_data.get("items", []))
+        return {"items": [item.to_dbt_dict() for item in items]}
+
     def transform_items(
         self,
         records: list[Mapping[str, t.ContainerValue]],
@@ -90,14 +98,6 @@ class FlextDbtOracleWmsTransformer:
                 ),
             )
         return transformed
-
-    def transform_all_entities(
-        self,
-        entity_data: Mapping[str, list[Mapping[str, t.ContainerValue]]],
-    ) -> Mapping[str, list[t.ContainerValue]]:
-        """Transform supported entity sets into DBT payloads."""
-        items = self.transform_items(entity_data.get("items", []))
-        return {"items": [item.to_dbt_dict() for item in items]}
 
     def validate_business_rules(
         self,

@@ -19,16 +19,6 @@ class FlextDbtOracleWmsClient:
         super().__init__()
         self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
 
-    def test_oracle_wms_connection(
-        self,
-    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
-        """Return simple connection health status."""
-        return FlextResult[t.ConfigurationMapping].ok({
-            "status": "connected",
-            "environment": self.config.oracle_wms_environment,
-            "base_url": self.config.oracle_wms_base_url,
-        })
-
     def discover_oracle_wms_entities(self) -> FlextResult[list[str]]:
         """Return the configured Oracle WMS entities."""
         entities = list(self.config.required_fields_per_entity.keys())
@@ -44,31 +34,6 @@ class FlextDbtOracleWmsClient:
         return FlextResult[list[t.ConfigurationMapping]].ok([
             {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"},
         ])
-
-    def validate_oracle_wms_data(
-        self,
-        entity_name: str,
-        records: Sequence[Mapping[str, t.ContainerValue]],
-    ) -> FlextResult[Sequence[Mapping[str, t.ContainerValue]]]:
-        """Validate records list for a specific entity."""
-        _ = entity_name
-        if not records:
-            return FlextResult[list[t.ConfigurationMapping]].fail(
-                "No records to validate",
-            )
-        return FlextResult[list[t.ConfigurationMapping]].ok(records)
-
-    def transform_with_dbt(
-        self,
-        entity_data: Mapping[str, Sequence[Mapping[str, t.ContainerValue]]],
-        model_names: list[str] | None,
-    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
-        """Return transformation summary for provided entities."""
-        return FlextResult[t.ConfigurationMapping].ok({
-            "transformed_tables": list(entity_data.keys()),
-            "requested_models": model_names or [],
-            "status": "success",
-        })
 
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
@@ -119,6 +84,41 @@ class FlextDbtOracleWmsClient:
             "transformation_results": tr_val,
             "pipeline_status": "completed",
         })
+
+    def test_oracle_wms_connection(
+        self,
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
+        """Return simple connection health status."""
+        return FlextResult[t.ConfigurationMapping].ok({
+            "status": "connected",
+            "environment": self.config.oracle_wms_environment,
+            "base_url": self.config.oracle_wms_base_url,
+        })
+
+    def transform_with_dbt(
+        self,
+        entity_data: Mapping[str, Sequence[Mapping[str, t.ContainerValue]]],
+        model_names: list[str] | None,
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
+        """Return transformation summary for provided entities."""
+        return FlextResult[t.ConfigurationMapping].ok({
+            "transformed_tables": list(entity_data.keys()),
+            "requested_models": model_names or [],
+            "status": "success",
+        })
+
+    def validate_oracle_wms_data(
+        self,
+        entity_name: str,
+        records: Sequence[Mapping[str, t.ContainerValue]],
+    ) -> FlextResult[Sequence[Mapping[str, t.ContainerValue]]]:
+        """Validate records list for a specific entity."""
+        _ = entity_name
+        if not records:
+            return FlextResult[list[t.ConfigurationMapping]].fail(
+                "No records to validate",
+            )
+        return FlextResult[list[t.ConfigurationMapping]].ok(records)
 
 
 __all__ = ["FlextDbtOracleWmsClient"]

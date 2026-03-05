@@ -51,6 +51,13 @@ class FlextDbtOracleWmsCliService:
             return FlextResult[str].fail(result.error or "Extract failed")
         return FlextResult[str].ok("Extraction completed successfully")
 
+    def handle_info(
+        self,
+        _args: Mapping[str, t.ContainerValue] | None = None,
+    ) -> FlextResult[str]:
+        """Handle package info command."""
+        return FlextResult[str].ok("FLEXT DBT Oracle WMS")
+
     def handle_pipeline(
         self,
         _args: Mapping[str, t.ContainerValue] | None = None,
@@ -60,13 +67,6 @@ class FlextDbtOracleWmsCliService:
         if result.is_failure:
             return FlextResult[str].fail(result.error or "Pipeline failed")
         return FlextResult[str].ok("Pipeline completed successfully")
-
-    def handle_info(
-        self,
-        _args: Mapping[str, t.ContainerValue] | None = None,
-    ) -> FlextResult[str]:
-        """Handle package info command."""
-        return FlextResult[str].ok("FLEXT DBT Oracle WMS")
 
 
 def discover() -> None:

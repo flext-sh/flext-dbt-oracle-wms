@@ -55,11 +55,6 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         self._monitoring_service: FlextDbtOracleWmsServices | None = None
         # Note: container, context, and logger are provided automatically by FlextService
 
-    @classmethod
-    def create(cls) -> FlextDbtOracleWms:
-        """Create a new FlextDbtOracleWms instance (factory method)."""
-        return cls()
-
     @property
     def client(self) -> FlextDbtOracleWmsClient:
         """Get the DBT Oracle WMS client instance."""
@@ -68,11 +63,10 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         return self._client
 
     @property
-    def workflow_service(self) -> FlextDbtOracleWmsServices:
-        """Get the workflow service instance."""
-        if self._workflow_service is None:
-            self._workflow_service = FlextDbtOracleWmsServices()
-        return self._workflow_service
+    @override
+    def config(self) -> FlextDbtOracleWmsSettings:
+        """Get the current configuration."""
+        return self._wms_config
 
     @property
     def monitoring_service(self) -> FlextDbtOracleWmsServices:
@@ -82,94 +76,16 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         return self._monitoring_service
 
     @property
-    @override
-    def config(self) -> FlextDbtOracleWmsSettings:
-        """Get the current configuration."""
-        return self._wms_config
+    def workflow_service(self) -> FlextDbtOracleWmsServices:
+        """Get the workflow service instance."""
+        if self._workflow_service is None:
+            self._workflow_service = FlextDbtOracleWmsServices()
+        return self._workflow_service
 
-    # =============================================================================
-    # MAIN WORKFLOW OPERATIONS - Enhanced with FlextResult error handling
-    # =============================================================================
-
-    def run_oracle_wms_to_dbt_workflow(
-        self,
-        inventory_items: list[str] | None = None,
-        shipments: list[str] | None = None,
-        *,
-        generate_models: bool = True,
-        run_transformations: bool = False,
-    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
-        """Run complete Oracle WMS-to-DBT workflow.
-
-        Args:
-        inventory_items: List of inventory items to process
-        shipments: List of shipments to process
-        generate_models: Whether to generate DBT models
-        run_transformations: Whether to run transformations
-
-        Returns:
-        FlextResult containing workflow results
-
-        """
-        try:
-            self.logger.info("Running Oracle WMS-to-DBT workflow")
-            return FlextResult[t.ConfigurationMapping].ok({
-                "status": "completed",
-                "generate_models": generate_models,
-                "run_transformations": run_transformations,
-                "inventory_processed": len(inventory_items) if inventory_items else 0,
-                "shipments_processed": len(shipments) if shipments else 0,
-            })
-        except (
-            ValueError,
-            TypeError,
-            KeyError,
-            AttributeError,
-            OSError,
-            RuntimeError,
-            ImportError,
-        ) as e:
-            return FlextResult[t.ConfigurationMapping].fail(
-                f"Workflow execution failed: {e}",
-            )
-
-    def generate_dbt_models_from_wms(
-        self,
-        inventory_items: list[str] | None = None,
-        shipments: list[str] | None = None,
-        output_dir: str | None = None,
-    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
-        """Generate DBT models from Oracle WMS data.
-
-        Args:
-        inventory_items: List of inventory items to process
-        shipments: List of shipments to process
-        output_dir: Output directory for generated models
-
-        Returns:
-        FlextResult containing model generation results
-
-        """
-        try:
-            self.logger.info("Generating DBT models from Oracle WMS")
-            return FlextResult[t.ConfigurationMapping].ok({
-                "status": "models_generated",
-                "inventory_items": len(inventory_items) if inventory_items else 0,
-                "shipments": len(shipments) if shipments else 0,
-                "output_dir": str(output_dir),
-            })
-        except (
-            ValueError,
-            TypeError,
-            KeyError,
-            AttributeError,
-            OSError,
-            RuntimeError,
-            ImportError,
-        ) as e:
-            return FlextResult[t.ConfigurationMapping].fail(
-                f"Model generation failed: {e}",
-            )
+    @classmethod
+    def create(cls) -> FlextDbtOracleWms:
+        """Create a new FlextDbtOracleWms instance (factory method)."""
+        return cls()
 
     def extract_wms_metadata(
         self,
@@ -213,27 +129,30 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 f"Metadata extraction failed: {e}",
             )
 
-    def monitor_dbt_execution(
+    def generate_dbt_models_from_wms(
         self,
-        command: str,
-        timeout_seconds: int = 300,
+        inventory_items: list[str] | None = None,
+        shipments: list[str] | None = None,
+        output_dir: str | None = None,
     ) -> FlextResult[Mapping[str, t.ContainerValue]]:
-        """Monitor DBT command execution with metrics.
+        """Generate DBT models from Oracle WMS data.
 
         Args:
-        command: DBT command to execute
-        timeout_seconds: Timeout for command execution
+        inventory_items: List of inventory items to process
+        shipments: List of shipments to process
+        output_dir: Output directory for generated models
 
         Returns:
-        FlextResult containing monitoring results
+        FlextResult containing model generation results
 
         """
         try:
-            self.logger.info("Monitoring DBT execution: %s", command)
+            self.logger.info("Generating DBT models from Oracle WMS")
             return FlextResult[t.ConfigurationMapping].ok({
-                "status": "monitored",
-                "command": command,
-                "timeout": timeout_seconds,
+                "status": "models_generated",
+                "inventory_items": len(inventory_items) if inventory_items else 0,
+                "shipments": len(shipments) if shipments else 0,
+                "output_dir": str(output_dir),
             })
         except (
             ValueError,
@@ -245,29 +164,8 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[t.ConfigurationMapping].fail(
-                f"Monitoring failed: {e}",
+                f"Model generation failed: {e}",
             )
-
-    def validate_wms_connection(self) -> FlextResult[bool]:
-        """Validate Oracle WMS connection.
-
-        Returns:
-        FlextResult containing connection validation result
-
-        """
-        try:
-            self.logger.info("Validating Oracle WMS connection")
-            return FlextResult[bool].ok(value=True)
-        except (
-            ValueError,
-            TypeError,
-            KeyError,
-            AttributeError,
-            OSError,
-            RuntimeError,
-            ImportError,
-        ) as e:
-            return FlextResult[bool].fail(f"Connection validation failed: {e}")
 
     def get_wms_inventory_info(
         self,
@@ -332,6 +230,108 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             return FlextResult[t.ConfigurationMapping].fail(
                 f"Shipment info retrieval failed: {e}",
             )
+
+    def monitor_dbt_execution(
+        self,
+        command: str,
+        timeout_seconds: int = 300,
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
+        """Monitor DBT command execution with metrics.
+
+        Args:
+        command: DBT command to execute
+        timeout_seconds: Timeout for command execution
+
+        Returns:
+        FlextResult containing monitoring results
+
+        """
+        try:
+            self.logger.info("Monitoring DBT execution: %s", command)
+            return FlextResult[t.ConfigurationMapping].ok({
+                "status": "monitored",
+                "command": command,
+                "timeout": timeout_seconds,
+            })
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return FlextResult[t.ConfigurationMapping].fail(
+                f"Monitoring failed: {e}",
+            )
+
+    # =============================================================================
+    # MAIN WORKFLOW OPERATIONS - Enhanced with FlextResult error handling
+    # =============================================================================
+
+    def run_oracle_wms_to_dbt_workflow(
+        self,
+        inventory_items: list[str] | None = None,
+        shipments: list[str] | None = None,
+        *,
+        generate_models: bool = True,
+        run_transformations: bool = False,
+    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
+        """Run complete Oracle WMS-to-DBT workflow.
+
+        Args:
+        inventory_items: List of inventory items to process
+        shipments: List of shipments to process
+        generate_models: Whether to generate DBT models
+        run_transformations: Whether to run transformations
+
+        Returns:
+        FlextResult containing workflow results
+
+        """
+        try:
+            self.logger.info("Running Oracle WMS-to-DBT workflow")
+            return FlextResult[t.ConfigurationMapping].ok({
+                "status": "completed",
+                "generate_models": generate_models,
+                "run_transformations": run_transformations,
+                "inventory_processed": len(inventory_items) if inventory_items else 0,
+                "shipments_processed": len(shipments) if shipments else 0,
+            })
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return FlextResult[t.ConfigurationMapping].fail(
+                f"Workflow execution failed: {e}",
+            )
+
+    def validate_wms_connection(self) -> FlextResult[bool]:
+        """Validate Oracle WMS connection.
+
+        Returns:
+        FlextResult containing connection validation result
+
+        """
+        try:
+            self.logger.info("Validating Oracle WMS connection")
+            return FlextResult[bool].ok(value=True)
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return FlextResult[bool].fail(f"Connection validation failed: {e}")
 
 
 __all__ = [

@@ -172,152 +172,6 @@ class FlextDbtOracleWmsSettings(FlextSettings):
         "orders": ["orderId", "customerId", "orderStatus"],
     }
 
-    # Pydantic 2 field validators
-    @field_validator("dbt_target")
-    @classmethod
-    def validate_dbt_target(cls, v: str) -> str:
-        """Validate DBT target environment."""
-        valid_targets = {member.value for member in c.DbtOracleWms.DbtTargets}
-        if v.lower() not in valid_targets:
-            valid_list = ", ".join(sorted(valid_targets))
-            msg = f"Invalid DBT target: {v}. Must be one of: {valid_list}"
-            raise ValueError(msg)
-        return v.lower()
-
-    @field_validator("oracle_wms_environment")
-    @classmethod
-    def validate_oracle_wms_environment(cls, v: str) -> str:
-        """Validate Oracle WMS environment."""
-        valid_environments = {
-            member.value for member in c.DbtOracleWms.OracleWmsEnvironments
-        }
-        if v.lower() not in valid_environments:
-            valid_list = ", ".join(sorted(valid_environments))
-            msg = f"Invalid Oracle WMS environment: {v}. Must be one of: {valid_list}"
-            raise ValueError(msg)
-        return v.lower()
-
-    @model_validator(mode="after")
-    def validate_oracle_wms_connection_config(self) -> Self:
-        """Validate Oracle WMS connection configuration."""
-        # Base URL must be provided
-        if not self.oracle_wms_base_url.strip():
-            msg = "Oracle WMS base URL must be provided"
-            raise ValueError(msg)
-
-        # Username must be provided
-        if not self.oracle_wms_username.strip():
-            msg = "Oracle WMS username must be provided"
-            raise ValueError(msg)
-
-        return self
-
-    # Configuration helper methods
-    def get_oracle_wms_config(self) -> FlextOracleWmsSettings:
-        """Get Oracle WMS configuration for flext-oracle-wms integration."""
-        return FlextOracleWmsSettings(
-            base_url=self.oracle_wms_base_url,
-            username=self.oracle_wms_username,
-            password=self.oracle_wms_password.get_secret_value(),
-            timeout=int(self.oracle_wms_timeout),
-            retry_attempts=int(self.oracle_wms_max_retries),
-            environment=self.oracle_wms_environment,
-        )
-
-    def get_meltano_config(self) -> FlextMeltanoSettings:
-        """Get Meltano configuration for flext-meltano integration."""
-        return FlextMeltanoSettings(
-            project_root=Path(self.dbt_project_dir),
-            environment=self.dbt_target,
-        )
-
-    def get_oracle_wms_quality_config(self) -> Mapping[str, t.ContainerValue]:
-        """Get data quality configuration for Oracle WMS validation."""
-        return {
-            "min_quality_threshold": self.min_quality_threshold,
-            "required_fields_per_entity": self.required_fields_per_entity,
-            "validate_business_rules": self.validate_business_rules_flag,
-            "business_rules": self.oracle_wms_business_rules,
-        }
-
-    def get_entity_dbt_mapping(self, entity_name: str) -> str:
-        """Get DBT staging table name for Oracle WMS entity."""
-        return self.oracle_wms_entity_mapping.get(entity_name, f"stg_wms_{entity_name}")
-
-    def get_field_dbt_mapping(self, field_name: str) -> str:
-        """Get DBT field name for Oracle WMS field."""
-        return self.oracle_wms_field_mapping.get(field_name, field_name.lower())
-
-    def validate_oracle_wms_connection(self) -> bool:
-        """Validate Oracle WMS connection configuration."""
-        required_fields = [
-            self.oracle_wms_base_url,
-            self.oracle_wms_username,
-            bool(self.oracle_wms_password.get_secret_value()),
-        ]
-        return all(self._has_required_value(field) for field in required_fields)
-
-    @staticmethod
-    def _has_required_value(field: t.ContainerValue) -> bool:
-        """Normalize required field values for connection validation."""
-        try:
-            return bool(_STRING_ADAPTER.validate_python(field).strip())
-        except ValidationError:
-            return bool(field)
-
-    def get_business_rule(
-        self,
-        entity_name: str,
-        rule_name: str,
-    ) -> t.ContainerValue | None:
-        """Get business rule for specific Oracle WMS entity."""
-        entity_rules = self.oracle_wms_business_rules.get(entity_name)
-        if entity_rules is None:
-            return None
-        try:
-            validated_rules = m.Dict.model_validate(entity_rules)
-        except ValidationError:
-            return None
-        return validated_rules.get(rule_name)
-
-    def get_required_fields(self, entity_name: str) -> list[str]:
-        """Get required fields for specific Oracle WMS entity."""
-        return self.required_fields_per_entity.get(entity_name, [])
-
-    @classmethod
-    def get_or_create_shared_instance(
-        cls,
-        project_name: str | None = None,
-        **overrides: t.ContainerValue,
-    ) -> Self:
-        """Get or create a shared singleton settings instance."""
-        _ = project_name
-        if cls not in cls._instances:
-            with cls._lock:
-                if cls not in cls._instances:
-                    cls._instances[cls] = cls()
-
-        raw_instance = cls._instances[cls]
-        try:
-            validated_instance = cls.model_validate(raw_instance)
-        except ValidationError as exc:
-            msg = f"Singleton instance is not of expected type {cls}"
-            raise TypeError(msg) from exc
-
-        if overrides:
-            for key, value in overrides.items():
-                if key in cls.model_fields:
-                    setattr(validated_instance, key, value)
-
-        return validated_instance
-
-    @classmethod
-    def reset_shared_instance(cls, project_name: str | None = None) -> None:
-        """Reset the shared singleton settings instance."""
-        _ = project_name
-        with cls._lock:
-            _ = cls._instances.pop(cls, None)
-
     @classmethod
     def create_for_development(
         cls,
@@ -348,6 +202,21 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             ImportError,
         ) as e:
             return FlextResult[Self].fail(f"Development config creation failed: {e}")
+
+    @classmethod
+    def create_for_environment(
+        cls,
+        environment: str,
+        **overrides: t.ContainerValue,
+    ) -> FlextResult[Self]:
+        """Create configuration for specific environment."""
+        if environment == "production":
+            return cls.create_for_production(**overrides)
+        if environment == "development":
+            return cls.create_for_development(**overrides)
+        if environment == "testing":
+            return cls.create_for_testing(**overrides)
+        return FlextResult[Self].fail(f"Unknown environment: {environment}")
 
     @classmethod
     def create_for_production(
@@ -414,31 +283,162 @@ class FlextDbtOracleWmsSettings(FlextSettings):
             return FlextResult[Self].fail(f"Testing config creation failed: {e}")
 
     @classmethod
-    def create_for_environment(
-        cls,
-        environment: str,
-        **overrides: t.ContainerValue,
-    ) -> FlextResult[Self]:
-        """Create configuration for specific environment."""
-        if environment == "production":
-            return cls.create_for_production(**overrides)
-        if environment == "development":
-            return cls.create_for_development(**overrides)
-        if environment == "testing":
-            return cls.create_for_testing(**overrides)
-        return FlextResult[Self].fail(f"Unknown environment: {environment}")
-
-    @classmethod
     @override
     def get_global_instance(cls) -> Self:
         """Get the global singleton instance using enhanced FlextSettings pattern."""
         return cls.get_or_create_shared_instance(project_name="flext-dbt-oracle-wms")
 
     @classmethod
+    def get_or_create_shared_instance(
+        cls,
+        project_name: str | None = None,
+        **overrides: t.ContainerValue,
+    ) -> Self:
+        """Get or create a shared singleton settings instance."""
+        _ = project_name
+        if cls not in cls._instances:
+            with cls._lock:
+                if cls not in cls._instances:
+                    cls._instances[cls] = cls()
+
+        raw_instance = cls._instances[cls]
+        try:
+            validated_instance = cls.model_validate(raw_instance)
+        except ValidationError as exc:
+            msg = f"Singleton instance is not of expected type {cls}"
+            raise TypeError(msg) from exc
+
+        if overrides:
+            for key, value in overrides.items():
+                if key in cls.model_fields:
+                    setattr(validated_instance, key, value)
+
+        return validated_instance
+
+    @classmethod
     @override
     def reset_global_instance(cls) -> None:
         """Reset the global instance (mainly for testing)."""
         cls.reset_shared_instance(project_name="flext-dbt-oracle-wms")
+
+    @classmethod
+    def reset_shared_instance(cls, project_name: str | None = None) -> None:
+        """Reset the shared singleton settings instance."""
+        _ = project_name
+        with cls._lock:
+            _ = cls._instances.pop(cls, None)
+
+    # Pydantic 2 field validators
+    @field_validator("dbt_target")
+    @classmethod
+    def validate_dbt_target(cls, v: str) -> str:
+        """Validate DBT target environment."""
+        valid_targets = {member.value for member in c.DbtOracleWms.DbtTargets}
+        if v.lower() not in valid_targets:
+            valid_list = ", ".join(sorted(valid_targets))
+            msg = f"Invalid DBT target: {v}. Must be one of: {valid_list}"
+            raise ValueError(msg)
+        return v.lower()
+
+    @field_validator("oracle_wms_environment")
+    @classmethod
+    def validate_oracle_wms_environment(cls, v: str) -> str:
+        """Validate Oracle WMS environment."""
+        valid_environments = {
+            member.value for member in c.DbtOracleWms.OracleWmsEnvironments
+        }
+        if v.lower() not in valid_environments:
+            valid_list = ", ".join(sorted(valid_environments))
+            msg = f"Invalid Oracle WMS environment: {v}. Must be one of: {valid_list}"
+            raise ValueError(msg)
+        return v.lower()
+
+    @staticmethod
+    def _has_required_value(field: t.ContainerValue) -> bool:
+        """Normalize required field values for connection validation."""
+        try:
+            return bool(_STRING_ADAPTER.validate_python(field).strip())
+        except ValidationError:
+            return bool(field)
+
+    def get_business_rule(
+        self,
+        entity_name: str,
+        rule_name: str,
+    ) -> t.ContainerValue | None:
+        """Get business rule for specific Oracle WMS entity."""
+        entity_rules = self.oracle_wms_business_rules.get(entity_name)
+        if entity_rules is None:
+            return None
+        try:
+            validated_rules = m.Dict.model_validate(entity_rules)
+        except ValidationError:
+            return None
+        return validated_rules.get(rule_name)
+
+    def get_entity_dbt_mapping(self, entity_name: str) -> str:
+        """Get DBT staging table name for Oracle WMS entity."""
+        return self.oracle_wms_entity_mapping.get(entity_name, f"stg_wms_{entity_name}")
+
+    def get_field_dbt_mapping(self, field_name: str) -> str:
+        """Get DBT field name for Oracle WMS field."""
+        return self.oracle_wms_field_mapping.get(field_name, field_name.lower())
+
+    def get_meltano_config(self) -> FlextMeltanoSettings:
+        """Get Meltano configuration for flext-meltano integration."""
+        return FlextMeltanoSettings(
+            project_root=Path(self.dbt_project_dir),
+            environment=self.dbt_target,
+        )
+
+    # Configuration helper methods
+    def get_oracle_wms_config(self) -> FlextOracleWmsSettings:
+        """Get Oracle WMS configuration for flext-oracle-wms integration."""
+        return FlextOracleWmsSettings(
+            base_url=self.oracle_wms_base_url,
+            username=self.oracle_wms_username,
+            password=self.oracle_wms_password.get_secret_value(),
+            timeout=int(self.oracle_wms_timeout),
+            retry_attempts=int(self.oracle_wms_max_retries),
+            environment=self.oracle_wms_environment,
+        )
+
+    def get_oracle_wms_quality_config(self) -> Mapping[str, t.ContainerValue]:
+        """Get data quality configuration for Oracle WMS validation."""
+        return {
+            "min_quality_threshold": self.min_quality_threshold,
+            "required_fields_per_entity": self.required_fields_per_entity,
+            "validate_business_rules": self.validate_business_rules_flag,
+            "business_rules": self.oracle_wms_business_rules,
+        }
+
+    def get_required_fields(self, entity_name: str) -> list[str]:
+        """Get required fields for specific Oracle WMS entity."""
+        return self.required_fields_per_entity.get(entity_name, [])
+
+    def validate_oracle_wms_connection(self) -> bool:
+        """Validate Oracle WMS connection configuration."""
+        required_fields = [
+            self.oracle_wms_base_url,
+            self.oracle_wms_username,
+            bool(self.oracle_wms_password.get_secret_value()),
+        ]
+        return all(self._has_required_value(field) for field in required_fields)
+
+    @model_validator(mode="after")
+    def validate_oracle_wms_connection_config(self) -> Self:
+        """Validate Oracle WMS connection configuration."""
+        # Base URL must be provided
+        if not self.oracle_wms_base_url.strip():
+            msg = "Oracle WMS base URL must be provided"
+            raise ValueError(msg)
+
+        # Username must be provided
+        if not self.oracle_wms_username.strip():
+            msg = "Oracle WMS username must be provided"
+            raise ValueError(msg)
+
+        return self
 
 
 __all__ = [
