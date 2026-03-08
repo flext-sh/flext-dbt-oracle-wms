@@ -11,11 +11,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import override
 
-from flext_core import (
-    FlextResult,
-    FlextService,
-    t,
-)
+from flext_core import FlextResult, FlextService, t
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
@@ -53,7 +49,6 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         self._client: FlextDbtOracleWmsClient | None = None
         self._workflow_service: FlextDbtOracleWmsServices | None = None
         self._monitoring_service: FlextDbtOracleWmsServices | None = None
-        # Note: container, context, and logger are provided automatically by FlextService
 
     @property
     def client(self) -> FlextDbtOracleWmsClient:
@@ -126,7 +121,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[t.ConfigurationMapping].fail(
-                f"Metadata extraction failed: {e}",
+                f"Metadata extraction failed: {e}"
             )
 
     def generate_dbt_models_from_wms(
@@ -164,12 +159,11 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[t.ConfigurationMapping].fail(
-                f"Model generation failed: {e}",
+                f"Model generation failed: {e}"
             )
 
     def get_wms_inventory_info(
-        self,
-        item_id: str,
+        self, item_id: str
     ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Get detailed information about WMS inventory item.
 
@@ -196,12 +190,11 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[t.ConfigurationMapping].fail(
-                f"Inventory info retrieval failed: {e}",
+                f"Inventory info retrieval failed: {e}"
             )
 
     def get_wms_shipment_info(
-        self,
-        shipment_id: str,
+        self, shipment_id: str
     ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Get detailed information about WMS shipment.
 
@@ -228,13 +221,11 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[t.ConfigurationMapping].fail(
-                f"Shipment info retrieval failed: {e}",
+                f"Shipment info retrieval failed: {e}"
             )
 
     def monitor_dbt_execution(
-        self,
-        command: str,
-        timeout_seconds: int = 300,
+        self, command: str, timeout_seconds: int = 300
     ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Monitor DBT command execution with metrics.
 
@@ -262,13 +253,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return FlextResult[t.ConfigurationMapping].fail(
-                f"Monitoring failed: {e}",
-            )
-
-    # =============================================================================
-    # MAIN WORKFLOW OPERATIONS - Enhanced with FlextResult error handling
-    # =============================================================================
+            return FlextResult[t.ConfigurationMapping].fail(f"Monitoring failed: {e}")
 
     def run_oracle_wms_to_dbt_workflow(
         self,
@@ -309,7 +294,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[t.ConfigurationMapping].fail(
-                f"Workflow execution failed: {e}",
+                f"Workflow execution failed: {e}"
             )
 
     def validate_wms_connection(self) -> FlextResult[bool]:
@@ -334,6 +319,4 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             return FlextResult[bool].fail(f"Connection validation failed: {e}")
 
 
-__all__ = [
-    "FlextDbtOracleWms",
-]
+__all__ = ["FlextDbtOracleWms"]

@@ -21,8 +21,7 @@ class FlextDbtOracleWmsServices:
         self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
 
     def generate_workflow_recommendations(
-        self,
-        entities: list[Mapping[str, t.ContainerValue]] | None = None,
+        self, entities: list[Mapping[str, t.ContainerValue]] | None = None
     ) -> FlextResult[Mapping[str, t.ContainerValue]]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
@@ -35,9 +34,7 @@ class FlextDbtOracleWmsServices:
                 "message": "Process entities in smaller batches",
             })
         return FlextResult[t.ConfigurationMapping].ok({
-            "analysis": {
-                "total_entities": total,
-            },
+            "analysis": {"total_entities": total},
             "recommendations": recommendations,
             "summary": {
                 "dbt_threads": self.config.dbt_threads,
@@ -78,6 +75,4 @@ class FlextDbtOracleWmsServices:
         }
 
 
-__all__ = [
-    "FlextDbtOracleWmsServices",
-]
+__all__ = ["FlextDbtOracleWmsServices"]

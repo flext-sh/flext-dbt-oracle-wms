@@ -38,6 +38,4 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
 
 __all__ = ["FlextDbtOracleWmsUtilities", "u"]
-
-
 u = FlextDbtOracleWmsUtilities

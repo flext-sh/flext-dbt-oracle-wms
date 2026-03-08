@@ -8,12 +8,9 @@ Copyright (c) 2025 FLEXT Contributors SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms.typings import (
-    t,
-)
+from flext_dbt_oracle_wms.typings import t
 
 
-# Domain type classes with real inheritance
 class DBTOracleWMSProject(t.DomainObjects.DBTOracleWMSProject):
     """DBTOracleWMSProject - real inheritance from DomainObjects.DBTOracleWMSProject."""
 
@@ -42,9 +39,7 @@ class DBTOracleWMSAnalysis(t.DomainObjects.DBTOracleWMSAnalysis):
     """DBTOracleWMSAnalysis - real inheritance from DomainObjects.DBTOracleWMSAnalysis."""
 
 
-class DBTOracleWMSCompilation(
-    t.DomainObjects.DBTOracleWMSCompilation,
-):
+class DBTOracleWMSCompilation(t.DomainObjects.DBTOracleWMSCompilation):
     """DBTOracleWMSCompilation - real inheritance from DomainObjects.DBTOracleWMSCompilation."""
 
 
@@ -52,15 +47,8 @@ class DBTOracleWMSExecution(t.DomainObjects.DBTOracleWMSExecution):
     """DBTOracleWMSExecution - real inheritance from DomainObjects.DBTOracleWMSExecution."""
 
 
-class DBTOracleWMSDocumentation(
-    t.DomainObjects.DBTOracleWMSDocumentation,
-):
+class DBTOracleWMSDocumentation(t.DomainObjects.DBTOracleWMSDocumentation):
     """DBTOracleWMSDocumentation - real inheritance from DomainObjects.DBTOracleWMSDocumentation."""
-
-
-# ==============================================================================
-# EXPORTS - All types now centralized in typings.py
-# ==============================================================================
 
 
 __all__: list[str] = [

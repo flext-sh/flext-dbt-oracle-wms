@@ -6,13 +6,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from pydantic import (
-    TypeAdapter,
-)
+from pydantic import TypeAdapter
 
 _STRING_ADAPTER = TypeAdapter(str)
-
-
-__all__ = [
-    "FlextDbtOracleWmsSettings",
-]
+__all__ = ["FlextDbtOracleWmsSettings"]
