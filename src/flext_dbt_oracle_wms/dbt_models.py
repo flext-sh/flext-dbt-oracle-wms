@@ -5,67 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 
 from flext_core import FlextResult, t
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
-
-
-class _RawItemRecord(BaseModel):
-    """Validated raw Oracle WMS item payload."""
-
-    model_config = ConfigDict(populate_by_name=True)
-
-    item_id: str = Field(alias="itemId")
-    item_number: str = Field(alias="itemNumber")
-    item_description: str | None = Field(default=None, alias="itemDescription")
-
-
-class FlextDbtOracleWmsItemDimension(BaseModel):
-    """Item dimension payload for DBT."""
-
-    item_id: str
-    item_number: str
-    item_description: str | None = None
-
-    def to_dbt_dict(self) -> Mapping[str, t.ContainerValue]:
-        """Serialize item dimension to DBT dictionary format."""
-        return self.model_dump()
-
-
-class FlextDbtOracleWmsLocationDimension(BaseModel):
-    """Location dimension payload for DBT."""
-
-    location_id: str
-    location_name: str
-    facility_id: str
-
-    def to_dbt_dict(self) -> Mapping[str, t.ContainerValue]:
-        """Serialize location dimension to DBT dictionary format."""
-        return self.model_dump()
-
-
-class FlextDbtOracleWmsInventoryFact(BaseModel):
-    """Inventory fact payload for DBT."""
-
-    item_id: str
-    location_id: str
-    facility_id: str
-    quantity_on_hand: float = Field(default=0.0)
-
-    def to_dbt_dict(self) -> Mapping[str, t.ContainerValue]:
-        """Serialize inventory fact to DBT dictionary format."""
-        return self.model_dump()
-
-
-class FlextDbtOracleWmsShipmentFact(BaseModel):
-    """Shipment fact payload for DBT."""
-
-    shipment_id: str
-    order_id: str
-    facility_id: str
-    shipment_status: str = "CREATED"
-
-    def to_dbt_dict(self) -> Mapping[str, t.ContainerValue]:
-        """Serialize shipment fact to DBT dictionary format."""
-        return self.model_dump()
+from pydantic import ValidationError
 
 
 class FlextDbtOracleWmsTransformer:
