@@ -36,6 +36,8 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsUtilities,
         FlextDbtOracleWmsUtilities as u,
     )
+
+# Lazy import mapping: export_name -> (module_path, attr_name)
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "FlextDbtOracleWms": ("flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"),
     "FlextDbtOracleWmsClient": (
@@ -74,6 +76,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
     "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
 }
+
 __all__ = [
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsClient",
@@ -93,7 +96,7 @@ __all__ = [
 ]
 
 
-def __getattr__(name: str) -> Any:
+def __getattr__(name: str) -> Any:  # noqa: ANN401  # JUSTIFIED: Ruff (any-type) with PEP 562 dynamic module exports — https://docs.astral.sh/ruff/rules/any-type/
     """Lazy-load module attributes on first access (PEP 562)."""
     return lazy_getattr(name, _LAZY_IMPORTS, globals(), __name__)
 
