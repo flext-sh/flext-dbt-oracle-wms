@@ -47,9 +47,9 @@ class FlextDbtOracleWmsTransformer:
 
 
 __all__ = [
-    "FlextDbtOracleWmsInventoryFact",
-    "FlextDbtOracleWmsItemDimension",
-    "FlextDbtOracleWmsLocationDimension",
-    "FlextDbtOracleWmsShipmentFact",
+    "FlextDbtOracleWmsInventoryFact",  # noqa: F822
+    "FlextDbtOracleWmsItemDimension",  # noqa: F822
+    "FlextDbtOracleWmsLocationDimension",  # noqa: F822
+    "FlextDbtOracleWmsShipmentFact",  # noqa: F822
     "FlextDbtOracleWmsTransformer",
 ]

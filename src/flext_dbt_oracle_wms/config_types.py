@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 __all__ = [
-    "DBTOracleWMSConfiguration",
-    "DBTOracleWMSMacroConfiguration",
-    "DBTOracleWMSModelConfiguration",
-    "DBTOracleWMSProfileConfiguration",
-    "DBTOracleWMSSourceConfiguration",
-    "DBTOracleWMSTestConfiguration",
-    "FlextDBTOracleWMSSettings",
+    "DBTOracleWMSConfiguration",  # noqa: F822
+    "DBTOracleWMSMacroConfiguration",  # noqa: F822
+    "DBTOracleWMSModelConfiguration",  # noqa: F822
+    "DBTOracleWMSProfileConfiguration",  # noqa: F822
+    "DBTOracleWMSSourceConfiguration",  # noqa: F822
+    "DBTOracleWMSTestConfiguration",  # noqa: F822
+    "FlextDBTOracleWMSSettings",  # noqa: F822
 ]

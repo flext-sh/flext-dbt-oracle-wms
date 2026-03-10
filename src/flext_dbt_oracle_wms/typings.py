@@ -268,14 +268,14 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
 
 __all__ = [
-    "DBTOracleWMSAnalysisConfiguration",
-    "DBTOracleWMSCompilationConfiguration",
-    "DBTOracleWMSDocumentationConfiguration",
-    "DBTOracleWMSExecutionConfiguration",
+    "DBTOracleWMSAnalysisConfiguration",  # noqa: F822
+    "DBTOracleWMSCompilationConfiguration",  # noqa: F822
+    "DBTOracleWMSDocumentationConfiguration",  # noqa: F822
+    "DBTOracleWMSExecutionConfiguration",  # noqa: F822
     "DBTOracleWMSMaterialization",
-    "DBTOracleWMSProjectConfiguration",
+    "DBTOracleWMSProjectConfiguration",  # noqa: F822
     "DBTOracleWMSRunStatus",
-    "DBTOracleWMSSnapshotConfiguration",
+    "DBTOracleWMSSnapshotConfiguration",  # noqa: F822
     "DBTOracleWMSTestType",
     "FlextDbtOracleWmsTypes",
 ]
