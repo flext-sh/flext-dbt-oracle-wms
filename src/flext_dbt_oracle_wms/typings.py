@@ -265,11 +265,6 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     class DomainObjects:
         """DBT Oracle WMS domain object Pydantic model definitions."""
 
-    class _Core:
-        type DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
-
-    Core = _Core
-
 
 __all__ = [
     "DBTOracleWMSMaterialization",
