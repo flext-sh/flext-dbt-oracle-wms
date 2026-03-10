@@ -7,10 +7,9 @@ from typing import Final
 
 from flext_core import t
 from flext_meltano import FlextMeltanoConstants
-from flext_oracle_wms.constants import FlextOracleWmsConstants
 
 
-class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):
+class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
     """Constants for DBT Oracle WMS with dual inheritance from Meltano and WMS domains."""
 
     class DbtOracleWms:

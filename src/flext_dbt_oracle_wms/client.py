@@ -26,7 +26,7 @@ class FlextDbtOracleWmsClient:
 
     def extract_oracle_wms_data(
         self, entity_name: str, filters: Mapping[str, t.ContainerValue] | None = None
-    ) -> FlextResult[Sequence[Mapping[str, t.ContainerValue]]]:
+    ) -> FlextResult[list[t.ConfigurationMapping]]:
         """Return sample records for a requested entity."""
         _ = filters
         return FlextResult[list[t.ConfigurationMapping]].ok([
@@ -100,8 +100,8 @@ class FlextDbtOracleWmsClient:
         })
 
     def validate_oracle_wms_data(
-        self, entity_name: str, records: Sequence[Mapping[str, t.ContainerValue]]
-    ) -> FlextResult[Sequence[Mapping[str, t.ContainerValue]]]:
+        self, entity_name: str, records: list[t.ConfigurationMapping]
+    ) -> FlextResult[list[t.ConfigurationMapping]]:
         """Validate records list for a specific entity."""
         _ = entity_name
         if not records:

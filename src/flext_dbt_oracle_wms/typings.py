@@ -266,8 +266,24 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         """DBT Oracle WMS domain object Pydantic model definitions."""
 
 
+type DBTOracleWMSAnalysisConfiguration = dict[str, FlextTypes.ContainerValue]
+type DBTOracleWMSCompilationConfiguration = dict[str, FlextTypes.ContainerValue]
+type DBTOracleWMSDocumentationConfiguration = dict[str, FlextTypes.ContainerValue]
+type DBTOracleWMSExecutionConfiguration = dict[str, FlextTypes.ContainerValue]
+type DBTOracleWMSProjectConfiguration = dict[str, FlextTypes.ContainerValue]
+type DBTOracleWMSSnapshotConfiguration = dict[str, FlextTypes.ContainerValue]
+DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
+
+
 __all__ = [
+    "DBTOracleWMSAnalysisConfiguration",
+    "DBTOracleWMSCompilationConfiguration",
+    "DBTOracleWMSDocumentationConfiguration",
+    "DBTOracleWMSExecutionConfiguration",
     "DBTOracleWMSMaterialization",
+    "DBTOracleWMSProjectConfiguration",
+    "DBTOracleWMSRunStatus",
+    "DBTOracleWMSSnapshotConfiguration",
     "DBTOracleWMSTestType",
     "FlextDbtOracleWmsTypes",
 ]

@@ -1,54 +1,53 @@
-"""FLEXT DBT Oracle WMS Domain Types - Centralized type exports from typings.py.
-
-This module re-exports all domain types from the centralized typings.py module.
-All type definitions have been moved to typings.py following FLEXT domain separation standards.
-
-Copyright (c) 2025 FLEXT Contributors SPDX-License-Identifier: MIT
-"""
-
 from __future__ import annotations
 
-from flext_dbt_oracle_wms.typings import t
+from collections.abc import Mapping
+
+from flext_core import t
+from pydantic import BaseModel, Field
 
 
-class DBTOracleWMSProject(t.DomainObjects.DBTOracleWMSProject):
-    """DBTOracleWMSProject - real inheritance from DomainObjects.DBTOracleWMSProject."""
+class DBTOracleWMSProject(BaseModel):
+    name: str = Field(default="flext_dbt_oracle_wms")
+    profile: str = Field(default="flext_oracle_wms")
 
 
-class DBTOracleWMSModel(t.DomainObjects.DBTOracleWMSModel):
-    """DBTOracleWMSModel - real inheritance from DomainObjects.DBTOracleWMSModel."""
+class DBTOracleWMSModel(BaseModel):
+    name: str = Field(default="")
+    materialization: str = Field(default="view")
 
 
-class DBTOracleWMSSource(t.DomainObjects.DBTOracleWMSSource):
-    """DBTOracleWMSSource - real inheritance from DomainObjects.DBTOracleWMSSource."""
+class DBTOracleWMSSource(BaseModel):
+    name: str = Field(default="")
+    source_schema: Mapping[str, t.ContainerValue] = Field(default_factory=dict)
 
 
-class DBTOracleWMSTest(t.DomainObjects.DBTOracleWMSTest):
-    """DBTOracleWMSTest - real inheritance from DomainObjects.DBTOracleWMSTest."""
+class DBTOracleWMSTest(BaseModel):
+    name: str = Field(default="")
+    severity: str = Field(default="warn")
 
 
-class DBTOracleWMSMacro(t.DomainObjects.DBTOracleWMSMacro):
-    """DBTOracleWMSMacro - real inheritance from DomainObjects.DBTOracleWMSMacro."""
+class DBTOracleWMSMacro(BaseModel):
+    name: str = Field(default="")
 
 
-class DBTOracleWMSSnapshot(t.DomainObjects.DBTOracleWMSSnapshot):
-    """DBTOracleWMSSnapshot - real inheritance from DomainObjects.DBTOracleWMSSnapshot."""
+class DBTOracleWMSSnapshot(BaseModel):
+    name: str = Field(default="")
 
 
-class DBTOracleWMSAnalysis(t.DomainObjects.DBTOracleWMSAnalysis):
-    """DBTOracleWMSAnalysis - real inheritance from DomainObjects.DBTOracleWMSAnalysis."""
+class DBTOracleWMSAnalysis(BaseModel):
+    name: str = Field(default="")
 
 
-class DBTOracleWMSCompilation(t.DomainObjects.DBTOracleWMSCompilation):
-    """DBTOracleWMSCompilation - real inheritance from DomainObjects.DBTOracleWMSCompilation."""
+class DBTOracleWMSCompilation(BaseModel):
+    name: str = Field(default="")
 
 
-class DBTOracleWMSExecution(t.DomainObjects.DBTOracleWMSExecution):
-    """DBTOracleWMSExecution - real inheritance from DomainObjects.DBTOracleWMSExecution."""
+class DBTOracleWMSExecution(BaseModel):
+    name: str = Field(default="")
 
 
-class DBTOracleWMSDocumentation(t.DomainObjects.DBTOracleWMSDocumentation):
-    """DBTOracleWMSDocumentation - real inheritance from DomainObjects.DBTOracleWMSDocumentation."""
+class DBTOracleWMSDocumentation(BaseModel):
+    name: str = Field(default="")
 
 
 __all__: list[str] = [
@@ -62,5 +61,4 @@ __all__: list[str] = [
     "DBTOracleWMSSnapshot",
     "DBTOracleWMSSource",
     "DBTOracleWMSTest",
-    "t",
 ]
