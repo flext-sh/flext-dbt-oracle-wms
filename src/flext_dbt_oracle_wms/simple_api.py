@@ -44,7 +44,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__()
         self._wms_config: FlextDbtOracleWmsSettings = (
-            config or FlextDbtOracleWmsSettings()
+            config if config is not None else FlextDbtOracleWmsSettings()
         )
         self._client: FlextDbtOracleWmsClient | None = None
         self._workflow_service: FlextDbtOracleWmsServices | None = None
@@ -317,6 +317,25 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             ImportError,
         ) as e:
             return FlextResult[bool].fail(f"Connection validation failed: {e}")
+
+    @override
+    def execute(self) -> FlextResult[FlextDbtOracleWmsSettings]:
+        """Execute DBT Oracle WMS domain service logic."""
+        try:
+            self.logger.info("Executing DBT Oracle WMS service")
+            return FlextResult[FlextDbtOracleWmsSettings].ok(self.config)
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return FlextResult[FlextDbtOracleWmsSettings].fail(
+                f"Service execution failed: {e}"
+            )
 
 
 __all__ = ["FlextDbtOracleWms"]
