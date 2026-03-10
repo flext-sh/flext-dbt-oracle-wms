@@ -25,7 +25,6 @@ from flext_dbt_oracle_wms.constants import c
 
 DBTOracleWMSMaterialization = c.DbtOracleWms.Dbt.Materialization
 DBTOracleWMSTestType = c.DbtOracleWms.Dbt.TestType
-type DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
 
 
 class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
@@ -266,16 +265,14 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     class DomainObjects:
         """DBT Oracle WMS domain object Pydantic model definitions."""
 
+    class _Core:
+        type DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
+
+    Core = _Core
+
 
 __all__ = [
-    "DBTOracleWMSAnalysisConfiguration",  # noqa: F822
-    "DBTOracleWMSCompilationConfiguration",  # noqa: F822
-    "DBTOracleWMSDocumentationConfiguration",  # noqa: F822
-    "DBTOracleWMSExecutionConfiguration",  # noqa: F822
     "DBTOracleWMSMaterialization",
-    "DBTOracleWMSProjectConfiguration",  # noqa: F822
-    "DBTOracleWMSRunStatus",
-    "DBTOracleWMSSnapshotConfiguration",  # noqa: F822
     "DBTOracleWMSTestType",
     "FlextDbtOracleWmsTypes",
 ]

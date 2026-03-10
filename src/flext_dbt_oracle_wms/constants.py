@@ -129,5 +129,6 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants)
             PRODUCTION = "production"
 
 
-c = FlextDbtOracleWmsConstants
 __all__ = ["FlextDbtOracleWmsConstants", "c"]
+
+c = FlextDbtOracleWmsConstants

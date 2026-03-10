@@ -17,7 +17,7 @@ class FlextDbtOracleWmsClient:
     def __init__(self, config: FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize client with explicit or global settings."""
         super().__init__()
-        self.config = config or FlextDbtOracleWmsSettings.get_global_instance()
+        self.config = config or FlextDbtOracleWmsSettings.get_global()
 
     def discover_oracle_wms_entities(self) -> FlextResult[list[str]]:
         """Return the configured Oracle WMS entities."""

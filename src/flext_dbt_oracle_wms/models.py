@@ -80,6 +80,6 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         return cls.ModelGenerator(config)
 
 
-m = FlextDbtOracleWmsModels
-
 __all__ = ["FlextDbtOracleWmsModels", "m"]
+
+m = FlextDbtOracleWmsModels
