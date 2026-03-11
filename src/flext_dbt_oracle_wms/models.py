@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import FlextResult, t
+from flext_core import r, t
 from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
@@ -31,16 +31,16 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         dependencies: list[str] = Field(default_factory=list)
         wms_business_rules: list[str] = Field(default_factory=list)
 
-        def validate_business_rules(self) -> FlextResult[bool]:
+        def validate_business_rules(self) -> r[bool]:
             """Validate essential DBT model constraints."""
             if not self.name:
-                return FlextResult[bool].fail("Model name cannot be empty")
+                return r[bool].fail("Model name cannot be empty")
             if (
                 self.materialization
                 not in FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.MATERIALIZATIONS
             ):
-                return FlextResult[bool].fail("Invalid materialization")
-            return FlextResult[bool].ok(True)
+                return r[bool].fail("Invalid materialization")
+            return r[bool].ok(True)
 
     class ModelGenerator:
         """Generator for lightweight DBT model objects."""
@@ -53,7 +53,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         def generate_wms_staging_models(
             self,
             oracle_sources: list[str],
-        ) -> FlextResult[list[FlextDbtOracleWmsModels.DbtModel]]:
+        ) -> r[list[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
                 FlextDbtOracleWmsModels.DbtModel.model_validate({
@@ -69,7 +69,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                 })
                 for source in oracle_sources
             ]
-            return FlextResult[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
+            return r[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
 
     @classmethod
     def create_generator(

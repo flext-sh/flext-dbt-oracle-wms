@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import FlextLogger, FlextResult, t
+from flext_core import FlextLogger, r, t
 
 from .settings import FlextDbtOracleWmsSettings
 
@@ -24,7 +24,7 @@ class FlextDbtOracleWmsServices:
 
     def generate_workflow_recommendations(
         self, entities: list[Mapping[str, t.ContainerValue]] | None = None
-    ) -> FlextResult[Mapping[str, t.ContainerValue]]:
+    ) -> r[Mapping[str, t.ContainerValue]]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
         total = len(entity_list)
@@ -35,7 +35,7 @@ class FlextDbtOracleWmsServices:
                 "priority": "high",
                 "message": "Process entities in smaller batches",
             })
-        return FlextResult[t.ConfigurationMapping].ok({
+        return r[t.ConfigurationMapping].ok({
             "analysis": {"total_entities": total},
             "recommendations": recommendations,
             "summary": {
@@ -47,7 +47,7 @@ class FlextDbtOracleWmsServices:
     def log_workflow_completion(
         self,
         tracking_info: Mapping[str, t.ContainerValue],
-        result: FlextResult[Mapping[str, t.ContainerValue]],
+        result: r[Mapping[str, t.ContainerValue]],
     ) -> None:
         """Log workflow completion status."""
         logger.info(

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import FlextResult, r, t
+from flext_core import r, t
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 
@@ -86,7 +86,7 @@ class FlextDbtOracleWmsTransformer:
     ) -> r[bool]:
         """Validate business rules for WMS records."""
         if not records:
-            return FlextResult[bool].fail("No records to validate")
+            return r[bool].fail("No records to validate")
         return r[bool].ok(True)
 
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from collections.abc import Mapping
 
-from flext_core import FlextLogger, FlextResult, t
+from flext_core import FlextLogger, r, t
 from pydantic import TypeAdapter, ValidationError
 
 from .client import FlextDbtOracleWmsClient
@@ -24,16 +24,16 @@ class FlextDbtOracleWmsCliService:
 
     def handle_discover(
         self, _args: Mapping[str, t.ContainerValue] | None = None
-    ) -> FlextResult[str]:
+    ) -> r[str]:
         """Handle discover command."""
         result = self._client.discover_oracle_wms_entities()
         if result.is_failure:
-            return FlextResult[str].fail(result.error or "Discover failed")
-        return FlextResult[str].ok("Discovery completed successfully")
+            return r[str].fail(result.error or "Discover failed")
+        return r[str].ok("Discovery completed successfully")
 
     def handle_extract(
         self, args: Mapping[str, t.ContainerValue] | None = None
-    ) -> FlextResult[str]:
+    ) -> r[str]:
         """Handle extract command."""
         entity = "inventory"
         if args is not None:
@@ -46,23 +46,23 @@ class FlextDbtOracleWmsCliService:
                 entity = validated_entity
         result = self._client.extract_oracle_wms_data(entity, None)
         if result.is_failure:
-            return FlextResult[str].fail(result.error or "Extract failed")
-        return FlextResult[str].ok("Extraction completed successfully")
+            return r[str].fail(result.error or "Extract failed")
+        return r[str].ok("Extraction completed successfully")
 
     def handle_info(
         self, _args: Mapping[str, t.ContainerValue] | None = None
-    ) -> FlextResult[str]:
+    ) -> r[str]:
         """Handle package info command."""
-        return FlextResult[str].ok("FLEXT DBT Oracle WMS")
+        return r[str].ok("FLEXT DBT Oracle WMS")
 
     def handle_pipeline(
         self, _args: Mapping[str, t.ContainerValue] | None = None
-    ) -> FlextResult[str]:
+    ) -> r[str]:
         """Handle full pipeline command."""
         result = self._client.run_full_oracle_wms_to_dbt_pipeline()
         if result.is_failure:
-            return FlextResult[str].fail(result.error or "Pipeline failed")
-        return FlextResult[str].ok("Pipeline completed successfully")
+            return r[str].fail(result.error or "Pipeline failed")
+        return r[str].ok("Pipeline completed successfully")
 
 
 def discover() -> int:
