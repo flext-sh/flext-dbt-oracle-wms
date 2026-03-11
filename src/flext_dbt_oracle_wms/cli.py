@@ -65,49 +65,44 @@ class FlextDbtOracleWmsCliService:
         return FlextResult[str].ok("Pipeline completed successfully")
 
 
-def discover() -> None:
-    """Execute discover command and exit with status code."""
+def discover() -> int:
+    """Execute discover command and return status code."""
     result = FlextDbtOracleWmsCliService().handle_discover()
-    if result.is_failure:
-        sys.exit(1)
+    return 1 if result.is_failure else 0
 
 
-def extract() -> None:
-    """Execute extract command and exit with status code."""
+def extract() -> int:
+    """Execute extract command and return status code."""
     result = FlextDbtOracleWmsCliService().handle_extract()
-    if result.is_failure:
-        sys.exit(1)
+    return 1 if result.is_failure else 0
 
 
-def pipeline() -> None:
-    """Execute pipeline command and exit with status code."""
+def pipeline() -> int:
+    """Execute pipeline command and return status code."""
     result = FlextDbtOracleWmsCliService().handle_pipeline()
-    if result.is_failure:
-        sys.exit(1)
+    return 1 if result.is_failure else 0
 
 
-def info() -> None:
-    """Execute info command and exit with status code."""
+def info() -> int:
+    """Execute info command and return status code."""
     result = FlextDbtOracleWmsCliService().handle_info()
-    if result.is_failure:
-        sys.exit(1)
+    return 1 if result.is_failure else 0
 
 
-def main() -> None:
+def main() -> int:
     """Main package CLI entrypoint."""
     command = sys.argv[1] if len(sys.argv) > 1 else "info"
     if command == "discover":
-        discover()
-    elif command == "extract":
-        extract()
-    elif command == "pipeline":
-        pipeline()
-    elif command == "info":
-        info()
-    else:
-        logger.error("Unknown command", extra={"command": command})
-        sys.exit(1)
+        return discover()
+    if command == "extract":
+        return extract()
+    if command == "pipeline":
+        return pipeline()
+    if command == "info":
+        return info()
+    logger.error("Unknown command", extra={"command": command})
+    return 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
