@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import override
 
-from flext_core import FlextService, r, t
+from flext_core import FlextService, r
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
@@ -183,9 +183,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return r[object].fail(
-                f"Inventory info retrieval failed: {e}"
-            )
+            return r[object].fail(f"Inventory info retrieval failed: {e}")
 
     def get_wms_shipment_info(self, shipment_id: str) -> r[Mapping[str, object]]:
         """Get detailed information about WMS shipment.
@@ -212,9 +210,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             RuntimeError,
             ImportError,
         ) as e:
-            return r[object].fail(
-                f"Shipment info retrieval failed: {e}"
-            )
+            return r[object].fail(f"Shipment info retrieval failed: {e}")
 
     def monitor_dbt_execution(
         self, command: str, timeout_seconds: int = 300

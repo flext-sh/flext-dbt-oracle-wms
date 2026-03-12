@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 
-from flext_core import FlextLogger, r, t
+from flext_core import FlextLogger, r
 
 from .settings import FlextDbtOracleWmsSettings
 
@@ -48,30 +48,22 @@ class FlextDbtOracleWmsClient:
             else self.discover_oracle_wms_entities()
         )
         if entities_result.is_failure:
-            return r[object].fail(
-                entities_result.error or "Entity discovery failed"
-            )
+            return r[object].fail(entities_result.error or "Entity discovery failed")
         entity_list = entities_result.value
         extracted: dict[str, list[dict[str, object]]] = {}
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.is_failure:
-                return r[object].fail(
-                    extract_result.error or "Extraction failed"
-                )
+                return r[object].fail(extract_result.error or "Extraction failed")
             validate_result = self.validate_oracle_wms_data(
                 entity_name, extract_result.value
             )
             if validate_result.is_failure:
-                return r[object].fail(
-                    validate_result.error or "Validation failed"
-                )
+                return r[object].fail(validate_result.error or "Validation failed")
             extracted[entity_name] = [dict(record) for record in validate_result.value]
         transform_result = self.transform_with_dbt(extracted, model_names)
         if transform_result.is_failure:
-            return r[object].fail(
-                transform_result.error or "Transformation failed"
-            )
+            return r[object].fail(transform_result.error or "Transformation failed")
         logger.info("Completed Oracle WMS to DBT pipeline")
         tr_val = transform_result.value
         return r[object].ok({

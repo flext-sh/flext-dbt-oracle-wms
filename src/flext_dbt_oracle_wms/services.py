@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import FlextLogger, r, t
+from flext_core import FlextLogger, r
 
 from .settings import FlextDbtOracleWmsSettings
 
