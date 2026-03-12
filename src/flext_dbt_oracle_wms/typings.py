@@ -17,7 +17,6 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Annotated, Literal
 
-from flext_core import FlextTypes
 from flext_meltano import FlextMeltanoTypes
 from flext_oracle_wms import FlextOracleWmsTypes
 
@@ -73,155 +72,101 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     class DbtProject:
         """DBT Oracle WMS project complex types."""
 
-        type ProjectConfiguration = dict[
-            str, FlextTypes.ContainerValue | dict[str, FlextTypes.ContainerValue]
-        ]
-        type ModelConfiguration = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type SourceConfiguration = dict[
-            str, str | list[dict[str, FlextTypes.ContainerValue]]
-        ]
-        type ProfileConfiguration = dict[str, FlextTypes.ContainerValue]
-        type MacroConfiguration = dict[str, str | dict[str, FlextTypes.ContainerValue]]
+        type ProjectConfiguration = dict[str, object | dict[str, object]]
+        type ModelConfiguration = dict[str, str | dict[str, object]]
+        type SourceConfiguration = dict[str, str | list[dict[str, object]]]
+        type ProfileConfiguration = dict[str, object]
+        type MacroConfiguration = dict[str, str | dict[str, object]]
         type TestConfiguration = dict[str, str | bool | list[str]]
 
     class OracleWmsConnection:
         """Oracle WMS connection complex types."""
 
-        type ConnectionConfig = dict[
-            str, str | int | bool | dict[str, FlextTypes.ContainerValue]
-        ]
-        type DatabaseConnection = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type PoolingConfig = dict[
-            str, int | bool | dict[str, FlextTypes.ContainerValue]
-        ]
-        type SecurityConfig = dict[
-            str, bool | str | dict[str, FlextTypes.ContainerValue]
-        ]
-        type SessionConfig = dict[str, str | int | dict[str, FlextTypes.ContainerValue]]
+        type ConnectionConfig = dict[str, str | int | bool | dict[str, object]]
+        type DatabaseConnection = dict[str, str | dict[str, object]]
+        type PoolingConfig = dict[str, int | bool | dict[str, object]]
+        type SecurityConfig = dict[str, bool | str | dict[str, object]]
+        type SessionConfig = dict[str, str | int | dict[str, object]]
         type TimeoutConfig = dict[str, int | float]
 
     class WmsData:
         """Oracle WMS data complex types."""
 
-        type InventoryData = dict[
-            str, str | int | float | dict[str, FlextTypes.JsonValue]
-        ]
-        type LocationData = dict[str, str | list[str] | dict[str, FlextTypes.JsonValue]]
-        type AllocationData = dict[
-            str, str | int | bool | dict[str, FlextTypes.ContainerValue]
-        ]
-        type OrderData = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
-        type TaskData = dict[str, str | int | dict[str, FlextTypes.JsonValue]]
-        type ShipmentData = dict[
-            str, str | list[str] | dict[str, FlextTypes.ContainerValue]
-        ]
+        type InventoryData = dict[str, str | int | float | dict[str, object]]
+        type LocationData = dict[str, str | list[str] | dict[str, object]]
+        type AllocationData = dict[str, str | int | bool | dict[str, object]]
+        type OrderData = dict[str, str | list[dict[str, object]]]
+        type TaskData = dict[str, str | int | dict[str, object]]
+        type ShipmentData = dict[str, str | list[str] | dict[str, object]]
 
     class DbtTransformation:
         """DBT Oracle WMS transformation complex types."""
 
-        type TransformationConfig = dict[
-            str, FlextTypes.JsonValue | dict[str, FlextTypes.ContainerValue]
-        ]
-        type WmsTransformation = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type DataValidation = dict[
-            str, bool | str | list[str] | dict[str, FlextTypes.ContainerValue]
-        ]
-        type MaterializationConfig = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type OutputFormat = dict[str, str | dict[str, FlextTypes.ContainerValue]]
-        type ProcessingStep = dict[str, str | int | dict[str, FlextTypes.JsonValue]]
+        type TransformationConfig = dict[str, object | dict[str, object]]
+        type WmsTransformation = dict[str, str | dict[str, object]]
+        type DataValidation = dict[str, bool | str | list[str] | dict[str, object]]
+        type MaterializationConfig = dict[str, str | dict[str, object]]
+        type OutputFormat = dict[str, str | dict[str, object]]
+        type ProcessingStep = dict[str, str | int | dict[str, object]]
 
     class DimensionalModeling:
         """WMS dimensional modeling complex types."""
 
-        type DimensionModel = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
-        type FactModel = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type BridgeModel = dict[
-            str, str | list[str] | dict[str, FlextTypes.ContainerValue]
-        ]
-        type StarSchema = dict[str, list[dict[str, FlextTypes.JsonValue]]]
-        type ScdConfiguration = dict[
-            str, str | bool | dict[str, FlextTypes.ContainerValue]
-        ]
+        type DimensionModel = dict[str, str | list[dict[str, object]]]
+        type FactModel = dict[str, str | dict[str, object]]
+        type BridgeModel = dict[str, str | list[str] | dict[str, object]]
+        type StarSchema = dict[str, list[dict[str, object]]]
+        type ScdConfiguration = dict[str, str | bool | dict[str, object]]
         type GrainDefinition = dict[str, str | list[str]]
 
     class WmsBusinessLogic:
         """WMS business logic complex types."""
 
-        type InventoryRules = dict[
-            str, bool | str | float | dict[str, FlextTypes.ContainerValue]
-        ]
-        type AllocationRules = dict[
-            str, str | int | bool | dict[str, FlextTypes.JsonValue]
-        ]
-        type PickingRules = dict[
-            str, str | list[str] | dict[str, FlextTypes.ContainerValue]
-        ]
-        type ReceivingRules = dict[str, bool | str | dict[str, FlextTypes.JsonValue]]
-        type ShippingRules = dict[str, str | int | dict[str, FlextTypes.ContainerValue]]
-        type QualityRules = dict[str, bool | float | dict[str, FlextTypes.JsonValue]]
+        type InventoryRules = dict[str, bool | str | float | dict[str, object]]
+        type AllocationRules = dict[str, str | int | bool | dict[str, object]]
+        type PickingRules = dict[str, str | list[str] | dict[str, object]]
+        type ReceivingRules = dict[str, bool | str | dict[str, object]]
+        type ShippingRules = dict[str, str | int | dict[str, object]]
+        type QualityRules = dict[str, bool | float | dict[str, object]]
 
     class DbtModel:
         """DBT Oracle WMS model complex types."""
 
-        type ModelDefinition = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type ModelExecution = dict[
-            str, str | bool | int | dict[str, FlextTypes.ContainerValue]
-        ]
-        type ModelDependency = dict[
-            str, str | list[str] | dict[str, FlextTypes.ContainerValue]
-        ]
-        type ModelTest = dict[str, str | bool | dict[str, FlextTypes.JsonValue]]
-        type ModelDocumentation = dict[str, str | dict[str, FlextTypes.ContainerValue]]
-        type ModelMaterialization = dict[
-            str, str | dict[str, FlextTypes.ContainerValue]
-        ]
+        type ModelDefinition = dict[str, str | dict[str, object]]
+        type ModelExecution = dict[str, str | bool | int | dict[str, object]]
+        type ModelDependency = dict[str, str | list[str] | dict[str, object]]
+        type ModelTest = dict[str, str | bool | dict[str, object]]
+        type ModelDocumentation = dict[str, str | dict[str, object]]
+        type ModelMaterialization = dict[str, str | dict[str, object]]
 
     class DbtSource:
         """DBT Oracle WMS source complex types."""
 
-        type SourceDefinition = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type SourceConnection = dict[
-            str, FlextTypes.ContainerValue | dict[str, FlextTypes.ContainerValue]
-        ]
-        type SourceTable = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
-        type SourceFreshness = dict[
-            str, str | int | dict[str, FlextTypes.ContainerValue]
-        ]
+        type SourceDefinition = dict[str, str | dict[str, object]]
+        type SourceConnection = dict[str, object | dict[str, object]]
+        type SourceTable = dict[str, str | list[dict[str, object]]]
+        type SourceFreshness = dict[str, str | int | dict[str, object]]
         type SourceTest = dict[str, str | bool | list[str]]
-        type SourceSchema = dict[str, str | dict[str, FlextTypes.JsonValue]]
+        type SourceSchema = dict[str, str | dict[str, object]]
 
     class OracleWmsAdapter:
         """Oracle WMS adapter complex types."""
 
-        type AdapterConfiguration = dict[
-            str, FlextTypes.ContainerValue | dict[str, FlextTypes.ContainerValue]
-        ]
-        type ConnectionAdapter = dict[
-            str, str | int | bool | dict[str, FlextTypes.ContainerValue]
-        ]
-        type QueryAdapter = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type SchemaAdapter = dict[
-            str, str | list[str] | dict[str, FlextTypes.ContainerValue]
-        ]
-        type TransactionAdapter = dict[
-            str, bool | str | dict[str, FlextTypes.JsonValue]
-        ]
-        type WmsAdapter = dict[str, str | int | dict[str, FlextTypes.ContainerValue]]
+        type AdapterConfiguration = dict[str, object | dict[str, object]]
+        type ConnectionAdapter = dict[str, str | int | bool | dict[str, object]]
+        type QueryAdapter = dict[str, str | dict[str, object]]
+        type SchemaAdapter = dict[str, str | list[str] | dict[str, object]]
+        type TransactionAdapter = dict[str, bool | str | dict[str, object]]
+        type WmsAdapter = dict[str, str | int | dict[str, object]]
 
     class PerformanceOptimization:
         """Oracle WMS performance optimization complex types."""
 
-        type PartitionStrategy = dict[
-            str, str | list[str] | dict[str, FlextTypes.ContainerValue]
-        ]
-        type IndexStrategy = dict[str, str | bool | dict[str, FlextTypes.JsonValue]]
-        type MaterializationStrategy = dict[
-            str, str | dict[str, FlextTypes.ContainerValue]
-        ]
-        type CacheStrategy = dict[str, bool | int | dict[str, FlextTypes.JsonValue]]
-        type ParallelProcessing = dict[
-            str, int | bool | dict[str, FlextTypes.ContainerValue]
-        ]
+        type PartitionStrategy = dict[str, str | list[str] | dict[str, object]]
+        type IndexStrategy = dict[str, str | bool | dict[str, object]]
+        type MaterializationStrategy = dict[str, str | dict[str, object]]
+        type CacheStrategy = dict[str, bool | int | dict[str, object]]
+        type ParallelProcessing = dict[str, int | bool | dict[str, object]]
         type OracleHints = dict[str, str | list[str]]
 
     class Project:
@@ -255,23 +200,21 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
             "warehouse-bi",
             "wms-compliance-reporting",
         ]
-        type DbtOracleWmsProjectConfig = dict[str, FlextTypes.ContainerValue]
+        type DbtOracleWmsProjectConfig = dict[str, object]
         type WmsTransformConfig = dict[str, str | int | bool | list[str]]
-        type WmsAnalyticsConfig = dict[
-            str, bool | str | dict[str, FlextTypes.ContainerValue]
-        ]
-        type DbtWmsPipelineConfig = dict[str, FlextTypes.ContainerValue]
+        type WmsAnalyticsConfig = dict[str, bool | str | dict[str, object]]
+        type DbtWmsPipelineConfig = dict[str, object]
 
     class DomainObjects:
         """DBT Oracle WMS domain object Pydantic model definitions."""
 
 
-type DBTOracleWMSAnalysisConfiguration = dict[str, FlextTypes.ContainerValue]
-type DBTOracleWMSCompilationConfiguration = dict[str, FlextTypes.ContainerValue]
-type DBTOracleWMSDocumentationConfiguration = dict[str, FlextTypes.ContainerValue]
-type DBTOracleWMSExecutionConfiguration = dict[str, FlextTypes.ContainerValue]
-type DBTOracleWMSProjectConfiguration = dict[str, FlextTypes.ContainerValue]
-type DBTOracleWMSSnapshotConfiguration = dict[str, FlextTypes.ContainerValue]
+type DBTOracleWMSAnalysisConfiguration = dict[str, object]
+type DBTOracleWMSCompilationConfiguration = dict[str, object]
+type DBTOracleWMSDocumentationConfiguration = dict[str, object]
+type DBTOracleWMSExecutionConfiguration = dict[str, object]
+type DBTOracleWMSProjectConfiguration = dict[str, object]
+type DBTOracleWMSSnapshotConfiguration = dict[str, object]
 DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
 
 

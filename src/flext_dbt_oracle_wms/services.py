@@ -35,7 +35,7 @@ class FlextDbtOracleWmsServices:
                 "priority": "high",
                 "message": "Process entities in smaller batches",
             })
-        return r[t.ConfigurationMapping].ok({
+        return r[object].ok({
             "analysis": {"total_entities": total},
             "recommendations": recommendations,
             "summary": {
