@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import r, t
+from flext_core import r
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 
@@ -23,7 +23,7 @@ class FlextDbtOracleWmsItemDimension(BaseModel):
     item_number: str = Field(default="")
     item_description: str = Field(default="")
 
-    def to_dbt_dict(self) -> Mapping[str, t.ContainerValue]:
+    def to_dbt_dict(self) -> Mapping[str, object]:
         """Convert item dimension to DBT-compatible dictionary."""
         return {
             "item_id": self.item_id,
@@ -35,27 +35,27 @@ class FlextDbtOracleWmsItemDimension(BaseModel):
 class FlextDbtOracleWmsInventoryFact(BaseModel):
     """Inventory fact table model."""
 
-    record: Mapping[str, t.ContainerValue] = Field(default_factory=dict)
+    record: Mapping[str, object] = Field(default_factory=dict)
 
 
 class FlextDbtOracleWmsLocationDimension(BaseModel):
     """Location dimension model for warehouse analytics."""
 
-    record: Mapping[str, t.ContainerValue] = Field(default_factory=dict)
+    record: Mapping[str, object] = Field(default_factory=dict)
 
 
 class FlextDbtOracleWmsShipmentFact(BaseModel):
     """Shipment fact table model."""
 
-    record: Mapping[str, t.ContainerValue] = Field(default_factory=dict)
+    record: Mapping[str, object] = Field(default_factory=dict)
 
 
 class FlextDbtOracleWmsTransformer:
     """Transformer for WMS entity data to DBT models."""
 
     def transform_all_entities(
-        self, entity_data: Mapping[str, list[Mapping[str, t.ContainerValue]]]
-    ) -> Mapping[str, list[t.ContainerValue]]:
+        self, entity_data: Mapping[str, list[Mapping[str, object]]]
+    ) -> Mapping[str, list[object]]:
         """Transform all WMS entities to DBT-compatible format."""
         items: list[FlextDbtOracleWmsItemDimension] = self.transform_items(
             entity_data.get("items", [])
@@ -63,7 +63,7 @@ class FlextDbtOracleWmsTransformer:
         return {"items": [item.to_dbt_dict() for item in items]}
 
     def transform_items(
-        self, records: list[Mapping[str, t.ContainerValue]]
+        self, records: list[Mapping[str, object]]
     ) -> list[FlextDbtOracleWmsItemDimension]:
         """Transform item records to item dimension models."""
         transformed: list[FlextDbtOracleWmsItemDimension] = []
@@ -81,9 +81,7 @@ class FlextDbtOracleWmsTransformer:
             )
         return transformed
 
-    def validate_business_rules(
-        self, records: list[Mapping[str, t.ContainerValue]]
-    ) -> r[bool]:
+    def validate_business_rules(self, records: list[Mapping[str, object]]) -> r[bool]:
         """Validate business rules for WMS records."""
         if not records:
             return r[bool].fail("No records to validate")

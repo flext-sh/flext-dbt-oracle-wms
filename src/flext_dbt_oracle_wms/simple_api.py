@@ -89,7 +89,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
-    ) -> r[Mapping[str, t.ContainerValue]]:
+    ) -> r[Mapping[str, object]]:
         """Extract Oracle WMS metadata.
 
         Args:
@@ -127,7 +127,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         inventory_items: list[str] | None = None,
         shipments: list[str] | None = None,
         output_dir: str | None = None,
-    ) -> r[Mapping[str, t.ContainerValue]]:
+    ) -> r[Mapping[str, object]]:
         """Generate DBT models from Oracle WMS data.
 
         Args:
@@ -158,7 +158,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         ) as e:
             return r[t.ConfigurationMapping].fail(f"Model generation failed: {e}")
 
-    def get_wms_inventory_info(self, item_id: str) -> r[Mapping[str, t.ContainerValue]]:
+    def get_wms_inventory_info(self, item_id: str) -> r[Mapping[str, object]]:
         """Get detailed information about WMS inventory item.
 
         Args:
@@ -187,9 +187,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 f"Inventory info retrieval failed: {e}"
             )
 
-    def get_wms_shipment_info(
-        self, shipment_id: str
-    ) -> r[Mapping[str, t.ContainerValue]]:
+    def get_wms_shipment_info(self, shipment_id: str) -> r[Mapping[str, object]]:
         """Get detailed information about WMS shipment.
 
         Args:
@@ -220,7 +218,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
 
     def monitor_dbt_execution(
         self, command: str, timeout_seconds: int = 300
-    ) -> r[Mapping[str, t.ContainerValue]]:
+    ) -> r[Mapping[str, object]]:
         """Monitor DBT command execution with metrics.
 
         Args:
@@ -256,7 +254,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> r[Mapping[str, t.ContainerValue]]:
+    ) -> r[Mapping[str, object]]:
         """Run complete Oracle WMS-to-DBT workflow.
 
         Args:

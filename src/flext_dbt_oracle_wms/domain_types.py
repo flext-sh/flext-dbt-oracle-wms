@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import t
 from pydantic import BaseModel, Field
 
 
@@ -26,7 +25,7 @@ class DBTOracleWMSSource(BaseModel):
     """DBT source definition."""
 
     name: str = Field(default="")
-    source_schema: Mapping[str, t.ContainerValue] = Field(default_factory=dict)
+    source_schema: Mapping[str, object] = Field(default_factory=dict)
 
 
 class DBTOracleWMSTest(BaseModel):

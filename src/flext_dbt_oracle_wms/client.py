@@ -27,7 +27,7 @@ class FlextDbtOracleWmsClient:
         return r[list[str]].ok(entities)
 
     def extract_oracle_wms_data(
-        self, entity_name: str, filters: Mapping[str, t.ContainerValue] | None = None
+        self, entity_name: str, filters: Mapping[str, object] | None = None
     ) -> r[list[t.ConfigurationMapping]]:
         """Return sample records for a requested entity."""
         _ = filters
@@ -38,9 +38,9 @@ class FlextDbtOracleWmsClient:
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
         entity_names: list[str] | None = None,
-        filters: Mapping[str, t.ContainerValue] | None = None,
+        filters: Mapping[str, object] | None = None,
         model_names: list[str] | None = None,
-    ) -> r[Mapping[str, t.ContainerValue]]:
+    ) -> r[Mapping[str, object]]:
         """Run discover, extract, validate, and transform pipeline."""
         entities_result = (
             r[list[str]].ok(entity_names)
@@ -52,7 +52,7 @@ class FlextDbtOracleWmsClient:
                 entities_result.error or "Entity discovery failed"
             )
         entity_list = entities_result.value
-        extracted: dict[str, list[dict[str, t.ContainerValue]]] = {}
+        extracted: dict[str, list[dict[str, object]]] = {}
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.is_failure:
@@ -81,7 +81,7 @@ class FlextDbtOracleWmsClient:
             "pipeline_status": "completed",
         })
 
-    def test_oracle_wms_connection(self) -> r[Mapping[str, t.ContainerValue]]:
+    def test_oracle_wms_connection(self) -> r[Mapping[str, object]]:
         """Return simple connection health status."""
         return r[t.ConfigurationMapping].ok({
             "status": "connected",
@@ -91,9 +91,9 @@ class FlextDbtOracleWmsClient:
 
     def transform_with_dbt(
         self,
-        entity_data: Mapping[str, Sequence[Mapping[str, t.ContainerValue]]],
+        entity_data: Mapping[str, Sequence[Mapping[str, object]]],
         model_names: list[str] | None,
-    ) -> r[Mapping[str, t.ContainerValue]]:
+    ) -> r[Mapping[str, object]]:
         """Return transformation summary for provided entities."""
         return r[t.ConfigurationMapping].ok({
             "transformed_tables": list(entity_data.keys()),

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import r, t
+from flext_core import r
 from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
@@ -45,7 +45,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     class ModelGenerator:
         """Generator for lightweight DBT model objects."""
 
-        def __init__(self, config: Mapping[str, t.ContainerValue]) -> None:
+        def __init__(self, config: Mapping[str, object]) -> None:
             """Store generation config for later model creation."""
             super().__init__()
             self.config = config
@@ -74,7 +74,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     @classmethod
     def create_generator(
         cls,
-        config: Mapping[str, t.ContainerValue],
+        config: Mapping[str, object],
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a model generator with explicit configuration."""
         return cls.ModelGenerator(config)
