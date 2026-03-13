@@ -16,7 +16,7 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
         """DBT Oracle WMS protocol namespace."""
 
         @runtime_checkable
-        class DbtProtocol(Protocol):
+        class Dbt(Protocol):
             """Protocol for DBT operation execution."""
 
             def run_dbt_models(
@@ -32,7 +32,7 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
                 ...
 
         @runtime_checkable
-        class WmsIntegrationProtocol(Protocol):
+        class WmsIntegration(Protocol):
             """Protocol for Oracle WMS data extraction and transform stages."""
 
             def extract_wms_inventory_data(
