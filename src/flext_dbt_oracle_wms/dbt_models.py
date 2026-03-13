@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from typing import Annotated
 
 from flext_core import r
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
@@ -11,17 +12,17 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 class _RawItemRecord(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
-    item_id: str = Field(default="")
-    item_number: str = Field(default="")
-    item_description: str = Field(default="")
+    item_id: Annotated[str, Field(default="")]
+    item_number: Annotated[str, Field(default="")]
+    item_description: Annotated[str, Field(default="")]
 
 
 class FlextDbtOracleWmsItemDimension(BaseModel):
     """Item dimension model for WMS analytics."""
 
-    item_id: str = Field(default="")
-    item_number: str = Field(default="")
-    item_description: str = Field(default="")
+    item_id: Annotated[str, Field(default="")]
+    item_number: Annotated[str, Field(default="")]
+    item_description: Annotated[str, Field(default="")]
 
     def to_dbt_dict(self) -> Mapping[str, object]:
         """Convert item dimension to DBT-compatible dictionary."""
@@ -35,19 +36,19 @@ class FlextDbtOracleWmsItemDimension(BaseModel):
 class FlextDbtOracleWmsInventoryFact(BaseModel):
     """Inventory fact table model."""
 
-    record: Mapping[str, object] = Field(default_factory=dict)
+    record: Annotated[Mapping[str, object], Field(default_factory=dict)]
 
 
 class FlextDbtOracleWmsLocationDimension(BaseModel):
     """Location dimension model for warehouse analytics."""
 
-    record: Mapping[str, object] = Field(default_factory=dict)
+    record: Annotated[Mapping[str, object], Field(default_factory=dict)]
 
 
 class FlextDbtOracleWmsShipmentFact(BaseModel):
     """Shipment fact table model."""
 
-    record: Mapping[str, object] = Field(default_factory=dict)
+    record: Annotated[Mapping[str, object], Field(default_factory=dict)]
 
 
 class FlextDbtOracleWmsTransformer:

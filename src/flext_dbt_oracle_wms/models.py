@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from typing import Annotated
 
 from flext_core import r
 from flext_meltano import FlextMeltanoModels
@@ -23,13 +24,13 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         wms_entity_type: str
         schema_name: str
         table_name: str
-        columns: list[dict[str, object]] = Field(default=[])
+        columns: Annotated[list[dict[str, object]], Field(default_factory=list)]
         materialization: str
         sql_content: str
         description: str
         oracle_source: str
-        dependencies: list[str] = Field(default_factory=list)
-        wms_business_rules: list[str] = Field(default_factory=list)
+        dependencies: Annotated[list[str], Field(default_factory=list)]
+        wms_business_rules: Annotated[list[str], Field(default_factory=list)]
 
         def validate_business_rules(self) -> r[bool]:
             """Validate essential DBT model constraints."""
