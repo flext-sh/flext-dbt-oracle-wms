@@ -57,7 +57,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         ) -> r[list[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
-                FlextDbtOracleWmsModels.DbtModel.model_validate({
+                FlextDbtOracleWmsModels.DbtModel({
                     "name": f"stg_wms_{source}",
                     "dbt_model_type": "staging",
                     "wms_entity_type": source,

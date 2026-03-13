@@ -70,7 +70,7 @@ class FlextDbtOracleWmsTransformer:
         transformed: list[FlextDbtOracleWmsItemDimension] = []
         for record in records:
             try:
-                raw_record: _RawItemRecord = _RawItemRecord.model_validate(record)
+                raw_record: _RawItemRecord = _RawItemRecord(record)
             except ValidationError:
                 continue
             transformed.append(
