@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Annotated
 
-from flext_core import r
+from flext_core import r, t
 from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
@@ -24,7 +24,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         wms_entity_type: str
         schema_name: str
         table_name: str
-        columns: Annotated[list[dict[str, object]], Field(default_factory=list)]
+        columns: Annotated[list[dict[str, t.Scalar]], Field(default_factory=list)]
         materialization: str
         sql_content: str
         description: str
@@ -46,7 +46,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     class ModelGenerator:
         """Generator for lightweight DBT model objects."""
 
-        def __init__(self, config: Mapping[str, object]) -> None:
+        def __init__(self, config: Mapping[str, t.Scalar]) -> None:
             """Store generation config for later model creation."""
             super().__init__()
             self.config = config
@@ -57,17 +57,20 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         ) -> r[list[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
-                FlextDbtOracleWmsModels.DbtModel({
-                    "name": f"stg_wms_{source}",
-                    "dbt_model_type": "staging",
-                    "wms_entity_type": source,
-                    "schema_name": "wms_staging",
-                    "table_name": f"stg_{source}",
-                    "materialization": FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.Materialization.VIEW.value,
-                    "sql_content": f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
-                    "description": f"Staging model for {source}",
-                    "oracle_source": source,
-                })
+                FlextDbtOracleWmsModels.DbtModel(
+                    name=f"stg_wms_{source}",
+                    dbt_model_type="staging",
+                    wms_entity_type=source,
+                    schema_name="wms_staging",
+                    table_name=f"stg_{source}",
+                    columns=[],
+                    materialization=FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.Materialization.VIEW.value,
+                    sql_content=f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
+                    description=f"Staging model for {source}",
+                    oracle_source=source,
+                    dependencies=[],
+                    wms_business_rules=[],
+                )
                 for source in oracle_sources
             ]
             return r[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
@@ -75,7 +78,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     @classmethod
     def create_generator(
         cls,
-        config: Mapping[str, object],
+        config: Mapping[str, t.Scalar],
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a model generator with explicit configuration."""
         return cls.ModelGenerator(config)

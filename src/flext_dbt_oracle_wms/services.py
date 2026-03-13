@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import FlextLogger, r
+from flext_core import FlextLogger, r, t
 
 from .settings import FlextDbtOracleWmsSettings
 
@@ -23,39 +23,31 @@ class FlextDbtOracleWmsServices:
         )
 
     def generate_workflow_recommendations(
-        self, entities: list[Mapping[str, object]] | None = None
-    ) -> r[Mapping[str, object]]:
+        self, entities: list[Mapping[str, t.Scalar]] | None = None
+    ) -> r[t.Dict]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
         total = len(entity_list)
-        recommendations: list[dict[str, object]] = []
+        recommendation_message = ""
         if total > PERFORMANCE_RECOMMENDATION_THRESHOLD:
-            recommendations.append({
-                "type": "performance",
-                "priority": "high",
-                "message": "Process entities in smaller batches",
-            })
-        return r[object].ok({
-            "analysis": {"total_entities": total},
-            "recommendations": recommendations,
-            "summary": {
-                "dbt_threads": self.config.dbt_threads,
-                "target": self.config.dbt_target,
-            },
+            recommendation_message = "Process entities in smaller batches"
+        return r[t.Dict].ok({
+            "total_entities": total,
+            "recommendation": recommendation_message,
+            "dbt_threads": str(self.config.dbt_threads),
+            "target": str(self.config.dbt_target),
         })
 
     def log_workflow_completion(
         self,
-        tracking_info: Mapping[str, object],
-        result: r[Mapping[str, object]],
+        tracking_info: Mapping[str, t.Scalar],
+        result: r[t.Dict],
     ) -> None:
         """Log workflow completion status."""
         logger.info(
             "Workflow completion",
-            extra={
-                "tracking_id": tracking_info.get("tracking_id"),
-                "is_success": result.is_success,
-            },
+            tracking_id=str(tracking_info.get("tracking_id", "")),
+            is_success=result.is_success,
         )
 
     def track_workflow_execution(
@@ -64,14 +56,14 @@ class FlextDbtOracleWmsServices:
         workflow_type: str,
         entity_names: list[str] | None = None,
         additional_data: Mapping[str, str | int | float] | None = None,
-    ) -> Mapping[str, object]:
+    ) -> t.Dict:
         """Return tracking payload for workflow instrumentation."""
         logger.info("Tracking workflow execution")
         return {
             "workflow_name": workflow_name,
             "workflow_type": workflow_type,
-            "entity_names": entity_names or [],
-            "additional_data": additional_data or {},
+            "entity_names": ",".join(entity_names or []),
+            "additional_data": str(additional_data or {}),
             "tracking_id": f"{workflow_name}:{workflow_type}",
             "status": "running",
         }

@@ -92,7 +92,7 @@ def main() -> int:
         return pipeline()
     if command == "info":
         return info()
-    logger.error("Unknown command", extra={"command": command})
+    logger.error("Unknown command", command=command)
     return 1
 
 
