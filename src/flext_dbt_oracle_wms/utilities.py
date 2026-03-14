@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from flext_core import r
+from flext_core import r, t
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import FlextOracleWmsUtilities
 
@@ -17,10 +17,21 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: Mapping[str, object],
-        ) -> r[Mapping[str, object]]:
+            extraction_config: Mapping[str, t.ContainerValue | None],
+        ) -> r[
+            Mapping[
+                str,
+                Mapping[str, t.ContainerValue | None] | list[t.ContainerValue | None],
+            ]
+        ]:
             """Return basic extraction metadata for inventory loads."""
-            return r[object].ok({
+            return r[
+                Mapping[
+                    str,
+                    Mapping[str, t.ContainerValue | None]
+                    | list[t.ContainerValue | None],
+                ]
+            ].ok({
                 "extraction_config": extraction_config,
                 "inventory_records": [],
             })
@@ -30,7 +41,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
         @staticmethod
         def generate_wms_inventory_dimension(
-            inventory_config: Mapping[str, object],
+            inventory_config: Mapping[str, t.ContainerValue | None],
         ) -> r[str]:
             """Generate SQL for inventory dimension model."""
             _ = inventory_config

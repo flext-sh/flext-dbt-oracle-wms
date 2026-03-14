@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from collections.abc import Mapping
 
-from flext_core import FlextLogger, r
+from flext_core import FlextLogger, r, t
 from pydantic import TypeAdapter, ValidationError
 
 from .client import FlextDbtOracleWmsClient
@@ -22,14 +22,20 @@ class FlextDbtOracleWmsCliService:
         super().__init__()
         self._client = FlextDbtOracleWmsClient()
 
-    def handle_discover(self, _args: Mapping[str, object] | None = None) -> r[str]:
+    def handle_discover(
+        self,
+        _args: Mapping[str, t.ContainerValue | None] | None = None,
+    ) -> r[str]:
         """Handle discover command."""
         result = self._client.discover_oracle_wms_entities()
         if result.is_failure:
             return r[str].fail(result.error or "Discover failed")
         return r[str].ok("Discovery completed successfully")
 
-    def handle_extract(self, args: Mapping[str, object] | None = None) -> r[str]:
+    def handle_extract(
+        self,
+        args: Mapping[str, t.ContainerValue | None] | None = None,
+    ) -> r[str]:
         """Handle extract command."""
         entity = "inventory"
         if args is not None:
@@ -45,11 +51,17 @@ class FlextDbtOracleWmsCliService:
             return r[str].fail(result.error or "Extract failed")
         return r[str].ok("Extraction completed successfully")
 
-    def handle_info(self, _args: Mapping[str, object] | None = None) -> r[str]:
+    def handle_info(
+        self,
+        _args: Mapping[str, t.ContainerValue | None] | None = None,
+    ) -> r[str]:
         """Handle package info command."""
         return r[str].ok("FLEXT DBT Oracle WMS")
 
-    def handle_pipeline(self, _args: Mapping[str, object] | None = None) -> r[str]:
+    def handle_pipeline(
+        self,
+        _args: Mapping[str, t.ContainerValue | None] | None = None,
+    ) -> r[str]:
         """Handle full pipeline command."""
         result = self._client.run_full_oracle_wms_to_dbt_pipeline()
         if result.is_failure:

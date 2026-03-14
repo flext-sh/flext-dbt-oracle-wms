@@ -5,6 +5,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Final
 
+from flext_core import t
 from flext_meltano import FlextMeltanoConstants
 
 
@@ -97,7 +98,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
         class Configuration:
             """Default runtime configuration values."""
 
-            DEFAULT_CONFIG: Final[dict[str, object]] = {
+            DEFAULT_CONFIG: Final[dict[str, t.ContainerValue | None]] = {
                 "project_name": "flext_dbt_oracle_wms",
                 "profile": "flext_oracle_wms",
                 "schema_prefix": "wms",
