@@ -2,71 +2,54 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Annotated
 
-from flext_core import FlextSettings, FlextTypes as t
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, Field
 
-
-class FlextDBTOracleWMSSettings(FlextSettings):
-    """Minimal settings model for DBT Oracle WMS configuration."""
-
-    project_name: str = Field(default="flext-dbt-oracle-wms")
-    version: str = Field(default="0.10.0-dev")
-    profile: str = Field(default="flext_oracle_wms")
-    wms_entities: list[str] = Field(default_factory=lambda: ["inventory", "location"])
+from .settings import FlextDbtOracleWmsSettings
 
 
 class DBTOracleWMSConfiguration(BaseModel):
-    """Top-level DBT Oracle WMS configuration payload."""
+    """Base configuration for DBT Oracle WMS project."""
 
-    model_config = ConfigDict(frozen=False, extra="forbid")
-    project_name: str
-    version: str
-    profile: str
+    project_name: Annotated[str, Field(default="flext_dbt_oracle_wms")]
+    profile: Annotated[str, Field(default="flext_oracle_wms")]
 
 
-class DBTOracleWMSModelConfiguration(BaseModel):
-    """DBT model configuration payload."""
+class DBTOracleWMSModelConfiguration(DBTOracleWMSConfiguration):
+    """Configuration for DBT model materialization."""
 
-    model_config = ConfigDict(frozen=False, extra="forbid")
-    materialized: Literal["table", "view", "incremental"]
-    schema_name: str = Field(alias="schema")
-    tags: list[str]
+    materialization: Annotated[str, Field(default="view")]
 
 
-class DBTOracleWMSSourceConfiguration(BaseModel):
-    """DBT source configuration payload."""
+class DBTOracleWMSSourceConfiguration(DBTOracleWMSConfiguration):
+    """Configuration for DBT source definitions."""
 
-    model_config = ConfigDict(frozen=False, extra="forbid")
-    name: str
-    schema_name: str = Field(alias="schema")
-    tables: list[dict[str, t.GeneralValueType]]
+    source_name: Annotated[str, Field(default="oracle_wms")]
 
 
-class DBTOracleWMSTestConfiguration(BaseModel):
-    """DBT test configuration payload."""
+class DBTOracleWMSTestConfiguration(DBTOracleWMSConfiguration):
+    """Configuration for DBT test execution."""
 
-    model_config = ConfigDict(frozen=False, extra="forbid")
-    store_failures: bool
-    schema_name: str = Field(alias="schema")
+    severity: Annotated[str, Field(default="warn")]
 
 
-class DBTOracleWMSMacroConfiguration(BaseModel):
-    """DBT macro configuration payload."""
+class DBTOracleWMSMacroConfiguration(DBTOracleWMSConfiguration):
+    """Configuration for DBT macro namespace."""
 
-    model_config = ConfigDict(frozen=False, extra="forbid")
-    name: str
-    description: str
-    arguments: list[str]
+    macro_namespace: Annotated[str, Field(default="wms")]
 
 
-class DBTOracleWMSProfileConfiguration(BaseModel):
-    """DBT profile configuration payload."""
+class DBTOracleWMSProfileConfiguration(DBTOracleWMSConfiguration):
+    """Configuration for DBT profile and target."""
 
-    model_config = ConfigDict(frozen=False, extra="forbid")
-    target: str
-    outputs: dict[str, t.GeneralValueType]
+    target: Annotated[str, Field(default="dev")]
+
+
+class FlextDBTOracleWMSSettings(FlextDbtOracleWmsSettings):
+    """Settings for FLEXT DBT Oracle WMS integration."""
+
+    pass
 
 
 __all__ = [

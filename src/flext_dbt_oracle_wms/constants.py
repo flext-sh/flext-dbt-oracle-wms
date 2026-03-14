@@ -5,122 +5,128 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Final
 
-from flext_core import FlextConstants, FlextTypes as t
+from flext_meltano import FlextMeltanoConstants
 
 
-class FlextDbtOracleWmsSemanticConstants(FlextConstants):
-    """Semantic constants namespace for DBT Oracle WMS."""
+class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
+    """Constants for DBT Oracle WMS with dual inheritance from Meltano and WMS domains."""
 
-    class Core:
-        """Core package metadata constants."""
+    class DbtOracleWms:
+        """DBT Oracle WMS project-specific constants."""
 
-        NAME: Final[str] = "flext-dbt-oracle-wms"
-        VERSION: Final[str] = "0.10.0-dev"
+        class Core:
+            """Core package metadata constants."""
 
-    class Dbt:
-        """DBT constants and enum values."""
+            NAME: Final[str] = "flext-dbt-oracle-wms"
+            VERSION: Final[str] = "0.10.0-dev"
 
-        PROJECT_NAME: Final[str] = "flext_dbt_oracle_wms"
-        PROFILE: Final[str] = "flext_oracle_wms"
-        SCHEMA_PREFIX: Final[str] = "wms"
+        class Dbt:
+            """DBT constants and enum values."""
 
-        class Materialization(StrEnum):
-            """DBT materialization types."""
+            PROJECT_NAME: Final[str] = "flext_dbt_oracle_wms"
+            PROFILE: Final[str] = "flext_oracle_wms"
+            SCHEMA_PREFIX: Final[str] = "wms"
 
-            TABLE = "table"
-            VIEW = "view"
-            INCREMENTAL = "incremental"
+            class Materialization(StrEnum):
+                """DBT materialization types."""
 
-        class TestType(StrEnum):
-            """DBT test types."""
+                TABLE = "table"
+                VIEW = "view"
+                INCREMENTAL = "incremental"
 
-            UNIQUE = "unique"
-            NOT_NULL = "not_null"
-            RELATIONSHIPS = "relationships"
+            class TestType(StrEnum):
+                """DBT test types."""
 
-        MATERIALIZATIONS: Final[tuple[str, ...]] = tuple(
-            member.value for member in Materialization.__members__.values()
-        )
-        TEST_TYPES: Final[tuple[str, ...]] = tuple(
-            member.value for member in TestType.__members__.values()
-        )
+                UNIQUE = "unique"
+                NOT_NULL = "not_null"
+                RELATIONSHIPS = "relationships"
 
-    class Entities:
-        """Oracle WMS entity constants."""
+            MATERIALIZATIONS: Final[tuple[str, ...]] = tuple(
+                member.value for member in Materialization.__members__.values()
+            )
+            TEST_TYPES: Final[tuple[str, ...]] = tuple(
+                member.value for member in TestType.__members__.values()
+            )
 
-        WMS_ENTITIES: Final[tuple[str, ...]] = (
-            "inventory",
-            "location",
-            "allocation",
-            "order",
-            "item",
-            "shipment",
-            "receipt",
-            "task",
-            "wave",
-        )
+        class Entities:
+            """Oracle WMS entity constants."""
 
-    class DbtOracleWmsProcessing:
-        """Processing constants for DBT Oracle WMS workloads."""
+            WMS_ENTITIES: Final[tuple[str, ...]] = (
+                "inventory",
+                "location",
+                "allocation",
+                "order",
+                "item",
+                "shipment",
+                "receipt",
+                "task",
+                "wave",
+            )
 
-        DEFAULT_BATCH_SIZE: Final[int] = 1000
-        INCREMENTAL_LOOKBACK_DAYS: Final[int] = 7
-        DATA_QUALITY_THRESHOLD: Final[float] = 0.95
-        HIGH_VOLUME_THRESHOLD: Final[int] = 100
-        MEDIUM_VOLUME_THRESHOLD: Final[int] = 10
-        HIGH_FREQUENCY_THRESHOLD: Final[int] = 1000
+        class DbtOracleWmsProcessing:
+            """Processing constants for DBT Oracle WMS workloads."""
 
-        class ProcessingStatus(StrEnum):
-            """Pipeline processing status values."""
+            DEFAULT_BATCH_SIZE: Final[int] = 1000
+            INCREMENTAL_LOOKBACK_DAYS: Final[int] = 7
+            DATA_QUALITY_THRESHOLD: Final[float] = 0.95
+            HIGH_VOLUME_THRESHOLD: Final[int] = 100
+            MEDIUM_VOLUME_THRESHOLD: Final[int] = 10
+            HIGH_FREQUENCY_THRESHOLD: Final[int] = 1000
 
-            PENDING = "pending"
-            PROCESSING = "processing"
-            COMPLETED = "completed"
-            FAILED = "failed"
+            class ProcessingStatus(StrEnum):
+                """Pipeline processing status values."""
 
-        class RunStatus(StrEnum):
-            """DBT run status values."""
+                PENDING = "pending"
+                PROCESSING = "processing"
+                COMPLETED = "completed"
+                FAILED = "failed"
 
-            SUCCESS = "success"
-            ERROR = "error"
-            SKIPPED = "skipped"
-            RUNNING = "running"
-            QUEUED = "queued"
+            class RunStatus(StrEnum):
+                """DBT run status values."""
 
-        PROCESSING_STATUSES: Final[tuple[str, ...]] = tuple(
-            member.value for member in ProcessingStatus.__members__.values()
-        )
+                SUCCESS = "success"
+                ERROR = "error"
+                SKIPPED = "skipped"
+                RUNNING = "running"
+                QUEUED = "queued"
 
-    class Configuration:
-        """Default runtime configuration values."""
+            PROCESSING_STATUSES: Final[tuple[str, ...]] = tuple(
+                member.value for member in ProcessingStatus.__members__.values()
+            )
 
-        DEFAULT_CONFIG: Final[dict[str, t.GeneralValueType]] = {
-            "project_name": "flext_dbt_oracle_wms",
-            "profile": "flext_oracle_wms",
-            "schema_prefix": "wms",
-            "batch_size": 1000,
-            "incremental_lookback_days": 7,
-            "data_quality_threshold": 0.95,
-        }
+        class Configuration:
+            """Default runtime configuration values."""
+
+            DEFAULT_CONFIG: Final[dict[str, object]] = {
+                "project_name": "flext_dbt_oracle_wms",
+                "profile": "flext_oracle_wms",
+                "schema_prefix": "wms",
+                "batch_size": 1000,
+                "incremental_lookback_days": 7,
+                "data_quality_threshold": 0.95,
+            }
+
+        class DbtTargets(StrEnum):
+            """Valid DBT target environments."""
+
+            DEV = "dev"
+            DEVELOPMENT = "development"
+            STAGING = "staging"
+            PROD = "prod"
+            PRODUCTION = "production"
+            TEST = "test"
+            LOCAL = "local"
+
+        class OracleWmsEnvironments(StrEnum):
+            """Valid Oracle WMS environments."""
+
+            DEV = "dev"
+            TEST = "test"
+            STAGING = "staging"
+            PROD = "prod"
+            PRODUCTION = "production"
 
 
-class FlextDbtOracleWmsConstants(FlextDbtOracleWmsSemanticConstants):
-    """Backward-compatible constants alias namespace."""
-
-
-class FlextWmsConstants(FlextConstants):
-    """Legacy WMS constants kept for compatibility."""
-
-    HIGH_LEVEL: Final[str] = "high"
-    MEDIUM_LEVEL: Final[str] = "medium"
-    LOW_LEVEL: Final[str] = "low"
-
+__all__ = ["FlextDbtOracleWmsConstants", "c"]
 
 c = FlextDbtOracleWmsConstants
-
-__all__ = [
-    "FlextDbtOracleWmsConstants",
-    "FlextDbtOracleWmsSemanticConstants",
-    "FlextWmsConstants",
-    "c",
-]

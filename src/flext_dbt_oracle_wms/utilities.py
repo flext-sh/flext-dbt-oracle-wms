@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
-from flext_core import FlextResult, FlextTypes as t
+from collections.abc import Mapping
+
+from flext_core import r
+from flext_meltano import FlextMeltanoUtilities
+from flext_oracle_wms import FlextOracleWmsUtilities
 
 
-class FlextDbtOracleWmsUtilities:
+class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities):
     """Namespace with utility helpers for extraction and modeling."""
 
     class DbtOracleWms:
@@ -13,10 +17,10 @@ class FlextDbtOracleWmsUtilities:
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: dict[str, t.GeneralValueType],
-        ) -> FlextResult[dict[str, t.GeneralValueType]]:
+            extraction_config: Mapping[str, object],
+        ) -> r[Mapping[str, object]]:
             """Return basic extraction metadata for inventory loads."""
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return r[object].ok({
                 "extraction_config": extraction_config,
                 "inventory_records": [],
             })
@@ -26,11 +30,13 @@ class FlextDbtOracleWmsUtilities:
 
         @staticmethod
         def generate_wms_inventory_dimension(
-            inventory_config: dict[str, t.GeneralValueType],
-        ) -> FlextResult[str]:
+            inventory_config: Mapping[str, object],
+        ) -> r[str]:
             """Generate SQL for inventory dimension model."""
             _ = inventory_config
-            return FlextResult[str].ok("select * from {{ ref('stg_wms_inventory') }}")
+            return r[str].ok("select * from {{ ref('stg_wms_inventory') }}")
 
 
-__all__ = ["FlextDbtOracleWmsUtilities"]
+__all__ = ["FlextDbtOracleWmsUtilities", "u"]
+
+u = FlextDbtOracleWmsUtilities

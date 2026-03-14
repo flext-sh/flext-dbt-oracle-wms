@@ -2,16 +2,21 @@
 
 from __future__ import annotations
 
-from flext_core import FlextModels, FlextResult, FlextTypes as t
+from collections.abc import Mapping
+from typing import Annotated
+
+from flext_core import r, t
+from flext_meltano import FlextMeltanoModels
+from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
 
 from .constants import FlextDbtOracleWmsConstants
 
 
-class FlextDbtOracleWmsModels(FlextModels):
+class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     """Pydantic model namespace for DBT Oracle WMS objects."""
 
-    class DbtModel(FlextModels.ArbitraryTypesModel):
+    class DbtModel(FlextMeltanoModels.ArbitraryTypesModel):
         """Single DBT model metadata payload."""
 
         name: str
@@ -19,36 +24,37 @@ class FlextDbtOracleWmsModels(FlextModels):
         wms_entity_type: str
         schema_name: str
         table_name: str
-        columns: list[dict[str, t.GeneralValueType]] = Field(default_factory=list)
+        columns: Annotated[list[dict[str, t.Scalar]], Field(default_factory=list)]
         materialization: str
         sql_content: str
         description: str
         oracle_source: str
-        dependencies: list[str] = Field(default_factory=list)
-        wms_business_rules: list[str] = Field(default_factory=list)
+        dependencies: Annotated[list[str], Field(default_factory=list)]
+        wms_business_rules: Annotated[list[str], Field(default_factory=list)]
 
-        def validate_business_rules(self) -> FlextResult[bool]:
+        def validate_business_rules(self) -> r[bool]:
             """Validate essential DBT model constraints."""
             if not self.name:
-                return FlextResult[bool].fail("Model name cannot be empty")
+                return r[bool].fail("Model name cannot be empty")
             if (
                 self.materialization
-                not in FlextDbtOracleWmsConstants.Dbt.MATERIALIZATIONS
+                not in FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.MATERIALIZATIONS
             ):
-                return FlextResult[bool].fail("Invalid materialization")
-            return FlextResult[bool].ok(True)
+                return r[bool].fail("Invalid materialization")
+            return r[bool].ok(True)
 
     class ModelGenerator:
         """Generator for lightweight DBT model objects."""
 
-        def __init__(self, config: dict[str, t.GeneralValueType]) -> None:
+        def __init__(self, config: Mapping[str, t.Scalar]) -> None:
             """Store generation config for later model creation."""
+            super().__init__()
             self.config = config
 
         def generate_wms_staging_models(
             self,
             oracle_sources: list[str],
-        ) -> FlextResult[list[FlextDbtOracleWmsModels.DbtModel]]:
+        ) -> r[list[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
                 FlextDbtOracleWmsModels.DbtModel(
@@ -57,25 +63,27 @@ class FlextDbtOracleWmsModels(FlextModels):
                     wms_entity_type=source,
                     schema_name="wms_staging",
                     table_name=f"stg_{source}",
-                    materialization=FlextDbtOracleWmsConstants.Dbt.Materialization.VIEW.value,
-                    sql_content=f"select * from {{{{ source('oracle_wms', '{source}') }}}}",
+                    columns=[],
+                    materialization=FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.Materialization.VIEW.value,
+                    sql_content=f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
                     description=f"Staging model for {source}",
                     oracle_source=source,
+                    dependencies=[],
+                    wms_business_rules=[],
                 )
                 for source in oracle_sources
             ]
-            return FlextResult[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
+            return r[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
 
     @classmethod
     def create_generator(
         cls,
-        config: dict[str, t.GeneralValueType],
+        config: Mapping[str, t.Scalar],
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a model generator with explicit configuration."""
         return cls.ModelGenerator(config)
 
 
-m = FlextDbtOracleWmsModels
-m_dbt_oracle_wms = FlextDbtOracleWmsModels
+__all__ = ["FlextDbtOracleWmsModels", "m"]
 
-__all__ = ["FlextDbtOracleWmsModels", "m", "m_dbt_oracle_wms"]
+m = FlextDbtOracleWmsModels

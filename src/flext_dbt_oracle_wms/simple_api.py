@@ -8,17 +8,12 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 
 from __future__ import annotations
 
-from flext_core import (
-    FlextResult,
-    FlextService,
-    FlextTypes as t,
-)
+from typing import override
+
+from flext_core import FlextService, r, t
 
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.services import (
-    FlextDbtOracleWmsMonitoringService,
-    FlextDbtOracleWmsWorkflowService,
-)
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
 
@@ -39,26 +34,24 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
     - FlextContainer for dependency injection
     - FlextContext for operation context
     - FlextLogger for structured logging
-    - FlextResult for railway-oriented error handling
+    - r for railway-oriented error handling
 
     PYTHON 3.13+ COMPATIBILITY: Uses modern patterns and latest type features.
     """
 
     def __init__(self, config: FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize the unified DBT Oracle WMS service."""
-        super().__init__()
+        super().__init__(
+            config_type=None,
+            config_overrides=None,
+            initial_context=None,
+        )
         self._wms_config: FlextDbtOracleWmsSettings = (
-            config or FlextDbtOracleWmsSettings()
+            config if config is not None else FlextDbtOracleWmsSettings.get_global()
         )
         self._client: FlextDbtOracleWmsClient | None = None
-        self._workflow_service: FlextDbtOracleWmsWorkflowService | None = None
-        self._monitoring_service: FlextDbtOracleWmsMonitoringService | None = None
-        # Note: container, context, and logger are provided automatically by FlextService
-
-    @classmethod
-    def create(cls) -> FlextDbtOracleWms:
-        """Create a new FlextDbtOracleWms instance (factory method)."""
-        return cls()
+        self._workflow_service: FlextDbtOracleWmsServices | None = None
+        self._monitoring_service: FlextDbtOracleWmsServices | None = None
 
     @property
     def client(self) -> FlextDbtOracleWmsClient:
@@ -68,91 +61,29 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         return self._client
 
     @property
-    def workflow_service(self) -> FlextDbtOracleWmsWorkflowService:
-        """Get the workflow service instance."""
-        if self._workflow_service is None:
-            self._workflow_service = FlextDbtOracleWmsWorkflowService()
-        return self._workflow_service
-
-    @property
-    def monitoring_service(self) -> FlextDbtOracleWmsMonitoringService:
-        """Get the monitoring service instance."""
-        if self._monitoring_service is None:
-            self._monitoring_service = FlextDbtOracleWmsMonitoringService()
-        return self._monitoring_service
-
-    @property
+    @override
     def config(self) -> FlextDbtOracleWmsSettings:
         """Get the current configuration."""
         return self._wms_config
 
-    # =============================================================================
-    # MAIN WORKFLOW OPERATIONS - Enhanced with FlextResult error handling
-    # =============================================================================
+    @property
+    def monitoring_service(self) -> FlextDbtOracleWmsServices:
+        """Get the monitoring service instance."""
+        if self._monitoring_service is None:
+            self._monitoring_service = FlextDbtOracleWmsServices()
+        return self._monitoring_service
 
-    def run_oracle_wms_to_dbt_workflow(
-        self,
-        inventory_items: list[str] | None = None,
-        shipments: list[str] | None = None,
-        *,
-        generate_models: bool = True,
-        run_transformations: bool = False,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
-        """Run complete Oracle WMS-to-DBT workflow.
+    @property
+    def workflow_service(self) -> FlextDbtOracleWmsServices:
+        """Get the workflow service instance."""
+        if self._workflow_service is None:
+            self._workflow_service = FlextDbtOracleWmsServices()
+        return self._workflow_service
 
-        Args:
-        inventory_items: List of inventory items to process
-        shipments: List of shipments to process
-        generate_models: Whether to generate DBT models
-        run_transformations: Whether to run transformations
-
-        Returns:
-        FlextResult containing workflow results
-
-        """
-        try:
-            self.logger.info("Running Oracle WMS-to-DBT workflow")
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
-                "status": "completed",
-                "generate_models": generate_models,
-                "run_transformations": run_transformations,
-                "inventory_processed": len(inventory_items) if inventory_items else 0,
-                "shipments_processed": len(shipments) if shipments else 0,
-            })
-        except Exception as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Workflow execution failed: {e}",
-            )
-
-    def generate_dbt_models_from_wms(
-        self,
-        inventory_items: list[str] | None = None,
-        shipments: list[str] | None = None,
-        output_dir: str | None = None,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
-        """Generate DBT models from Oracle WMS data.
-
-        Args:
-        inventory_items: List of inventory items to process
-        shipments: List of shipments to process
-        output_dir: Output directory for generated models
-
-        Returns:
-        FlextResult containing model generation results
-
-        """
-        try:
-            self.logger.info("Generating DBT models from Oracle WMS")
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
-                "status": "models_generated",
-                "inventory_items": len(inventory_items) if inventory_items else 0,
-                "shipments": len(shipments) if shipments else 0,
-                "output_dir": str(output_dir),
-            })
-        except Exception as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Model generation failed: {e}"
-            )
+    @classmethod
+    def create(cls) -> FlextDbtOracleWms:
+        """Create a new FlextDbtOracleWms instance (factory method)."""
+        return cls()
 
     def extract_wms_metadata(
         self,
@@ -161,7 +92,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+    ) -> r[t.Dict]:
         """Extract Oracle WMS metadata.
 
         Args:
@@ -171,28 +102,122 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         include_shipment_tracking: Whether to include shipment tracking
 
         Returns:
-        FlextResult containing metadata extraction results
+        r containing metadata extraction results
 
         """
         try:
             self.logger.info("Extracting Oracle WMS metadata")
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return r[t.Dict].ok({
                 "status": "metadata_extracted",
                 "include_inventory_details": include_inventory_details,
                 "include_shipment_tracking": include_shipment_tracking,
                 "inventory_count": len(inventory_items) if inventory_items else 0,
                 "shipment_count": len(shipments) if shipments else 0,
             })
-        except Exception as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Metadata extraction failed: {e}",
-            )
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[t.Dict].fail(f"Metadata extraction failed: {e}")
+
+    def generate_dbt_models_from_wms(
+        self,
+        inventory_items: list[str] | None = None,
+        shipments: list[str] | None = None,
+        output_dir: str | None = None,
+    ) -> r[t.Dict]:
+        """Generate DBT models from Oracle WMS data.
+
+        Args:
+        inventory_items: List of inventory items to process
+        shipments: List of shipments to process
+        output_dir: Output directory for generated models
+
+        Returns:
+        r containing model generation results
+
+        """
+        try:
+            self.logger.info("Generating DBT models from Oracle WMS")
+            return r[t.Dict].ok({
+                "status": "models_generated",
+                "inventory_items": len(inventory_items) if inventory_items else 0,
+                "shipments": len(shipments) if shipments else 0,
+                "output_dir": str(output_dir),
+            })
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[t.Dict].fail(f"Model generation failed: {e}")
+
+    def get_wms_inventory_info(self, item_id: str) -> r[t.Dict]:
+        """Get detailed information about WMS inventory item.
+
+        Args:
+        item_id: Inventory item identifier
+
+        Returns:
+        r containing inventory item information
+
+        """
+        try:
+            self.logger.info("Getting WMS inventory info: %s", item_id)
+            return r[t.Dict].ok({
+                "item_id": item_id,
+                "status": "info_retrieved",
+            })
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[t.Dict].fail(f"Inventory info retrieval failed: {e}")
+
+    def get_wms_shipment_info(self, shipment_id: str) -> r[t.Dict]:
+        """Get detailed information about WMS shipment.
+
+        Args:
+        shipment_id: Shipment identifier
+
+        Returns:
+        r containing shipment information
+
+        """
+        try:
+            self.logger.info("Getting WMS shipment info: %s", shipment_id)
+            return r[t.Dict].ok({
+                "shipment_id": shipment_id,
+                "status": "info_retrieved",
+            })
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[t.Dict].fail(f"Shipment info retrieval failed: {e}")
 
     def monitor_dbt_execution(
-        self,
-        command: str,
-        timeout_seconds: int = 300,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
+        self, command: str, timeout_seconds: int = 300
+    ) -> r[t.Dict]:
         """Monitor DBT command execution with metrics.
 
         Args:
@@ -200,87 +225,104 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         timeout_seconds: Timeout for command execution
 
         Returns:
-        FlextResult containing monitoring results
+        r containing monitoring results
 
         """
         try:
             self.logger.info("Monitoring DBT execution: %s", command)
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
+            return r[t.Dict].ok({
                 "status": "monitored",
                 "command": command,
                 "timeout": timeout_seconds,
             })
-        except Exception as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Monitoring failed: {e}"
-            )
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[t.Dict].fail(f"Monitoring failed: {e}")
 
-    def validate_wms_connection(self) -> FlextResult[bool]:
+    def run_oracle_wms_to_dbt_workflow(
+        self,
+        inventory_items: list[str] | None = None,
+        shipments: list[str] | None = None,
+        *,
+        generate_models: bool = True,
+        run_transformations: bool = False,
+    ) -> r[t.Dict]:
+        """Run complete Oracle WMS-to-DBT workflow.
+
+        Args:
+        inventory_items: List of inventory items to process
+        shipments: List of shipments to process
+        generate_models: Whether to generate DBT models
+        run_transformations: Whether to run transformations
+
+        Returns:
+        r containing workflow results
+
+        """
+        try:
+            self.logger.info("Running Oracle WMS-to-DBT workflow")
+            return r[t.Dict].ok({
+                "status": "completed",
+                "generate_models": generate_models,
+                "run_transformations": run_transformations,
+                "inventory_processed": len(inventory_items) if inventory_items else 0,
+                "shipments_processed": len(shipments) if shipments else 0,
+            })
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[t.Dict].fail(f"Workflow execution failed: {e}")
+
+    def validate_wms_connection(self) -> r[bool]:
         """Validate Oracle WMS connection.
 
         Returns:
-        FlextResult containing connection validation result
+        r containing connection validation result
 
         """
         try:
             self.logger.info("Validating Oracle WMS connection")
-            return FlextResult[bool].ok(value=True)
-        except Exception as e:
-            return FlextResult[bool].fail(f"Connection validation failed: {e}")
+            return r[bool].ok(value=True)
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[bool].fail(f"Connection validation failed: {e}")
 
-    def get_wms_inventory_info(
-        self,
-        item_id: str,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
-        """Get detailed information about WMS inventory item.
-
-        Args:
-        item_id: Inventory item identifier
-
-        Returns:
-        FlextResult containing inventory item information
-
-        """
+    @override
+    def execute(self) -> r[FlextDbtOracleWmsSettings]:
+        """Execute DBT Oracle WMS domain service logic."""
         try:
-            self.logger.info("Getting WMS inventory info: %s", item_id)
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
-                "item_id": item_id,
-                "status": "info_retrieved",
-            })
-        except Exception as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Inventory info retrieval failed: {e}",
-            )
-
-    def get_wms_shipment_info(
-        self,
-        shipment_id: str,
-    ) -> FlextResult[dict[str, t.GeneralValueType]]:
-        """Get detailed information about WMS shipment.
-
-        Args:
-        shipment_id: Shipment identifier
-
-        Returns:
-        FlextResult containing shipment information
-
-        """
-        try:
-            self.logger.info("Getting WMS shipment info: %s", shipment_id)
-            return FlextResult[dict[str, t.GeneralValueType]].ok({
-                "shipment_id": shipment_id,
-                "status": "info_retrieved",
-            })
-        except Exception as e:
-            return FlextResult[dict[str, t.GeneralValueType]].fail(
-                f"Shipment info retrieval failed: {e}",
-            )
+            self.logger.info("Executing DBT Oracle WMS service")
+            return r[FlextDbtOracleWmsSettings].ok(self.config)
+        except (
+            ValueError,
+            TypeError,
+            KeyError,
+            AttributeError,
+            OSError,
+            RuntimeError,
+            ImportError,
+        ) as e:
+            return r[FlextDbtOracleWmsSettings].fail(f"Service execution failed: {e}")
 
 
-# Alias for backward compatibility
-FlextDbtOracleWmsAPI = FlextDbtOracleWms
-
-__all__ = [
-    "FlextDbtOracleWms",
-    "FlextDbtOracleWmsAPI",
-]
+__all__ = ["FlextDbtOracleWms"]

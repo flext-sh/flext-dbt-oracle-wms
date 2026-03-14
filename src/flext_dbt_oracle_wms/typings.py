@@ -14,39 +14,26 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import datetime
 from typing import Annotated, Literal
 
-from flext_core import FlextTypes
-from pydantic import BaseModel, ConfigDict
+from flext_meltano import FlextMeltanoTypes
+from flext_oracle_wms import FlextOracleWmsTypes
 
 from flext_dbt_oracle_wms.constants import c
 
-# ==============================================================================
-# DBT ORACLE WMS ENUMS - Aliases from constants.py (single source of truth)
-# ==============================================================================
-
-DBTOracleWMSMaterialization = c.Dbt.Materialization
-DBTOracleWMSTestType = c.Dbt.TestType
-type DBTOracleWMSRunStatus = c.DbtOracleWmsProcessing.RunStatus
-
-# =============================================================================
-# DBT ORACLE WMS-SPECIFIC TYPE VARIABLES - Domain-specific TypeVars for DBT Oracle WMS operations
-# =============================================================================
+DBTOracleWMSMaterialization = c.DbtOracleWms.Dbt.Materialization
+DBTOracleWMSTestType = c.DbtOracleWms.Dbt.TestType
 
 
-# DBT Oracle WMS domain TypeVars
-class FlextDbtOracleWmsTypes(FlextTypes):
+class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     """DBT Oracle WMS-specific type definitions extending t.
 
     Domain-specific type system for DBT Oracle WMS data transformation operations.
     Contains ONLY complex DBT Oracle WMS-specific types, no simple aliases.
     Uses Python 3.13+ type syntax and patterns.
     """
-
-    # =========================================================================
-    # BASE TYPES - Foundational type aliases for DBT Oracle WMS
-    # =========================================================================
 
     class Base:
         """Foundational type aliases for DBT Oracle WMS domain."""
@@ -58,13 +45,8 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type Version = str
         type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
         type UpdatedAt = Annotated[
-            datetime,
-            "Timestamp of when entity was last updated",
+            datetime, "Timestamp of when entity was last updated"
         ]
-
-    # =========================================================================
-    # ORACLE WMS ID TYPES - Oracle WMS specific identifiers
-    # =========================================================================
 
     class DbtOracleWms:
         """Oracle WMS specific ID type aliases."""
@@ -73,10 +55,6 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type OracleWMSConnectionId = str
         type OracleWMSSchemaId = str
         type OracleWMSQueryId = str
-
-    # =========================================================================
-    # TIMEOUT TYPES - DBT Oracle WMS operation timeouts
-    # =========================================================================
 
     class Timeouts:
         """DBT Oracle WMS timeout type aliases."""
@@ -92,214 +70,105 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         type DBTOracleWMSExecutionTimeout = int
         type DBTOracleWMSDocumentationTimeout = int
 
-    # =========================================================================
-    # DBT PROJECT TYPES - DBT project configuration types for Oracle WMS
-    # =========================================================================
-
     class DbtProject:
         """DBT Oracle WMS project complex types."""
 
-        type ProjectConfiguration = dict[
-            str, FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type ModelConfiguration = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type SourceConfiguration = dict[
-            str, str | list[dict[str, FlextTypes.GeneralValueType]]
-        ]
-        type ProfileConfiguration = dict[str, FlextTypes.GeneralValueType]
-        type MacroConfiguration = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
-        ]
+        type ProjectConfiguration = dict[str, object | Mapping[str, object]]
+        type ModelConfiguration = dict[str, str | Mapping[str, object]]
+        type SourceConfiguration = dict[str, str | list[Mapping[str, object]]]
+        type ProfileConfiguration = dict[str, object]
+        type MacroConfiguration = dict[str, str | Mapping[str, object]]
         type TestConfiguration = dict[str, str | bool | list[str]]
-
-    # =========================================================================
-    # ORACLE WMS CONNECTION TYPES - Oracle WMS database connection configuration
-    # =========================================================================
 
     class OracleWmsConnection:
         """Oracle WMS connection complex types."""
 
-        type ConnectionConfig = dict[
-            str, str | int | bool | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type DatabaseConnection = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type PoolingConfig = dict[
-            str, int | bool | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type SecurityConfig = dict[
-            str, bool | str | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type SessionConfig = dict[
-            str, str | int | dict[str, FlextTypes.GeneralValueType]
-        ]
+        type ConnectionConfig = dict[str, str | int | bool | Mapping[str, object]]
+        type DatabaseConnection = dict[str, str | Mapping[str, object]]
+        type PoolingConfig = dict[str, int | bool | Mapping[str, object]]
+        type SecurityConfig = dict[str, bool | str | Mapping[str, object]]
+        type SessionConfig = dict[str, str | int | Mapping[str, object]]
         type TimeoutConfig = dict[str, int | float]
-
-    # =========================================================================
-    # WMS DATA TYPES - Oracle WMS warehouse management data types
-    # =========================================================================
 
     class WmsData:
         """Oracle WMS data complex types."""
 
-        type InventoryData = dict[
-            str,
-            str | int | float | dict[str, FlextTypes.JsonValue],
-        ]
-        type LocationData = dict[str, str | list[str] | dict[str, FlextTypes.JsonValue]]
-        type AllocationData = dict[
-            str, str | int | bool | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type OrderData = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
-        type TaskData = dict[str, str | int | dict[str, FlextTypes.JsonValue]]
-        type ShipmentData = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
-        ]
-
-    # =========================================================================
-    # DBT TRANSFORMATION TYPES - Data transformation configuration for Oracle WMS
-    # =========================================================================
+        type InventoryData = dict[str, str | int | float | Mapping[str, object]]
+        type LocationData = dict[str, str | list[str] | Mapping[str, object]]
+        type AllocationData = dict[str, str | int | bool | Mapping[str, object]]
+        type OrderData = dict[str, str | list[Mapping[str, object]]]
+        type TaskData = dict[str, str | int | Mapping[str, object]]
+        type ShipmentData = dict[str, str | list[str] | Mapping[str, object]]
 
     class DbtTransformation:
         """DBT Oracle WMS transformation complex types."""
 
-        type TransformationConfig = dict[
-            str, FlextTypes.JsonValue | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type WmsTransformation = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type DataValidation = dict[
-            str, bool | str | list[str] | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type MaterializationConfig = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type OutputFormat = dict[str, str | dict[str, FlextTypes.GeneralValueType]]
-        type ProcessingStep = dict[str, str | int | dict[str, FlextTypes.JsonValue]]
-
-    # =========================================================================
-    # DIMENSIONAL MODELING TYPES - WMS dimensional model types
-    # =========================================================================
+        type TransformationConfig = dict[str, object | Mapping[str, object]]
+        type WmsTransformation = dict[str, str | Mapping[str, object]]
+        type DataValidation = dict[str, bool | str | list[str] | Mapping[str, object]]
+        type MaterializationConfig = dict[str, str | Mapping[str, object]]
+        type OutputFormat = dict[str, str | Mapping[str, object]]
+        type ProcessingStep = dict[str, str | int | Mapping[str, object]]
 
     class DimensionalModeling:
         """WMS dimensional modeling complex types."""
 
-        type DimensionModel = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
-        type FactModel = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type BridgeModel = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type StarSchema = dict[str, list[dict[str, FlextTypes.JsonValue]]]
-        type ScdConfiguration = dict[
-            str, str | bool | dict[str, FlextTypes.GeneralValueType]
-        ]
+        type DimensionModel = dict[str, str | list[Mapping[str, object]]]
+        type FactModel = dict[str, str | Mapping[str, object]]
+        type BridgeModel = dict[str, str | list[str] | Mapping[str, object]]
+        type StarSchema = dict[str, list[dict[str, object]]]
+        type ScdConfiguration = dict[str, str | bool | Mapping[str, object]]
         type GrainDefinition = dict[str, str | list[str]]
-
-    # =========================================================================
-    # WMS BUSINESS LOGIC TYPES - Warehouse management business rule types
-    # =========================================================================
 
     class WmsBusinessLogic:
         """WMS business logic complex types."""
 
-        type InventoryRules = dict[
-            str, bool | str | float | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type AllocationRules = dict[
-            str,
-            str | int | bool | dict[str, FlextTypes.JsonValue],
-        ]
-        type PickingRules = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type ReceivingRules = dict[str, bool | str | dict[str, FlextTypes.JsonValue]]
-        type ShippingRules = dict[
-            str, str | int | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type QualityRules = dict[str, bool | float | dict[str, FlextTypes.JsonValue]]
-
-    # =========================================================================
-    # DBT MODEL TYPES - DBT model definition and execution types for Oracle WMS
-    # =========================================================================
+        type InventoryRules = dict[str, bool | str | float | Mapping[str, object]]
+        type AllocationRules = dict[str, str | int | bool | Mapping[str, object]]
+        type PickingRules = dict[str, str | list[str] | Mapping[str, object]]
+        type ReceivingRules = dict[str, bool | str | Mapping[str, object]]
+        type ShippingRules = dict[str, str | int | Mapping[str, object]]
+        type QualityRules = dict[str, bool | float | Mapping[str, object]]
 
     class DbtModel:
         """DBT Oracle WMS model complex types."""
 
-        type ModelDefinition = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type ModelExecution = dict[
-            str, str | bool | int | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type ModelDependency = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type ModelTest = dict[str, str | bool | dict[str, FlextTypes.JsonValue]]
-        type ModelDocumentation = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type ModelMaterialization = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
-        ]
-
-    # =========================================================================
-    # DBT SOURCE TYPES - DBT source configuration types for Oracle WMS
-    # =========================================================================
+        type ModelDefinition = dict[str, str | Mapping[str, object]]
+        type ModelExecution = dict[str, str | bool | int | Mapping[str, object]]
+        type ModelDependency = dict[str, str | list[str] | Mapping[str, object]]
+        type ModelTest = dict[str, str | bool | Mapping[str, object]]
+        type ModelDocumentation = dict[str, str | Mapping[str, object]]
+        type ModelMaterialization = dict[str, str | Mapping[str, object]]
 
     class DbtSource:
         """DBT Oracle WMS source complex types."""
 
-        type SourceDefinition = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type SourceConnection = dict[
-            str, FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type SourceTable = dict[str, str | list[dict[str, FlextTypes.JsonValue]]]
-        type SourceFreshness = dict[
-            str, str | int | dict[str, FlextTypes.GeneralValueType]
-        ]
+        type SourceDefinition = dict[str, str | Mapping[str, object]]
+        type SourceConnection = dict[str, object | Mapping[str, object]]
+        type SourceTable = dict[str, str | list[Mapping[str, object]]]
+        type SourceFreshness = dict[str, str | int | Mapping[str, object]]
         type SourceTest = dict[str, str | bool | list[str]]
-        type SourceSchema = dict[str, str | dict[str, FlextTypes.JsonValue]]
-
-    # =========================================================================
-    # ORACLE WMS ADAPTER TYPES - Oracle WMS-specific adapter configuration
-    # =========================================================================
+        type SourceSchema = dict[str, str | Mapping[str, object]]
 
     class OracleWmsAdapter:
         """Oracle WMS adapter complex types."""
 
-        type AdapterConfiguration = dict[
-            str, FlextTypes.GeneralValueType | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type ConnectionAdapter = dict[
-            str, str | int | bool | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type QueryAdapter = dict[str, str | dict[str, FlextTypes.JsonValue]]
-        type SchemaAdapter = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type TransactionAdapter = dict[
-            str,
-            bool | str | dict[str, FlextTypes.JsonValue],
-        ]
-        type WmsAdapter = dict[str, str | int | dict[str, FlextTypes.GeneralValueType]]
-
-    # =========================================================================
-    # PERFORMANCE OPTIMIZATION TYPES - Oracle WMS performance optimization
-    # =========================================================================
+        type AdapterConfiguration = dict[str, object | Mapping[str, object]]
+        type ConnectionAdapter = dict[str, str | int | bool | Mapping[str, object]]
+        type QueryAdapter = dict[str, str | Mapping[str, object]]
+        type SchemaAdapter = dict[str, str | list[str] | Mapping[str, object]]
+        type TransactionAdapter = dict[str, bool | str | Mapping[str, object]]
+        type WmsAdapter = dict[str, str | int | Mapping[str, object]]
 
     class PerformanceOptimization:
         """Oracle WMS performance optimization complex types."""
 
-        type PartitionStrategy = dict[
-            str, str | list[str] | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type IndexStrategy = dict[str, str | bool | dict[str, FlextTypes.JsonValue]]
-        type MaterializationStrategy = dict[
-            str, str | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type CacheStrategy = dict[str, bool | int | dict[str, FlextTypes.JsonValue]]
-        type ParallelProcessing = dict[
-            str, int | bool | dict[str, FlextTypes.GeneralValueType]
-        ]
+        type PartitionStrategy = dict[str, str | list[str] | Mapping[str, object]]
+        type IndexStrategy = dict[str, str | bool | Mapping[str, object]]
+        type MaterializationStrategy = dict[str, str | Mapping[str, object]]
+        type CacheStrategy = dict[str, bool | int | Mapping[str, object]]
+        type ParallelProcessing = dict[str, int | bool | Mapping[str, object]]
         type OracleHints = dict[str, str | list[str]]
-
-    # =========================================================================
-    # DBT ORACLE WMS PROJECT TYPES - Domain-specific project types extending t
-    # =========================================================================
 
     class Project:
         """DBT Oracle WMS-specific project types.
@@ -309,13 +178,10 @@ class FlextDbtOracleWmsTypes(FlextTypes):
         DBT Oracle WMS domain owns Oracle WMS data transformation-specific types.
         """
 
-        # DBT Oracle WMS-specific project types extending the generic ones
         type ProjectType = Literal[
-            # Generic types inherited from t
             "library",
             "application",
             "service",
-            # DBT Oracle WMS-specific types
             "dbt-oracle-wms",
             "wms-transform",
             "wms-analytics",
@@ -335,313 +201,33 @@ class FlextDbtOracleWmsTypes(FlextTypes):
             "warehouse-bi",
             "wms-compliance-reporting",
         ]
-
-        # DBT Oracle WMS-specific project configurations
-        type DbtOracleWmsProjectConfig = dict[str, FlextTypes.GeneralValueType]
+        type DbtOracleWmsProjectConfig = dict[str, object]
         type WmsTransformConfig = dict[str, str | int | bool | list[str]]
-        type WmsAnalyticsConfig = dict[
-            str, bool | str | dict[str, FlextTypes.GeneralValueType]
-        ]
-        type DbtWmsPipelineConfig = dict[str, FlextTypes.GeneralValueType]
-
-    # =========================================================================
-    # DBT ORACLE WMS DOMAIN OBJECTS - TypedDict definitions for domain objects
-    # =========================================================================
+        type WmsAnalyticsConfig = dict[str, bool | str | Mapping[str, object]]
+        type DbtWmsPipelineConfig = dict[str, object]
 
     class DomainObjects:
         """DBT Oracle WMS domain object Pydantic model definitions."""
 
-        # Domain objects using the configurations above
-        class DBTOracleWMSProject(BaseModel):
-            """DBT Oracle WMS project domain object using core types."""
 
-            model_config = ConfigDict(frozen=False, extra="forbid")
+type DBTOracleWMSAnalysisConfiguration = dict[str, object]
+type DBTOracleWMSCompilationConfiguration = dict[str, object]
+type DBTOracleWMSDocumentationConfiguration = dict[str, object]
+type DBTOracleWMSExecutionConfiguration = dict[str, object]
+type DBTOracleWMSProjectConfiguration = dict[str, object]
+type DBTOracleWMSSnapshotConfiguration = dict[str, object]
+DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
 
-            id: EntityId
-            name: ProjectName
-            version: Version
-            configuration: DBTOracleWMSProjectConfiguration
-            created_at: CreatedAt
-            updated_at: UpdatedAt
-
-        class DBTOracleWMSModel(BaseModel):
-            """DBT Oracle WMS model domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            name: str
-            configuration: dict[
-                str, FlextTypes.GeneralValueType
-            ]  # Using dict for model config
-            sql_content: str
-            created_at: CreatedAt
-            updated_at: UpdatedAt
-
-        class DBTOracleWMSSource(BaseModel):
-            """DBT Oracle WMS source domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            name: str
-            configuration: dict[
-                str, FlextTypes.GeneralValueType
-            ]  # Using dict for source config
-            created_at: CreatedAt
-            updated_at: UpdatedAt
-
-        class DBTOracleWMSTest(BaseModel):
-            """DBT Oracle WMS test domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            model_id: EntityId | None = None
-            name: str
-            configuration: dict[
-                str, FlextTypes.GeneralValueType
-            ]  # Using dict for test config
-            sql_content: str | None = None
-            created_at: CreatedAt
-            updated_at: UpdatedAt
-
-        class DBTOracleWMSMacro(BaseModel):
-            """DBT Oracle WMS macro domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            name: str
-            configuration: dict[
-                str, FlextTypes.GeneralValueType
-            ]  # Using dict for macro config
-            sql_content: str
-            created_at: CreatedAt
-            updated_at: UpdatedAt
-
-        class DBTOracleWMSSnapshot(BaseModel):
-            """DBT Oracle WMS snapshot domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            name: str
-            configuration: DBTOracleWMSSnapshotConfiguration
-            sql_content: str
-            created_at: CreatedAt
-            updated_at: UpdatedAt
-
-        class DBTOracleWMSAnalysis(BaseModel):
-            """DBT Oracle WMS analysis domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            name: str
-            configuration: DBTOracleWMSAnalysisConfiguration
-            sql_content: str
-            created_at: CreatedAt
-            updated_at: UpdatedAt
-
-        class DBTOracleWMSCompilation(BaseModel):
-            """DBT Oracle WMS compilation domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            configuration: DBTOracleWMSCompilationConfiguration
-            status: DBTOracleWMSRunStatus
-            output: str | None = None
-            error: str | None = None
-            created_at: CreatedAt
-            completed_at: UpdatedAt | None = None
-
-        class DBTOracleWMSExecution(BaseModel):
-            """DBT Oracle WMS execution domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            configuration: DBTOracleWMSExecutionConfiguration
-            status: DBTOracleWMSRunStatus
-            output: str | None = None
-            error: str | None = None
-            created_at: CreatedAt
-            completed_at: UpdatedAt | None = None
-
-        class DBTOracleWMSDocumentation(BaseModel):
-            """DBT Oracle WMS documentation domain object using core types."""
-
-            model_config = ConfigDict(frozen=False, extra="forbid")
-
-            id: EntityId
-            project_id: EntityId
-            configuration: DBTOracleWMSDocumentationConfiguration
-            status: DBTOracleWMSRunStatus
-            output_path: str | None = None
-            error: str | None = None
-            created_at: CreatedAt
-            completed_at: UpdatedAt | None = None
-
-
-# Moved Pydantic model classes to module level to avoid F821 issues
-class DBTOracleWMSProjectConfiguration(BaseModel):
-    """DBT Oracle WMS project configuration using core types."""
-
-    model_config = ConfigDict(frozen=False, extra="forbid")
-
-    name: ProjectName
-    version: Version
-    profile: str
-    model_paths: list[str]
-    analysis_paths: list[str]
-    test_paths: list[str]
-    seed_paths: list[str]
-    macro_paths: list[str]
-    snapshot_paths: list[str]
-    target_path: str
-    clean_targets: list[str]
-    require_dbt_version: str
-    dbt_version: str
-
-
-class DBTOracleWMSSnapshotConfiguration(BaseModel):
-    """DBT Oracle WMS snapshot configuration using core types."""
-
-    model_config = ConfigDict(frozen=False, extra="forbid")
-
-    name: str
-    strategy: str
-    unique_key: str
-    updated_at: str
-    dbt_version: str
-
-
-class DBTOracleWMSAnalysisConfiguration(BaseModel):
-    """DBT Oracle WMS analysis configuration using core types."""
-
-    model_config = ConfigDict(frozen=False, extra="forbid")
-
-    name: str
-    depends_on: list[str]
-
-
-class DBTOracleWMSCompilationConfiguration(BaseModel):
-    """DBT Oracle WMS compilation configuration using core types."""
-
-    model_config = ConfigDict(frozen=False, extra="forbid")
-
-    name: str
-    depends_on: list[str]
-
-
-class DBTOracleWMSExecutionConfiguration(BaseModel):
-    """DBT Oracle WMS execution configuration using core types."""
-
-    model_config = ConfigDict(frozen=False, extra="forbid")
-
-    name: str
-    depends_on: list[str]
-
-
-class DBTOracleWMSDocumentationConfiguration(BaseModel):
-    """DBT Oracle WMS documentation configuration using core types."""
-
-    model_config = ConfigDict(frozen=False, extra="forbid")
-
-    name: str
-    depends_on: list[str]
-
-
-# Alias for simplified usage
-t = FlextDbtOracleWmsTypes
-
-# Namespace composition via class inheritance
-# DbtOracleWms namespace provides access to nested classes through inheritance
-# Access patterns:
-# - t.DbtOracleWms.* for DBT Oracle WMS-specific types
-# - t.Project.* for project types
-# - t.Core.* for core types (inherited from parent)
-
-# =============================================================================
-# MODULE-LEVEL RE-EXPORTS - For backward compatibility with TypedDict classes
-# =============================================================================
-
-# Base types re-exports
-EntityId = t.Base.EntityId
-ProjectName = t.Base.ProjectName
-TimeoutSeconds = t.Base.TimeoutSeconds
-TimestampISO = t.Base.TimestampISO
-Version = t.Base.Version
-CreatedAt = t.Base.CreatedAt
-UpdatedAt = t.Base.UpdatedAt
-
-# ID types re-exports
-OracleWMSOperationId = t.DbtOracleWms.OracleWMSOperationId
-OracleWMSConnectionId = t.DbtOracleWms.OracleWMSConnectionId
-OracleWMSSchemaId = t.DbtOracleWms.OracleWMSSchemaId
-OracleWMSQueryId = t.DbtOracleWms.OracleWMSQueryId
-
-# Timeout types re-exports
-DBTOracleWMSProjectTimeout = t.Timeouts.DBTOracleWMSProjectTimeout
-DBTOracleWMSModelTimeout = t.Timeouts.DBTOracleWMSModelTimeout
-DBTOracleWMSSourceTimeout = t.Timeouts.DBTOracleWMSSourceTimeout
-DBTOracleWMSTestTimeout = t.Timeouts.DBTOracleWMSTestTimeout
-DBTOracleWMSMacroTimeout = t.Timeouts.DBTOracleWMSMacroTimeout
-DBTOracleWMSSnapshotTimeout = t.Timeouts.DBTOracleWMSSnapshotTimeout
-DBTOracleWMSAnalysisTimeout = t.Timeouts.DBTOracleWMSAnalysisTimeout
-DBTOracleWMSCompilationTimeout = t.Timeouts.DBTOracleWMSCompilationTimeout
-DBTOracleWMSExecutionTimeout = t.Timeouts.DBTOracleWMSExecutionTimeout
-DBTOracleWMSDocumentationTimeout = t.Timeouts.DBTOracleWMSDocumentationTimeout
-
-# =============================================================================
-# PUBLIC API EXPORTS - DBT Oracle WMS TypeVars and types
-# =============================================================================
 
 __all__ = [
-    "CreatedAt",
     "DBTOracleWMSAnalysisConfiguration",
-    "DBTOracleWMSAnalysisTimeout",
     "DBTOracleWMSCompilationConfiguration",
-    "DBTOracleWMSCompilationTimeout",
     "DBTOracleWMSDocumentationConfiguration",
-    "DBTOracleWMSDocumentationTimeout",
     "DBTOracleWMSExecutionConfiguration",
-    "DBTOracleWMSExecutionTimeout",
-    "DBTOracleWMSMacroTimeout",
-    # Enums
     "DBTOracleWMSMaterialization",
-    "DBTOracleWMSModelTimeout",
     "DBTOracleWMSProjectConfiguration",
-    "DBTOracleWMSProjectTimeout",
     "DBTOracleWMSRunStatus",
     "DBTOracleWMSSnapshotConfiguration",
-    "DBTOracleWMSSnapshotTimeout",
-    "DBTOracleWMSSourceTimeout",
-    "DBTOracleWMSTestTimeout",
     "DBTOracleWMSTestType",
-    # Module-level aliases
-    "EntityId",
-    # Core types
     "FlextDbtOracleWmsTypes",
-    "OracleWMSConnectionId",
-    # Type aliases
-    "OracleWMSOperationId",
-    "OracleWMSQueryId",
-    "OracleWMSSchemaId",
-    "ProjectName",
-    "TimeoutSeconds",
-    "TimestampISO",
-    "UpdatedAt",
-    "Version",
-    "t",
 ]
