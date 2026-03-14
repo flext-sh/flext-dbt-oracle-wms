@@ -18,7 +18,6 @@ if TYPE_CHECKING:
         test_package_structure,
     )
 
-# Lazy import mapping: export_name -> (module_path, attr_name)
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
     "test_package_import": ("tests.unit.test_basic", "test_package_import"),

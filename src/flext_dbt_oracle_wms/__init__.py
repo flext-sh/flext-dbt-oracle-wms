@@ -88,7 +88,6 @@ if TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities, u
 
-# Lazy import mapping: export_name -> (module_path, attr_name)
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "DBTOracleWMSAnalysis": (
         "flext_dbt_oracle_wms.domain_types",
