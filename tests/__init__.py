@@ -1,13 +1,7 @@
 # AUTO-GENERATED FILE — DO NOT EDIT MANUALLY.
 # Regenerate with: make codegen
 #
-"""Tests for flext-dbt-oracle-wms.
-
-This module is part of the FLEXT ecosystem. Docstrings follow PEP 257 and Google style.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT.
-"""
+"""Tests package."""
 
 from __future__ import annotations
 
@@ -18,6 +12,7 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
 
+    from tests import unit
     from tests.constants import (
         TestsFlextDbtOracleWmsConstants,
         TestsFlextDbtOracleWmsConstants as c,
@@ -62,6 +57,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
     "tm": ("tests.models", "tm"),
     "u": ("tests.utilities", "TestsFlextDbtOracleWmsUtilities"),
+    "unit": ("tests.unit", ""),
 }
 
 __all__ = [
@@ -79,6 +75,7 @@ __all__ = [
     "test_package_structure",
     "tm",
     "u",
+    "unit",
 ]
 
 
