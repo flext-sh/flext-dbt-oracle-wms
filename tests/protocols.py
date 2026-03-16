@@ -35,3 +35,5 @@ class TestsFlextDbtOracleWmsProtocols(FlextTestsProtocols, FlextDbtOracleWmsProt
 
 p: type[TestsFlextDbtOracleWmsProtocols] = TestsFlextDbtOracleWmsProtocols
 __all__ = ["TestsFlextDbtOracleWmsProtocols", "p"]
+
+p = TestsFlextDbtOracleWmsProtocols
