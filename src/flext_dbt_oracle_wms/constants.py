@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from enum import StrEnum
+from enum import StrEnum, unique, unique
 from typing import Final
 
 from flext_core import t
@@ -28,16 +28,18 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
             PROFILE: Final[str] = "flext_oracle_wms"
             SCHEMA_PREFIX: Final[str] = "wms"
 
+            @unique
             class Materialization(StrEnum):
                 """DBT materialization types."""
-
+            
                 TABLE = "table"
                 VIEW = "view"
                 INCREMENTAL = "incremental"
 
+            @unique
             class TestType(StrEnum):
                 """DBT test types."""
-
+            
                 UNIQUE = "unique"
                 NOT_NULL = "not_null"
                 RELATIONSHIPS = "relationships"
@@ -74,17 +76,19 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
             MEDIUM_VOLUME_THRESHOLD: Final[int] = 10
             HIGH_FREQUENCY_THRESHOLD: Final[int] = 1000
 
+            @unique
             class ProcessingStatus(StrEnum):
                 """Pipeline processing status values."""
-
+            
                 PENDING = "pending"
                 PROCESSING = "processing"
                 COMPLETED = "completed"
                 FAILED = "failed"
 
+            @unique
             class RunStatus(StrEnum):
                 """DBT run status values."""
-
+            
                 SUCCESS = "success"
                 ERROR = "error"
                 SKIPPED = "skipped"
@@ -107,9 +111,10 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
                 "data_quality_threshold": 0.95,
             }
 
+        @unique
         class DbtTargets(StrEnum):
             """Valid DBT target environments."""
-
+        
             DEV = "dev"
             DEVELOPMENT = "development"
             STAGING = "staging"
@@ -118,9 +123,10 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
             TEST = "test"
             LOCAL = "local"
 
+        @unique
         class OracleWmsEnvironments(StrEnum):
             """Valid Oracle WMS environments."""
-
+        
             DEV = "dev"
             TEST = "test"
             STAGING = "staging"
@@ -129,5 +135,30 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
 
 
 __all__ = ["FlextDbtOracleWmsConstants", "c"]
+
+
+    @unique
+    class ProjectType(StrEnum):
+        LIBRARY = "library"
+        APPLICATION = "application"
+        SERVICE = "service"
+        DBT_ORACLE_WMS = "dbt-oracle-wms"
+        WMS_TRANSFORM = "wms-transform"
+        WMS_ANALYTICS = "wms-analytics"
+        WMS_DBT_MODELS = "wms-dbt-models"
+        DBT_WMS_PROJECT = "dbt-wms-project"
+        WMS_DIMENSIONAL = "wms-dimensional"
+        WMS_WAREHOUSE = "wms-warehouse"
+        WMS_ETL = "wms-etl"
+        DBT_WMS_PIPELINE = "dbt-wms-pipeline"
+        WMS_REPORTING = "wms-reporting"
+        WMS_DBT = "wms-dbt"
+        WMS_DATA_WAREHOUSE = "wms-data-warehouse"
+        WMS_INVENTORY_ANALYTICS = "wms-inventory-analytics"
+        WMS_ALLOCATION_ANALYTICS = "wms-allocation-analytics"
+        WMS_OPERATIONAL_REPORTING = "wms-operational-reporting"
+        WMS_PERFORMANCE_ANALYTICS = "wms-performance-analytics"
+        WAREHOUSE_BI = "warehouse-bi"
+        WMS_COMPLIANCE_REPORTING = "wms-compliance-reporting"
 
 c = FlextDbtOracleWmsConstants

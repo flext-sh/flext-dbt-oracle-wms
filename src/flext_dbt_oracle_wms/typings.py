@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from datetime import datetime
-from typing import Annotated, Literal
+from typing import Annotated
 
 from flext_core import t
 from flext_meltano import FlextMeltanoTypes
@@ -26,6 +26,9 @@ from flext_dbt_oracle_wms.constants import c
 
 DBTOracleWMSMaterialization = c.DbtOracleWms.Dbt.Materialization
 DBTOracleWMSTestType = c.DbtOracleWms.Dbt.TestType
+
+
+from flext_dbt_oracle_wms import c
 
 
 class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
@@ -332,29 +335,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         DBT Oracle WMS domain owns Oracle WMS data transformation-specific types.
         """
 
-        type ProjectType = Literal[
-            "library",
-            "application",
-            "service",
-            "dbt-oracle-wms",
-            "wms-transform",
-            "wms-analytics",
-            "wms-dbt-models",
-            "dbt-wms-project",
-            "wms-dimensional",
-            "wms-warehouse",
-            "wms-etl",
-            "dbt-wms-pipeline",
-            "wms-reporting",
-            "wms-dbt",
-            "wms-data-warehouse",
-            "wms-inventory-analytics",
-            "wms-allocation-analytics",
-            "wms-operational-reporting",
-            "wms-performance-analytics",
-            "warehouse-bi",
-            "wms-compliance-reporting",
-        ]
+        type ProjectType = c.ProjectType
         type DbtOracleWmsProjectConfig = dict[str, t.ContainerValue | None]
         type WmsTransformConfig = dict[str, str | int | bool | list[str]]
         type WmsAnalyticsConfig = dict[
