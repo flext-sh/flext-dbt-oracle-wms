@@ -48,6 +48,7 @@ if TYPE_CHECKING:
         DBTOracleWMSTestConfiguration,
         FlextDBTOracleWMSSettings,
     )
+    from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants, c
     from flext_dbt_oracle_wms.dbt_models import (
         FlextDbtOracleWmsInventoryFact,
         FlextDbtOracleWmsItemDimension,
@@ -180,6 +181,10 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "flext_dbt_oracle_wms.client",
         "FlextDbtOracleWmsClient",
     ),
+    "FlextDbtOracleWmsConstants": (
+        "flext_dbt_oracle_wms.constants",
+        "FlextDbtOracleWmsConstants",
+    ),
     "FlextDbtOracleWmsInventoryFact": (
         "flext_dbt_oracle_wms.dbt_models",
         "FlextDbtOracleWmsInventoryFact",
@@ -233,6 +238,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "__url__": ("flext_dbt_oracle_wms.__version__", "__url__"),
     "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
+    "c": ("flext_dbt_oracle_wms.constants", "c"),
     "discover": ("flext_dbt_oracle_wms.cli", "discover"),
     "extract": ("flext_dbt_oracle_wms.cli", "extract"),
     "info": ("flext_dbt_oracle_wms.cli", "info"),
@@ -276,6 +282,7 @@ __all__ = [
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsCliService",
     "FlextDbtOracleWmsClient",
+    "FlextDbtOracleWmsConstants",
     "FlextDbtOracleWmsInventoryFact",
     "FlextDbtOracleWmsItemDimension",
     "FlextDbtOracleWmsLocationDimension",
@@ -296,6 +303,7 @@ __all__ = [
     "__url__",
     "__version__",
     "__version_info__",
+    "c",
     "discover",
     "extract",
     "info",

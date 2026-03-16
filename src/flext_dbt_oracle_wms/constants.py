@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from enum import StrEnum, unique, unique
+from enum import StrEnum, unique
 from typing import Final
 
 from flext_core import t
@@ -31,7 +31,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
             @unique
             class Materialization(StrEnum):
                 """DBT materialization types."""
-            
+
                 TABLE = "table"
                 VIEW = "view"
                 INCREMENTAL = "incremental"
@@ -39,7 +39,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
             @unique
             class TestType(StrEnum):
                 """DBT test types."""
-            
+
                 UNIQUE = "unique"
                 NOT_NULL = "not_null"
                 RELATIONSHIPS = "relationships"
@@ -79,7 +79,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
             @unique
             class ProcessingStatus(StrEnum):
                 """Pipeline processing status values."""
-            
+
                 PENDING = "pending"
                 PROCESSING = "processing"
                 COMPLETED = "completed"
@@ -88,7 +88,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
             @unique
             class RunStatus(StrEnum):
                 """DBT run status values."""
-            
+
                 SUCCESS = "success"
                 ERROR = "error"
                 SKIPPED = "skipped"
@@ -114,7 +114,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
         @unique
         class DbtTargets(StrEnum):
             """Valid DBT target environments."""
-        
+
             DEV = "dev"
             DEVELOPMENT = "development"
             STAGING = "staging"
@@ -126,16 +126,12 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
         @unique
         class OracleWmsEnvironments(StrEnum):
             """Valid Oracle WMS environments."""
-        
+
             DEV = "dev"
             TEST = "test"
             STAGING = "staging"
             PROD = "prod"
             PRODUCTION = "production"
-
-
-__all__ = ["FlextDbtOracleWmsConstants", "c"]
-
 
     @unique
     class ProjectType(StrEnum):
@@ -161,4 +157,7 @@ __all__ = ["FlextDbtOracleWmsConstants", "c"]
         WAREHOUSE_BI = "warehouse-bi"
         WMS_COMPLIANCE_REPORTING = "wms-compliance-reporting"
 
+
 c = FlextDbtOracleWmsConstants
+
+__all__ = ["FlextDbtOracleWmsConstants", "c"]
