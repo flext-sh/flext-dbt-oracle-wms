@@ -13,10 +13,7 @@ if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
 
     from tests import unit
-    from tests.constants import (
-        TestsFlextDbtOracleWmsConstants,
-        TestsFlextDbtOracleWmsConstants as c,
-    )
+    from tests.constants import TestsFlextDbtOracleWmsConstants, c
     from tests.models import TestsFlextDbtOracleWmsModels, m, tm
     from tests.protocols import TestsFlextDbtOracleWmsProtocols, p
     from tests.typings import (
@@ -28,10 +25,7 @@ if TYPE_CHECKING:
         test_package_import,
         test_package_structure,
     )
-    from tests.utilities import (
-        TestsFlextDbtOracleWmsUtilities,
-        TestsFlextDbtOracleWmsUtilities as u,
-    )
+    from tests.utilities import TestsFlextDbtOracleWmsUtilities, u
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "TestsFlextDbtOracleWmsConstants": (
@@ -48,7 +42,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "tests.utilities",
         "TestsFlextDbtOracleWmsUtilities",
     ),
-    "c": ("tests.constants", "TestsFlextDbtOracleWmsConstants"),
+    "c": ("tests.constants", "c"),
     "m": ("tests.models", "m"),
     "p": ("tests.protocols", "p"),
     "t": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
@@ -56,7 +50,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "test_package_import": ("tests.unit.test_basic", "test_package_import"),
     "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
     "tm": ("tests.models", "tm"),
-    "u": ("tests.utilities", "TestsFlextDbtOracleWmsUtilities"),
+    "u": ("tests.utilities", "u"),
     "unit": ("tests.unit", ""),
 }
 
