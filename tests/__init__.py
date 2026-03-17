@@ -12,20 +12,17 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
 
-    from tests import unit
-    from tests.constants import TestsFlextDbtOracleWmsConstants, c
-    from tests.models import TestsFlextDbtOracleWmsModels, m, tm
-    from tests.protocols import TestsFlextDbtOracleWmsProtocols, p
-    from tests.typings import (
-        TestsFlextDbtOracleWmsTypes,
-        TestsFlextDbtOracleWmsTypes as t,
-    )
-    from tests.unit.test_basic import (
+    from . import unit as unit
+    from .constants import TestsFlextDbtOracleWmsConstants, c
+    from .models import TestsFlextDbtOracleWmsModels, m, tm
+    from .protocols import TestsFlextDbtOracleWmsProtocols, p
+    from .typings import TestsFlextDbtOracleWmsTypes, TestsFlextDbtOracleWmsTypes as t
+    from .unit.test_basic import (
         test_basic_import,
         test_package_import,
         test_package_structure,
     )
-    from tests.utilities import TestsFlextDbtOracleWmsUtilities, u
+    from .utilities import TestsFlextDbtOracleWmsUtilities, u
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "TestsFlextDbtOracleWmsConstants": (
