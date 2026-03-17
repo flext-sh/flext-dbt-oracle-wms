@@ -135,6 +135,8 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
 
     @unique
     class ProjectType(StrEnum):
+        """Project-type identifiers for dbt Oracle WMS packages."""
+
         LIBRARY = "library"
         APPLICATION = "application"
         SERVICE = "service"
