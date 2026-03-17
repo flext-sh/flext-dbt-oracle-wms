@@ -22,13 +22,10 @@ from flext_core import t
 from flext_meltano import FlextMeltanoTypes
 from flext_oracle_wms import FlextOracleWmsTypes
 
-from flext_dbt_oracle_wms.constants import c
+from flext_dbt_oracle_wms import c
 
 DBTOracleWMSMaterialization = c.DbtOracleWms.Dbt.Materialization
 DBTOracleWMSTestType = c.DbtOracleWms.Dbt.TestType
-
-
-from flext_dbt_oracle_wms import c
 
 
 class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
