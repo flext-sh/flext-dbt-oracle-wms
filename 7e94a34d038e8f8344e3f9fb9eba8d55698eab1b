@@ -1,0 +1,27 @@
+src/flext_dbt_oracle_wms/client.py
+  a347b44e7b229f23 70,75,81,85,95,99
+src/flext_dbt_oracle_wms/services.py
+  a347b44e7b229f23 35,40,64,71
+src/flext_dbt_oracle_wms/simple_api.py
+  a347b44e7b229f23 111,117,150,155,181,184,210,213,242,246,282,290
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "7e94a34d038e8f8344e3f9fb9eba8d55698eab1b",
+  "prompts": {
+    "a347b44e7b229f23": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_2fe00e2f5ffeFKUDPSye3TqOX3",
+        "model": "anthropic/claude-haiku-4-5"
+      },
+      "human_author": "FLEXT Bot <team@flext.sh>",
+      "messages": [],
+      "total_additions": 89,
+      "total_deletions": 67,
+      "accepted_lines": 22,
+      "overriden_lines": 0
+    }
+  }
+}
