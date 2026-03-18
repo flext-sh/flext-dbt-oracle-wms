@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from .constants import TestsFlextDbtOracleWmsConstants, c
     from .models import TestsFlextDbtOracleWmsModels, m, tm
     from .protocols import TestsFlextDbtOracleWmsProtocols, p
-    from .typings import TestsFlextDbtOracleWmsTypes, TestsFlextDbtOracleWmsTypes as t
+    from .typings import TestsFlextDbtOracleWmsTypes, t
     from .unit.test_basic import (
         test_basic_import,
         test_package_import,
@@ -42,7 +42,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "c": ("tests.constants", "c"),
     "m": ("tests.models", "m"),
     "p": ("tests.protocols", "p"),
-    "t": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
+    "t": ("tests.typings", "t"),
     "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
     "test_package_import": ("tests.unit.test_basic", "test_package_import"),
     "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
