@@ -31,12 +31,14 @@ class FlextDbtOracleWmsServices:
         recommendation_message = ""
         if total > PERFORMANCE_RECOMMENDATION_THRESHOLD:
             recommendation_message = "Process entities in smaller batches"
-        return r[t.Dict].ok({
-            "total_entities": total,
-            "recommendation": recommendation_message,
-            "dbt_threads": str(self.config.dbt_threads),
-            "target": str(self.config.dbt_target),
-        })
+        return r[t.Dict].ok(
+            t.Dict.model_validate({
+                "total_entities": total,
+                "recommendation": recommendation_message,
+                "dbt_threads": str(self.config.dbt_threads),
+                "target": str(self.config.dbt_target),
+            })
+        )
 
     def log_workflow_completion(
         self,
@@ -59,14 +61,14 @@ class FlextDbtOracleWmsServices:
     ) -> t.Dict:
         """Return tracking payload for workflow instrumentation."""
         logger.info("Tracking workflow execution")
-        return {
+        return t.Dict.model_validate({
             "workflow_name": workflow_name,
             "workflow_type": workflow_type,
             "entity_names": ",".join(entity_names or []),
             "additional_data": str(additional_data or {}),
             "tracking_id": f"{workflow_name}:{workflow_type}",
             "status": "running",
-        }
+        })
 
 
 __all__ = ["FlextDbtOracleWmsServices"]

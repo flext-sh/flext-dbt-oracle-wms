@@ -107,13 +107,15 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Extracting Oracle WMS metadata")
-            return r[t.Dict].ok({
-                "status": "metadata_extracted",
-                "include_inventory_details": include_inventory_details,
-                "include_shipment_tracking": include_shipment_tracking,
-                "inventory_count": len(inventory_items) if inventory_items else 0,
-                "shipment_count": len(shipments) if shipments else 0,
-            })
+            return r[t.Dict].ok(
+                t.Dict.model_validate({
+                    "status": "metadata_extracted",
+                    "include_inventory_details": include_inventory_details,
+                    "include_shipment_tracking": include_shipment_tracking,
+                    "inventory_count": len(inventory_items) if inventory_items else 0,
+                    "shipment_count": len(shipments) if shipments else 0,
+                })
+            )
         except (
             ValueError,
             TypeError,
@@ -144,12 +146,14 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Generating DBT models from Oracle WMS")
-            return r[t.Dict].ok({
-                "status": "models_generated",
-                "inventory_items": len(inventory_items) if inventory_items else 0,
-                "shipments": len(shipments) if shipments else 0,
-                "output_dir": str(output_dir),
-            })
+            return r[t.Dict].ok(
+                t.Dict.model_validate({
+                    "status": "models_generated",
+                    "inventory_items": len(inventory_items) if inventory_items else 0,
+                    "shipments": len(shipments) if shipments else 0,
+                    "output_dir": str(output_dir),
+                })
+            )
         except (
             ValueError,
             TypeError,
@@ -173,10 +177,12 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Getting WMS inventory info: %s", item_id)
-            return r[t.Dict].ok({
-                "item_id": item_id,
-                "status": "info_retrieved",
-            })
+            return r[t.Dict].ok(
+                t.Dict.model_validate({
+                    "item_id": item_id,
+                    "status": "info_retrieved",
+                })
+            )
         except (
             ValueError,
             TypeError,
@@ -200,10 +206,12 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Getting WMS shipment info: %s", shipment_id)
-            return r[t.Dict].ok({
-                "shipment_id": shipment_id,
-                "status": "info_retrieved",
-            })
+            return r[t.Dict].ok(
+                t.Dict.model_validate({
+                    "shipment_id": shipment_id,
+                    "status": "info_retrieved",
+                })
+            )
         except (
             ValueError,
             TypeError,
@@ -230,11 +238,13 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Monitoring DBT execution: %s", command)
-            return r[t.Dict].ok({
-                "status": "monitored",
-                "command": command,
-                "timeout": timeout_seconds,
-            })
+            return r[t.Dict].ok(
+                t.Dict.model_validate({
+                    "status": "monitored",
+                    "command": command,
+                    "timeout": timeout_seconds,
+                })
+            )
         except (
             ValueError,
             TypeError,
@@ -268,13 +278,17 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
         """
         try:
             self.logger.info("Running Oracle WMS-to-DBT workflow")
-            return r[t.Dict].ok({
-                "status": "completed",
-                "generate_models": generate_models,
-                "run_transformations": run_transformations,
-                "inventory_processed": len(inventory_items) if inventory_items else 0,
-                "shipments_processed": len(shipments) if shipments else 0,
-            })
+            return r[t.Dict].ok(
+                t.Dict.model_validate({
+                    "status": "completed",
+                    "generate_models": generate_models,
+                    "run_transformations": run_transformations,
+                    "inventory_processed": len(inventory_items)
+                    if inventory_items
+                    else 0,
+                    "shipments_processed": len(shipments) if shipments else 0,
+                })
+            )
         except (
             ValueError,
             TypeError,

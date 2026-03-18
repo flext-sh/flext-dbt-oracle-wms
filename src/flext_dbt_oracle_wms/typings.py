@@ -63,241 +63,165 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
         type ProjectConfiguration = dict[
             str,
-            FlextMeltanoTypes.load_python_module.ContainerValue
-            | None
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
         type ModelConfiguration = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type SourceConfiguration = dict[
             str,
-            str
-            | list[
-                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
-            ],
+            str | list[Mapping[str, t.ContainerValue | None]],
         ]
-        type ProfileConfiguration = dict[
-            str, FlextMeltanoTypes.load_python_module.ContainerValue | None
-        ]
+        type ProfileConfiguration = dict[str, t.ContainerValue | None]
         type MacroConfiguration = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type TestConfiguration = dict[str, str | bool | list[str]]
 
         type ConnectionConfig = dict[
             str,
-            str
-            | int
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
         type DatabaseConnection = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type PoolingConfig = dict[
             str,
-            int
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            int | bool | Mapping[str, t.ContainerValue | None],
         ]
         type SecurityConfig = dict[
             str,
-            bool
-            | str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            bool | str | Mapping[str, t.ContainerValue | None],
         ]
         type SessionConfig = dict[
             str,
-            str
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | Mapping[str, t.ContainerValue | None],
         ]
         type TimeoutConfig = dict[str, int | float]
 
         type InventoryData = dict[
             str,
-            str
-            | int
-            | float
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | float | Mapping[str, t.ContainerValue | None],
         ]
         type LocationData = dict[
             str,
-            str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
         type AllocationData = dict[
             str,
-            str
-            | int
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
         type OrderData = dict[
             str,
-            str
-            | list[
-                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
-            ],
+            str | list[Mapping[str, t.ContainerValue | None]],
         ]
         type TaskData = dict[
             str,
-            str
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | Mapping[str, t.ContainerValue | None],
         ]
         type ShipmentData = dict[
             str,
-            str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
 
         type TransformationConfig = dict[
             str,
-            FlextMeltanoTypes.load_python_module.ContainerValue
-            | None
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
         type WmsTransformation = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type DataValidation = dict[
             str,
-            bool
-            | str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            bool | str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
         type MaterializationConfig = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type OutputFormat = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type ProcessingStep = dict[
             str,
-            str
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | Mapping[str, t.ContainerValue | None],
         ]
 
         type DimensionModel = dict[
             str,
-            str
-            | list[
-                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
-            ],
+            str | list[Mapping[str, t.ContainerValue | None]],
         ]
         type FactModel = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type BridgeModel = dict[
             str,
-            str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
         type StarSchema = dict[
             str,
-            list[dict[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]],
+            list[dict[str, t.ContainerValue | None]],
         ]
         type ScdConfiguration = dict[
             str,
-            str
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | bool | Mapping[str, t.ContainerValue | None],
         ]
         type GrainDefinition = dict[str, str | list[str]]
 
         type InventoryRules = dict[
             str,
-            bool
-            | str
-            | float
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            bool | str | float | Mapping[str, t.ContainerValue | None],
         ]
         type AllocationRules = dict[
             str,
-            str
-            | int
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
         type PickingRules = dict[
             str,
-            str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
         type ReceivingRules = dict[
             str,
-            bool
-            | str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            bool | str | Mapping[str, t.ContainerValue | None],
         ]
         type ShippingRules = dict[
             str,
-            str
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | Mapping[str, t.ContainerValue | None],
         ]
         type QualityRules = dict[
             str,
-            bool
-            | float
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            bool | float | Mapping[str, t.ContainerValue | None],
         ]
 
         type ModelDefinition = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type ModelExecution = dict[
             str,
-            str
-            | bool
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | bool | int | Mapping[str, t.ContainerValue | None],
         ]
         type ModelDependency = dict[
             str,
-            str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
         type ModelTest = dict[
             str,
-            str
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | bool | Mapping[str, t.ContainerValue | None],
         ]
         type ModelDocumentation = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type ModelMaterialization = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
 
     class DbtSource:
@@ -305,117 +229,81 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
         type SourceDefinition = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type SourceConnection = dict[
             str,
-            FlextMeltanoTypes.load_python_module.ContainerValue
-            | None
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
         type SourceTable = dict[
             str,
-            str
-            | list[
-                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
-            ],
+            str | list[Mapping[str, t.ContainerValue | None]],
         ]
         type SourceFreshness = dict[
             str,
-            str
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | Mapping[str, t.ContainerValue | None],
         ]
         type SourceTest = dict[str, str | bool | list[str]]
         type SourceSchema = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
 
         type AdapterConfiguration = dict[
             str,
-            FlextMeltanoTypes.load_python_module.ContainerValue
-            | None
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
         type ConnectionAdapter = dict[
             str,
-            str
-            | int
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
         type QueryAdapter = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type SchemaAdapter = dict[
             str,
-            str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
         type TransactionAdapter = dict[
             str,
-            bool
-            | str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            bool | str | Mapping[str, t.ContainerValue | None],
         ]
         type WmsAdapter = dict[
             str,
-            str
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | int | Mapping[str, t.ContainerValue | None],
         ]
 
         type PartitionStrategy = dict[
             str,
-            str
-            | list[str]
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | list[str] | Mapping[str, t.ContainerValue | None],
         ]
         type IndexStrategy = dict[
             str,
-            str
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | bool | Mapping[str, t.ContainerValue | None],
         ]
         type MaterializationStrategy = dict[
             str,
-            str
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            str | Mapping[str, t.ContainerValue | None],
         ]
         type CacheStrategy = dict[
             str,
-            bool
-            | int
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            bool | int | Mapping[str, t.ContainerValue | None],
         ]
         type ParallelProcessing = dict[
             str,
-            int
-            | bool
-            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+            int | bool | Mapping[str, t.ContainerValue | None],
         ]
         type OracleHints = dict[str, str | list[str]]
 
     type ProjectType = c.ProjectType
-    type DbtOracleWmsProjectConfig = dict[
-        str, FlextMeltanoTypes.load_python_module.ContainerValue | None
-    ]
+    type DbtOracleWmsProjectConfig = dict[str, t.ContainerValue | None]
     type WmsTransformConfig = dict[str, str | int | bool | list[str]]
     type WmsAnalyticsConfig = dict[
         str,
-        bool
-        | str
-        | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+        bool | str | Mapping[str, t.ContainerValue | None],
     ]
-    type DbtWmsPipelineConfig = dict[
-        str, FlextMeltanoTypes.load_python_module.ContainerValue | None
-    ]
+    type DbtWmsPipelineConfig = dict[str, t.ContainerValue | None]
 
 
 # Facade assignment - enables t.TypeAlias syntax for consumers

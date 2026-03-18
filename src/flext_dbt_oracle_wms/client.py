@@ -66,20 +66,24 @@ class FlextDbtOracleWmsClient:
             return r[t.Dict].fail(transform_result.error or "Transformation failed")
         logger.info("Completed Oracle WMS to DBT pipeline")
         tr_val = transform_result.value
-        return r[t.Dict].ok({
-            "processed_entities": ",".join(extracted.keys()),
-            "total_records": sum(len(records) for records in extracted.values()),
-            "transformation_status": str(tr_val.get("status", "")),
-            "pipeline_status": "completed",
-        })
+        return r[t.Dict].ok(
+            t.Dict.model_validate({
+                "processed_entities": ",".join(extracted.keys()),
+                "total_records": sum(len(records) for records in extracted.values()),
+                "transformation_status": str(tr_val.get("status", "")),
+                "pipeline_status": "completed",
+            })
+        )
 
     def test_oracle_wms_connection(self) -> r[t.Dict]:
         """Return simple connection health status."""
-        return r[t.Dict].ok({
-            "status": "connected",
-            "environment": self.config.oracle_wms_environment,
-            "base_url": self.config.oracle_wms_base_url,
-        })
+        return r[t.Dict].ok(
+            t.Dict.model_validate({
+                "status": "connected",
+                "environment": self.config.oracle_wms_environment,
+                "base_url": self.config.oracle_wms_base_url,
+            })
+        )
 
     def transform_with_dbt(
         self,
@@ -87,11 +91,13 @@ class FlextDbtOracleWmsClient:
         model_names: list[str] | None,
     ) -> r[t.Dict]:
         """Return transformation summary for provided entities."""
-        return r[t.Dict].ok({
-            "transformed_tables": ",".join(entity_data.keys()),
-            "requested_models": ",".join(model_names or []),
-            "status": "success",
-        })
+        return r[t.Dict].ok(
+            t.Dict.model_validate({
+                "transformed_tables": ",".join(entity_data.keys()),
+                "requested_models": ",".join(model_names or []),
+                "status": "success",
+            })
+        )
 
     def validate_oracle_wms_data(
         self, entity_name: str, records: list[dict[str, t.Scalar]]
