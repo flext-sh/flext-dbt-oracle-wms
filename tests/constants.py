@@ -16,3 +16,4 @@ class TestsFlextDbtOracleWmsConstants(FlextTestsConstants):
 
 
 c = TestsFlextDbtOracleWmsConstants
+__all__ = ["TestsFlextDbtOracleWmsConstants", "c"]

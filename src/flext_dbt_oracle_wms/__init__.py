@@ -73,19 +73,7 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
     from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
-    from flext_dbt_oracle_wms.typings import (
-        DBTOracleWMSAnalysisConfiguration,
-        DBTOracleWMSCompilationConfiguration,
-        DBTOracleWMSDocumentationConfiguration,
-        DBTOracleWMSExecutionConfiguration,
-        DBTOracleWMSMaterialization,
-        DBTOracleWMSProjectConfiguration,
-        DBTOracleWMSRunStatus,
-        DBTOracleWMSSnapshotConfiguration,
-        DBTOracleWMSTestType,
-        FlextDbtOracleWmsTypes,
-        FlextDbtOracleWmsTypes as t,
-    )
+    from flext_dbt_oracle_wms.typings import FlextDbtOracleWmsTypes, t
     from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities, u
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
@@ -93,17 +81,9 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "flext_dbt_oracle_wms.domain_types",
         "DBTOracleWMSAnalysis",
     ),
-    "DBTOracleWMSAnalysisConfiguration": (
-        "flext_dbt_oracle_wms.typings",
-        "DBTOracleWMSAnalysisConfiguration",
-    ),
     "DBTOracleWMSCompilation": (
         "flext_dbt_oracle_wms.domain_types",
         "DBTOracleWMSCompilation",
-    ),
-    "DBTOracleWMSCompilationConfiguration": (
-        "flext_dbt_oracle_wms.typings",
-        "DBTOracleWMSCompilationConfiguration",
     ),
     "DBTOracleWMSConfiguration": (
         "flext_dbt_oracle_wms.config_types",
@@ -113,26 +93,14 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "flext_dbt_oracle_wms.domain_types",
         "DBTOracleWMSDocumentation",
     ),
-    "DBTOracleWMSDocumentationConfiguration": (
-        "flext_dbt_oracle_wms.typings",
-        "DBTOracleWMSDocumentationConfiguration",
-    ),
     "DBTOracleWMSExecution": (
         "flext_dbt_oracle_wms.domain_types",
         "DBTOracleWMSExecution",
-    ),
-    "DBTOracleWMSExecutionConfiguration": (
-        "flext_dbt_oracle_wms.typings",
-        "DBTOracleWMSExecutionConfiguration",
     ),
     "DBTOracleWMSMacro": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSMacro"),
     "DBTOracleWMSMacroConfiguration": (
         "flext_dbt_oracle_wms.config_types",
         "DBTOracleWMSMacroConfiguration",
-    ),
-    "DBTOracleWMSMaterialization": (
-        "flext_dbt_oracle_wms.typings",
-        "DBTOracleWMSMaterialization",
     ),
     "DBTOracleWMSModel": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSModel"),
     "DBTOracleWMSModelConfiguration": (
@@ -144,18 +112,9 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "DBTOracleWMSProfileConfiguration",
     ),
     "DBTOracleWMSProject": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSProject"),
-    "DBTOracleWMSProjectConfiguration": (
-        "flext_dbt_oracle_wms.typings",
-        "DBTOracleWMSProjectConfiguration",
-    ),
-    "DBTOracleWMSRunStatus": ("flext_dbt_oracle_wms.typings", "DBTOracleWMSRunStatus"),
     "DBTOracleWMSSnapshot": (
         "flext_dbt_oracle_wms.domain_types",
         "DBTOracleWMSSnapshot",
-    ),
-    "DBTOracleWMSSnapshotConfiguration": (
-        "flext_dbt_oracle_wms.typings",
-        "DBTOracleWMSSnapshotConfiguration",
     ),
     "DBTOracleWMSSource": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSSource"),
     "DBTOracleWMSSourceConfiguration": (
@@ -167,7 +126,6 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "flext_dbt_oracle_wms.config_types",
         "DBTOracleWMSTestConfiguration",
     ),
-    "DBTOracleWMSTestType": ("flext_dbt_oracle_wms.typings", "DBTOracleWMSTestType"),
     "FlextDBTOracleWMSSettings": (
         "flext_dbt_oracle_wms.config_types",
         "FlextDBTOracleWMSSettings",
@@ -248,36 +206,27 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "p": ("flext_dbt_oracle_wms.protocols", "p"),
     "pipeline": ("flext_dbt_oracle_wms.cli", "pipeline"),
     "s": ("flext_dbt_oracle_wms.cli", "FlextDbtOracleWmsCliService"),
-    "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
+    "t": ("flext_dbt_oracle_wms.typings", "t"),
     "u": ("flext_dbt_oracle_wms.utilities", "u"),
 }
 
 __all__ = [
     "DBTOracleWMSAnalysis",
-    "DBTOracleWMSAnalysisConfiguration",
     "DBTOracleWMSCompilation",
-    "DBTOracleWMSCompilationConfiguration",
     "DBTOracleWMSConfiguration",
     "DBTOracleWMSDocumentation",
-    "DBTOracleWMSDocumentationConfiguration",
     "DBTOracleWMSExecution",
-    "DBTOracleWMSExecutionConfiguration",
     "DBTOracleWMSMacro",
     "DBTOracleWMSMacroConfiguration",
-    "DBTOracleWMSMaterialization",
     "DBTOracleWMSModel",
     "DBTOracleWMSModelConfiguration",
     "DBTOracleWMSProfileConfiguration",
     "DBTOracleWMSProject",
-    "DBTOracleWMSProjectConfiguration",
-    "DBTOracleWMSRunStatus",
     "DBTOracleWMSSnapshot",
-    "DBTOracleWMSSnapshotConfiguration",
     "DBTOracleWMSSource",
     "DBTOracleWMSSourceConfiguration",
     "DBTOracleWMSTest",
     "DBTOracleWMSTestConfiguration",
-    "DBTOracleWMSTestType",
     "FlextDBTOracleWMSSettings",
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsCliService",
