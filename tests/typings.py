@@ -11,7 +11,7 @@ from __future__ import annotations
 from flext_tests import t
 
 
-class TestsFlextDbtOracleWmsTypes(FlextTestsTypes):
+class TestsFlextDbtOracleWmsTypes(t):
     """Test type aliases for flextdbtoraclewms."""
 
 

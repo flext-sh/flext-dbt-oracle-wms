@@ -1,6 +1,6 @@
 """Test protocol definitions for flext-dbt-oracle-wms.
 
-Provides TestsFlextDbtOracleWmsProtocols, combining FlextTestsProtocols with
+Provides TestsFlextDbtOracleWmsProtocols, combining p with
 FlextDbtOracleWmsProtocols for test-specific protocol definitions.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
@@ -14,19 +14,19 @@ from flext_tests import p
 from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 
 
-class TestsFlextDbtOracleWmsProtocols(FlextTestsProtocols, FlextDbtOracleWmsProtocols):
-    """Test protocols combining FlextTestsProtocols and FlextDbtOracleWmsProtocols.
+class TestsFlextDbtOracleWmsProtocols(p, FlextDbtOracleWmsProtocols):
+    """Test protocols combining p and FlextDbtOracleWmsProtocols.
 
     Provides access to:
-    - p.Tests.Docker.* (from FlextTestsProtocols)
-    - p.Tests.Factory.* (from FlextTestsProtocols)
+    - p.Tests.Docker.* (from p)
+    - p.Tests.Factory.* (from p)
     - p.DbtOracleWms.* (from FlextDbtOracleWmsProtocols)
     """
 
-    class Tests(FlextTestsProtocols.Tests):
+    class Tests(p.Tests):
         """Project-specific test protocols.
 
-        Extends FlextTestsProtocols.Tests with DbtOracleWms-specific protocols.
+        Extends p.Tests with DbtOracleWms-specific protocols.
         """
 
         class DbtOracleWms:
