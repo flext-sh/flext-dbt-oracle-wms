@@ -18,14 +18,10 @@ from collections.abc import Mapping
 from datetime import datetime
 from typing import Annotated
 
-from flext_core import t
 from flext_meltano import FlextMeltanoTypes
 from flext_oracle_wms import FlextOracleWmsTypes
 
 from flext_dbt_oracle_wms import c
-
-DBTOracleWMSMaterialization = c.DbtOracleWms.Dbt.Materialization
-DBTOracleWMSTestType = c.DbtOracleWms.Dbt.TestType
 
 
 class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
@@ -36,8 +32,13 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     Uses Python 3.13+ type syntax and patterns.
     """
 
-    class Base:
-        """Foundational type aliases for DBT Oracle WMS domain."""
+    class DbtOracleWms:
+        """Oracle WMS specific ID type aliases."""
+
+        type OracleWMSOperationId = str
+        type OracleWMSConnectionId = str
+        type OracleWMSSchemaId = str
+        type OracleWMSQueryId = str
 
         type EntityId = str
         type ProjectName = str
@@ -48,17 +49,6 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         type UpdatedAt = Annotated[
             datetime, "Timestamp of when entity was last updated"
         ]
-
-    class DbtOracleWms:
-        """Oracle WMS specific ID type aliases."""
-
-        type OracleWMSOperationId = str
-        type OracleWMSConnectionId = str
-        type OracleWMSSchemaId = str
-        type OracleWMSQueryId = str
-
-    class Timeouts:
-        """DBT Oracle WMS timeout type aliases."""
 
         type DBTOracleWMSProjectTimeout = int
         type DBTOracleWMSModelTimeout = int
@@ -71,182 +61,243 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         type DBTOracleWMSExecutionTimeout = int
         type DBTOracleWMSDocumentationTimeout = int
 
-    class DbtProject:
-        """DBT Oracle WMS project complex types."""
-
         type ProjectConfiguration = dict[
             str,
-            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
+            FlextMeltanoTypes.load_python_module.ContainerValue
+            | None
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ModelConfiguration = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type SourceConfiguration = dict[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str
+            | list[
+                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
+            ],
         ]
-        type ProfileConfiguration = dict[str, t.ContainerValue | None]
+        type ProfileConfiguration = dict[
+            str, FlextMeltanoTypes.load_python_module.ContainerValue | None
+        ]
         type MacroConfiguration = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type TestConfiguration = dict[str, str | bool | list[str]]
 
-    class OracleWmsConnection:
-        """Oracle WMS connection complex types."""
-
         type ConnectionConfig = dict[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type DatabaseConnection = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type PoolingConfig = dict[
             str,
-            int | bool | Mapping[str, t.ContainerValue | None],
+            int
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type SecurityConfig = dict[
             str,
-            bool | str | Mapping[str, t.ContainerValue | None],
+            bool
+            | str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type SessionConfig = dict[
             str,
-            str | int | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type TimeoutConfig = dict[str, int | float]
 
-    class WmsData:
-        """Oracle WMS data complex types."""
-
         type InventoryData = dict[
             str,
-            str | int | float | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | float
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type LocationData = dict[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type AllocationData = dict[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type OrderData = dict[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str
+            | list[
+                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
+            ],
         ]
         type TaskData = dict[
             str,
-            str | int | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ShipmentData = dict[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
-
-    class DbtTransformation:
-        """DBT Oracle WMS transformation complex types."""
 
         type TransformationConfig = dict[
             str,
-            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
+            FlextMeltanoTypes.load_python_module.ContainerValue
+            | None
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type WmsTransformation = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type DataValidation = dict[
             str,
-            bool | str | list[str] | Mapping[str, t.ContainerValue | None],
+            bool
+            | str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type MaterializationConfig = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type OutputFormat = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ProcessingStep = dict[
             str,
-            str | int | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
-
-    class DimensionalModeling:
-        """WMS dimensional modeling complex types."""
 
         type DimensionModel = dict[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str
+            | list[
+                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
+            ],
         ]
-        type FactModel = dict[str, str | Mapping[str, t.ContainerValue | None]]
+        type FactModel = dict[
+            str,
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+        ]
         type BridgeModel = dict[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
-        type StarSchema = dict[str, list[dict[str, t.ContainerValue | None]]]
+        type StarSchema = dict[
+            str,
+            list[dict[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]],
+        ]
         type ScdConfiguration = dict[
             str,
-            str | bool | Mapping[str, t.ContainerValue | None],
+            str
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type GrainDefinition = dict[str, str | list[str]]
 
-    class WmsBusinessLogic:
-        """WMS business logic complex types."""
-
         type InventoryRules = dict[
             str,
-            bool | str | float | Mapping[str, t.ContainerValue | None],
+            bool
+            | str
+            | float
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type AllocationRules = dict[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type PickingRules = dict[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ReceivingRules = dict[
             str,
-            bool | str | Mapping[str, t.ContainerValue | None],
+            bool
+            | str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ShippingRules = dict[
             str,
-            str | int | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type QualityRules = dict[
             str,
-            bool | float | Mapping[str, t.ContainerValue | None],
+            bool
+            | float
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
-
-    class DbtModel:
-        """DBT Oracle WMS model complex types."""
 
         type ModelDefinition = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ModelExecution = dict[
             str,
-            str | bool | int | Mapping[str, t.ContainerValue | None],
+            str
+            | bool
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ModelDependency = dict[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ModelTest = dict[
             str,
-            str | bool | Mapping[str, t.ContainerValue | None],
+            str
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ModelDocumentation = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ModelMaterialization = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
 
     class DbtSource:
@@ -254,115 +305,123 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
         type SourceDefinition = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type SourceConnection = dict[
             str,
-            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
+            FlextMeltanoTypes.load_python_module.ContainerValue
+            | None
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type SourceTable = dict[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str
+            | list[
+                Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None]
+            ],
         ]
         type SourceFreshness = dict[
             str,
-            str | int | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type SourceTest = dict[str, str | bool | list[str]]
         type SourceSchema = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
-
-    class OracleWmsAdapter:
-        """Oracle WMS adapter complex types."""
 
         type AdapterConfiguration = dict[
             str,
-            t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
+            FlextMeltanoTypes.load_python_module.ContainerValue
+            | None
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ConnectionAdapter = dict[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
-        type QueryAdapter = dict[str, str | Mapping[str, t.ContainerValue | None]]
+        type QueryAdapter = dict[
+            str,
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+        ]
         type SchemaAdapter = dict[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type TransactionAdapter = dict[
             str,
-            bool | str | Mapping[str, t.ContainerValue | None],
+            bool
+            | str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type WmsAdapter = dict[
             str,
-            str | int | Mapping[str, t.ContainerValue | None],
+            str
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
-
-    class PerformanceOptimization:
-        """Oracle WMS performance optimization complex types."""
 
         type PartitionStrategy = dict[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str
+            | list[str]
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type IndexStrategy = dict[
             str,
-            str | bool | Mapping[str, t.ContainerValue | None],
+            str
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type MaterializationStrategy = dict[
             str,
-            str | Mapping[str, t.ContainerValue | None],
+            str
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type CacheStrategy = dict[
             str,
-            bool | int | Mapping[str, t.ContainerValue | None],
+            bool
+            | int
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type ParallelProcessing = dict[
             str,
-            int | bool | Mapping[str, t.ContainerValue | None],
+            int
+            | bool
+            | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
         ]
         type OracleHints = dict[str, str | list[str]]
 
-    class Project:
-        """DBT Oracle WMS-specific project types.
-
-        Adds DBT Oracle WMS transformation-specific project types.
-        Follows domain separation principle:
-        DBT Oracle WMS domain owns Oracle WMS data transformation-specific types.
-        """
-
-        type ProjectType = c.ProjectType
-        type DbtOracleWmsProjectConfig = dict[str, t.ContainerValue | None]
-        type WmsTransformConfig = dict[str, str | int | bool | list[str]]
-        type WmsAnalyticsConfig = dict[
-            str,
-            bool | str | Mapping[str, t.ContainerValue | None],
-        ]
-        type DbtWmsPipelineConfig = dict[str, t.ContainerValue | None]
-
-    class DomainObjects:
-        """DBT Oracle WMS domain object Pydantic model definitions."""
+    type ProjectType = c.ProjectType
+    type DbtOracleWmsProjectConfig = dict[
+        str, FlextMeltanoTypes.load_python_module.ContainerValue | None
+    ]
+    type WmsTransformConfig = dict[str, str | int | bool | list[str]]
+    type WmsAnalyticsConfig = dict[
+        str,
+        bool
+        | str
+        | Mapping[str, FlextMeltanoTypes.load_python_module.ContainerValue | None],
+    ]
+    type DbtWmsPipelineConfig = dict[
+        str, FlextMeltanoTypes.load_python_module.ContainerValue | None
+    ]
 
 
-type DBTOracleWMSAnalysisConfiguration = dict[str, t.ContainerValue | None]
-type DBTOracleWMSCompilationConfiguration = dict[str, t.ContainerValue | None]
-type DBTOracleWMSDocumentationConfiguration = dict[str, t.ContainerValue | None]
-type DBTOracleWMSExecutionConfiguration = dict[str, t.ContainerValue | None]
-type DBTOracleWMSProjectConfiguration = dict[str, t.ContainerValue | None]
-type DBTOracleWMSSnapshotConfiguration = dict[str, t.ContainerValue | None]
-DBTOracleWMSRunStatus = c.DbtOracleWms.DbtOracleWmsProcessing.RunStatus
-
+# Facade assignment - enables t.TypeAlias syntax for consumers
+t = FlextDbtOracleWmsTypes
 
 __all__ = [
-    "DBTOracleWMSAnalysisConfiguration",
-    "DBTOracleWMSCompilationConfiguration",
-    "DBTOracleWMSDocumentationConfiguration",
-    "DBTOracleWMSExecutionConfiguration",
-    "DBTOracleWMSMaterialization",
-    "DBTOracleWMSProjectConfiguration",
-    "DBTOracleWMSRunStatus",
-    "DBTOracleWMSSnapshotConfiguration",
-    "DBTOracleWMSTestType",
     "FlextDbtOracleWmsTypes",
+    "t",
 ]
