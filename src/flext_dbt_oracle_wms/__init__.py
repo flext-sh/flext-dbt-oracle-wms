@@ -16,12 +16,7 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 
 if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
-    from flext_meltano.decorators import d
-    from flext_meltano.exceptions import e
-    from flext_meltano.handlers import h
-    from flext_meltano.mixins import x
-    from flext_meltano.result import r
-    from flext_meltano.service import s
+    from flext_meltano import d, e, h, r, s, x
 
     from flext_dbt_oracle_wms.__version__ import (
         __all__,
@@ -202,22 +197,22 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
     "c": ("flext_dbt_oracle_wms.constants", "c"),
-    "d": ("flext_meltano.decorators", "d"),
+    "d": ("flext_meltano", "d"),
     "discover": ("flext_dbt_oracle_wms.cli", "discover"),
-    "e": ("flext_meltano.exceptions", "e"),
+    "e": ("flext_meltano", "e"),
     "extract": ("flext_dbt_oracle_wms.cli", "extract"),
-    "h": ("flext_meltano.handlers", "h"),
+    "h": ("flext_meltano", "h"),
     "info": ("flext_dbt_oracle_wms.cli", "info"),
     "logger": ("flext_dbt_oracle_wms.cli", "logger"),
     "m": ("flext_dbt_oracle_wms.models", "m"),
     "main": ("flext_dbt_oracle_wms.cli", "main"),
     "p": ("flext_dbt_oracle_wms.protocols", "p"),
     "pipeline": ("flext_dbt_oracle_wms.cli", "pipeline"),
-    "r": ("flext_meltano.result", "r"),
-    "s": ("flext_meltano.service", "s"),
+    "r": ("flext_meltano", "r"),
+    "s": ("flext_meltano", "s"),
     "t": ("flext_dbt_oracle_wms.typings", "t"),
     "u": ("flext_dbt_oracle_wms.utilities", "u"),
-    "x": ("flext_meltano.mixins", "x"),
+    "x": ("flext_meltano", "x"),
 }
 
 __all__ = [
