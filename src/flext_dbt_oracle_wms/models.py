@@ -10,9 +10,7 @@ from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
 
-from flext_dbt_oracle_wms import t
-
-from .constants import FlextDbtOracleWmsConstants
+from flext_dbt_oracle_wms import c, t
 
 
 class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
@@ -40,7 +38,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                 return r[bool].fail("Model name cannot be empty")
             if (
                 self.materialization
-                not in FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.MATERIALIZATIONS
+                not in c.DbtOracleWms.Dbt.MATERIALIZATIONS
             ):
                 return r[bool].fail("Invalid materialization")
             return r[bool].ok(True)
@@ -66,7 +64,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                     schema_name="wms_staging",
                     table_name=f"stg_{source}",
                     columns=[],
-                    materialization=FlextDbtOracleWmsConstants.DbtOracleWms.Dbt.Materialization.VIEW.value,
+                    materialization=c.DbtOracleWms.Dbt.Materialization.VIEW.value,
                     sql_content=f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
                     description=f"Staging model for {source}",
                     oracle_source=source,
