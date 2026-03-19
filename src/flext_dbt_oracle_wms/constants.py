@@ -69,7 +69,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
         class DbtOracleWmsProcessing:
             """Processing constants for DBT Oracle WMS workloads."""
 
-            DEFAULT_BATCH_SIZE: Final[int] = 1000
+            DEFAULT_BATCH_SIZE: Final[int] = FlextMeltanoConstants.DEFAULT_BATCH_SIZE
             INCREMENTAL_LOOKBACK_DAYS: Final[int] = 7
             DATA_QUALITY_THRESHOLD: Final[float] = 0.95
             HIGH_VOLUME_THRESHOLD: Final[int] = 100
