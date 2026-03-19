@@ -36,10 +36,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             """Validate essential DBT model constraints."""
             if not self.name:
                 return r[bool].fail("Model name cannot be empty")
-            if (
-                self.materialization
-                not in c.DbtOracleWms.Dbt.MATERIALIZATIONS
-            ):
+            if self.materialization not in c.DbtOracleWms.Dbt.MATERIALIZATIONS:
                 return r[bool].fail("Invalid materialization")
             return r[bool].ok(True)
 
