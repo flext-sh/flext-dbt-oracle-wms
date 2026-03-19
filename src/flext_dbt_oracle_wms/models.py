@@ -5,10 +5,12 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Annotated
 
-from flext_core import r, t
+from flext_core import r
 from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms.wms_models import FlextOracleWmsModels
 from pydantic import Field
+
+from flext_dbt_oracle_wms import t
 
 from .constants import FlextDbtOracleWmsConstants
 

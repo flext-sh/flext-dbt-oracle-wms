@@ -10,8 +10,9 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import FlextService, r, t
+from flext_core import FlextService, r
 
+from flext_dbt_oracle_wms import t
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings

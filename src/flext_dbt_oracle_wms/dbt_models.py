@@ -5,8 +5,10 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Annotated
 
-from flext_core import r, t
+from flext_core import r
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
+
+from flext_dbt_oracle_wms import t
 
 
 class _RawItemRecord(BaseModel):

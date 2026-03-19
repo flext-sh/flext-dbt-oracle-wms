@@ -5,8 +5,10 @@ from __future__ import annotations
 import sys
 from collections.abc import Mapping
 
-from flext_core import FlextLogger, r, t
+from flext_core import FlextLogger, r
 from pydantic import TypeAdapter, ValidationError
+
+from flext_dbt_oracle_wms import t
 
 from .client import FlextDbtOracleWmsClient
 

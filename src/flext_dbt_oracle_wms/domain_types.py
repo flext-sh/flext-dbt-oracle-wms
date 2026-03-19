@@ -5,8 +5,9 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Annotated
 
-from flext_core import t
 from pydantic import BaseModel, Field
+
+from flext_dbt_oracle_wms import t
 
 
 class DBTOracleWMSProject(BaseModel):
