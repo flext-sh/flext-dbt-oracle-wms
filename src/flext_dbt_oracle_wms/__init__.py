@@ -16,7 +16,7 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 
 if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
-    from flext_meltano import d, e, h, r, x
+    from flext_meltano import d, e, h, r, s, x
 
     from flext_dbt_oracle_wms.__version__ import (
         __all__,
@@ -31,7 +31,6 @@ if TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms.cli import (
         FlextDbtOracleWmsCliService,
-        FlextDbtOracleWmsCliService as s,
         discover,
         extract,
         info,
@@ -225,7 +224,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "p": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
     "pipeline": ("flext_dbt_oracle_wms.cli", "pipeline"),
     "r": ("flext_meltano", "r"),
-    "s": ("flext_dbt_oracle_wms.cli", "FlextDbtOracleWmsCliService"),
+    "s": ("flext_meltano", "s"),
     "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
     "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
     "x": ("flext_meltano", "x"),
