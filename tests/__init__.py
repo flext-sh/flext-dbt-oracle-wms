@@ -13,16 +13,29 @@ if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
 
     from . import unit as unit
-    from .constants import TestsFlextDbtOracleWmsConstants, c
-    from .models import TestsFlextDbtOracleWmsModels, m, tm
-    from .protocols import TestsFlextDbtOracleWmsProtocols, p
-    from .typings import TestsFlextDbtOracleWmsTypes, t
+    from .constants import (
+        TestsFlextDbtOracleWmsConstants,
+        TestsFlextDbtOracleWmsConstants as c,
+    )
+    from .models import (
+        TestsFlextDbtOracleWmsModels,
+        TestsFlextDbtOracleWmsModels as m,
+        tm,
+    )
+    from .protocols import (
+        TestsFlextDbtOracleWmsProtocols,
+        TestsFlextDbtOracleWmsProtocols as p,
+    )
+    from .typings import TestsFlextDbtOracleWmsTypes, TestsFlextDbtOracleWmsTypes as t
     from .unit.test_basic import (
         test_basic_import,
         test_package_import,
         test_package_structure,
     )
-    from .utilities import TestsFlextDbtOracleWmsUtilities, u
+    from .utilities import (
+        TestsFlextDbtOracleWmsUtilities,
+        TestsFlextDbtOracleWmsUtilities as u,
+    )
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "TestsFlextDbtOracleWmsConstants": (
@@ -39,15 +52,15 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
         "tests.utilities",
         "TestsFlextDbtOracleWmsUtilities",
     ),
-    "c": ("tests.constants", "c"),
-    "m": ("tests.models", "m"),
-    "p": ("tests.protocols", "p"),
-    "t": ("tests.typings", "t"),
+    "c": ("tests.constants", "TestsFlextDbtOracleWmsConstants"),
+    "m": ("tests.models", "TestsFlextDbtOracleWmsModels"),
+    "p": ("tests.protocols", "TestsFlextDbtOracleWmsProtocols"),
+    "t": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
     "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
     "test_package_import": ("tests.unit.test_basic", "test_package_import"),
     "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
     "tm": ("tests.models", "tm"),
-    "u": ("tests.utilities", "u"),
+    "u": ("tests.utilities", "TestsFlextDbtOracleWmsUtilities"),
     "unit": ("tests.unit", ""),
 }
 
