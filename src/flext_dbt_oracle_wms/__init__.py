@@ -16,7 +16,7 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 
 if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
-    from flext_meltano import d, e, h, r, s, x
+    from flext_meltano import d, e, h, r, x
 
     from flext_dbt_oracle_wms.__version__ import (
         __all__,
@@ -31,6 +31,7 @@ if TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms.cli import (
         FlextDbtOracleWmsCliService,
+        FlextDbtOracleWmsCliService as s,
         discover,
         extract,
         info,
@@ -48,7 +49,10 @@ if TYPE_CHECKING:
         DBTOracleWMSTestConfiguration,
         FlextDBTOracleWMSSettings,
     )
-    from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants, c
+    from flext_dbt_oracle_wms.constants import (
+        FlextDbtOracleWmsConstants,
+        FlextDbtOracleWmsConstants as c,
+    )
     from flext_dbt_oracle_wms.dbt_models import (
         FlextDbtOracleWmsInventoryFact,
         FlextDbtOracleWmsItemDimension,
@@ -68,13 +72,25 @@ if TYPE_CHECKING:
         DBTOracleWMSSource,
         DBTOracleWMSTest,
     )
-    from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m
-    from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols, p
+    from flext_dbt_oracle_wms.models import (
+        FlextDbtOracleWmsModels,
+        FlextDbtOracleWmsModels as m,
+    )
+    from flext_dbt_oracle_wms.protocols import (
+        FlextDbtOracleWmsProtocols,
+        FlextDbtOracleWmsProtocols as p,
+    )
     from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
     from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
-    from flext_dbt_oracle_wms.typings import FlextDbtOracleWmsTypes, t
-    from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities, u
+    from flext_dbt_oracle_wms.typings import (
+        FlextDbtOracleWmsTypes,
+        FlextDbtOracleWmsTypes as t,
+    )
+    from flext_dbt_oracle_wms.utilities import (
+        FlextDbtOracleWmsUtilities,
+        FlextDbtOracleWmsUtilities as u,
+    )
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "DBTOracleWMSAnalysis": (
@@ -196,7 +212,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "__url__": ("flext_dbt_oracle_wms.__version__", "__url__"),
     "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
     "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
-    "c": ("flext_dbt_oracle_wms.constants", "c"),
+    "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
     "d": ("flext_meltano", "d"),
     "discover": ("flext_dbt_oracle_wms.cli", "discover"),
     "e": ("flext_meltano", "e"),
@@ -204,14 +220,14 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "h": ("flext_meltano", "h"),
     "info": ("flext_dbt_oracle_wms.cli", "info"),
     "logger": ("flext_dbt_oracle_wms.cli", "logger"),
-    "m": ("flext_dbt_oracle_wms.models", "m"),
+    "m": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
     "main": ("flext_dbt_oracle_wms.cli", "main"),
-    "p": ("flext_dbt_oracle_wms.protocols", "p"),
+    "p": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
     "pipeline": ("flext_dbt_oracle_wms.cli", "pipeline"),
     "r": ("flext_meltano", "r"),
-    "s": ("flext_meltano", "s"),
-    "t": ("flext_dbt_oracle_wms.typings", "t"),
-    "u": ("flext_dbt_oracle_wms.utilities", "u"),
+    "s": ("flext_dbt_oracle_wms.cli", "FlextDbtOracleWmsCliService"),
+    "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
+    "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
     "x": ("flext_meltano", "x"),
 }
 
