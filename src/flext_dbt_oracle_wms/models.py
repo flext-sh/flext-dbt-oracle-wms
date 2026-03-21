@@ -8,13 +8,184 @@ from typing import Annotated
 from flext_core import r
 from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms.wms_models import FlextOracleWmsModels
-from pydantic import Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from flext_dbt_oracle_wms import c, t
 
 
 class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     """Pydantic model namespace for DBT Oracle WMS objects."""
+
+    # Domain types from domain_types.py
+    class DBTOracleWMSProject(BaseModel):
+        """DBT project configuration."""
+
+        name: Annotated[str, Field(default="flext_dbt_oracle_wms")]
+        profile: Annotated[str, Field(default="flext_oracle_wms")]
+
+    class DBTOracleWMSModel(BaseModel):
+        """DBT model definition."""
+
+        name: Annotated[str, Field(default="")]
+        materialization: Annotated[str, Field(default="view")]
+
+    class DBTOracleWMSSource(BaseModel):
+        """DBT source definition."""
+
+        name: Annotated[str, Field(default="")]
+        source_schema: Annotated[
+            Mapping[str, t.ContainerValue | None],
+            Field(default_factory=dict),
+        ]
+
+    class DBTOracleWMSTest(BaseModel):
+        """DBT test definition."""
+
+        name: Annotated[str, Field(default="")]
+        severity: Annotated[str, Field(default="warn")]
+
+    class DBTOracleWMSMacro(BaseModel):
+        """DBT macro definition."""
+
+        name: Annotated[str, Field(default="")]
+
+    class DBTOracleWMSSnapshot(BaseModel):
+        """DBT snapshot definition."""
+
+        name: Annotated[str, Field(default="")]
+
+    class DBTOracleWMSAnalysis(BaseModel):
+        """DBT analysis definition."""
+
+        name: Annotated[str, Field(default="")]
+
+    class DBTOracleWMSCompilation(BaseModel):
+        """DBT compilation definition."""
+
+        name: Annotated[str, Field(default="")]
+
+    class DBTOracleWMSExecution(BaseModel):
+        """DBT execution definition."""
+
+        name: Annotated[str, Field(default="")]
+
+    class DBTOracleWMSDocumentation(BaseModel):
+        """DBT documentation definition."""
+
+        name: Annotated[str, Field(default="")]
+
+    # Configuration types from config_types.py
+    class DBTOracleWMSConfiguration(BaseModel):
+        """Base configuration for DBT Oracle WMS project."""
+
+        project_name: Annotated[str, Field(default="flext_dbt_oracle_wms")]
+        profile: Annotated[str, Field(default="flext_oracle_wms")]
+
+    class DBTOracleWMSModelConfiguration(DBTOracleWMSConfiguration):
+        """Configuration for DBT model materialization."""
+
+        materialization: Annotated[str, Field(default="view")]
+
+    class DBTOracleWMSSourceConfiguration(DBTOracleWMSConfiguration):
+        """Configuration for DBT source definitions."""
+
+        source_name: Annotated[str, Field(default="oracle_wms")]
+
+    class DBTOracleWMSTestConfiguration(DBTOracleWMSConfiguration):
+        """Configuration for DBT test execution."""
+
+        severity: Annotated[str, Field(default="warn")]
+
+    class DBTOracleWMSMacroConfiguration(DBTOracleWMSConfiguration):
+        """Configuration for DBT macro namespace."""
+
+        macro_namespace: Annotated[str, Field(default="wms")]
+
+    class DBTOracleWMSProfileConfiguration(DBTOracleWMSConfiguration):
+        """Configuration for DBT profile and target."""
+
+        target: Annotated[str, Field(default="dev")]
+
+    # Models from dbt_models.py
+    class _RawItemRecord(BaseModel):
+        model_config = ConfigDict(extra="ignore")
+
+        item_id: Annotated[str, Field(default="")]
+        item_number: Annotated[str, Field(default="")]
+        item_description: Annotated[str, Field(default="")]
+
+    class FlextDbtOracleWmsItemDimension(BaseModel):
+        """Item dimension model for WMS analytics."""
+
+        item_id: Annotated[str, Field(default="")]
+        item_number: Annotated[str, Field(default="")]
+        item_description: Annotated[str, Field(default="")]
+
+        def to_dbt_dict(self) -> Mapping[str, t.Scalar]:
+            """Convert item dimension to DBT-compatible dictionary."""
+            return {
+                "item_id": self.item_id,
+                "item_number": self.item_number,
+                "item_description": self.item_description,
+            }
+
+    class FlextDbtOracleWmsInventoryFact(BaseModel):
+        """Inventory fact table model."""
+
+        record: Annotated[Mapping[str, t.Scalar], Field(default_factory=dict)]
+
+    class FlextDbtOracleWmsLocationDimension(BaseModel):
+        """Location dimension model for warehouse analytics."""
+
+        record: Annotated[Mapping[str, t.Scalar], Field(default_factory=dict)]
+
+    class FlextDbtOracleWmsShipmentFact(BaseModel):
+        """Shipment fact table model."""
+
+        record: Annotated[Mapping[str, t.Scalar], Field(default_factory=dict)]
+
+    class FlextDbtOracleWmsTransformer:
+        """Transformer for WMS entity data to DBT models."""
+
+        def transform_all_entities(
+            self, entity_data: Mapping[str, list[Mapping[str, t.Scalar]]]
+        ) -> Mapping[str, list[Mapping[str, t.Scalar]]]:
+            """Transform all WMS entities to DBT-compatible format."""
+            items: list[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension] = (
+                self.transform_items(entity_data.get("items", []))
+            )
+            return {"items": [item.to_dbt_dict() for item in items]}
+
+        def transform_items(
+            self, records: list[Mapping[str, t.Scalar]]
+        ) -> list[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension]:
+            """Transform item records to item dimension models."""
+            transformed: list[
+                FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension
+            ] = []
+            for record in records:
+                try:
+                    raw_record = FlextDbtOracleWmsModels._RawItemRecord.model_validate(
+                        record
+                    )
+                except ValidationError:
+                    continue
+                transformed.append(
+                    FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension(
+                        item_id=raw_record.item_id,
+                        item_number=raw_record.item_number,
+                        item_description=raw_record.item_description,
+                    )
+                )
+            return transformed
+
+        def validate_business_rules(
+            self, records: list[Mapping[str, t.Scalar]]
+        ) -> r[bool]:
+            """Validate business rules for WMS records."""
+            if not records:
+                return r[bool].fail("No records to validate")
+            return r[bool].ok(True)
 
     class DbtModel(FlextMeltanoModels.ArbitraryTypesModel):
         """Single DBT model metadata payload."""
@@ -72,6 +243,32 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             ]
             return r[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
 
+    class FlextDbtOracleWmsSettings(FlextSettings):
+        """Runtime settings for DBT Oracle WMS transformations."""
+
+        required_fields_per_entity: Annotated[
+            dict[str, list[str]],
+            Field(
+                default_factory=dict,
+                description="Required fields per WMS entity for validation",
+            ),
+        ]
+        oracle_wms_environment: Annotated[
+            str,
+            Field(
+                default="development",
+                description="Oracle WMS environment (development/production)",
+            ),
+        ]
+        oracle_wms_base_url: Annotated[
+            str, Field(default="", description="Base URL for Oracle WMS API")
+        ]
+
+    class FlextDBTOracleWMSSettings(FlextDbtOracleWmsSettings):
+        """Settings for FLEXT DBT Oracle WMS integration."""
+
+        pass
+
     @classmethod
     def create_generator(
         cls,
@@ -84,3 +281,28 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
 __all__ = ["FlextDbtOracleWmsModels", "m"]
 
 m = FlextDbtOracleWmsModels
+
+# Re-export facade models for backward compatibility
+DBTOracleWMSProject = FlextDbtOracleWmsModels.DBTOracleWMSProject
+DBTOracleWMSModel = FlextDbtOracleWmsModels.DBTOracleWMSModel
+DBTOracleWMSSource = FlextDbtOracleWmsModels.DBTOracleWMSSource
+DBTOracleWMSTest = FlextDbtOracleWmsModels.DBTOracleWMSTest
+DBTOracleWMSMacro = FlextDbtOracleWmsModels.DBTOracleWMSMacro
+DBTOracleWMSSnapshot = FlextDbtOracleWmsModels.DBTOracleWMSSnapshot
+DBTOracleWMSAnalysis = FlextDbtOracleWmsModels.DBTOracleWMSAnalysis
+DBTOracleWMSCompilation = FlextDbtOracleWmsModels.DBTOracleWMSCompilation
+DBTOracleWMSExecution = FlextDbtOracleWmsModels.DBTOracleWMSExecution
+DBTOracleWMSDocumentation = FlextDbtOracleWmsModels.DBTOracleWMSDocumentation
+DBTOracleWMSConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSConfiguration
+DBTOracleWMSModelConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSModelConfiguration
+DBTOracleWMSSourceConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSSourceConfiguration
+DBTOracleWMSTestConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSTestConfiguration
+DBTOracleWMSMacroConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSMacroConfiguration
+DBTOracleWMSProfileConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSProfileConfiguration
+FlextDbtOracleWmsItemDimension = FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension
+FlextDbtOracleWmsInventoryFact = FlextDbtOracleWmsModels.FlextDbtOracleWmsInventoryFact
+FlextDbtOracleWmsLocationDimension = FlextDbtOracleWmsModels.FlextDbtOracleWmsLocationDimension
+FlextDbtOracleWmsShipmentFact = FlextDbtOracleWmsModels.FlextDbtOracleWmsShipmentFact
+FlextDbtOracleWmsTransformer = FlextDbtOracleWmsModels.FlextDbtOracleWmsTransformer
+FlextDbtOracleWmsSettings = FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings
+FlextDBTOracleWMSSettings = FlextDbtOracleWmsModels.FlextDBTOracleWMSSettings
