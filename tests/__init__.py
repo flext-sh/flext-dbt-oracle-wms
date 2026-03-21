@@ -38,20 +38,11 @@ if TYPE_CHECKING:
     )
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
-    "TestsFlextDbtOracleWmsConstants": (
-        "tests.constants",
-        "TestsFlextDbtOracleWmsConstants",
-    ),
+    "TestsFlextDbtOracleWmsConstants": ("tests.constants", "TestsFlextDbtOracleWmsConstants"),
     "TestsFlextDbtOracleWmsModels": ("tests.models", "TestsFlextDbtOracleWmsModels"),
-    "TestsFlextDbtOracleWmsProtocols": (
-        "tests.protocols",
-        "TestsFlextDbtOracleWmsProtocols",
-    ),
+    "TestsFlextDbtOracleWmsProtocols": ("tests.protocols", "TestsFlextDbtOracleWmsProtocols"),
     "TestsFlextDbtOracleWmsTypes": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
-    "TestsFlextDbtOracleWmsUtilities": (
-        "tests.utilities",
-        "TestsFlextDbtOracleWmsUtilities",
-    ),
+    "TestsFlextDbtOracleWmsUtilities": ("tests.utilities", "TestsFlextDbtOracleWmsUtilities"),
     "c": ("tests.constants", "TestsFlextDbtOracleWmsConstants"),
     "m": ("tests.models", "TestsFlextDbtOracleWmsModels"),
     "p": ("tests.protocols", "TestsFlextDbtOracleWmsProtocols"),
