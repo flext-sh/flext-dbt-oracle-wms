@@ -14,7 +14,7 @@ from flext_tests import p
 from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
 
 
-class TestsFlextDbtOracleWmsProtocols(p, FlextDbtOracleWmsProtocols):
+class TestsFlextDbtOracleWmsProtocols(p):
     """Test protocols combining p and FlextDbtOracleWmsProtocols.
 
     Provides access to:
@@ -23,17 +23,12 @@ class TestsFlextDbtOracleWmsProtocols(p, FlextDbtOracleWmsProtocols):
     - p.DbtOracleWms.* (from FlextDbtOracleWmsProtocols)
     """
 
-    class Tests(p.Tests):
-        """Project-specific test protocols.
+    class DbtOracleWms(FlextDbtOracleWmsProtocols):
+        """DbtOracleWms domain protocols extending project protocols."""
 
-        Extends p.Tests with DbtOracleWms-specific protocols.
-        """
-
-        class DbtOracleWms:
+        class Tests:
             """DbtOracleWms-specific test protocols."""
 
 
-p: type[TestsFlextDbtOracleWmsProtocols] = TestsFlextDbtOracleWmsProtocols
-__all__ = ["TestsFlextDbtOracleWmsProtocols", "p"]
-
 p = TestsFlextDbtOracleWmsProtocols
+__all__ = ["TestsFlextDbtOracleWmsProtocols", "p"]
