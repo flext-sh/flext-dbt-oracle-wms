@@ -27,11 +27,7 @@ if TYPE_CHECKING:
         TestsFlextDbtOracleWmsProtocols as p,
     )
     from .typings import TestsFlextDbtOracleWmsTypes, TestsFlextDbtOracleWmsTypes as t
-    from .unit.test_basic import (
-        test_basic_import,
-        test_package_import,
-        test_package_structure,
-    )
+    from .unit import test_basic_import, test_package_import, test_package_structure
     from .utilities import (
         TestsFlextDbtOracleWmsUtilities,
         TestsFlextDbtOracleWmsUtilities as u,
@@ -56,9 +52,9 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "m": ("tests.models", "TestsFlextDbtOracleWmsModels"),
     "p": ("tests.protocols", "TestsFlextDbtOracleWmsProtocols"),
     "t": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
-    "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
-    "test_package_import": ("tests.unit.test_basic", "test_package_import"),
-    "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
+    "test_basic_import": ("tests.unit", "test_basic_import"),
+    "test_package_import": ("tests.unit", "test_package_import"),
+    "test_package_structure": ("tests.unit", "test_package_structure"),
     "tm": ("tests.models", "tm"),
     "u": ("tests.utilities", "TestsFlextDbtOracleWmsUtilities"),
     "unit": ("tests.unit", ""),
