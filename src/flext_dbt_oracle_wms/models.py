@@ -7,7 +7,7 @@ from typing import Annotated
 
 from flext_core import FlextSettings, r
 from flext_meltano import FlextMeltanoModels
-from flext_oracle_wms.wms_models import FlextOracleWmsModels
+from flext_oracle_wms.models import FlextOracleWmsModels
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from flext_dbt_oracle_wms import c, t
