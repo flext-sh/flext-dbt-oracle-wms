@@ -108,7 +108,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
 
     # Models from dbt_models.py
     class _RawItemRecord(BaseModel):
-        model_config = ConfigDict(extra="ignore")
+        model_config: ClassVar[ConfigDict] = ConfigDict(extra="ignore")
 
         item_id: Annotated[str, Field(default="")]
         item_number: Annotated[str, Field(default="")]
