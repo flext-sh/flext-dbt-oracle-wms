@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Annotated
+from typing import Annotated, ClassVar
 
 from flext_core import FlextSettings, r
 from flext_meltano import FlextMeltanoModels
