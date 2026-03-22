@@ -11,75 +11,82 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 
 if TYPE_CHECKING:
     from flext_core.typings import FlextTypes
+    from flext_tests import d, e, h, r, s, x
 
     from . import unit as unit
     from .constants import (
-        TestsFlextDbtOracleWmsConstants,
-        TestsFlextDbtOracleWmsConstants as c,
+        FlextDbtOracleWmsTestConstants,
+        FlextDbtOracleWmsTestConstants as c,
     )
-    from .models import (
-        TestsFlextDbtOracleWmsModels,
-        TestsFlextDbtOracleWmsModels as m,
-        tm,
-    )
+    from .models import FlextDbtOracleWmsTestModels, FlextDbtOracleWmsTestModels as m
     from .protocols import (
-        TestsFlextDbtOracleWmsProtocols,
-        TestsFlextDbtOracleWmsProtocols as p,
+        FlextDbtOracleWmsTestProtocols,
+        FlextDbtOracleWmsTestProtocols as p,
     )
-    from .typings import TestsFlextDbtOracleWmsTypes, TestsFlextDbtOracleWmsTypes as t
+    from .typings import FlextDbtOracleWmsTestTypes, FlextDbtOracleWmsTestTypes as t
     from .unit.test_basic import (
         test_basic_import,
         test_package_import,
         test_package_structure,
     )
     from .utilities import (
-        TestsFlextDbtOracleWmsUtilities,
-        TestsFlextDbtOracleWmsUtilities as u,
+        FlextDbtOracleWmsTestUtilities,
+        FlextDbtOracleWmsTestUtilities as u,
     )
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
-    "TestsFlextDbtOracleWmsConstants": (
+    "FlextDbtOracleWmsTestConstants": (
         "tests.constants",
-        "TestsFlextDbtOracleWmsConstants",
+        "FlextDbtOracleWmsTestConstants",
     ),
-    "TestsFlextDbtOracleWmsModels": ("tests.models", "TestsFlextDbtOracleWmsModels"),
-    "TestsFlextDbtOracleWmsProtocols": (
+    "FlextDbtOracleWmsTestModels": ("tests.models", "FlextDbtOracleWmsTestModels"),
+    "FlextDbtOracleWmsTestProtocols": (
         "tests.protocols",
-        "TestsFlextDbtOracleWmsProtocols",
+        "FlextDbtOracleWmsTestProtocols",
     ),
-    "TestsFlextDbtOracleWmsTypes": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
-    "TestsFlextDbtOracleWmsUtilities": (
+    "FlextDbtOracleWmsTestTypes": ("tests.typings", "FlextDbtOracleWmsTestTypes"),
+    "FlextDbtOracleWmsTestUtilities": (
         "tests.utilities",
-        "TestsFlextDbtOracleWmsUtilities",
+        "FlextDbtOracleWmsTestUtilities",
     ),
-    "c": ("tests.constants", "TestsFlextDbtOracleWmsConstants"),
-    "m": ("tests.models", "TestsFlextDbtOracleWmsModels"),
-    "p": ("tests.protocols", "TestsFlextDbtOracleWmsProtocols"),
-    "t": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
+    "c": ("tests.constants", "FlextDbtOracleWmsTestConstants"),
+    "d": ("flext_tests", "d"),
+    "e": ("flext_tests", "e"),
+    "h": ("flext_tests", "h"),
+    "m": ("tests.models", "FlextDbtOracleWmsTestModels"),
+    "p": ("tests.protocols", "FlextDbtOracleWmsTestProtocols"),
+    "r": ("flext_tests", "r"),
+    "s": ("flext_tests", "s"),
+    "t": ("tests.typings", "FlextDbtOracleWmsTestTypes"),
     "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
     "test_package_import": ("tests.unit.test_basic", "test_package_import"),
     "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
-    "tm": ("tests.models", "tm"),
-    "u": ("tests.utilities", "TestsFlextDbtOracleWmsUtilities"),
+    "u": ("tests.utilities", "FlextDbtOracleWmsTestUtilities"),
     "unit": ("tests.unit", ""),
+    "x": ("flext_tests", "x"),
 }
 
 __all__ = [
-    "TestsFlextDbtOracleWmsConstants",
-    "TestsFlextDbtOracleWmsModels",
-    "TestsFlextDbtOracleWmsProtocols",
-    "TestsFlextDbtOracleWmsTypes",
-    "TestsFlextDbtOracleWmsUtilities",
+    "FlextDbtOracleWmsTestConstants",
+    "FlextDbtOracleWmsTestModels",
+    "FlextDbtOracleWmsTestProtocols",
+    "FlextDbtOracleWmsTestTypes",
+    "FlextDbtOracleWmsTestUtilities",
     "c",
+    "d",
+    "e",
+    "h",
     "m",
     "p",
+    "r",
+    "s",
     "t",
     "test_basic_import",
     "test_package_import",
     "test_package_structure",
-    "tm",
     "u",
     "unit",
+    "x",
 ]
 
 
