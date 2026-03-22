@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 
-
 # Re-export from models facade
 DBTOracleWMSProject = FlextDbtOracleWmsModels.DBTOracleWMSProject
 DBTOracleWMSModel = FlextDbtOracleWmsModels.DBTOracleWMSModel
