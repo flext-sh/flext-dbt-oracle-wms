@@ -13,23 +13,29 @@ if TYPE_CHECKING:
     from flext_core import FlextTypes
     from flext_tests import d, e, h, r, s, x
 
-    from . import unit as unit
-    from .constants import (
+    from tests import unit
+    from tests.constants import (
         FlextDbtOracleWmsTestConstants,
         FlextDbtOracleWmsTestConstants as c,
     )
-    from .models import FlextDbtOracleWmsTestModels, FlextDbtOracleWmsTestModels as m
-    from .protocols import (
+    from tests.models import (
+        FlextDbtOracleWmsTestModels,
+        FlextDbtOracleWmsTestModels as m,
+    )
+    from tests.protocols import (
         FlextDbtOracleWmsTestProtocols,
         FlextDbtOracleWmsTestProtocols as p,
     )
-    from .typings import FlextDbtOracleWmsTestTypes, FlextDbtOracleWmsTestTypes as t
-    from .unit.test_basic import (
+    from tests.typings import (
+        FlextDbtOracleWmsTestTypes,
+        FlextDbtOracleWmsTestTypes as t,
+    )
+    from tests.unit.test_basic import (
         test_basic_import,
         test_package_import,
         test_package_structure,
     )
-    from .utilities import (
+    from tests.utilities import (
         FlextDbtOracleWmsTestUtilities,
         FlextDbtOracleWmsTestUtilities as u,
     )
