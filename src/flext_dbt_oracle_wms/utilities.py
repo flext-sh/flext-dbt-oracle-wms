@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 from flext_core import r
 from flext_meltano import FlextMeltanoUtilities
@@ -23,7 +23,8 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
         ) -> r[
             Mapping[
                 str,
-                Mapping[str, t.ContainerValue | None] | list[t.ContainerValue | None],
+                Mapping[str, t.ContainerValue | None]
+                | Sequence[t.ContainerValue | None],
             ]
         ]:
             """Return basic extraction metadata for inventory loads."""
@@ -31,7 +32,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 Mapping[
                     str,
                     Mapping[str, t.ContainerValue | None]
-                    | list[t.ContainerValue | None],
+                    | Sequence[t.ContainerValue | None],
                 ]
             ].ok({
                 "extraction_config": extraction_config,

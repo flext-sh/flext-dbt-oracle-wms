@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 from flext_core import FlextLogger, r
 
@@ -25,7 +25,7 @@ class FlextDbtOracleWmsServices:
         )
 
     def generate_workflow_recommendations(
-        self, entities: list[Mapping[str, t.Scalar]] | None = None
+        self, entities: Sequence[Mapping[str, t.Scalar]] | None = None
     ) -> r[t.Dict]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
@@ -58,7 +58,7 @@ class FlextDbtOracleWmsServices:
         self,
         workflow_name: str,
         workflow_type: str,
-        entity_names: list[str] | None = None,
+        entity_names: Sequence[str] | None = None,
         additional_data: Mapping[str, str | int | float] | None = None,
     ) -> t.Dict:
         """Return tracking payload for workflow instrumentation."""

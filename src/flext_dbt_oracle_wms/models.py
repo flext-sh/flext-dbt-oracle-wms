@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Annotated, ClassVar
 
 from flext_core import FlextSettings, r
@@ -148,19 +148,19 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         """Transformer for WMS entity data to DBT models."""
 
         def transform_all_entities(
-            self, entity_data: Mapping[str, list[Mapping[str, t.Scalar]]]
-        ) -> Mapping[str, list[Mapping[str, t.Scalar]]]:
+            self, entity_data: Mapping[str, Sequence[Mapping[str, t.Scalar]]]
+        ) -> Mapping[str, Sequence[Mapping[str, t.Scalar]]]:
             """Transform all WMS entities to DBT-compatible format."""
-            items: list[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension] = (
+            items: Sequence[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension] = (
                 self.transform_items(entity_data.get("items", []))
             )
             return {"items": [item.to_dbt_dict() for item in items]}
 
         def transform_items(
-            self, records: list[Mapping[str, t.Scalar]]
-        ) -> list[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension]:
+            self, records: Sequence[Mapping[str, t.Scalar]]
+        ) -> Sequence[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension]:
             """Transform item records to item dimension models."""
-            transformed: list[
+            transformed: Sequence[
                 FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension
             ] = []
             for record in records:
@@ -180,7 +180,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             return transformed
 
         def validate_business_rules(
-            self, records: list[Mapping[str, t.Scalar]]
+            self, records: Sequence[Mapping[str, t.Scalar]]
         ) -> r[bool]:
             """Validate business rules for WMS records."""
             if not records:
@@ -195,13 +195,15 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         wms_entity_type: str
         schema_name: str
         table_name: str
-        columns: Annotated[list[dict[str, t.Scalar]], Field(default_factory=list)]
+        columns: Annotated[
+            Sequence[Mapping[str, t.Scalar]], Field(default_factory=list)
+        ]
         materialization: str
         sql_content: str
         description: str
         oracle_source: str
-        dependencies: Annotated[list[str], Field(default_factory=list)]
-        wms_business_rules: Annotated[list[str], Field(default_factory=list)]
+        dependencies: Annotated[Sequence[str], Field(default_factory=list)]
+        wms_business_rules: Annotated[Sequence[str], Field(default_factory=list)]
 
         def validate_business_rules(self) -> r[bool]:
             """Validate essential DBT model constraints."""
@@ -221,8 +223,8 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
 
         def generate_wms_staging_models(
             self,
-            oracle_sources: list[str],
-        ) -> r[list[FlextDbtOracleWmsModels.DbtModel]]:
+            oracle_sources: Sequence[str],
+        ) -> r[Sequence[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
                 FlextDbtOracleWmsModels.DbtModel(
@@ -241,13 +243,13 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                 )
                 for source in oracle_sources
             ]
-            return r[list[FlextDbtOracleWmsModels.DbtModel]].ok(models)
+            return r[Sequence[FlextDbtOracleWmsModels.DbtModel]].ok(models)
 
     class FlextDbtOracleWmsSettings(FlextSettings):
         """Runtime settings for DBT Oracle WMS transformations."""
 
         required_fields_per_entity: Annotated[
-            dict[str, list[str]],
+            Mapping[str, Sequence[str]],
             Field(
                 default_factory=dict,
                 description="Required fields per WMS entity for validation",

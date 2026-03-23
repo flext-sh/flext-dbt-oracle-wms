@@ -14,7 +14,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import datetime
 from typing import Annotated
 
@@ -61,165 +61,165 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         type DBTOracleWMSExecutionTimeout = int
         type DBTOracleWMSDocumentationTimeout = int
 
-        type ProjectConfiguration = dict[
+        type ProjectConfiguration = Mapping[
             str,
             t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
-        type ModelConfiguration = dict[
+        type ModelConfiguration = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type SourceConfiguration = dict[
+        type SourceConfiguration = Mapping[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str | Sequence[Mapping[str, t.ContainerValue | None]],
         ]
-        type ProfileConfiguration = dict[str, t.ContainerValue | None]
-        type MacroConfiguration = dict[
+        type ProfileConfiguration = Mapping[str, t.ContainerValue | None]
+        type MacroConfiguration = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type TestConfiguration = dict[str, str | bool | list[str]]
+        type TestConfiguration = Mapping[str, str | bool | Sequence[str]]
 
-        type ConnectionConfig = dict[
+        type ConnectionConfig = Mapping[
             str,
             str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type DatabaseConnection = dict[
+        type DatabaseConnection = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type PoolingConfig = dict[
+        type PoolingConfig = Mapping[
             str,
             int | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type SecurityConfig = dict[
+        type SecurityConfig = Mapping[
             str,
             bool | str | Mapping[str, t.ContainerValue | None],
         ]
-        type SessionConfig = dict[
+        type SessionConfig = Mapping[
             str,
             str | int | Mapping[str, t.ContainerValue | None],
         ]
-        type TimeoutConfig = dict[str, int | float]
+        type TimeoutConfig = Mapping[str, int | float]
 
-        type InventoryData = dict[
+        type InventoryData = Mapping[
             str,
             str | int | float | Mapping[str, t.ContainerValue | None],
         ]
-        type LocationData = dict[
+        type LocationData = Mapping[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
-        type AllocationData = dict[
+        type AllocationData = Mapping[
             str,
             str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type OrderData = dict[
+        type OrderData = Mapping[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str | Sequence[Mapping[str, t.ContainerValue | None]],
         ]
-        type TaskData = dict[
+        type TaskData = Mapping[
             str,
             str | int | Mapping[str, t.ContainerValue | None],
         ]
-        type ShipmentData = dict[
+        type ShipmentData = Mapping[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
 
-        type TransformationConfig = dict[
+        type TransformationConfig = Mapping[
             str,
             t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
-        type WmsTransformation = dict[
+        type WmsTransformation = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type DataValidation = dict[
+        type DataValidation = Mapping[
             str,
-            bool | str | list[str] | Mapping[str, t.ContainerValue | None],
+            bool | str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
-        type MaterializationConfig = dict[
-            str,
-            str | Mapping[str, t.ContainerValue | None],
-        ]
-        type OutputFormat = dict[
+        type MaterializationConfig = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type ProcessingStep = dict[
+        type OutputFormat = Mapping[
+            str,
+            str | Mapping[str, t.ContainerValue | None],
+        ]
+        type ProcessingStep = Mapping[
             str,
             str | int | Mapping[str, t.ContainerValue | None],
         ]
 
-        type DimensionModel = dict[
+        type DimensionModel = Mapping[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str | Sequence[Mapping[str, t.ContainerValue | None]],
         ]
-        type FactModel = dict[
+        type FactModel = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type BridgeModel = dict[
+        type BridgeModel = Mapping[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
-        type StarSchema = dict[
+        type StarSchema = Mapping[
             str,
-            list[dict[str, t.ContainerValue | None]],
+            Sequence[Mapping[str, t.ContainerValue | None]],
         ]
-        type ScdConfiguration = dict[
+        type ScdConfiguration = Mapping[
             str,
             str | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type GrainDefinition = dict[str, str | list[str]]
+        type GrainDefinition = Mapping[str, str | Sequence[str]]
 
-        type InventoryRules = dict[
+        type InventoryRules = Mapping[
             str,
             bool | str | float | Mapping[str, t.ContainerValue | None],
         ]
-        type AllocationRules = dict[
+        type AllocationRules = Mapping[
             str,
             str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type PickingRules = dict[
+        type PickingRules = Mapping[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
-        type ReceivingRules = dict[
+        type ReceivingRules = Mapping[
             str,
             bool | str | Mapping[str, t.ContainerValue | None],
         ]
-        type ShippingRules = dict[
+        type ShippingRules = Mapping[
             str,
             str | int | Mapping[str, t.ContainerValue | None],
         ]
-        type QualityRules = dict[
+        type QualityRules = Mapping[
             str,
             bool | float | Mapping[str, t.ContainerValue | None],
         ]
 
-        type ModelDefinition = dict[
+        type ModelDefinition = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type ModelExecution = dict[
+        type ModelExecution = Mapping[
             str,
             str | bool | int | Mapping[str, t.ContainerValue | None],
         ]
-        type ModelDependency = dict[
+        type ModelDependency = Mapping[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
-        type ModelTest = dict[
+        type ModelTest = Mapping[
             str,
             str | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type ModelDocumentation = dict[
+        type ModelDocumentation = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type ModelMaterialization = dict[
+        type ModelMaterialization = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
@@ -227,83 +227,83 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     class DbtSource:
         """DBT Oracle WMS source complex types."""
 
-        type SourceDefinition = dict[
+        type SourceDefinition = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type SourceConnection = dict[
+        type SourceConnection = Mapping[
             str,
             t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
-        type SourceTable = dict[
+        type SourceTable = Mapping[
             str,
-            str | list[Mapping[str, t.ContainerValue | None]],
+            str | Sequence[Mapping[str, t.ContainerValue | None]],
         ]
-        type SourceFreshness = dict[
+        type SourceFreshness = Mapping[
             str,
             str | int | Mapping[str, t.ContainerValue | None],
         ]
-        type SourceTest = dict[str, str | bool | list[str]]
-        type SourceSchema = dict[
+        type SourceTest = Mapping[str, str | bool | Sequence[str]]
+        type SourceSchema = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
 
-        type AdapterConfiguration = dict[
+        type AdapterConfiguration = Mapping[
             str,
             t.ContainerValue | None | Mapping[str, t.ContainerValue | None],
         ]
-        type ConnectionAdapter = dict[
+        type ConnectionAdapter = Mapping[
             str,
             str | int | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type QueryAdapter = dict[
+        type QueryAdapter = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type SchemaAdapter = dict[
+        type SchemaAdapter = Mapping[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
-        type TransactionAdapter = dict[
+        type TransactionAdapter = Mapping[
             str,
             bool | str | Mapping[str, t.ContainerValue | None],
         ]
-        type WmsAdapter = dict[
+        type WmsAdapter = Mapping[
             str,
             str | int | Mapping[str, t.ContainerValue | None],
         ]
 
-        type PartitionStrategy = dict[
+        type PartitionStrategy = Mapping[
             str,
-            str | list[str] | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
-        type IndexStrategy = dict[
+        type IndexStrategy = Mapping[
             str,
             str | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type MaterializationStrategy = dict[
+        type MaterializationStrategy = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type CacheStrategy = dict[
+        type CacheStrategy = Mapping[
             str,
             bool | int | Mapping[str, t.ContainerValue | None],
         ]
-        type ParallelProcessing = dict[
+        type ParallelProcessing = Mapping[
             str,
             int | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type OracleHints = dict[str, str | list[str]]
+        type OracleHints = Mapping[str, str | Sequence[str]]
 
     type ProjectType = c.ProjectType
-    type DbtOracleWmsProjectConfig = dict[str, t.ContainerValue | None]
-    type WmsTransformConfig = dict[str, str | int | bool | list[str]]
-    type WmsAnalyticsConfig = dict[
+    type DbtOracleWmsProjectConfig = Mapping[str, t.ContainerValue | None]
+    type WmsTransformConfig = Mapping[str, str | int | bool | Sequence[str]]
+    type WmsAnalyticsConfig = Mapping[
         str,
         bool | str | Mapping[str, t.ContainerValue | None],
     ]
-    type DbtWmsPipelineConfig = dict[str, t.ContainerValue | None]
+    type DbtWmsPipelineConfig = Mapping[str, t.ContainerValue | None]
 
 
 # Facade assignment - enables t.TypeAlias syntax for consumers

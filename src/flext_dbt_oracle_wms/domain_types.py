@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 
 # Re-export from models facade
@@ -17,7 +19,7 @@ DBTOracleWMSExecution = FlextDbtOracleWmsModels.DBTOracleWMSExecution
 DBTOracleWMSDocumentation = FlextDbtOracleWmsModels.DBTOracleWMSDocumentation
 
 
-__all__: list[str] = [
+__all__: Sequence[str] = [
     "DBTOracleWMSAnalysis",
     "DBTOracleWMSCompilation",
     "DBTOracleWMSDocumentation",

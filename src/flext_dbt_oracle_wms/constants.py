@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from enum import StrEnum, unique
 from typing import Final
 
@@ -102,7 +103,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
         class Configuration:
             """Default runtime configuration values."""
 
-            DEFAULT_CONFIG: Final[dict[str, t.ContainerValue | None]] = {
+            DEFAULT_CONFIG: Final[Mapping[str, t.ContainerValue | None]] = {
                 "project_name": "flext_dbt_oracle_wms",
                 "profile": "flext_oracle_wms",
                 "schema_prefix": "wms",
