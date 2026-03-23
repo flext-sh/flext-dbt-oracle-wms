@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping, MutableSequence, Sequence
 from typing import Annotated, ClassVar
 
 from flext_core import FlextSettings, r
@@ -160,7 +160,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             self, records: Sequence[Mapping[str, t.Scalar]]
         ) -> Sequence[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension]:
             """Transform item records to item dimension models."""
-            transformed: Sequence[
+            transformed: MutableSequence[
                 FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension
             ] = []
             for record in records:

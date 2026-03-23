@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping, MutableMapping, Sequence
 
 from flext_core import FlextLogger, r
 
@@ -52,7 +52,7 @@ class FlextDbtOracleWmsClient:
         if entities_result.is_failure:
             return r[t.Dict].fail(entities_result.error or "Entity discovery failed")
         entity_list = entities_result.value
-        extracted: Mapping[str, Sequence[Mapping[str, t.Scalar]]] = {}
+        extracted: MutableMapping[str, Sequence[Mapping[str, t.Scalar]]] = {}
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.is_failure:
