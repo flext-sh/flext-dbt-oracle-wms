@@ -1,7 +1,6 @@
 # Development Guidelines
 
 <!-- TOC START -->
-
 - [🏗️ Architecture Principles](#architecture-principles)
   - [Clean Architecture Application](#clean-architecture-application)
   - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
@@ -33,7 +32,6 @@
   - [dbt Resources](#dbt-resources)
   - [Oracle WMS Resources](#oracle-wms-resources)
   - [FLEXT Framework](#flext-framework)
-
 <!-- TOC END -->
 
 **Best Practices for FLEXT DBT Oracle WMS Development**

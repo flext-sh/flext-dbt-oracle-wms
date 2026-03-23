@@ -1,7 +1,6 @@
 # FLEXT DBT Oracle WMS Documentation
 
 <!-- TOC START -->
-
 - [�"� Documentation Structure](#documentation-structure)
   - [🚀 Getting Started](#getting-started)
   - [🏗️ Data Models](#data-models)
@@ -40,7 +39,6 @@
 - [�"� Roadmap](#roadmap)
   - [Current Version (v0.7.0)](#current-version-v070)
   - [Upcoming Features](#upcoming-features)
-
 <!-- TOC END -->
 
 **Enterprise Oracle WMS Data Transformations Documentation Hub**

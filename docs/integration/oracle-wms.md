@@ -1,7 +1,6 @@
 # Oracle WMS Integration Guide
 
 <!-- TOC START -->
-
 - [🏢 Oracle WMS Overview](#oracle-wms-overview)
   - [What is Oracle WMS](#what-is-oracle-wms)
   - [FLEXT Integration Benefits](#flext-integration-benefits)
@@ -28,7 +27,6 @@
 - [🔧 Troubleshooting](#troubleshooting)
   - [Common Integration Issues](#common-integration-issues)
 - [📚 Additional Resources](#additional-resources)
-
 <!-- TOC END -->
 
 **Complete Integration Guide for Oracle Warehouse Management System**

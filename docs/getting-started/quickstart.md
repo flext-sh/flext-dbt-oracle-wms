@@ -1,7 +1,6 @@
 # Quick Start Guide
 
 <!-- TOC START -->
-
 - [🚀 Prerequisites Check](#prerequisites-check)
 - [⚡ Quick Installation](#quick-installation)
   - [1. Clone and Setup (2 minutes)](#1-clone-and-setup-2-minutes)
@@ -36,7 +35,6 @@
 - [🆘 Getting Stuck](#getting-stuck)
   - [Common Issues](#common-issues)
   - [Get Help](#get-help)
-
 <!-- TOC END -->
 
 **Get FLEXT DBT Oracle WMS running in 10 minutes**

@@ -1,7 +1,6 @@
 # Setup Guide
 
 <!-- TOC START -->
-
 - [📋 Prerequisites](#prerequisites)
   - [System Requirements](#system-requirements)
   - [Oracle WMS Requirements](#oracle-wms-requirements)
@@ -35,7 +34,6 @@
   - [Getting Help](#getting-help)
 - [✅ Next Steps](#next-steps)
 - [📚 Additional Resources](#additional-resources)
-
 <!-- TOC END -->
 
 **Complete Installation and Configuration for FLEXT DBT Oracle WMS**

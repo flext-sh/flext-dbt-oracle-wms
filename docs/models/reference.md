@@ -1,7 +1,6 @@
 # Model Reference
 
 <!-- TOC START -->
-
 - [📊 Model Architecture Overview](#model-architecture-overview)
 - [🔵 Staging Models](#staging-models)
   - [stg_wms\_\_allocation](#stgwmsallocation)
@@ -29,7 +28,6 @@
 - [📚 Documentation](#documentation)
   - [Model Documentation](#model-documentation)
   - [Automated Documentation Generation](#automated-documentation-generation)
-
 <!-- TOC END -->
 
 **Complete Data Model Documentation for FLEXT DBT Oracle WMS**
