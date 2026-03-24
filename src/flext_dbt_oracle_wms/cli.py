@@ -47,7 +47,7 @@ class FlextDbtOracleWmsCliService:
             try:
                 validated_entity = (
                     FlextDbtOracleWmsCliService._STRING_ADAPTER.validate_python(
-                        entity_value
+                        entity_value,
                     ).strip()
                 )
             except ValidationError:

@@ -66,42 +66,15 @@ if TYPE_CHECKING:
 
 _LAZY_IMPORTS: Mapping[str, tuple[str, str]] = {
     "FlextDbtOracleWms": ("flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"),
-    "FlextDbtOracleWmsCliService": (
-        "flext_dbt_oracle_wms.cli",
-        "FlextDbtOracleWmsCliService",
-    ),
-    "FlextDbtOracleWmsClient": (
-        "flext_dbt_oracle_wms.client",
-        "FlextDbtOracleWmsClient",
-    ),
-    "FlextDbtOracleWmsConstants": (
-        "flext_dbt_oracle_wms.constants",
-        "FlextDbtOracleWmsConstants",
-    ),
-    "FlextDbtOracleWmsModels": (
-        "flext_dbt_oracle_wms.models",
-        "FlextDbtOracleWmsModels",
-    ),
-    "FlextDbtOracleWmsProtocols": (
-        "flext_dbt_oracle_wms.protocols",
-        "FlextDbtOracleWmsProtocols",
-    ),
-    "FlextDbtOracleWmsServices": (
-        "flext_dbt_oracle_wms.services",
-        "FlextDbtOracleWmsServices",
-    ),
-    "FlextDbtOracleWmsSettings": (
-        "flext_dbt_oracle_wms.settings",
-        "FlextDbtOracleWmsSettings",
-    ),
-    "FlextDbtOracleWmsTypes": (
-        "flext_dbt_oracle_wms.typings",
-        "FlextDbtOracleWmsTypes",
-    ),
-    "FlextDbtOracleWmsUtilities": (
-        "flext_dbt_oracle_wms.utilities",
-        "FlextDbtOracleWmsUtilities",
-    ),
+    "FlextDbtOracleWmsCliService": ("flext_dbt_oracle_wms.cli", "FlextDbtOracleWmsCliService"),
+    "FlextDbtOracleWmsClient": ("flext_dbt_oracle_wms.client", "FlextDbtOracleWmsClient"),
+    "FlextDbtOracleWmsConstants": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
+    "FlextDbtOracleWmsModels": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
+    "FlextDbtOracleWmsProtocols": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
+    "FlextDbtOracleWmsServices": ("flext_dbt_oracle_wms.services", "FlextDbtOracleWmsServices"),
+    "FlextDbtOracleWmsSettings": ("flext_dbt_oracle_wms.settings", "FlextDbtOracleWmsSettings"),
+    "FlextDbtOracleWmsTypes": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
+    "FlextDbtOracleWmsUtilities": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
     "__all__": ("flext_dbt_oracle_wms.__version__", "__all__"),
     "__author__": ("flext_dbt_oracle_wms.__version__", "__author__"),
     "__author_email__": ("flext_dbt_oracle_wms.__version__", "__author_email__"),

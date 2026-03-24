@@ -19,7 +19,7 @@ from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
 
 
 class FlextDbtOracleWms(
-    FlextService[FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings]
+    FlextService[FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings],
 ):
     """Unified DBT Oracle WMS facade with complete FLEXT ecosystem integration.
 
@@ -43,7 +43,7 @@ class FlextDbtOracleWms(
     """
 
     def __init__(
-        self, config: FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings | None = None
+        self, config: FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__(
@@ -346,7 +346,7 @@ class FlextDbtOracleWms(
             ImportError,
         ) as e:
             return r[FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings].fail(
-                f"Service execution failed: {e}"
+                f"Service execution failed: {e}",
             )
 
 
