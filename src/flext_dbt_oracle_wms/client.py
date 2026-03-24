@@ -33,7 +33,7 @@ class FlextDbtOracleWmsClient:
     ) -> r[Sequence[Mapping[str, t.Scalar]]]:
         """Return sample records for a requested entity."""
         _ = filters
-        return r[Sequence[Mapping[str, t.Scalar]]].ok([
+        return r[Sequence[t.ScalarMapping]].ok([
             {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"}
         ])
 
@@ -107,8 +107,8 @@ class FlextDbtOracleWmsClient:
         """Validate records list for a specific entity."""
         _ = entity_name
         if not records:
-            return r[Sequence[Mapping[str, t.Scalar]]].fail("No records to validate")
-        return r[Sequence[Mapping[str, t.Scalar]]].ok(records)
+            return r[Sequence[t.ScalarMapping]].fail("No records to validate")
+        return r[Sequence[t.ScalarMapping]].ok(records)
 
 
 __all__ = ["FlextDbtOracleWmsClient"]
