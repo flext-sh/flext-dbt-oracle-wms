@@ -283,34 +283,3 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
 __all__ = ["FlextDbtOracleWmsModels", "m"]
 
 m = FlextDbtOracleWmsModels
-
-# Re-export facade models for backward compatibility
-DBTOracleWMSProject = FlextDbtOracleWmsModels.DBTOracleWMSProject
-DBTOracleWMSModel = FlextDbtOracleWmsModels.DBTOracleWMSModel
-DBTOracleWMSSource = FlextDbtOracleWmsModels.DBTOracleWMSSource
-DBTOracleWMSTest = FlextDbtOracleWmsModels.DBTOracleWMSTest
-DBTOracleWMSMacro = FlextDbtOracleWmsModels.DBTOracleWMSMacro
-DBTOracleWMSSnapshot = FlextDbtOracleWmsModels.DBTOracleWMSSnapshot
-DBTOracleWMSAnalysis = FlextDbtOracleWmsModels.DBTOracleWMSAnalysis
-DBTOracleWMSCompilation = FlextDbtOracleWmsModels.DBTOracleWMSCompilation
-DBTOracleWMSExecution = FlextDbtOracleWmsModels.DBTOracleWMSExecution
-DBTOracleWMSDocumentation = FlextDbtOracleWmsModels.DBTOracleWMSDocumentation
-DBTOracleWMSConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSConfiguration
-DBTOracleWMSModelConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSModelConfiguration
-DBTOracleWMSSourceConfiguration = (
-    FlextDbtOracleWmsModels.DBTOracleWMSSourceConfiguration
-)
-DBTOracleWMSTestConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSTestConfiguration
-DBTOracleWMSMacroConfiguration = FlextDbtOracleWmsModels.DBTOracleWMSMacroConfiguration
-DBTOracleWMSProfileConfiguration = (
-    FlextDbtOracleWmsModels.DBTOracleWMSProfileConfiguration
-)
-FlextDbtOracleWmsItemDimension = FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension
-FlextDbtOracleWmsInventoryFact = FlextDbtOracleWmsModels.FlextDbtOracleWmsInventoryFact
-FlextDbtOracleWmsLocationDimension = (
-    FlextDbtOracleWmsModels.FlextDbtOracleWmsLocationDimension
-)
-FlextDbtOracleWmsShipmentFact = FlextDbtOracleWmsModels.FlextDbtOracleWmsShipmentFact
-FlextDbtOracleWmsTransformer = FlextDbtOracleWmsModels.FlextDbtOracleWmsTransformer
-FlextDbtOracleWmsSettings = FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings
-FlextDBTOracleWMSSettings = FlextDbtOracleWmsModels.FlextDBTOracleWMSSettings
