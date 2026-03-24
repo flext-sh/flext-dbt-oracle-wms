@@ -8,4 +8,6 @@ from __future__ import annotations
 
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 
-__all__: list[str] = ["FlextDbtOracleWmsModels"]
+FlextDbtOracleWmsSettings = FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings
+
+__all__: list[str] = ["FlextDbtOracleWmsSettings"]

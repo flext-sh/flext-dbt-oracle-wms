@@ -559,25 +559,7 @@ indent-style = "space"
 line-ending = "lf"
 quote-style = "double"
 [tool.pyright]
-extraPaths = [
-  ".",
-  "../flext-core/examples",
-  "../flext-core/src",
-  "../flext-core/tests",
-  "../flext-meltano/docs",
-  "../flext-meltano/examples",
-  "../flext-meltano/src",
-  "../flext-meltano/tests",
-  "../flext-oracle-wms/docs",
-  "../flext-oracle-wms/examples",
-  "../flext-oracle-wms/src",
-  "../flext-oracle-wms/tests",
-  "../typings",
-  "../typings/generated",
-  "docs",
-  "src",
-  "tests",
-]
+extraPaths = [".", "../flext-core/examples", "../flext-core/src", "../flext-core/tests", "../flext-meltano/docs", "../flext-meltano/examples", "../flext-meltano/src", "../flext-meltano/tests", "../flext-oracle-wms/docs", "../flext-oracle-wms/examples", "../flext-oracle-wms/src", "../flext-oracle-wms/tests", "../typings", "../typings/generated", "docs", "src", "tests", "../flext-tests/src", "../flext-infra/src"]
 pythonPlatform = "Linux"
 pythonVersion = "3.13"
 reportCallIssue = "none"
