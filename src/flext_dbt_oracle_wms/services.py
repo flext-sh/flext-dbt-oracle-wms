@@ -58,7 +58,7 @@ class FlextDbtOracleWmsServices:
         self,
         workflow_name: str,
         workflow_type: str,
-        entity_names: Sequence[str] | None = None,
+        entity_names: t.StrSequence | None = None,
         additional_data: Mapping[str, str | int | float] | None = None,
     ) -> t.Dict:
         """Return tracking payload for workflow instrumentation."""

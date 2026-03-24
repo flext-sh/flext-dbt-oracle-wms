@@ -202,8 +202,8 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         sql_content: str
         description: str
         oracle_source: str
-        dependencies: Annotated[Sequence[str], Field(default_factory=list)]
-        wms_business_rules: Annotated[Sequence[str], Field(default_factory=list)]
+        dependencies: Annotated[t.StrSequence, Field(default_factory=list)]
+        wms_business_rules: Annotated[t.StrSequence, Field(default_factory=list)]
 
         def validate_business_rules(self) -> r[bool]:
             """Validate essential DBT model constraints."""
@@ -223,7 +223,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
 
         def generate_wms_staging_models(
             self,
-            oracle_sources: Sequence[str],
+            oracle_sources: t.StrSequence,
         ) -> r[Sequence[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
@@ -249,7 +249,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         """Runtime settings for DBT Oracle WMS transformations."""
 
         required_fields_per_entity: Annotated[
-            Mapping[str, Sequence[str]],
+            Mapping[str, t.StrSequence],
             Field(
                 default_factory=dict,
                 description="Required fields per WMS entity for validation",
