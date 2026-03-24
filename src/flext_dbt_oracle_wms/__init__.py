@@ -93,116 +93,38 @@ if TYPE_CHECKING:
     )
 
 _LAZY_IMPORTS: Mapping[str, tuple[str, str]] = {
-    "DBTOracleWMSAnalysis": (
-        "flext_dbt_oracle_wms.domain_types",
-        "DBTOracleWMSAnalysis",
-    ),
-    "DBTOracleWMSCompilation": (
-        "flext_dbt_oracle_wms.domain_types",
-        "DBTOracleWMSCompilation",
-    ),
-    "DBTOracleWMSConfiguration": (
-        "flext_dbt_oracle_wms.config_types",
-        "DBTOracleWMSConfiguration",
-    ),
-    "DBTOracleWMSDocumentation": (
-        "flext_dbt_oracle_wms.domain_types",
-        "DBTOracleWMSDocumentation",
-    ),
-    "DBTOracleWMSExecution": (
-        "flext_dbt_oracle_wms.domain_types",
-        "DBTOracleWMSExecution",
-    ),
+    "DBTOracleWMSAnalysis": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSAnalysis"),
+    "DBTOracleWMSCompilation": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSCompilation"),
+    "DBTOracleWMSConfiguration": ("flext_dbt_oracle_wms.config_types", "DBTOracleWMSConfiguration"),
+    "DBTOracleWMSDocumentation": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSDocumentation"),
+    "DBTOracleWMSExecution": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSExecution"),
     "DBTOracleWMSMacro": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSMacro"),
-    "DBTOracleWMSMacroConfiguration": (
-        "flext_dbt_oracle_wms.config_types",
-        "DBTOracleWMSMacroConfiguration",
-    ),
+    "DBTOracleWMSMacroConfiguration": ("flext_dbt_oracle_wms.config_types", "DBTOracleWMSMacroConfiguration"),
     "DBTOracleWMSModel": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSModel"),
-    "DBTOracleWMSModelConfiguration": (
-        "flext_dbt_oracle_wms.config_types",
-        "DBTOracleWMSModelConfiguration",
-    ),
-    "DBTOracleWMSProfileConfiguration": (
-        "flext_dbt_oracle_wms.config_types",
-        "DBTOracleWMSProfileConfiguration",
-    ),
+    "DBTOracleWMSModelConfiguration": ("flext_dbt_oracle_wms.config_types", "DBTOracleWMSModelConfiguration"),
+    "DBTOracleWMSProfileConfiguration": ("flext_dbt_oracle_wms.config_types", "DBTOracleWMSProfileConfiguration"),
     "DBTOracleWMSProject": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSProject"),
-    "DBTOracleWMSSnapshot": (
-        "flext_dbt_oracle_wms.domain_types",
-        "DBTOracleWMSSnapshot",
-    ),
+    "DBTOracleWMSSnapshot": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSSnapshot"),
     "DBTOracleWMSSource": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSSource"),
-    "DBTOracleWMSSourceConfiguration": (
-        "flext_dbt_oracle_wms.config_types",
-        "DBTOracleWMSSourceConfiguration",
-    ),
+    "DBTOracleWMSSourceConfiguration": ("flext_dbt_oracle_wms.config_types", "DBTOracleWMSSourceConfiguration"),
     "DBTOracleWMSTest": ("flext_dbt_oracle_wms.domain_types", "DBTOracleWMSTest"),
-    "DBTOracleWMSTestConfiguration": (
-        "flext_dbt_oracle_wms.config_types",
-        "DBTOracleWMSTestConfiguration",
-    ),
-    "FlextDBTOracleWMSSettings": (
-        "flext_dbt_oracle_wms.config_types",
-        "FlextDBTOracleWMSSettings",
-    ),
+    "DBTOracleWMSTestConfiguration": ("flext_dbt_oracle_wms.config_types", "DBTOracleWMSTestConfiguration"),
+    "FlextDBTOracleWMSSettings": ("flext_dbt_oracle_wms.config_types", "FlextDBTOracleWMSSettings"),
     "FlextDbtOracleWms": ("flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"),
-    "FlextDbtOracleWmsCliService": (
-        "flext_dbt_oracle_wms.cli",
-        "FlextDbtOracleWmsCliService",
-    ),
-    "FlextDbtOracleWmsClient": (
-        "flext_dbt_oracle_wms.client",
-        "FlextDbtOracleWmsClient",
-    ),
-    "FlextDbtOracleWmsConstants": (
-        "flext_dbt_oracle_wms.constants",
-        "FlextDbtOracleWmsConstants",
-    ),
-    "FlextDbtOracleWmsInventoryFact": (
-        "flext_dbt_oracle_wms.dbt_models",
-        "FlextDbtOracleWmsInventoryFact",
-    ),
-    "FlextDbtOracleWmsItemDimension": (
-        "flext_dbt_oracle_wms.dbt_models",
-        "FlextDbtOracleWmsItemDimension",
-    ),
-    "FlextDbtOracleWmsLocationDimension": (
-        "flext_dbt_oracle_wms.dbt_models",
-        "FlextDbtOracleWmsLocationDimension",
-    ),
-    "FlextDbtOracleWmsModels": (
-        "flext_dbt_oracle_wms.models",
-        "FlextDbtOracleWmsModels",
-    ),
-    "FlextDbtOracleWmsProtocols": (
-        "flext_dbt_oracle_wms.protocols",
-        "FlextDbtOracleWmsProtocols",
-    ),
-    "FlextDbtOracleWmsServices": (
-        "flext_dbt_oracle_wms.services",
-        "FlextDbtOracleWmsServices",
-    ),
-    "FlextDbtOracleWmsSettings": (
-        "flext_dbt_oracle_wms.settings",
-        "FlextDbtOracleWmsSettings",
-    ),
-    "FlextDbtOracleWmsShipmentFact": (
-        "flext_dbt_oracle_wms.dbt_models",
-        "FlextDbtOracleWmsShipmentFact",
-    ),
-    "FlextDbtOracleWmsTransformer": (
-        "flext_dbt_oracle_wms.dbt_models",
-        "FlextDbtOracleWmsTransformer",
-    ),
-    "FlextDbtOracleWmsTypes": (
-        "flext_dbt_oracle_wms.typings",
-        "FlextDbtOracleWmsTypes",
-    ),
-    "FlextDbtOracleWmsUtilities": (
-        "flext_dbt_oracle_wms.utilities",
-        "FlextDbtOracleWmsUtilities",
-    ),
+    "FlextDbtOracleWmsCliService": ("flext_dbt_oracle_wms.cli", "FlextDbtOracleWmsCliService"),
+    "FlextDbtOracleWmsClient": ("flext_dbt_oracle_wms.client", "FlextDbtOracleWmsClient"),
+    "FlextDbtOracleWmsConstants": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
+    "FlextDbtOracleWmsInventoryFact": ("flext_dbt_oracle_wms.dbt_models", "FlextDbtOracleWmsInventoryFact"),
+    "FlextDbtOracleWmsItemDimension": ("flext_dbt_oracle_wms.dbt_models", "FlextDbtOracleWmsItemDimension"),
+    "FlextDbtOracleWmsLocationDimension": ("flext_dbt_oracle_wms.dbt_models", "FlextDbtOracleWmsLocationDimension"),
+    "FlextDbtOracleWmsModels": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
+    "FlextDbtOracleWmsProtocols": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
+    "FlextDbtOracleWmsServices": ("flext_dbt_oracle_wms.services", "FlextDbtOracleWmsServices"),
+    "FlextDbtOracleWmsSettings": ("flext_dbt_oracle_wms.settings", "FlextDbtOracleWmsSettings"),
+    "FlextDbtOracleWmsShipmentFact": ("flext_dbt_oracle_wms.dbt_models", "FlextDbtOracleWmsShipmentFact"),
+    "FlextDbtOracleWmsTransformer": ("flext_dbt_oracle_wms.dbt_models", "FlextDbtOracleWmsTransformer"),
+    "FlextDbtOracleWmsTypes": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
+    "FlextDbtOracleWmsUtilities": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
     "__all__": ("flext_dbt_oracle_wms.__version__", "__all__"),
     "__author__": ("flext_dbt_oracle_wms.__version__", "__author__"),
     "__author_email__": ("flext_dbt_oracle_wms.__version__", "__author_email__"),
