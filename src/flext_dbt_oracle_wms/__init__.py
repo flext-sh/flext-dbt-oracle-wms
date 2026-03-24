@@ -64,70 +64,70 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsUtilities as u,
     )
 
-_LAZY_IMPORTS: Mapping[str, tuple[str, str]] = {
-    "FlextDbtOracleWms": ("flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"),
-    "FlextDbtOracleWmsCliService": (
+_LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
+    "FlextDbtOracleWms": ["flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"],
+    "FlextDbtOracleWmsCliService": [
         "flext_dbt_oracle_wms.cli",
         "FlextDbtOracleWmsCliService",
-    ),
-    "FlextDbtOracleWmsClient": (
+    ],
+    "FlextDbtOracleWmsClient": [
         "flext_dbt_oracle_wms.client",
         "FlextDbtOracleWmsClient",
-    ),
-    "FlextDbtOracleWmsConstants": (
+    ],
+    "FlextDbtOracleWmsConstants": [
         "flext_dbt_oracle_wms.constants",
         "FlextDbtOracleWmsConstants",
-    ),
-    "FlextDbtOracleWmsModels": (
+    ],
+    "FlextDbtOracleWmsModels": [
         "flext_dbt_oracle_wms.models",
         "FlextDbtOracleWmsModels",
-    ),
-    "FlextDbtOracleWmsProtocols": (
+    ],
+    "FlextDbtOracleWmsProtocols": [
         "flext_dbt_oracle_wms.protocols",
         "FlextDbtOracleWmsProtocols",
-    ),
-    "FlextDbtOracleWmsServices": (
+    ],
+    "FlextDbtOracleWmsServices": [
         "flext_dbt_oracle_wms.services",
         "FlextDbtOracleWmsServices",
-    ),
-    "FlextDbtOracleWmsSettings": (
+    ],
+    "FlextDbtOracleWmsSettings": [
         "flext_dbt_oracle_wms.settings",
         "FlextDbtOracleWmsSettings",
-    ),
-    "FlextDbtOracleWmsTypes": (
+    ],
+    "FlextDbtOracleWmsTypes": [
         "flext_dbt_oracle_wms.typings",
         "FlextDbtOracleWmsTypes",
-    ),
-    "FlextDbtOracleWmsUtilities": (
+    ],
+    "FlextDbtOracleWmsUtilities": [
         "flext_dbt_oracle_wms.utilities",
         "FlextDbtOracleWmsUtilities",
-    ),
-    "__all__": ("flext_dbt_oracle_wms.__version__", "__all__"),
-    "__author__": ("flext_dbt_oracle_wms.__version__", "__author__"),
-    "__author_email__": ("flext_dbt_oracle_wms.__version__", "__author_email__"),
-    "__description__": ("flext_dbt_oracle_wms.__version__", "__description__"),
-    "__license__": ("flext_dbt_oracle_wms.__version__", "__license__"),
-    "__title__": ("flext_dbt_oracle_wms.__version__", "__title__"),
-    "__url__": ("flext_dbt_oracle_wms.__version__", "__url__"),
-    "__version__": ("flext_dbt_oracle_wms.__version__", "__version__"),
-    "__version_info__": ("flext_dbt_oracle_wms.__version__", "__version_info__"),
-    "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
-    "d": ("flext_meltano", "d"),
-    "discover": ("flext_dbt_oracle_wms.cli", "discover"),
-    "e": ("flext_meltano", "e"),
-    "extract": ("flext_dbt_oracle_wms.cli", "extract"),
-    "h": ("flext_meltano", "h"),
-    "info": ("flext_dbt_oracle_wms.cli", "info"),
-    "logger": ("flext_dbt_oracle_wms.cli", "logger"),
-    "m": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
-    "main": ("flext_dbt_oracle_wms.cli", "main"),
-    "p": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
-    "pipeline": ("flext_dbt_oracle_wms.cli", "pipeline"),
-    "r": ("flext_meltano", "r"),
-    "s": ("flext_meltano", "s"),
-    "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
-    "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
-    "x": ("flext_meltano", "x"),
+    ],
+    "__all__": ["flext_dbt_oracle_wms.__version__", "__all__"],
+    "__author__": ["flext_dbt_oracle_wms.__version__", "__author__"],
+    "__author_email__": ["flext_dbt_oracle_wms.__version__", "__author_email__"],
+    "__description__": ["flext_dbt_oracle_wms.__version__", "__description__"],
+    "__license__": ["flext_dbt_oracle_wms.__version__", "__license__"],
+    "__title__": ["flext_dbt_oracle_wms.__version__", "__title__"],
+    "__url__": ["flext_dbt_oracle_wms.__version__", "__url__"],
+    "__version__": ["flext_dbt_oracle_wms.__version__", "__version__"],
+    "__version_info__": ["flext_dbt_oracle_wms.__version__", "__version_info__"],
+    "c": ["flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"],
+    "d": ["flext_meltano", "d"],
+    "discover": ["flext_dbt_oracle_wms.cli", "discover"],
+    "e": ["flext_meltano", "e"],
+    "extract": ["flext_dbt_oracle_wms.cli", "extract"],
+    "h": ["flext_meltano", "h"],
+    "info": ["flext_dbt_oracle_wms.cli", "info"],
+    "logger": ["flext_dbt_oracle_wms.cli", "logger"],
+    "m": ["flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"],
+    "main": ["flext_dbt_oracle_wms.cli", "main"],
+    "p": ["flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"],
+    "pipeline": ["flext_dbt_oracle_wms.cli", "pipeline"],
+    "r": ["flext_meltano", "r"],
+    "s": ["flext_meltano", "s"],
+    "t": ["flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"],
+    "u": ["flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"],
+    "x": ["flext_meltano", "x"],
 }
 
 __all__ = [

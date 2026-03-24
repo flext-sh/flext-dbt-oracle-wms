@@ -41,36 +41,36 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsTestUtilities as u,
     )
 
-_LAZY_IMPORTS: Mapping[str, tuple[str, str]] = {
-    "FlextDbtOracleWmsTestConstants": (
+_LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
+    "FlextDbtOracleWmsTestConstants": [
         "tests.constants",
         "FlextDbtOracleWmsTestConstants",
-    ),
-    "FlextDbtOracleWmsTestModels": ("tests.models", "FlextDbtOracleWmsTestModels"),
-    "FlextDbtOracleWmsTestProtocols": (
+    ],
+    "FlextDbtOracleWmsTestModels": ["tests.models", "FlextDbtOracleWmsTestModels"],
+    "FlextDbtOracleWmsTestProtocols": [
         "tests.protocols",
         "FlextDbtOracleWmsTestProtocols",
-    ),
-    "FlextDbtOracleWmsTestTypes": ("tests.typings", "FlextDbtOracleWmsTestTypes"),
-    "FlextDbtOracleWmsTestUtilities": (
+    ],
+    "FlextDbtOracleWmsTestTypes": ["tests.typings", "FlextDbtOracleWmsTestTypes"],
+    "FlextDbtOracleWmsTestUtilities": [
         "tests.utilities",
         "FlextDbtOracleWmsTestUtilities",
-    ),
-    "c": ("tests.constants", "FlextDbtOracleWmsTestConstants"),
-    "d": ("flext_tests", "d"),
-    "e": ("flext_tests", "e"),
-    "h": ("flext_tests", "h"),
-    "m": ("tests.models", "FlextDbtOracleWmsTestModels"),
-    "p": ("tests.protocols", "FlextDbtOracleWmsTestProtocols"),
-    "r": ("flext_tests", "r"),
-    "s": ("flext_tests", "s"),
-    "t": ("tests.typings", "FlextDbtOracleWmsTestTypes"),
-    "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
-    "test_package_import": ("tests.unit.test_basic", "test_package_import"),
-    "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
-    "u": ("tests.utilities", "FlextDbtOracleWmsTestUtilities"),
-    "unit": ("tests.unit", ""),
-    "x": ("flext_tests", "x"),
+    ],
+    "c": ["tests.constants", "FlextDbtOracleWmsTestConstants"],
+    "d": ["flext_tests", "d"],
+    "e": ["flext_tests", "e"],
+    "h": ["flext_tests", "h"],
+    "m": ["tests.models", "FlextDbtOracleWmsTestModels"],
+    "p": ["tests.protocols", "FlextDbtOracleWmsTestProtocols"],
+    "r": ["flext_tests", "r"],
+    "s": ["flext_tests", "s"],
+    "t": ["tests.typings", "FlextDbtOracleWmsTestTypes"],
+    "test_basic_import": ["tests.unit.test_basic", "test_basic_import"],
+    "test_package_import": ["tests.unit.test_basic", "test_package_import"],
+    "test_package_structure": ["tests.unit.test_basic", "test_package_structure"],
+    "u": ["tests.utilities", "FlextDbtOracleWmsTestUtilities"],
+    "unit": ["tests.unit", ""],
+    "x": ["flext_tests", "x"],
 }
 
 __all__ = [
