@@ -43,7 +43,8 @@ class FlextDbtOracleWms(
     """
 
     def __init__(
-        self, config: FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings | None = None,
+        self,
+        config: FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__(

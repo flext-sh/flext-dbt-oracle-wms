@@ -273,7 +273,8 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         dbt_threads: Annotated[
             int,
             Field(
-                default=4, description="Number of DBT threads for parallel execution",
+                default=4,
+                description="Number of DBT threads for parallel execution",
             ),
         ]
         dbt_target: Annotated[
