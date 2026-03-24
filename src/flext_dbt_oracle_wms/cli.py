@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sys
 from collections.abc import Mapping
+from typing import ClassVar
 
 from flext_core import FlextLogger, r
 from pydantic import TypeAdapter, ValidationError
@@ -13,11 +14,12 @@ from flext_dbt_oracle_wms import t
 from .client import FlextDbtOracleWmsClient
 
 logger = FlextLogger(__name__)
-_STRING_ADAPTER = TypeAdapter(str)
 
 
 class FlextDbtOracleWmsCliService:
     """CLI adapter that calls typed client operations."""
+
+    _STRING_ADAPTER: ClassVar[TypeAdapter[str]] = TypeAdapter(str)
 
     def __init__(self) -> None:
         """Initialize CLI service with a DBT Oracle WMS client."""
@@ -43,7 +45,11 @@ class FlextDbtOracleWmsCliService:
         if args is not None:
             entity_value = args.get("entity")
             try:
-                validated_entity = _STRING_ADAPTER.validate_python(entity_value).strip()
+                validated_entity = (
+                    FlextDbtOracleWmsCliService._STRING_ADAPTER.validate_python(
+                        entity_value
+                    ).strip()
+                )
             except ValidationError:
                 validated_entity = ""
             if validated_entity:
