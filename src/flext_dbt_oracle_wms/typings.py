@@ -82,7 +82,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
         type ConnectionConfig = Mapping[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            t.Scalar | Mapping[str, t.ContainerValue | None],
         ]
         type DatabaseConnection = Mapping[
             str,
@@ -112,7 +112,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type AllocationData = Mapping[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            t.Scalar | Mapping[str, t.ContainerValue | None],
         ]
         type OrderData = Mapping[
             str,
@@ -180,7 +180,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type AllocationRules = Mapping[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            t.Scalar | Mapping[str, t.ContainerValue | None],
         ]
         type PickingRules = Mapping[
             str,
@@ -255,7 +255,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type ConnectionAdapter = Mapping[
             str,
-            str | int | bool | Mapping[str, t.ContainerValue | None],
+            t.Scalar | Mapping[str, t.ContainerValue | None],
         ]
         type QueryAdapter = Mapping[
             str,
@@ -298,7 +298,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
     type ProjectType = c.ProjectType
     type DbtOracleWmsProjectConfig = Mapping[str, t.ContainerValue | None]
-    type WmsTransformConfig = Mapping[str, str | int | bool | Sequence[str]]
+    type WmsTransformConfig = Mapping[str, t.Scalar | Sequence[str]]
     type WmsAnalyticsConfig = Mapping[
         str,
         bool | str | Mapping[str, t.ContainerValue | None],
