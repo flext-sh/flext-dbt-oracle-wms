@@ -15,7 +15,7 @@ from flext_core import FlextService, r
 from flext_dbt_oracle_wms import t
 from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 
 
 class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
