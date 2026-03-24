@@ -121,7 +121,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         item_number: Annotated[str, Field(default="")]
         item_description: Annotated[str, Field(default="")]
 
-        def to_dbt_dict(self) -> Mapping[str, t.Scalar]:
+        def to_dbt_dict(self) -> t.ConfigurationMapping:
             """Convert item dimension to DBT-compatible dictionary."""
             return {
                 "item_id": self.item_id,
@@ -132,24 +132,24 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     class FlextDbtOracleWmsInventoryFact(BaseModel):
         """Inventory fact table model."""
 
-        record: Annotated[Mapping[str, t.Scalar], Field(default_factory=dict)]
+        record: Annotated[t.ConfigurationMapping, Field(default_factory=dict)]
 
     class FlextDbtOracleWmsLocationDimension(BaseModel):
         """Location dimension model for warehouse analytics."""
 
-        record: Annotated[Mapping[str, t.Scalar], Field(default_factory=dict)]
+        record: Annotated[t.ConfigurationMapping, Field(default_factory=dict)]
 
     class FlextDbtOracleWmsShipmentFact(BaseModel):
         """Shipment fact table model."""
 
-        record: Annotated[Mapping[str, t.Scalar], Field(default_factory=dict)]
+        record: Annotated[t.ConfigurationMapping, Field(default_factory=dict)]
 
     class FlextDbtOracleWmsTransformer:
         """Transformer for WMS entity data to DBT models."""
 
         def transform_all_entities(
-            self, entity_data: Mapping[str, Sequence[Mapping[str, t.Scalar]]]
-        ) -> Mapping[str, Sequence[Mapping[str, t.Scalar]]]:
+            self, entity_data: Mapping[str, Sequence[t.ConfigurationMapping]]
+        ) -> Mapping[str, Sequence[t.ConfigurationMapping]]:
             """Transform all WMS entities to DBT-compatible format."""
             items: Sequence[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension] = (
                 self.transform_items(entity_data.get("items", []))
@@ -157,7 +157,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             return {"items": [item.to_dbt_dict() for item in items]}
 
         def transform_items(
-            self, records: Sequence[Mapping[str, t.Scalar]]
+            self, records: Sequence[t.ConfigurationMapping]
         ) -> Sequence[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension]:
             """Transform item records to item dimension models."""
             transformed: MutableSequence[
@@ -180,7 +180,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             return transformed
 
         def validate_business_rules(
-            self, records: Sequence[Mapping[str, t.Scalar]]
+            self, records: Sequence[t.ConfigurationMapping]
         ) -> r[bool]:
             """Validate business rules for WMS records."""
             if not records:
@@ -196,14 +196,14 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         schema_name: str
         table_name: str
         columns: Annotated[
-            Sequence[Mapping[str, t.Scalar]], Field(default_factory=list)
+            Sequence[t.ConfigurationMapping], Field(default_factory=list)
         ]
         materialization: str
         sql_content: str
         description: str
         oracle_source: str
-        dependencies: Annotated[Sequence[str], Field(default_factory=list)]
-        wms_business_rules: Annotated[Sequence[str], Field(default_factory=list)]
+        dependencies: Annotated[t.StrSequence, Field(default_factory=list)]
+        wms_business_rules: Annotated[t.StrSequence, Field(default_factory=list)]
 
         def validate_business_rules(self) -> r[bool]:
             """Validate essential DBT model constraints."""
@@ -216,14 +216,14 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     class ModelGenerator:
         """Generator for lightweight DBT model objects."""
 
-        def __init__(self, config: Mapping[str, t.Scalar]) -> None:
+        def __init__(self, config: t.ConfigurationMapping) -> None:
             """Store generation config for later model creation."""
             super().__init__()
             self.config = config
 
         def generate_wms_staging_models(
             self,
-            oracle_sources: Sequence[str],
+            oracle_sources: t.StrSequence,
         ) -> r[Sequence[FlextDbtOracleWmsModels.DbtModel]]:
             """Create one staging model per source name."""
             models = [
@@ -249,7 +249,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         """Runtime settings for DBT Oracle WMS transformations."""
 
         required_fields_per_entity: Annotated[
-            Mapping[str, Sequence[str]],
+            Mapping[str, t.StrSequence],
             Field(
                 default_factory=dict,
                 description="Required fields per WMS entity for validation",
@@ -274,7 +274,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     @classmethod
     def create_generator(
         cls,
-        config: Mapping[str, t.Scalar],
+        config: t.ConfigurationMapping,
     ) -> FlextDbtOracleWmsModels.ModelGenerator:
         """Create a model generator with explicit configuration."""
         return cls.ModelGenerator(config)

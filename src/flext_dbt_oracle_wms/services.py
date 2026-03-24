@@ -25,7 +25,7 @@ class FlextDbtOracleWmsServices:
         )
 
     def generate_workflow_recommendations(
-        self, entities: Sequence[Mapping[str, t.Scalar]] | None = None
+        self, entities: Sequence[t.ConfigurationMapping] | None = None
     ) -> r[t.Dict]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
@@ -44,7 +44,7 @@ class FlextDbtOracleWmsServices:
 
     def log_workflow_completion(
         self,
-        tracking_info: Mapping[str, t.Scalar],
+        tracking_info: t.ConfigurationMapping,
         result: r[t.Dict],
     ) -> None:
         """Log workflow completion status."""
@@ -58,7 +58,7 @@ class FlextDbtOracleWmsServices:
         self,
         workflow_name: str,
         workflow_type: str,
-        entity_names: Sequence[str] | None = None,
+        entity_names: t.StrSequence | None = None,
         additional_data: Mapping[str, str | int | float] | None = None,
     ) -> t.Dict:
         """Return tracking payload for workflow instrumentation."""
