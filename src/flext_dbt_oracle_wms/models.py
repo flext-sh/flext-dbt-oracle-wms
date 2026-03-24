@@ -270,6 +270,16 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             str,
             Field(default="", description="Base URL for Oracle WMS API"),
         ]
+        dbt_threads: Annotated[
+            int,
+            Field(
+                default=4, description="Number of DBT threads for parallel execution"
+            ),
+        ]
+        dbt_target: Annotated[
+            str,
+            Field(default="dev", description="DBT target profile (dev/prod)"),
+        ]
 
     class FlextDBTOracleWMSSettings(FlextDbtOracleWmsSettings):
         """Settings for FLEXT DBT Oracle WMS integration."""
