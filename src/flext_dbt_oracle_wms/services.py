@@ -25,7 +25,8 @@ class FlextDbtOracleWmsServices:
         )
 
     def generate_workflow_recommendations(
-        self, entities: Sequence[t.ConfigurationMapping] | None = None
+        self,
+        entities: Sequence[t.ConfigurationMapping] | None = None,
     ) -> r[t.Dict]:
         """Generate simple workflow recommendations for entity processing."""
         entity_list = entities or []
@@ -39,7 +40,7 @@ class FlextDbtOracleWmsServices:
                 "recommendation": recommendation_message,
                 "dbt_threads": str(self.config.dbt_threads),
                 "target": str(self.config.dbt_target),
-            })
+            }),
         )
 
     def log_workflow_completion(

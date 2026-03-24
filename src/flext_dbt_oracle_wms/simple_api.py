@@ -115,7 +115,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                     "include_shipment_tracking": include_shipment_tracking,
                     "inventory_count": len(inventory_items) if inventory_items else 0,
                     "shipment_count": len(shipments) if shipments else 0,
-                })
+                }),
             )
         except (
             ValueError,
@@ -153,7 +153,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                     "inventory_items": len(inventory_items) if inventory_items else 0,
                     "shipments": len(shipments) if shipments else 0,
                     "output_dir": str(output_dir),
-                })
+                }),
             )
         except (
             ValueError,
@@ -182,7 +182,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 t.Dict.model_validate({
                     "item_id": item_id,
                     "status": "info_retrieved",
-                })
+                }),
             )
         except (
             ValueError,
@@ -211,7 +211,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                 t.Dict.model_validate({
                     "shipment_id": shipment_id,
                     "status": "info_retrieved",
-                })
+                }),
             )
         except (
             ValueError,
@@ -225,7 +225,9 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
             return r[t.Dict].fail(f"Shipment info retrieval failed: {e}")
 
     def monitor_dbt_execution(
-        self, command: str, timeout_seconds: int = 300
+        self,
+        command: str,
+        timeout_seconds: int = 300,
     ) -> r[t.Dict]:
         """Monitor DBT command execution with metrics.
 
@@ -244,7 +246,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                     "status": "monitored",
                     "command": command,
                     "timeout": timeout_seconds,
-                })
+                }),
             )
         except (
             ValueError,
@@ -288,7 +290,7 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
                     if inventory_items
                     else 0,
                     "shipments_processed": len(shipments) if shipments else 0,
-                })
+                }),
             )
         except (
             ValueError,

@@ -23,13 +23,17 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
             """Protocol for DBT operation execution."""
 
             def run_dbt_models(
-                self, models: t.StrSequence | None = None, config: t.Dict | None = None
+                self,
+                models: t.StrSequence | None = None,
+                config: t.Dict | None = None,
             ) -> r[t.Dict]:
                 """Run DBT models and return execution metadata."""
                 ...
 
             def test_dbt_models(
-                self, models: t.StrSequence | None = None, config: t.Dict | None = None
+                self,
+                models: t.StrSequence | None = None,
+                config: t.Dict | None = None,
             ) -> r[t.Dict]:
                 """Run DBT tests and return status metadata."""
                 ...
@@ -39,7 +43,9 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
             """Protocol for Oracle WMS data extraction and transform stages."""
 
             def extract_wms_inventory_data(
-                self, wms_config: t.Dict, extraction_config: t.Dict
+                self,
+                wms_config: t.Dict,
+                extraction_config: t.Dict,
             ) -> r[Sequence[t.Dict]]:
                 """Extract inventory records from Oracle WMS."""
                 ...

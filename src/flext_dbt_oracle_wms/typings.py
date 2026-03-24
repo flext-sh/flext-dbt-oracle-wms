@@ -47,7 +47,8 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         type Version = str
         type CreatedAt = Annotated[datetime, "Timestamp of when entity was created"]
         type UpdatedAt = Annotated[
-            datetime, "Timestamp of when entity was last updated"
+            datetime,
+            "Timestamp of when entity was last updated",
         ]
 
         type DBTOracleWMSProjectTimeout = int
@@ -76,14 +77,16 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
             str | Sequence[Mapping[str, FlextOracleWmsTypes.ContainerValue | None]],
         ]
         type ProfileConfiguration = Mapping[
-            str, FlextOracleWmsTypes.ContainerValue | None
+            str,
+            FlextOracleWmsTypes.ContainerValue | None,
         ]
         type MacroConfiguration = Mapping[
             str,
             str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
         ]
         type TestConfiguration = Mapping[
-            str, str | bool | FlextOracleWmsTypes.StrSequence
+            str,
+            str | bool | FlextOracleWmsTypes.StrSequence,
         ]
 
         type ConnectionConfig = Mapping[
@@ -334,10 +337,12 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
     type ProjectType = c.ProjectType
     type DbtOracleWmsProjectConfig = Mapping[
-        str, FlextOracleWmsTypes.ContainerValue | None
+        str,
+        FlextOracleWmsTypes.ContainerValue | None,
     ]
     type WmsTransformConfig = Mapping[
-        str, FlextOracleWmsTypes.Scalar | FlextOracleWmsTypes.StrSequence
+        str,
+        FlextOracleWmsTypes.Scalar | FlextOracleWmsTypes.StrSequence,
     ]
     type WmsAnalyticsConfig = Mapping[
         str,

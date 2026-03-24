@@ -148,7 +148,8 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         """Transformer for WMS entity data to DBT models."""
 
         def transform_all_entities(
-            self, entity_data: Mapping[str, Sequence[t.ConfigurationMapping]]
+            self,
+            entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
         ) -> Mapping[str, Sequence[t.ConfigurationMapping]]:
             """Transform all WMS entities to DBT-compatible format."""
             items: Sequence[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension] = (
@@ -157,7 +158,8 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             return {"items": [item.to_dbt_dict() for item in items]}
 
         def transform_items(
-            self, records: Sequence[t.ConfigurationMapping]
+            self,
+            records: Sequence[t.ConfigurationMapping],
         ) -> Sequence[FlextDbtOracleWmsModels.FlextDbtOracleWmsItemDimension]:
             """Transform item records to item dimension models."""
             transformed: MutableSequence[
@@ -166,7 +168,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             for record in records:
                 try:
                     raw_record = FlextDbtOracleWmsModels._RawItemRecord.model_validate(
-                        record
+                        record,
                     )
                 except ValidationError:
                     continue
@@ -175,12 +177,13 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                         item_id=raw_record.item_id,
                         item_number=raw_record.item_number,
                         item_description=raw_record.item_description,
-                    )
+                    ),
                 )
             return transformed
 
         def validate_business_rules(
-            self, records: Sequence[t.ConfigurationMapping]
+            self,
+            records: Sequence[t.ConfigurationMapping],
         ) -> r[bool]:
             """Validate business rules for WMS records."""
             if not records:
@@ -196,7 +199,8 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         schema_name: str
         table_name: str
         columns: Annotated[
-            Sequence[t.ConfigurationMapping], Field(default_factory=list)
+            Sequence[t.ConfigurationMapping],
+            Field(default_factory=list),
         ]
         materialization: str
         sql_content: str
@@ -263,13 +267,12 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             ),
         ]
         oracle_wms_base_url: Annotated[
-            str, Field(default="", description="Base URL for Oracle WMS API")
+            str,
+            Field(default="", description="Base URL for Oracle WMS API"),
         ]
 
     class FlextDBTOracleWMSSettings(FlextDbtOracleWmsSettings):
         """Settings for FLEXT DBT Oracle WMS integration."""
-
-        pass
 
     @classmethod
     def create_generator(

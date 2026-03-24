@@ -29,12 +29,14 @@ class FlextDbtOracleWmsClient:
         return r[t.StrSequence].ok(entities)
 
     def extract_oracle_wms_data(
-        self, entity_name: str, filters: t.ConfigurationMapping | None = None
+        self,
+        entity_name: str,
+        filters: t.ConfigurationMapping | None = None,
     ) -> r[Sequence[t.ConfigurationMapping]]:
         """Return sample records for a requested entity."""
         _ = filters
         return r[Sequence[t.ScalarMapping]].ok([
-            {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"}
+            {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"},
         ])
 
     def run_full_oracle_wms_to_dbt_pipeline(
@@ -58,7 +60,8 @@ class FlextDbtOracleWmsClient:
             if extract_result.is_failure:
                 return r[t.Dict].fail(extract_result.error or "Extraction failed")
             validate_result = self.validate_oracle_wms_data(
-                entity_name, extract_result.value
+                entity_name,
+                extract_result.value,
             )
             if validate_result.is_failure:
                 return r[t.Dict].fail(validate_result.error or "Validation failed")
@@ -74,7 +77,7 @@ class FlextDbtOracleWmsClient:
                 "total_records": sum(len(records) for records in extracted.values()),
                 "transformation_status": str(tr_val.get("status", "")),
                 "pipeline_status": "completed",
-            })
+            }),
         )
 
     def test_oracle_wms_connection(self) -> r[t.Dict]:
@@ -84,7 +87,7 @@ class FlextDbtOracleWmsClient:
                 "status": "connected",
                 "environment": self.config.oracle_wms_environment,
                 "base_url": self.config.oracle_wms_base_url,
-            })
+            }),
         )
 
     def transform_with_dbt(
@@ -98,11 +101,13 @@ class FlextDbtOracleWmsClient:
                 "transformed_tables": ",".join(entity_data.keys()),
                 "requested_models": ",".join(model_names or []),
                 "status": "success",
-            })
+            }),
         )
 
     def validate_oracle_wms_data(
-        self, entity_name: str, records: Sequence[t.ConfigurationMapping]
+        self,
+        entity_name: str,
+        records: Sequence[t.ConfigurationMapping],
     ) -> r[Sequence[t.ConfigurationMapping]]:
         """Validate records list for a specific entity."""
         _ = entity_name
