@@ -78,7 +78,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
             str,
             str | Mapping[str, t.ContainerValue | None],
         ]
-        type TestConfiguration = Mapping[str, str | bool | t.StrSequence]
+        type TestConfiguration = Mapping[str, str | bool | Sequence[str]]
 
         type ConnectionConfig = Mapping[
             str,
@@ -108,7 +108,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type LocationData = Mapping[
             str,
-            str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
         type AllocationData = Mapping[
             str,
@@ -124,7 +124,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type ShipmentData = Mapping[
             str,
-            str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
 
         type TransformationConfig = Mapping[
@@ -137,7 +137,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type DataValidation = Mapping[
             str,
-            bool | str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            bool | str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
         type MaterializationConfig = Mapping[
             str,
@@ -162,7 +162,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type BridgeModel = Mapping[
             str,
-            str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
         type StarSchema = Mapping[
             str,
@@ -172,7 +172,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
             str,
             str | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type GrainDefinition = Mapping[str, str | t.StrSequence]
+        type GrainDefinition = Mapping[str, str | Sequence[str]]
 
         type InventoryRules = Mapping[
             str,
@@ -184,7 +184,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type PickingRules = Mapping[
             str,
-            str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
         type ReceivingRules = Mapping[
             str,
@@ -209,7 +209,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type ModelDependency = Mapping[
             str,
-            str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
         type ModelTest = Mapping[
             str,
@@ -243,7 +243,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
             str,
             str | int | Mapping[str, t.ContainerValue | None],
         ]
-        type SourceTest = Mapping[str, str | bool | t.StrSequence]
+        type SourceTest = Mapping[str, str | bool | Sequence[str]]
         type SourceSchema = Mapping[
             str,
             str | Mapping[str, t.ContainerValue | None],
@@ -263,7 +263,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
         ]
         type SchemaAdapter = Mapping[
             str,
-            str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
         type TransactionAdapter = Mapping[
             str,
@@ -276,7 +276,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
         type PartitionStrategy = Mapping[
             str,
-            str | t.StrSequence | Mapping[str, t.ContainerValue | None],
+            str | Sequence[str] | Mapping[str, t.ContainerValue | None],
         ]
         type IndexStrategy = Mapping[
             str,
@@ -294,11 +294,11 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
             str,
             int | bool | Mapping[str, t.ContainerValue | None],
         ]
-        type OracleHints = Mapping[str, str | t.StrSequence]
+        type OracleHints = Mapping[str, str | Sequence[str]]
 
     type ProjectType = c.ProjectType
     type DbtOracleWmsProjectConfig = Mapping[str, t.ContainerValue | None]
-    type WmsTransformConfig = Mapping[str, t.Scalar | t.StrSequence]
+    type WmsTransformConfig = Mapping[str, t.Scalar | Sequence[str]]
     type WmsAnalyticsConfig = Mapping[
         str,
         bool | str | Mapping[str, t.ContainerValue | None],

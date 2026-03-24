@@ -8,6 +8,7 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import override
 
 from flext_core import FlextService, r
@@ -88,8 +89,8 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
 
     def extract_wms_metadata(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
+        inventory_items: Sequence[str] | None = None,
+        shipments: Sequence[str] | None = None,
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
@@ -130,8 +131,8 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
 
     def generate_dbt_models_from_wms(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
+        inventory_items: Sequence[str] | None = None,
+        shipments: Sequence[str] | None = None,
         output_dir: str | None = None,
     ) -> r[t.Dict]:
         """Generate DBT models from Oracle WMS data.
@@ -259,8 +260,8 @@ class FlextDbtOracleWms(FlextService[FlextDbtOracleWmsSettings]):
 
     def run_oracle_wms_to_dbt_workflow(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
+        inventory_items: Sequence[str] | None = None,
+        shipments: Sequence[str] | None = None,
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
