@@ -7,8 +7,7 @@ from collections.abc import Mapping, Sequence
 from flext_core import FlextLogger, r
 
 from flext_dbt_oracle_wms import t
-
-from .settings import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels as m
 
 logger = FlextLogger(__name__)
 PERFORMANCE_RECOMMENDATION_THRESHOLD = 20
@@ -17,11 +16,11 @@ PERFORMANCE_RECOMMENDATION_THRESHOLD = 20
 class FlextDbtOracleWmsServices:
     """Service facade with recommendation and monitoring helpers."""
 
-    def __init__(self, config: FlextDbtOracleWmsSettings | None = None) -> None:
+    def __init__(self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize service state and default settings."""
         super().__init__()
         self.config = (
-            config if config is not None else FlextDbtOracleWmsSettings.get_global()
+            config if config is not None else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
         )
 
     def generate_workflow_recommendations(

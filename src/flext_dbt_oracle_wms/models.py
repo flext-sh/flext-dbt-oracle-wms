@@ -109,7 +109,9 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             target: Annotated[str, Field(default="dev")]
 
         # Models from dbt_models.py
-        class _RawItemRecord(BaseModel):
+        class RawItemRecord(BaseModel):
+            """Raw item record from Oracle WMS."""
+
             model_config: ClassVar[ConfigDict] = ConfigDict(extra="ignore")
 
             item_id: Annotated[str, Field(default="")]
@@ -171,7 +173,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                 ] = []
                 for record in records:
                     try:
-                        raw_record = FlextDbtOracleWmsModels.DbtOracleWms._RawItemRecord.model_validate(
+                        raw_record = FlextDbtOracleWmsModels.DbtOracleWms.RawItemRecord.model_validate(
                             record,
                         )
                     except ValidationError:
