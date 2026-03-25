@@ -33,10 +33,9 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         """DBT source definition."""
 
         name: Annotated[str, Field(default="")]
-        source_schema: Annotated[
-            Mapping[str, t.ContainerValue | None],
-            Field(default_factory=dict),
-        ]
+        source_schema: Annotated[Mapping[str, t.ContainerValue | None]] = Field(
+            default_factory=dict
+        )
 
     class DBTOracleWMSTest(BaseModel):
         """DBT test definition."""
@@ -132,17 +131,17 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     class FlextDbtOracleWmsInventoryFact(BaseModel):
         """Inventory fact table model."""
 
-        record: Annotated[t.ConfigurationMapping, Field(default_factory=dict)]
+        record: t.ConfigurationMapping = Field(default_factory=dict)
 
     class FlextDbtOracleWmsLocationDimension(BaseModel):
         """Location dimension model for warehouse analytics."""
 
-        record: Annotated[t.ConfigurationMapping, Field(default_factory=dict)]
+        record: t.ConfigurationMapping = Field(default_factory=dict)
 
     class FlextDbtOracleWmsShipmentFact(BaseModel):
         """Shipment fact table model."""
 
-        record: Annotated[t.ConfigurationMapping, Field(default_factory=dict)]
+        record: t.ConfigurationMapping = Field(default_factory=dict)
 
     class FlextDbtOracleWmsTransformer:
         """Transformer for WMS entity data to DBT models."""
@@ -198,16 +197,13 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         wms_entity_type: str
         schema_name: str
         table_name: str
-        columns: Annotated[
-            Sequence[t.ConfigurationMapping],
-            Field(default_factory=list),
-        ]
+        columns: Sequence[t.ConfigurationMapping] = Field(default_factory=list)
         materialization: str
         sql_content: str
         description: str
         oracle_source: str
-        dependencies: Annotated[t.StrSequence, Field(default_factory=list)]
-        wms_business_rules: Annotated[t.StrSequence, Field(default_factory=list)]
+        dependencies: t.StrSequence = Field(default_factory=list)
+        wms_business_rules: t.StrSequence = Field(default_factory=list)
 
         def validate_business_rules(self) -> r[bool]:
             """Validate essential DBT model constraints."""
@@ -255,10 +251,9 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
         required_fields_per_entity: Annotated[
             Mapping[str, t.StrSequence],
             Field(
-                default_factory=dict,
                 description="Required fields per WMS entity for validation",
             ),
-        ]
+        ] = Field(default_factory=dict)
         oracle_wms_environment: Annotated[
             str,
             Field(
