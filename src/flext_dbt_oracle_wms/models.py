@@ -204,7 +204,9 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             wms_entity_type: str
             schema_name: str
             table_name: str
-            columns: Sequence[t.ConfigurationMapping] = Field(default_factory=lambda: list[t.ConfigurationMapping]())
+            columns: Sequence[t.ConfigurationMapping] = Field(
+                default_factory=lambda: list[t.ConfigurationMapping]()
+            )
             materialization: str
             sql_content: str
             description: str
