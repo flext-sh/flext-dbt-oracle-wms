@@ -44,7 +44,8 @@ class FlextDbtOracleWms(
 
     def __init__(
         self,
-        config: FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
+        config: FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings
+        | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__(
@@ -332,11 +333,15 @@ class FlextDbtOracleWms(
             return r[bool].fail(f"Connection validation failed: {e}")
 
     @override
-    def execute(self) -> r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings]:
+    def execute(
+        self,
+    ) -> r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         try:
             self.logger.info("Executing DBT Oracle WMS service")
-            return r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings].ok(self.config)
+            return r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings].ok(
+                self.config
+            )
         except (
             ValueError,
             TypeError,
@@ -346,7 +351,9 @@ class FlextDbtOracleWms(
             RuntimeError,
             ImportError,
         ) as e:
-            return r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings].fail(
+            return r[
+                FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings
+            ].fail(
                 f"Service execution failed: {e}",
             )
 
