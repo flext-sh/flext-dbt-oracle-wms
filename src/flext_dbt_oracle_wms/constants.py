@@ -7,12 +7,13 @@ from enum import StrEnum, unique
 from typing import TYPE_CHECKING, Final
 
 from flext_meltano import FlextMeltanoConstants
+from flext_oracle_wms import FlextOracleWmsConstants
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import t
 
 
-class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
+class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):
     """Constants for DBT Oracle WMS with dual inheritance from Meltano and WMS domains."""
 
     class DbtOracleWms:
