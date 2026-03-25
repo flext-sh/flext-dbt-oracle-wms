@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from enum import StrEnum, unique
-from typing import Final
+from typing import TYPE_CHECKING, Final
 
-from flext_core import t
 from flext_meltano import FlextMeltanoConstants
+
+if TYPE_CHECKING:
+    from flext_dbt_oracle_wms import t
 
 
 class FlextDbtOracleWmsConstants(FlextMeltanoConstants):
