@@ -16,11 +16,15 @@ PERFORMANCE_RECOMMENDATION_THRESHOLD = 20
 class FlextDbtOracleWmsServices:
     """Service facade with recommendation and monitoring helpers."""
 
-    def __init__(self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None) -> None:
+    def __init__(
+        self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
+    ) -> None:
         """Initialize service state and default settings."""
         super().__init__()
         self.config = (
-            config if config is not None else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
+            config
+            if config is not None
+            else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
         )
 
     def generate_workflow_recommendations(

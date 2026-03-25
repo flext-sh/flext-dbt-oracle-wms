@@ -15,11 +15,15 @@ logger = FlextLogger(__name__)
 class FlextDbtOracleWmsClient:
     """DBT Oracle WMS client with typed extraction and transform stubs."""
 
-    def __init__(self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None) -> None:
+    def __init__(
+        self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
+    ) -> None:
         """Initialize client with explicit or global settings."""
         super().__init__()
         self.config = (
-            config if config is not None else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
+            config
+            if config is not None
+            else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
         )
 
     def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
