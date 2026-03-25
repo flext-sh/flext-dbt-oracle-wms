@@ -1,5 +1,5 @@
 # AUTO-GENERATED FILE — DO NOT EDIT MANUALLY.
-# Regenerate with: make codegen
+# Regenerate with: make gen
 #
 """FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using consolidated DBT patterns.
 
