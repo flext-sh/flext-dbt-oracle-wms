@@ -254,101 +254,103 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
             str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
         ]
 
-    class DbtSource:
-        """DBT Oracle WMS source complex types."""
+        class DbtSource:
+            """DBT Oracle WMS source complex types."""
 
-        type SourceDefinition = Mapping[
-            str,
-            str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type SourceConnection = Mapping[
-            str,
-            FlextOracleWmsTypes.ContainerValue
-            | None
-            | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type SourceTable = Mapping[
-            str,
-            str | Sequence[Mapping[str, FlextOracleWmsTypes.ContainerValue | None]],
-        ]
-        type SourceFreshness = Mapping[
-            str,
-            str | int | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type SourceTest = Mapping[str, str | bool | FlextOracleWmsTypes.StrSequence]
-        type SourceSchema = Mapping[
-            str,
-            str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
+            type SourceDefinition = Mapping[
+                str,
+                str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type SourceConnection = Mapping[
+                str,
+                FlextOracleWmsTypes.ContainerValue
+                | None
+                | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type SourceTable = Mapping[
+                str,
+                str | Sequence[Mapping[str, FlextOracleWmsTypes.ContainerValue | None]],
+            ]
+            type SourceFreshness = Mapping[
+                str,
+                str | int | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type SourceTest = Mapping[str, str | bool | FlextOracleWmsTypes.StrSequence]
+            type SourceSchema = Mapping[
+                str,
+                str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
 
-        type AdapterConfiguration = Mapping[
+            type AdapterConfiguration = Mapping[
+                str,
+                FlextOracleWmsTypes.ContainerValue
+                | None
+                | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type ConnectionAdapter = Mapping[
+                str,
+                FlextOracleWmsTypes.Scalar
+                | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type QueryAdapter = Mapping[
+                str,
+                str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type SchemaAdapter = Mapping[
+                str,
+                str
+                | FlextOracleWmsTypes.StrSequence
+                | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type TransactionAdapter = Mapping[
+                str,
+                bool | str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type WmsAdapter = Mapping[
+                str,
+                str | int | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+
+            type PartitionStrategy = Mapping[
+                str,
+                str
+                | FlextOracleWmsTypes.StrSequence
+                | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type IndexStrategy = Mapping[
+                str,
+                str | bool | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type MaterializationStrategy = Mapping[
+                str,
+                str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type CacheStrategy = Mapping[
+                str,
+                bool | int | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type ParallelProcessing = Mapping[
+                str,
+                int | bool | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            ]
+            type OracleHints = Mapping[str, str | FlextOracleWmsTypes.StrSequence]
+
+        type ProjectType = c.DbtOracleWms.ProjectType
+        type DbtOracleWmsProjectConfig = Mapping[
             str,
-            FlextOracleWmsTypes.ContainerValue
-            | None
-            | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            FlextOracleWmsTypes.ContainerValue | None,
         ]
-        type ConnectionAdapter = Mapping[
+        type WmsTransformConfig = Mapping[
             str,
-            FlextOracleWmsTypes.Scalar
-            | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+            FlextOracleWmsTypes.Scalar | FlextOracleWmsTypes.StrSequence,
         ]
-        type QueryAdapter = Mapping[
-            str,
-            str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type SchemaAdapter = Mapping[
-            str,
-            str
-            | FlextOracleWmsTypes.StrSequence
-            | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type TransactionAdapter = Mapping[
+        type WmsAnalyticsConfig = Mapping[
             str,
             bool | str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
         ]
-        type WmsAdapter = Mapping[
-            str,
-            str | int | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
+        type DbtWmsPipelineConfig = Mapping[
+            str, FlextOracleWmsTypes.ContainerValue | None
         ]
-
-        type PartitionStrategy = Mapping[
-            str,
-            str
-            | FlextOracleWmsTypes.StrSequence
-            | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type IndexStrategy = Mapping[
-            str,
-            str | bool | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type MaterializationStrategy = Mapping[
-            str,
-            str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type CacheStrategy = Mapping[
-            str,
-            bool | int | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type ParallelProcessing = Mapping[
-            str,
-            int | bool | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-        ]
-        type OracleHints = Mapping[str, str | FlextOracleWmsTypes.StrSequence]
-
-    type ProjectType = c.ProjectType
-    type DbtOracleWmsProjectConfig = Mapping[
-        str,
-        FlextOracleWmsTypes.ContainerValue | None,
-    ]
-    type WmsTransformConfig = Mapping[
-        str,
-        FlextOracleWmsTypes.Scalar | FlextOracleWmsTypes.StrSequence,
-    ]
-    type WmsAnalyticsConfig = Mapping[
-        str,
-        bool | str | Mapping[str, FlextOracleWmsTypes.ContainerValue | None],
-    ]
-    type DbtWmsPipelineConfig = Mapping[str, FlextOracleWmsTypes.ContainerValue | None]
 
 
 # Facade assignment - enables t.TypeAlias syntax for consumers

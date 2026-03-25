@@ -39,16 +39,16 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 "inventory_records": [],
             })
 
-    class WmsDimensionalModeling:
-        """DBT SQL generation helpers for dimensional models."""
+        class WmsDimensionalModeling:
+            """DBT SQL generation helpers for dimensional models."""
 
-        @staticmethod
-        def generate_wms_inventory_dimension(
-            inventory_config: Mapping[str, t.ContainerValue | None],
-        ) -> r[str]:
-            """Generate SQL for inventory dimension model."""
-            _ = inventory_config
-            return r[str].ok("select * from {{ ref('stg_wms_inventory') }}")
+            @staticmethod
+            def generate_wms_inventory_dimension(
+                inventory_config: Mapping[str, t.ContainerValue | None],
+            ) -> r[str]:
+                """Generate SQL for inventory dimension model."""
+                _ = inventory_config
+                return r[str].ok("select * from {{ ref('stg_wms_inventory') }}")
 
 
 __all__ = ["FlextDbtOracleWmsUtilities", "u"]
