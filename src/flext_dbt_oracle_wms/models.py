@@ -36,7 +36,7 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             """DBT source definition."""
 
             name: Annotated[str, Field(default="")]
-            source_schema: Annotated[Mapping[str, t.ContainerValue | None]] = Field(
+            source_schema: Mapping[str, t.ContainerValue | None] = Field(
                 default_factory=dict
             )
 

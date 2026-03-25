@@ -19,7 +19,7 @@ from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
 
 
 class FlextDbtOracleWms(
-    FlextService[FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings],
+    FlextService[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings],
 ):
     """Unified DBT Oracle WMS facade with complete FLEXT ecosystem integration.
 
@@ -44,7 +44,7 @@ class FlextDbtOracleWms(
 
     def __init__(
         self,
-        config: FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings | None = None,
+        config: FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__(
@@ -52,10 +52,10 @@ class FlextDbtOracleWms(
             config_overrides=None,
             initial_context=None,
         )
-        self._wms_config: FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings = (
+        self._wms_config: FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings = (
             config
             if config is not None
-            else FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings.get_global()
+            else FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
         )
         self._client: FlextDbtOracleWmsClient | None = None
         self._workflow_service: FlextDbtOracleWmsServices | None = None
@@ -70,7 +70,7 @@ class FlextDbtOracleWms(
 
     @property
     @override
-    def config(self) -> FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings:
+    def config(self) -> FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings:
         """Get the current configuration."""
         return self._wms_config
 
@@ -332,11 +332,11 @@ class FlextDbtOracleWms(
             return r[bool].fail(f"Connection validation failed: {e}")
 
     @override
-    def execute(self) -> r[FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings]:
+    def execute(self) -> r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         try:
             self.logger.info("Executing DBT Oracle WMS service")
-            return r[FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings].ok(self.config)
+            return r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings].ok(self.config)
         except (
             ValueError,
             TypeError,
@@ -346,7 +346,7 @@ class FlextDbtOracleWms(
             RuntimeError,
             ImportError,
         ) as e:
-            return r[FlextDbtOracleWmsModels.FlextDbtOracleWmsSettings].fail(
+            return r[FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings].fail(
                 f"Service execution failed: {e}",
             )
 
