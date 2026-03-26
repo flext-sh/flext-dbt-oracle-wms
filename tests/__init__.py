@@ -42,20 +42,11 @@ if TYPE_CHECKING:
     )
 
 _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
-    "FlextDbtOracleWmsTestConstants": [
-        "tests.constants",
-        "FlextDbtOracleWmsTestConstants",
-    ],
+    "FlextDbtOracleWmsTestConstants": ["tests.constants", "FlextDbtOracleWmsTestConstants"],
     "FlextDbtOracleWmsTestModels": ["tests.models", "FlextDbtOracleWmsTestModels"],
-    "FlextDbtOracleWmsTestProtocols": [
-        "tests.protocols",
-        "FlextDbtOracleWmsTestProtocols",
-    ],
+    "FlextDbtOracleWmsTestProtocols": ["tests.protocols", "FlextDbtOracleWmsTestProtocols"],
     "FlextDbtOracleWmsTestTypes": ["tests.typings", "FlextDbtOracleWmsTestTypes"],
-    "FlextDbtOracleWmsTestUtilities": [
-        "tests.utilities",
-        "FlextDbtOracleWmsTestUtilities",
-    ],
+    "FlextDbtOracleWmsTestUtilities": ["tests.utilities", "FlextDbtOracleWmsTestUtilities"],
     "c": ["tests.constants", "FlextDbtOracleWmsTestConstants"],
     "d": ["flext_tests", "d"],
     "e": ["flext_tests", "e"],
