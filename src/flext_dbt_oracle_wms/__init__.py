@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from flext_core import FlextTypes
     from flext_meltano import d, e, h, r, s, x
 
+    from flext_dbt_oracle_wms import _utilities
     from flext_dbt_oracle_wms.__version__ import (
         __all__,
         __author__,
@@ -30,6 +31,8 @@ if TYPE_CHECKING:
         __version__,
         __version_info__,
     )
+    from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+    from flext_dbt_oracle_wms._utilities.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.cli import (
         FlextDbtOracleWmsCliService,
         discover,
@@ -39,7 +42,6 @@ if TYPE_CHECKING:
         main,
         pipeline,
     )
-    from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
     from flext_dbt_oracle_wms.constants import (
         FlextDbtOracleWmsConstants,
         FlextDbtOracleWmsConstants as c,
@@ -52,7 +54,6 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsProtocols,
         FlextDbtOracleWmsProtocols as p,
     )
-    from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.typings import (
         FlextDbtOracleWmsTypes,
         FlextDbtOracleWmsTypes as t,
@@ -63,13 +64,16 @@ if TYPE_CHECKING:
     )
 
 _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
-    "FlextDbtOracleWms": ["flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"],
+    "FlextDbtOracleWms": [
+        "flext_dbt_oracle_wms._utilities.simple_api",
+        "FlextDbtOracleWms",
+    ],
     "FlextDbtOracleWmsCliService": [
         "flext_dbt_oracle_wms.cli",
         "FlextDbtOracleWmsCliService",
     ],
     "FlextDbtOracleWmsClient": [
-        "flext_dbt_oracle_wms.client",
+        "flext_dbt_oracle_wms._utilities.client",
         "FlextDbtOracleWmsClient",
     ],
     "FlextDbtOracleWmsConstants": [
@@ -101,6 +105,7 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
     "__url__": ["flext_dbt_oracle_wms.__version__", "__url__"],
     "__version__": ["flext_dbt_oracle_wms.__version__", "__version__"],
     "__version_info__": ["flext_dbt_oracle_wms.__version__", "__version_info__"],
+    "_utilities": ["flext_dbt_oracle_wms._utilities", ""],
     "c": ["flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"],
     "d": ["flext_meltano", "d"],
     "discover": ["flext_dbt_oracle_wms.cli", "discover"],
@@ -138,6 +143,7 @@ __all__ = [
     "__url__",
     "__version__",
     "__version_info__",
+    "_utilities",
     "c",
     "d",
     "discover",
