@@ -5,6 +5,9 @@ from __future__ import annotations
 from collections.abc import Mapping, MutableMapping, Sequence
 
 from flext_core import FlextLogger, r
+from flext_meltano import FlextMeltanoLibraryRunner
+from flext_oracle_wms import FlextOracleWmsClient, FlextOracleWmsSettings
+from pydantic import ValidationError
 
 from flext_dbt_oracle_wms import t
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels as m
@@ -13,7 +16,7 @@ logger = FlextLogger(__name__)
 
 
 class FlextDbtOracleWmsClient:
-    """DBT Oracle WMS client with typed extraction and transform stubs."""
+    """DBT Oracle WMS client backed by real WMS and Meltano integrations."""
 
     def __init__(
         self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
@@ -25,22 +28,40 @@ class FlextDbtOracleWmsClient:
             if config is not None
             else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
         )
+        self._meltano_runner = FlextMeltanoLibraryRunner()
+        self._transformer = m.DbtOracleWms.FlextDbtOracleWmsTransformer()
+        self._wms_client: FlextOracleWmsClient | None = None
 
     def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
-        """Return the configured Oracle WMS entities."""
-        entities = list(self.config.required_fields_per_entity.keys())
-        return r[t.StrSequence].ok(entities)
+        """Discover Oracle WMS entities through the owning domain client."""
+        client_result = self._get_wms_client()
+        if client_result.is_failure:
+            return r[t.StrSequence].fail(
+                client_result.error or "WMS client unavailable"
+            )
+        return client_result.value.discover_entities()
 
     def extract_oracle_wms_data(
         self,
         entity_name: str,
         filters: t.ConfigurationMapping | None = None,
     ) -> r[Sequence[t.ConfigurationMapping]]:
-        """Return sample records for a requested entity."""
-        _ = filters
-        return r[Sequence[t.ScalarMapping]].ok([
-            {"entity": entity_name, "id": 1, "name": f"sample_{entity_name}"},
-        ])
+        """Extract entity records from Oracle WMS using the real domain client."""
+        client_result = self._get_wms_client()
+        if client_result.is_failure:
+            return r[Sequence[t.ConfigurationMapping]].fail(
+                client_result.error or "WMS client unavailable",
+            )
+        extract_result = client_result.value.get_entity_data(
+            entity_name,
+            filters=filters,
+        )
+        if extract_result.is_failure:
+            return r[Sequence[t.ConfigurationMapping]].fail(
+                extract_result.error or "Oracle WMS extraction failed",
+            )
+        records = [dict(record) for record in extract_result.value]
+        return r[Sequence[t.ConfigurationMapping]].ok(records)
 
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
@@ -84,12 +105,22 @@ class FlextDbtOracleWmsClient:
         )
 
     def test_oracle_wms_connection(self) -> r[t.Dict]:
-        """Return simple connection health status."""
+        """Validate Oracle WMS connectivity using the real health endpoint."""
+        client_result = self._get_wms_client()
+        if client_result.is_failure:
+            return r[t.Dict].fail(client_result.error or "WMS client unavailable")
+        health_result = client_result.value.health_check()
+        if health_result.is_failure:
+            return r[t.Dict].fail(
+                health_result.error or "Oracle WMS health check failed"
+            )
+        response = health_result.value
         return r[t.Dict].ok(
             t.Dict.model_validate({
                 "status": "connected",
                 "environment": self.config.oracle_wms_environment,
                 "base_url": self.config.oracle_wms_base_url,
+                "status_code": response.status_code,
             }),
         )
 
@@ -98,12 +129,21 @@ class FlextDbtOracleWmsClient:
         entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
         model_names: t.StrSequence | None,
     ) -> r[t.Dict]:
-        """Return transformation summary for provided entities."""
+        """Run DBT transformations through flext-meltano."""
+        transformed_entities = self._transformer.transform_all_entities(entity_data)
+        dbt_result = self._meltano_runner.run_dbt_transformation(model_names)
+        if dbt_result.is_failure:
+            return r[t.Dict].fail(dbt_result.error or "DBT transformation failed")
+        execution_result = dbt_result.value
         return r[t.Dict].ok(
             t.Dict.model_validate({
-                "transformed_tables": ",".join(entity_data.keys()),
+                "transformed_tables": ",".join(sorted(transformed_entities.keys())),
                 "requested_models": ",".join(model_names or []),
-                "status": "success",
+                "models_run": str(execution_result.get("models_run", "")),
+                "execution_method": str(
+                    execution_result.get("execution_method", ""),
+                ),
+                "status": "success" if execution_result.get("success") else "failed",
             }),
         )
 
@@ -112,11 +152,46 @@ class FlextDbtOracleWmsClient:
         entity_name: str,
         records: Sequence[t.ConfigurationMapping],
     ) -> r[Sequence[t.ConfigurationMapping]]:
-        """Validate records list for a specific entity."""
-        _ = entity_name
+        """Validate extracted records against configured entity requirements."""
         if not records:
             return r[Sequence[t.ScalarMapping]].fail("No records to validate")
+        required_fields = self.config.required_fields_per_entity.get(entity_name, ())
+        for index, record in enumerate(records):
+            missing_fields = [
+                field
+                for field in required_fields
+                if not str(record.get(field, "")).strip()
+            ]
+            if missing_fields:
+                return r[Sequence[t.ConfigurationMapping]].fail(
+                    f"{entity_name} record {index} missing required fields: {missing_fields}",
+                )
+        validation_result = self._transformer.validate_business_rules(records)
+        if validation_result.is_failure:
+            return r[Sequence[t.ConfigurationMapping]].fail(
+                validation_result.error or "Oracle WMS validation failed",
+            )
         return r[Sequence[t.ScalarMapping]].ok(records)
+
+    def _get_wms_client(self) -> r[FlextOracleWmsClient]:
+        """Create and cache the real Oracle WMS client."""
+        if self._wms_client is not None:
+            return r[FlextOracleWmsClient].ok(self._wms_client)
+        try:
+            settings = FlextOracleWmsSettings.model_validate({
+                "base_url": self.config.oracle_wms_base_url,
+            })
+            validation_result = settings.validate_config()
+            if validation_result.is_failure:
+                return r[FlextOracleWmsClient].fail(
+                    validation_result.error or "Invalid Oracle WMS settings",
+                )
+            self._wms_client = FlextOracleWmsClient(config=settings)
+            return r[FlextOracleWmsClient].ok(self._wms_client)
+        except (ValidationError, TypeError, ValueError) as exc:
+            return r[FlextOracleWmsClient].fail(
+                f"Oracle WMS client initialization failed: {exc}",
+            )
 
 
 __all__ = ["FlextDbtOracleWmsClient"]
