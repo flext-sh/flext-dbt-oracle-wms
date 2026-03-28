@@ -52,7 +52,6 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsProtocols,
         FlextDbtOracleWmsProtocols as p,
     )
-    from flext_dbt_oracle_wms.services import FlextDbtOracleWmsServices
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.typings import (
         FlextDbtOracleWmsTypes,
@@ -84,10 +83,6 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
     "FlextDbtOracleWmsProtocols": [
         "flext_dbt_oracle_wms.protocols",
         "FlextDbtOracleWmsProtocols",
-    ],
-    "FlextDbtOracleWmsServices": [
-        "flext_dbt_oracle_wms.services",
-        "FlextDbtOracleWmsServices",
     ],
     "FlextDbtOracleWmsTypes": [
         "flext_dbt_oracle_wms.typings",
@@ -132,7 +127,6 @@ __all__ = [
     "FlextDbtOracleWmsConstants",
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsProtocols",
-    "FlextDbtOracleWmsServices",
     "FlextDbtOracleWmsTypes",
     "FlextDbtOracleWmsUtilities",
     "__all__",

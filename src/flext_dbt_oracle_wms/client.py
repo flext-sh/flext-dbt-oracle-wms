@@ -109,6 +109,11 @@ class FlextDbtOracleWmsClient:
         client_result = self._get_wms_client()
         if client_result.is_failure:
             return r[t.Dict].fail(client_result.error or "WMS client unavailable")
+        start_result = client_result.value.start()
+        if start_result.is_failure:
+            return r[t.Dict].fail(
+                start_result.error or "Oracle WMS client startup failed",
+            )
         health_result = client_result.value.health_check()
         if health_result.is_failure:
             return r[t.Dict].fail(
@@ -178,9 +183,12 @@ class FlextDbtOracleWmsClient:
         if self._wms_client is not None:
             return r[FlextOracleWmsClient].ok(self._wms_client)
         try:
-            settings = FlextOracleWmsSettings.model_validate({
-                "base_url": self.config.oracle_wms_base_url,
-            })
+            settings_overrides: t.ConfigurationMapping = (
+                {"base_url": self.config.oracle_wms_base_url}
+                if self.config.oracle_wms_base_url
+                else {}
+            )
+            settings = FlextOracleWmsSettings.get_global(overrides=settings_overrides)
             validation_result = settings.validate_config()
             if validation_result.is_failure:
                 return r[FlextOracleWmsClient].fail(
