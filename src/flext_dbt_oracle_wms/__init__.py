@@ -32,7 +32,6 @@ if TYPE_CHECKING:
         __version_info__,
     )
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
-    from flext_dbt_oracle_wms._utilities.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.cli import (
         FlextDbtOracleWmsCliService,
         discover,
@@ -54,6 +53,7 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsProtocols,
         FlextDbtOracleWmsProtocols as p,
     )
+    from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.typings import (
         FlextDbtOracleWmsTypes,
         FlextDbtOracleWmsTypes as t,
@@ -64,10 +64,7 @@ if TYPE_CHECKING:
     )
 
 _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
-    "FlextDbtOracleWms": [
-        "flext_dbt_oracle_wms._utilities.simple_api",
-        "FlextDbtOracleWms",
-    ],
+    "FlextDbtOracleWms": ["flext_dbt_oracle_wms.simple_api", "FlextDbtOracleWms"],
     "FlextDbtOracleWmsCliService": [
         "flext_dbt_oracle_wms.cli",
         "FlextDbtOracleWmsCliService",
