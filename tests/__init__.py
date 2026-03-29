@@ -46,20 +46,11 @@ if TYPE_CHECKING:
     )
 
 _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
-    "FlextDbtOracleWmsTestConstants": [
-        "tests.constants",
-        "FlextDbtOracleWmsTestConstants",
-    ],
+    "FlextDbtOracleWmsTestConstants": ["tests.constants", "FlextDbtOracleWmsTestConstants"],
     "FlextDbtOracleWmsTestModels": ["tests.models", "FlextDbtOracleWmsTestModels"],
-    "FlextDbtOracleWmsTestProtocols": [
-        "tests.protocols",
-        "FlextDbtOracleWmsTestProtocols",
-    ],
+    "FlextDbtOracleWmsTestProtocols": ["tests.protocols", "FlextDbtOracleWmsTestProtocols"],
     "FlextDbtOracleWmsTestTypes": ["tests.typings", "FlextDbtOracleWmsTestTypes"],
-    "FlextDbtOracleWmsTestUtilities": [
-        "tests.utilities",
-        "FlextDbtOracleWmsTestUtilities",
-    ],
+    "FlextDbtOracleWmsTestUtilities": ["tests.utilities", "FlextDbtOracleWmsTestUtilities"],
     "c": ["tests.constants", "FlextDbtOracleWmsTestConstants"],
     "d": ["flext_tests", "d"],
     "e": ["flext_tests", "e"],
@@ -72,14 +63,8 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
     "test_basic_import": ["tests.unit.test_basic", "test_basic_import"],
     "test_package_import": ["tests.unit.test_basic", "test_package_import"],
     "test_package_structure": ["tests.unit.test_basic", "test_package_structure"],
-    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result": [
-        "tests.unit.test_simple_api",
-        "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
-    ],
-    "test_validate_wms_connection_uses_client_result": [
-        "tests.unit.test_simple_api",
-        "test_validate_wms_connection_uses_client_result",
-    ],
+    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result": ["tests.unit.test_simple_api", "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result"],
+    "test_validate_wms_connection_uses_client_result": ["tests.unit.test_simple_api", "test_validate_wms_connection_uses_client_result"],
     "u": ["tests.utilities", "FlextDbtOracleWmsTestUtilities"],
     "unit": ["tests.unit", ""],
     "x": ["flext_tests", "x"],
