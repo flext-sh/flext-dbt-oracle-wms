@@ -16,7 +16,10 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 
 _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
-    "FlextDbtOracleWmsClient": ["flext_dbt_oracle_wms._utilities.client", "FlextDbtOracleWmsClient"],
+    "FlextDbtOracleWmsClient": [
+        "flext_dbt_oracle_wms._utilities.client",
+        "FlextDbtOracleWmsClient",
+    ],
 }
 
 __all__ = [
