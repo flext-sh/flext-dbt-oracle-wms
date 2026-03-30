@@ -30,7 +30,6 @@ if TYPE_CHECKING:
     from flext_meltano import *
 
     from flext_dbt_oracle_wms import (
-        _utilities,
         cli,
         client,
         constants,
@@ -40,7 +39,7 @@ if TYPE_CHECKING:
         typings,
         utilities,
     )
-    from flext_dbt_oracle_wms._utilities.client import *
+    from flext_dbt_oracle_wms._utilities import *
     from flext_dbt_oracle_wms.cli import *
     from flext_dbt_oracle_wms.constants import *
     from flext_dbt_oracle_wms.models import *
