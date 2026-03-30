@@ -10,10 +10,9 @@ from typing import TYPE_CHECKING
 
 from flext_core.lazy import install_lazy_exports
 
-if TYPE_CHECKING:
-    from flext_tests import *
+from tests.unit import _LAZY_IMPORTS as _CHILD_LAZY_0
 
-    from tests import constants, models, protocols, typings, utilities
+if TYPE_CHECKING:
     from tests.constants import *
     from tests.models import *
     from tests.protocols import *
@@ -22,6 +21,7 @@ if TYPE_CHECKING:
     from tests.utilities import *
 
 _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
+    **_CHILD_LAZY_0,
     "FlextDbtOracleWmsTestConstants": "tests.constants",
     "FlextDbtOracleWmsTestModels": "tests.models",
     "FlextDbtOracleWmsTestProtocols": "tests.protocols",
@@ -39,13 +39,6 @@ _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
     "r": "flext_tests",
     "s": "flext_tests",
     "t": ["tests.typings", "FlextDbtOracleWmsTestTypes"],
-    "test_basic": "tests.unit.test_basic",
-    "test_basic_import": "tests.unit.test_basic",
-    "test_package_import": "tests.unit.test_basic",
-    "test_package_structure": "tests.unit.test_basic",
-    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result": "tests.unit.test_simple_api",
-    "test_simple_api": "tests.unit.test_simple_api",
-    "test_validate_wms_connection_uses_client_result": "tests.unit.test_simple_api",
     "typings": "tests.typings",
     "u": ["tests.utilities", "FlextDbtOracleWmsTestUtilities"],
     "unit": "tests.unit",
@@ -54,4 +47,4 @@ _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
 }
 
 
-install_lazy_exports(__name__, globals(), _LAZY_IMPORTS, sorted(_LAZY_IMPORTS))
+install_lazy_exports(__name__, globals(), _LAZY_IMPORTS)

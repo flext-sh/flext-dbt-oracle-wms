@@ -15,30 +15,10 @@ from typing import TYPE_CHECKING
 
 from flext_core.lazy import install_lazy_exports
 
-from flext_dbt_oracle_wms.__version__ import (
-    __author__,
-    __author_email__,
-    __description__,
-    __license__,
-    __title__,
-    __url__,
-    __version__,
-    __version_info__,
-)
+from flext_dbt_oracle_wms._utilities import _LAZY_IMPORTS as _CHILD_LAZY_0
 
 if TYPE_CHECKING:
-    from flext_meltano import *
-
-    from flext_dbt_oracle_wms import (
-        cli,
-        client,
-        constants,
-        models,
-        protocols,
-        simple_api,
-        typings,
-        utilities,
-    )
+    from flext_dbt_oracle_wms.__version__ import *
     from flext_dbt_oracle_wms._utilities import *
     from flext_dbt_oracle_wms.cli import *
     from flext_dbt_oracle_wms.constants import *
@@ -48,15 +28,24 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms.typings import *
     from flext_dbt_oracle_wms.utilities import *
 
+
 _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
+    **_CHILD_LAZY_0,
     "FlextDbtOracleWms": "flext_dbt_oracle_wms.simple_api",
     "FlextDbtOracleWmsCliService": "flext_dbt_oracle_wms.cli",
-    "FlextDbtOracleWmsClient": "flext_dbt_oracle_wms._utilities.client",
     "FlextDbtOracleWmsConstants": "flext_dbt_oracle_wms.constants",
     "FlextDbtOracleWmsModels": "flext_dbt_oracle_wms.models",
     "FlextDbtOracleWmsProtocols": "flext_dbt_oracle_wms.protocols",
     "FlextDbtOracleWmsTypes": "flext_dbt_oracle_wms.typings",
     "FlextDbtOracleWmsUtilities": "flext_dbt_oracle_wms.utilities",
+    "__author__": "flext_dbt_oracle_wms.__version__",
+    "__author_email__": "flext_dbt_oracle_wms.__version__",
+    "__description__": "flext_dbt_oracle_wms.__version__",
+    "__license__": "flext_dbt_oracle_wms.__version__",
+    "__title__": "flext_dbt_oracle_wms.__version__",
+    "__url__": "flext_dbt_oracle_wms.__version__",
+    "__version__": "flext_dbt_oracle_wms.__version__",
+    "__version_info__": "flext_dbt_oracle_wms.__version__",
     "_utilities": "flext_dbt_oracle_wms._utilities",
     "c": ["flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"],
     "cli": "flext_dbt_oracle_wms.cli",
@@ -86,4 +75,4 @@ _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
 }
 
 
-install_lazy_exports(__name__, globals(), _LAZY_IMPORTS, sorted(_LAZY_IMPORTS))
+install_lazy_exports(__name__, globals(), _LAZY_IMPORTS)
