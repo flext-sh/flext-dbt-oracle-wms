@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from flext_tests import FlextTestsProtocols
 
-from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols
+from flext_dbt_oracle_wms import FlextDbtOracleWmsProtocols
 
 
 class FlextDbtOracleWmsTestProtocols(FlextTestsProtocols, FlextDbtOracleWmsProtocols):

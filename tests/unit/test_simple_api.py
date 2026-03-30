@@ -5,9 +5,11 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import override
 
-from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
-from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities as u
+from flext_dbt_oracle_wms import (
+    FlextDbtOracleWms,
+    FlextDbtOracleWmsClient,
+    FlextDbtOracleWmsUtilities as u,
+)
 from tests import m, r, t
 
 

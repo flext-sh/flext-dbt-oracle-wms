@@ -8,8 +8,7 @@ from flext_core import FlextLogger, r
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import FlextOracleWmsUtilities
 
-from flext_dbt_oracle_wms import t
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels as m
+from flext_dbt_oracle_wms import FlextDbtOracleWmsModels as m, t
 
 _logger = FlextLogger(__name__)
 _PERFORMANCE_RECOMMENDATION_THRESHOLD = 20

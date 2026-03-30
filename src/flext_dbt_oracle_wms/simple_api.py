@@ -14,10 +14,12 @@ from typing import override
 
 from flext_core import FlextService, r
 
-from flext_dbt_oracle_wms import t
-from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels as m
-from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities as u
+from flext_dbt_oracle_wms import (
+    FlextDbtOracleWmsClient,
+    FlextDbtOracleWmsModels as m,
+    FlextDbtOracleWmsUtilities as u,
+    t,
+)
 
 
 class FlextDbtOracleWms(

@@ -9,8 +9,7 @@ from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsClient, FlextOracleWmsSettings
 from pydantic import ValidationError
 
-from flext_dbt_oracle_wms import t
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels as m
+from flext_dbt_oracle_wms import FlextDbtOracleWmsModels as m, t
 
 logger = FlextLogger(__name__)
 
