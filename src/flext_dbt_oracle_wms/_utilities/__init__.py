@@ -13,6 +13,7 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 if TYPE_CHECKING:
     from flext_core import FlextTypes
 
+    from flext_dbt_oracle_wms._utilities import client
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 
 _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
@@ -20,10 +21,12 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
         "flext_dbt_oracle_wms._utilities.client",
         "FlextDbtOracleWmsClient",
     ],
+    "client": ["flext_dbt_oracle_wms._utilities.client", ""],
 }
 
 __all__ = [
     "FlextDbtOracleWmsClient",
+    "client",
 ]
 
 

@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from flext_core import FlextTypes
     from flext_tests import d, e, h, r, s, x
 
-    from tests import unit
+    from tests import constants, models, protocols, typings, unit, utilities
     from tests.constants import (
         FlextDbtOracleWmsTestConstants,
         FlextDbtOracleWmsTestConstants as c,
@@ -31,6 +31,7 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsTestTypes,
         FlextDbtOracleWmsTestTypes as t,
     )
+    from tests.unit import test_basic, test_simple_api
     from tests.unit.test_basic import (
         test_basic_import,
         test_package_import,
@@ -61,14 +62,18 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
         "FlextDbtOracleWmsTestUtilities",
     ],
     "c": ["tests.constants", "FlextDbtOracleWmsTestConstants"],
+    "constants": ["tests.constants", ""],
     "d": ["flext_tests", "d"],
     "e": ["flext_tests", "e"],
     "h": ["flext_tests", "h"],
     "m": ["tests.models", "FlextDbtOracleWmsTestModels"],
+    "models": ["tests.models", ""],
     "p": ["tests.protocols", "FlextDbtOracleWmsTestProtocols"],
+    "protocols": ["tests.protocols", ""],
     "r": ["flext_tests", "r"],
     "s": ["flext_tests", "s"],
     "t": ["tests.typings", "FlextDbtOracleWmsTestTypes"],
+    "test_basic": ["tests.unit.test_basic", ""],
     "test_basic_import": ["tests.unit.test_basic", "test_basic_import"],
     "test_package_import": ["tests.unit.test_basic", "test_package_import"],
     "test_package_structure": ["tests.unit.test_basic", "test_package_structure"],
@@ -76,12 +81,15 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
         "tests.unit.test_simple_api",
         "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
     ],
+    "test_simple_api": ["tests.unit.test_simple_api", ""],
     "test_validate_wms_connection_uses_client_result": [
         "tests.unit.test_simple_api",
         "test_validate_wms_connection_uses_client_result",
     ],
+    "typings": ["tests.typings", ""],
     "u": ["tests.utilities", "FlextDbtOracleWmsTestUtilities"],
     "unit": ["tests.unit", ""],
+    "utilities": ["tests.utilities", ""],
     "x": ["flext_tests", "x"],
 }
 
@@ -92,21 +100,28 @@ __all__ = [
     "FlextDbtOracleWmsTestTypes",
     "FlextDbtOracleWmsTestUtilities",
     "c",
+    "constants",
     "d",
     "e",
     "h",
     "m",
+    "models",
     "p",
+    "protocols",
     "r",
     "s",
     "t",
+    "test_basic",
     "test_basic_import",
     "test_package_import",
     "test_package_structure",
     "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
+    "test_simple_api",
     "test_validate_wms_connection_uses_client_result",
+    "typings",
     "u",
     "unit",
+    "utilities",
     "x",
 ]
 

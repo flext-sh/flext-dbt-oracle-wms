@@ -13,6 +13,7 @@ from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
 if TYPE_CHECKING:
     from flext_core import FlextTypes
 
+    from tests.unit import test_basic, test_simple_api
     from tests.unit.test_basic import (
         test_basic_import,
         test_package_import,
@@ -24,6 +25,7 @@ if TYPE_CHECKING:
     )
 
 _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
+    "test_basic": ["tests.unit.test_basic", ""],
     "test_basic_import": ["tests.unit.test_basic", "test_basic_import"],
     "test_package_import": ["tests.unit.test_basic", "test_package_import"],
     "test_package_structure": ["tests.unit.test_basic", "test_package_structure"],
@@ -31,6 +33,7 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
         "tests.unit.test_simple_api",
         "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
     ],
+    "test_simple_api": ["tests.unit.test_simple_api", ""],
     "test_validate_wms_connection_uses_client_result": [
         "tests.unit.test_simple_api",
         "test_validate_wms_connection_uses_client_result",
@@ -38,10 +41,12 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
 }
 
 __all__ = [
+    "test_basic",
     "test_basic_import",
     "test_package_import",
     "test_package_structure",
     "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
+    "test_simple_api",
     "test_validate_wms_connection_uses_client_result",
 ]
 

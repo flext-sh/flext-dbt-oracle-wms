@@ -30,7 +30,17 @@ if TYPE_CHECKING:
     from flext_core import FlextTypes
     from flext_meltano import d, e, h, r, s, x
 
-    from flext_dbt_oracle_wms import _utilities
+    from flext_dbt_oracle_wms import (
+        _utilities,
+        cli,
+        client,
+        constants,
+        models,
+        protocols,
+        simple_api,
+        typings,
+        utilities,
+    )
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
     from flext_dbt_oracle_wms.cli import (
         FlextDbtOracleWmsCliService,
@@ -95,6 +105,9 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
     ],
     "_utilities": ["flext_dbt_oracle_wms._utilities", ""],
     "c": ["flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"],
+    "cli": ["flext_dbt_oracle_wms.cli", ""],
+    "client": ["flext_dbt_oracle_wms.client", ""],
+    "constants": ["flext_dbt_oracle_wms.constants", ""],
     "d": ["flext_meltano", "d"],
     "discover": ["flext_dbt_oracle_wms.cli", "discover"],
     "e": ["flext_meltano", "e"],
@@ -104,12 +117,17 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
     "logger": ["flext_dbt_oracle_wms.cli", "logger"],
     "m": ["flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"],
     "main": ["flext_dbt_oracle_wms.cli", "main"],
+    "models": ["flext_dbt_oracle_wms.models", ""],
     "p": ["flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"],
     "pipeline": ["flext_dbt_oracle_wms.cli", "pipeline"],
+    "protocols": ["flext_dbt_oracle_wms.protocols", ""],
     "r": ["flext_meltano", "r"],
     "s": ["flext_meltano", "s"],
+    "simple_api": ["flext_dbt_oracle_wms.simple_api", ""],
     "t": ["flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"],
+    "typings": ["flext_dbt_oracle_wms.typings", ""],
     "u": ["flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"],
+    "utilities": ["flext_dbt_oracle_wms.utilities", ""],
     "x": ["flext_meltano", "x"],
 }
 
@@ -132,6 +150,9 @@ __all__ = [
     "__version_info__",
     "_utilities",
     "c",
+    "cli",
+    "client",
+    "constants",
     "d",
     "discover",
     "e",
@@ -141,12 +162,17 @@ __all__ = [
     "logger",
     "m",
     "main",
+    "models",
     "p",
     "pipeline",
+    "protocols",
     "r",
     "s",
+    "simple_api",
     "t",
+    "typings",
     "u",
+    "utilities",
     "x",
 ]
 
