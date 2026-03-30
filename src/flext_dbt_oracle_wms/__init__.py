@@ -11,11 +11,13 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING as _TYPE_CHECKING
 
 from flext_core.lazy import install_lazy_exports, merge_lazy_imports
 
-if TYPE_CHECKING:
+if _TYPE_CHECKING:
+    from flext_meltano import d, e, h, r, s, x
+
     from flext_dbt_oracle_wms.__version__ import *
     from flext_dbt_oracle_wms._utilities import *
     from flext_dbt_oracle_wms.cli import *
@@ -25,7 +27,6 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms.simple_api import *
     from flext_dbt_oracle_wms.typings import *
     from flext_dbt_oracle_wms.utilities import *
-
 
 _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = merge_lazy_imports(
     ("flext_dbt_oracle_wms._utilities",),
