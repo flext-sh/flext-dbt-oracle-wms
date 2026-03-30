@@ -10,66 +10,65 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from collections.abc import Mapping, MutableMapping, Sequence
+from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING
 
-from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
+from flext_core.lazy import install_lazy_exports
 
 from flext_dbt_oracle_wms.__version__ import (
-    __author__,
-    __author_email__,
-    __description__,
-    __license__,
-    __title__,
-    __url__,
-    __version__,
-    __version_info__,
+    __author__ as __author__,
+    __author_email__ as __author_email__,
+    __description__ as __description__,
+    __license__ as __license__,
+    __title__ as __title__,
+    __url__ as __url__,
+    __version__ as __version__,
+    __version_info__ as __version_info__,
 )
 
 if TYPE_CHECKING:
-    from flext_core import FlextTypes
-    from flext_meltano import d, e, h, r, s, x
-
     from flext_dbt_oracle_wms import (
-        _utilities,
-        cli,
-        client,
-        constants,
-        models,
-        protocols,
-        simple_api,
-        typings,
-        utilities,
+        _utilities as _utilities,
+        cli as cli,
+        client as client,
+        constants as constants,
+        models as models,
+        protocols as protocols,
+        simple_api as simple_api,
+        typings as typings,
+        utilities as utilities,
     )
-    from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+    from flext_dbt_oracle_wms._utilities.client import (
+        FlextDbtOracleWmsClient as FlextDbtOracleWmsClient,
+    )
     from flext_dbt_oracle_wms.cli import (
-        FlextDbtOracleWmsCliService,
-        discover,
-        extract,
-        info,
-        logger,
-        main,
-        pipeline,
+        FlextDbtOracleWmsCliService as FlextDbtOracleWmsCliService,
+        discover as discover,
+        extract as extract,
+        info as info,
+        logger as logger,
+        main as main,
+        pipeline as pipeline,
     )
     from flext_dbt_oracle_wms.constants import (
-        FlextDbtOracleWmsConstants,
+        FlextDbtOracleWmsConstants as FlextDbtOracleWmsConstants,
         FlextDbtOracleWmsConstants as c,
     )
     from flext_dbt_oracle_wms.models import (
-        FlextDbtOracleWmsModels,
+        FlextDbtOracleWmsModels as FlextDbtOracleWmsModels,
         FlextDbtOracleWmsModels as m,
     )
     from flext_dbt_oracle_wms.protocols import (
-        FlextDbtOracleWmsProtocols,
+        FlextDbtOracleWmsProtocols as FlextDbtOracleWmsProtocols,
         FlextDbtOracleWmsProtocols as p,
     )
-    from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
+    from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms as FlextDbtOracleWms
     from flext_dbt_oracle_wms.typings import (
-        FlextDbtOracleWmsTypes,
+        FlextDbtOracleWmsTypes as FlextDbtOracleWmsTypes,
         FlextDbtOracleWmsTypes as t,
     )
     from flext_dbt_oracle_wms.utilities import (
-        FlextDbtOracleWmsUtilities,
+        FlextDbtOracleWmsUtilities as FlextDbtOracleWmsUtilities,
         FlextDbtOracleWmsUtilities as u,
     )
 
@@ -131,7 +130,7 @@ _LAZY_IMPORTS: Mapping[str, Sequence[str]] = {
     "x": ["flext_meltano", "x"],
 }
 
-__all__ = [
+_EXPORTS: Sequence[str] = [
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsCliService",
     "FlextDbtOracleWmsClient",
@@ -177,41 +176,4 @@ __all__ = [
 ]
 
 
-_LAZY_CACHE: MutableMapping[str, FlextTypes.ModuleExport] = {}
-
-
-def __getattr__(name: str) -> FlextTypes.ModuleExport:
-    """Lazy-load module attributes on first access (PEP 562).
-
-    A local cache ``_LAZY_CACHE`` persists resolved objects across repeated
-    accesses during process lifetime.
-
-    Args:
-        name: Attribute name requested by dir()/import.
-
-    Returns:
-        Lazy-loaded module export type.
-
-    Raises:
-        AttributeError: If attribute not registered.
-
-    """
-    if name in _LAZY_CACHE:
-        return _LAZY_CACHE[name]
-
-    value = lazy_getattr(name, _LAZY_IMPORTS, globals(), __name__)
-    _LAZY_CACHE[name] = value
-    return value
-
-
-def __dir__() -> Sequence[str]:
-    """Return list of available attributes for dir() and autocomplete.
-
-    Returns:
-        List of public names from module exports.
-
-    """
-    return sorted(__all__)
-
-
-cleanup_submodule_namespace(__name__, _LAZY_IMPORTS)
+install_lazy_exports(__name__, globals(), _LAZY_IMPORTS, _EXPORTS)
