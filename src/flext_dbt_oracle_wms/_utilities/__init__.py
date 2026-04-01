@@ -13,7 +13,8 @@ from flext_core.lazy import install_lazy_exports
 if _TYPE_CHECKING:
     from flext_core import FlextTypes
 
-    from flext_dbt_oracle_wms._utilities.client import *
+    from flext_dbt_oracle_wms._utilities import client
+    from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 
 _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
     "FlextDbtOracleWmsClient": "flext_dbt_oracle_wms._utilities.client",

@@ -14,12 +14,36 @@ if _TYPE_CHECKING:
     from flext_core import FlextTypes
     from flext_tests import d, e, h, r, s, x
 
-    from tests.constants import *
-    from tests.models import *
-    from tests.protocols import *
-    from tests.typings import *
-    from tests.unit import *
-    from tests.utilities import *
+    from tests import constants, models, protocols, typings, unit, utilities
+    from tests.constants import (
+        FlextDbtOracleWmsTestConstants,
+        FlextDbtOracleWmsTestConstants as c,
+    )
+    from tests.models import (
+        FlextDbtOracleWmsTestModels,
+        FlextDbtOracleWmsTestModels as m,
+    )
+    from tests.protocols import (
+        FlextDbtOracleWmsTestProtocols,
+        FlextDbtOracleWmsTestProtocols as p,
+    )
+    from tests.typings import (
+        FlextDbtOracleWmsTestTypes,
+        FlextDbtOracleWmsTestTypes as t,
+    )
+    from tests.unit import (
+        test_basic,
+        test_basic_import,
+        test_package_import,
+        test_package_structure,
+        test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result,
+        test_simple_api,
+        test_validate_wms_connection_uses_client_result,
+    )
+    from tests.utilities import (
+        FlextDbtOracleWmsTestUtilities,
+        FlextDbtOracleWmsTestUtilities as u,
+    )
 
 _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = merge_lazy_imports(
     ("tests.unit",),
