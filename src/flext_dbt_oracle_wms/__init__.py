@@ -15,10 +15,21 @@ from typing import TYPE_CHECKING as _TYPE_CHECKING
 
 from flext_core.lazy import install_lazy_exports, merge_lazy_imports
 
+from flext_dbt_oracle_wms.__version__ import (
+    __author__,
+    __author_email__,
+    __description__,
+    __license__,
+    __title__,
+    __url__,
+    __version__,
+    __version_info__,
+)
+
 if _TYPE_CHECKING:
+    from flext_core import FlextTypes
     from flext_meltano import d, e, h, r, s, x
 
-    from flext_dbt_oracle_wms.__version__ import *
     from flext_dbt_oracle_wms._utilities import *
     from flext_dbt_oracle_wms.cli import *
     from flext_dbt_oracle_wms.constants import *
@@ -38,14 +49,6 @@ _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = merge_lazy_imports(
         "FlextDbtOracleWmsProtocols": "flext_dbt_oracle_wms.protocols",
         "FlextDbtOracleWmsTypes": "flext_dbt_oracle_wms.typings",
         "FlextDbtOracleWmsUtilities": "flext_dbt_oracle_wms.utilities",
-        "__author__": "flext_dbt_oracle_wms.__version__",
-        "__author_email__": "flext_dbt_oracle_wms.__version__",
-        "__description__": "flext_dbt_oracle_wms.__version__",
-        "__license__": "flext_dbt_oracle_wms.__version__",
-        "__title__": "flext_dbt_oracle_wms.__version__",
-        "__url__": "flext_dbt_oracle_wms.__version__",
-        "__version__": "flext_dbt_oracle_wms.__version__",
-        "__version_info__": "flext_dbt_oracle_wms.__version__",
         "_utilities": "flext_dbt_oracle_wms._utilities",
         "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
         "cli": "flext_dbt_oracle_wms.cli",
@@ -76,4 +79,18 @@ _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = merge_lazy_imports(
 )
 
 
-install_lazy_exports(__name__, globals(), _LAZY_IMPORTS)
+install_lazy_exports(
+    __name__,
+    globals(),
+    _LAZY_IMPORTS,
+    [
+        "__author__",
+        "__author_email__",
+        "__description__",
+        "__license__",
+        "__title__",
+        "__url__",
+        "__version__",
+        "__version_info__",
+    ],
+)
