@@ -13,8 +13,15 @@ from flext_core.lazy import install_lazy_exports
 if _TYPE_CHECKING:
     from flext_core import FlextTypes
 
-    from tests.unit.test_basic import *
-    from tests.unit.test_simple_api import *
+    from tests.unit.test_basic import (
+        test_basic_import,
+        test_package_import,
+        test_package_structure,
+    )
+    from tests.unit.test_simple_api import (
+        test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result,
+        test_validate_wms_connection_uses_client_result,
+    )
 
 _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
     "test_basic": "tests.unit.test_basic",
