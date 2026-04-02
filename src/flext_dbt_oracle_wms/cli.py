@@ -19,7 +19,7 @@ logger = FlextLogger(__name__)
 class FlextDbtOracleWmsCliService:
     """CLI adapter that calls typed client operations."""
 
-    _STRING_ADAPTER: ClassVar[TypeAdapter[str]] = TypeAdapter(str)
+    _STRING_ADAPTER: ClassVar[TypeAdapter[t.TextValue]] = TypeAdapter(t.TextValue)
 
     def __init__(self) -> None:
         """Initialize CLI service with a DBT Oracle WMS client."""

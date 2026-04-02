@@ -16,35 +16,16 @@ from flext_core import FlextService, r
 
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsClient,
-    FlextDbtOracleWmsModels as m,
-    FlextDbtOracleWmsUtilities as u,
+    m,
     t,
+    u,
 )
 
 
 class FlextDbtOracleWms(
     FlextService[m.DbtOracleWms.FlextDbtOracleWmsSettings],
 ):
-    """Unified DBT Oracle WMS facade with complete FLEXT ecosystem integration.
-
-    This is the single unified class for the flext-dbt-oracle-wms domain providing
-    access to all DBT Oracle WMS domain functionality with centralized patterns.
-
-    UNIFIED CLASS PATTERN: One class per module with nested helpers only.
-    CENTRALIZED APPROACH: All operations follow centralized patterns:
-    - FlextDbtOracleWms.* for DBT Oracle WMS-specific operations
-    - Centralized validation through FlextDbtOracleWmsWorkflowService
-    - No wrappers, aliases, or fallbacks
-    - Direct use of flext-core centralized services
-
-    FLEXT INTEGRATION: Complete integration with flext-core patterns:
-    - FlextContainer for dependency injection
-    - FlextContext for operation context
-    - FlextLogger for structured logging
-    - r for railway-oriented error handling
-
-    PYTHON 3.13+ COMPATIBILITY: Uses modern patterns and latest type features.
-    """
+    """Unified DBT Oracle WMS facade for extraction, modeling, and workflow execution."""
 
     def __init__(
         self,
@@ -283,12 +264,8 @@ class FlextDbtOracleWms(
             )
         dbt_subcommand = command_parts[1] if len(command_parts) > 1 else "run"
         if dbt_subcommand not in {"run", "build"}:
-            message = (
-                "DBT monitoring is implemented only for dbt run/build through "
-                "flext-meltano's transformation runner."
-            )
-            raise NotImplementedError(
-                message,
+            return r[t.Dict].fail(
+                "DBT monitoring is implemented only for dbt run/build"
             )
         model_names: list[str] = []
         if "--models" in command_parts:

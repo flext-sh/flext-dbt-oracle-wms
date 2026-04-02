@@ -19,95 +19,6 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     class DbtOracleWms:
         """DBT Oracle WMS domain namespace -- m.DbtOracleWms.*."""
 
-        # Domain types from domain_types.py
-        class DBTOracleWMSProject(BaseModel):
-            """DBT project configuration."""
-
-            name: Annotated[str, Field(default="flext_dbt_oracle_wms")]
-            profile: Annotated[str, Field(default="flext_oracle_wms")]
-
-        class DBTOracleWMSModel(BaseModel):
-            """DBT model definition."""
-
-            name: Annotated[str, Field(default="")]
-            materialization: Annotated[str, Field(default="view")]
-
-        class DBTOracleWMSSource(BaseModel):
-            """DBT source definition."""
-
-            name: Annotated[str, Field(default="")]
-            source_schema: Mapping[str, t.ContainerValue | None] = Field(
-                default_factory=dict
-            )
-
-        class DBTOracleWMSTest(BaseModel):
-            """DBT test definition."""
-
-            name: Annotated[str, Field(default="")]
-            severity: Annotated[str, Field(default="warn")]
-
-        class DBTOracleWMSMacro(BaseModel):
-            """DBT macro definition."""
-
-            name: Annotated[str, Field(default="")]
-
-        class DBTOracleWMSSnapshot(BaseModel):
-            """DBT snapshot definition."""
-
-            name: Annotated[str, Field(default="")]
-
-        class DBTOracleWMSAnalysis(BaseModel):
-            """DBT analysis definition."""
-
-            name: Annotated[str, Field(default="")]
-
-        class DBTOracleWMSCompilation(BaseModel):
-            """DBT compilation definition."""
-
-            name: Annotated[str, Field(default="")]
-
-        class DBTOracleWMSExecution(BaseModel):
-            """DBT execution definition."""
-
-            name: Annotated[str, Field(default="")]
-
-        class DBTOracleWMSDocumentation(BaseModel):
-            """DBT documentation definition."""
-
-            name: Annotated[str, Field(default="")]
-
-        # Configuration types from config_types.py
-        class DBTOracleWMSConfiguration(BaseModel):
-            """Base configuration for DBT Oracle WMS project."""
-
-            project_name: Annotated[str, Field(default="flext_dbt_oracle_wms")]
-            profile: Annotated[str, Field(default="flext_oracle_wms")]
-
-        class DBTOracleWMSModelConfiguration(DBTOracleWMSConfiguration):
-            """Configuration for DBT model materialization."""
-
-            materialization: Annotated[str, Field(default="view")]
-
-        class DBTOracleWMSSourceConfiguration(DBTOracleWMSConfiguration):
-            """Configuration for DBT source definitions."""
-
-            source_name: Annotated[str, Field(default="oracle_wms")]
-
-        class DBTOracleWMSTestConfiguration(DBTOracleWMSConfiguration):
-            """Configuration for DBT test execution."""
-
-            severity: Annotated[str, Field(default="warn")]
-
-        class DBTOracleWMSMacroConfiguration(DBTOracleWMSConfiguration):
-            """Configuration for DBT macro namespace."""
-
-            macro_namespace: Annotated[str, Field(default="wms")]
-
-        class DBTOracleWMSProfileConfiguration(DBTOracleWMSConfiguration):
-            """Configuration for DBT profile and target."""
-
-            target: Annotated[str, Field(default="dev")]
-
         # Models from dbt_models.py
         class RawItemRecord(BaseModel):
             """Raw item record from Oracle WMS."""
@@ -132,21 +43,6 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                     "item_number": self.item_number,
                     "item_description": self.item_description,
                 }
-
-        class FlextDbtOracleWmsInventoryFact(BaseModel):
-            """Inventory fact table model."""
-
-            record: t.ConfigurationMapping = Field(default_factory=dict)
-
-        class FlextDbtOracleWmsLocationDimension(BaseModel):
-            """Location dimension model for warehouse analytics."""
-
-            record: t.ConfigurationMapping = Field(default_factory=dict)
-
-        class FlextDbtOracleWmsShipmentFact(BaseModel):
-            """Shipment fact table model."""
-
-            record: t.ConfigurationMapping = Field(default_factory=dict)
 
         class FlextDbtOracleWmsTransformer:
             """Transformer for WMS entity data to DBT models."""
@@ -287,9 +183,6 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                 str,
                 Field(default="dev", description="DBT target profile (dev/prod)"),
             ]
-
-        class FlextDBTOracleWMSSettings(FlextDbtOracleWmsSettings):
-            """Settings for FLEXT DBT Oracle WMS integration."""
 
     @classmethod
     def create_generator(

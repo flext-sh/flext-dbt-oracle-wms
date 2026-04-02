@@ -17,7 +17,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     """MRO facade composing Meltano + OracleWms type namespaces."""
 
 
-# Facade assignment - enables t.TypeAlias syntax for consumers
+# Facade assignment - enables canonical t.* consumption for consumers
 t = FlextDbtOracleWmsTypes
 
 __all__ = [

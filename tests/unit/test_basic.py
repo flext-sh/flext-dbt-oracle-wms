@@ -6,15 +6,14 @@ SPDX-License-Identifier: MIT.
 
 from __future__ import annotations
 
-import importlib
 import pathlib
 
+import flext_dbt_oracle_wms as mod
 import tests
 
 
 def test_package_import() -> None:
     """Ensure package imports so coverage collects module execution."""
-    mod = importlib.import_module("flext_dbt_oracle_wms")
     assert mod is not None
 
 
