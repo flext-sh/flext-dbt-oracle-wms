@@ -11,9 +11,9 @@ from typing import TYPE_CHECKING as _TYPE_CHECKING
 from flext_core.lazy import install_lazy_exports, merge_lazy_imports
 
 if _TYPE_CHECKING:
-    from flext_core import FlextTypes
     from flext_tests import d, e, h, r, s, x
 
+    from flext_core import FlextTypes
     from tests import constants, models, protocols, typings, unit, utilities
     from tests.constants import (
         FlextDbtOracleWmsTestConstants,
@@ -45,7 +45,7 @@ if _TYPE_CHECKING:
         FlextDbtOracleWmsTestUtilities as u,
     )
 
-_LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = merge_lazy_imports(
+_LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
     ("tests.unit",),
     {
         "FlextDbtOracleWmsTestConstants": "tests.constants",

@@ -6,10 +6,9 @@ from collections.abc import Sequence
 from typing import Protocol, runtime_checkable
 
 from flext_core import r
+from flext_dbt_oracle_wms import t
 from flext_meltano import FlextMeltanoProtocols
 from flext_oracle_wms import FlextOracleWmsProtocols
-
-from flext_dbt_oracle_wms import t
 
 
 class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):

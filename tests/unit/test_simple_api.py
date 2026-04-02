@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
 from typing import override
 
 from flext_dbt_oracle_wms import (
@@ -71,7 +70,7 @@ class _MonitoringService(u.DbtOracleWms.Service):
         workflow_name: str,
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
-        additional_data: Mapping[str, str | int | float] | None = None,
+        additional_data: t.ConfigValueMapping | None = None,
     ) -> t.Dict:
         _ = entity_names
         _ = additional_data

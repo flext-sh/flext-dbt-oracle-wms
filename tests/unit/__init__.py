@@ -12,7 +12,6 @@ from flext_core.lazy import install_lazy_exports
 
 if _TYPE_CHECKING:
     from flext_core import FlextTypes
-
     from tests.unit import test_basic, test_simple_api
     from tests.unit.test_basic import (
         test_basic_import,
@@ -24,7 +23,7 @@ if _TYPE_CHECKING:
         test_validate_wms_connection_uses_client_result,
     )
 
-_LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = {
+_LAZY_IMPORTS: FlextTypes.LazyImportIndex = {
     "test_basic": "tests.unit.test_basic",
     "test_basic_import": "tests.unit.test_basic",
     "test_package_import": "tests.unit.test_basic",

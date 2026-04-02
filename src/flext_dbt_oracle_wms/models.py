@@ -5,12 +5,12 @@ from __future__ import annotations
 from collections.abc import Mapping, MutableSequence, Sequence
 from typing import Annotated, ClassVar
 
-from flext_core import FlextSettings, r
-from flext_meltano import FlextMeltanoModels
-from flext_oracle_wms import FlextOracleWmsModels
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from flext_core import FlextSettings, r
 from flext_dbt_oracle_wms import c, t
+from flext_meltano import FlextMeltanoModels
+from flext_oracle_wms import FlextOracleWmsModels
 
 
 class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):

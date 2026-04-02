@@ -2,6 +2,6 @@
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms import FlextDbtOracleWmsClient
 
 __all__ = ["FlextDbtOracleWmsClient"]

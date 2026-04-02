@@ -13,9 +13,8 @@ from __future__ import annotations
 from typing import override
 
 from flext_core import FlextSettings
-from flext_meltano import FlextMeltanoDbtServiceBase
-
 from flext_dbt_oracle_wms import FlextDbtOracleWmsModels, t
+from flext_meltano import FlextMeltanoDbtServiceBase
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):

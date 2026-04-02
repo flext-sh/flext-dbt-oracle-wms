@@ -3,15 +3,12 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from typing import ClassVar
 
 from flext_core import FlextLogger, r
+from flext_dbt_oracle_wms import FlextDbtOracleWmsModels as m, t
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import FlextOracleWmsUtilities
-
-from flext_dbt_oracle_wms import FlextDbtOracleWmsModels as m, t
-
-_logger = FlextLogger(__name__)
-_PERFORMANCE_RECOMMENDATION_THRESHOLD = 20
 
 
 class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities):
@@ -19,6 +16,8 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
     class DbtOracleWms:
         """Oracle WMS extraction and service helpers — u.DbtOracleWms.*."""
+
+        PERFORMANCE_RECOMMENDATION_THRESHOLD: ClassVar[int] = 20
 
         @staticmethod
         def extract_wms_inventory_data(
@@ -76,7 +75,10 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 entity_list = entities or []
                 total = len(entity_list)
                 recommendation_message = ""
-                if total > _PERFORMANCE_RECOMMENDATION_THRESHOLD:
+                if (
+                    total
+                    > FlextDbtOracleWmsUtilities.DbtOracleWms.PERFORMANCE_RECOMMENDATION_THRESHOLD
+                ):
                     recommendation_message = "Process entities in smaller batches"
                 return r[t.Dict].ok(
                     t.Dict.model_validate({
@@ -93,7 +95,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 result: r[t.Dict],
             ) -> None:
                 """Log workflow completion status."""
-                _logger.info(
+                FlextLogger(__name__).info(
                     "Workflow completion",
                     tracking_id=str(tracking_info.get("tracking_id", "")),
                     is_success=result.is_success,
@@ -104,10 +106,10 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 workflow_name: str,
                 workflow_type: str,
                 entity_names: t.StrSequence | None = None,
-                additional_data: Mapping[str, str | int | float] | None = None,
+                additional_data: t.ConfigValueMapping | None = None,
             ) -> t.Dict:
                 """Return tracking payload for workflow instrumentation."""
-                _logger.info("Tracking workflow execution")
+                FlextLogger(__name__).info("Tracking workflow execution")
                 return t.Dict.model_validate({
                     "workflow_name": workflow_name,
                     "workflow_type": workflow_type,

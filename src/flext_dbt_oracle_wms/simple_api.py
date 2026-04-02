@@ -13,7 +13,6 @@ from collections.abc import Sequence
 from typing import override
 
 from flext_core import FlextService, r
-
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsClient,
     m,
