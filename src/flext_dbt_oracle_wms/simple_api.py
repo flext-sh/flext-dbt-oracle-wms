@@ -93,7 +93,7 @@ class FlextDbtOracleWms(
         self,
         entity_name: str,
         requested_identifiers: t.StrSequence | None,
-        identifier_fields: Sequence[str],
+        identifier_fields: t.StrSequence,
     ) -> r[Sequence[t.ConfigurationMapping]]:
         extract_result = self.client.extract_oracle_wms_data(entity_name)
         if extract_result.is_failure:
