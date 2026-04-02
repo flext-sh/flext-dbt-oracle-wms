@@ -27,6 +27,12 @@ from flext_dbt_oracle_wms.__version__ import (
 
 if _TYPE_CHECKING:
     from flext_core import FlextTypes
+    from flext_core.decorators import FlextDecorators as d
+    from flext_core.exceptions import FlextExceptions as e
+    from flext_core.handlers import FlextHandlers as h
+    from flext_core.mixins import FlextMixins as x
+    from flext_core.result import FlextResult as r
+    from flext_core.service import FlextService as s
     from flext_dbt_oracle_wms import (
         _utilities,
         base,
@@ -71,7 +77,6 @@ if _TYPE_CHECKING:
         FlextDbtOracleWmsUtilities,
         FlextDbtOracleWmsUtilities as u,
     )
-    from flext_meltano import d, e, h, r, s, x
 
 _LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
     ("flext_dbt_oracle_wms._utilities",),
@@ -90,11 +95,11 @@ _LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
         "cli": "flext_dbt_oracle_wms.cli",
         "client": "flext_dbt_oracle_wms.client",
         "constants": "flext_dbt_oracle_wms.constants",
-        "d": "flext_meltano",
+        "d": ("flext_core.decorators", "FlextDecorators"),
         "discover": "flext_dbt_oracle_wms.cli",
-        "e": "flext_meltano",
+        "e": ("flext_core.exceptions", "FlextExceptions"),
         "extract": "flext_dbt_oracle_wms.cli",
-        "h": "flext_meltano",
+        "h": ("flext_core.handlers", "FlextHandlers"),
         "info": "flext_dbt_oracle_wms.cli",
         "logger": "flext_dbt_oracle_wms.cli",
         "m": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
@@ -103,14 +108,14 @@ _LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
         "p": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
         "pipeline": "flext_dbt_oracle_wms.cli",
         "protocols": "flext_dbt_oracle_wms.protocols",
-        "r": "flext_meltano",
-        "s": "flext_meltano",
+        "r": ("flext_core.result", "FlextResult"),
+        "s": ("flext_core.service", "FlextService"),
         "simple_api": "flext_dbt_oracle_wms.simple_api",
         "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
         "typings": "flext_dbt_oracle_wms.typings",
         "u": ("flext_dbt_oracle_wms.utilities", "FlextDbtOracleWmsUtilities"),
         "utilities": "flext_dbt_oracle_wms.utilities",
-        "x": "flext_meltano",
+        "x": ("flext_core.mixins", "FlextMixins"),
     },
 )
 
