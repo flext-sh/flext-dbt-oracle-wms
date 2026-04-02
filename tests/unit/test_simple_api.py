@@ -8,9 +8,8 @@ from typing import override
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
     FlextDbtOracleWmsClient,
-    FlextDbtOracleWmsUtilities as u,
 )
-from tests import m, r, t
+from tests import m, r, t, u
 
 
 class _SuccessfulConnectionClient(FlextDbtOracleWmsClient):

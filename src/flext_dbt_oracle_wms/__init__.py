@@ -32,6 +32,7 @@ if _TYPE_CHECKING:
 
     from flext_dbt_oracle_wms import (
         _utilities,
+        base,
         cli,
         client,
         constants,
@@ -42,6 +43,7 @@ if _TYPE_CHECKING:
         utilities,
     )
     from flext_dbt_oracle_wms._utilities import FlextDbtOracleWmsClient
+    from flext_dbt_oracle_wms.base import FlextDbtOracleWmsServiceBase
     from flext_dbt_oracle_wms.cli import (
         FlextDbtOracleWmsCliService,
         discover,
@@ -81,9 +83,11 @@ _LAZY_IMPORTS: Mapping[str, str | Sequence[str]] = merge_lazy_imports(
         "FlextDbtOracleWmsConstants": "flext_dbt_oracle_wms.constants",
         "FlextDbtOracleWmsModels": "flext_dbt_oracle_wms.models",
         "FlextDbtOracleWmsProtocols": "flext_dbt_oracle_wms.protocols",
+        "FlextDbtOracleWmsServiceBase": "flext_dbt_oracle_wms.base",
         "FlextDbtOracleWmsTypes": "flext_dbt_oracle_wms.typings",
         "FlextDbtOracleWmsUtilities": "flext_dbt_oracle_wms.utilities",
         "_utilities": "flext_dbt_oracle_wms._utilities",
+        "base": "flext_dbt_oracle_wms.base",
         "c": ("flext_dbt_oracle_wms.constants", "FlextDbtOracleWmsConstants"),
         "cli": "flext_dbt_oracle_wms.cli",
         "client": "flext_dbt_oracle_wms.client",
