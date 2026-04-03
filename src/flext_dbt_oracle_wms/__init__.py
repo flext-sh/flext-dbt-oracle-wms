@@ -5,33 +5,103 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from typing import TYPE_CHECKING as _TYPE_CHECKING
+import typing as _t
 
+from flext_core.decorators import FlextDecorators as d
+from flext_core.exceptions import FlextExceptions as e
+from flext_core.handlers import FlextHandlers as h
 from flext_core.lazy import install_lazy_exports, merge_lazy_imports
+from flext_core.mixins import FlextMixins as x
+from flext_core.result import FlextResult as r
 from flext_dbt_oracle_wms.__version__ import *
+from flext_dbt_oracle_wms.__version__ import (
+    __author__,
+    __author_email__,
+    __description__,
+    __license__,
+    __title__,
+    __url__,
+    __version__,
+    __version_info__,
+)
+from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms.base import (
+    FlextDbtOracleWmsServiceBase,
+    FlextDbtOracleWmsServiceBase as s,
+)
+from flext_dbt_oracle_wms.cli import (
+    FlextDbtOracleWmsCliService,
+    discover,
+    extract,
+    info,
+    logger,
+    main,
+    pipeline,
+)
+from flext_dbt_oracle_wms.constants import (
+    FlextDbtOracleWmsConstants,
+    FlextDbtOracleWmsConstants as c,
+)
+from flext_dbt_oracle_wms.models import (
+    FlextDbtOracleWmsModels,
+    FlextDbtOracleWmsModels as m,
+)
+from flext_dbt_oracle_wms.protocols import (
+    FlextDbtOracleWmsProtocols,
+    FlextDbtOracleWmsProtocols as p,
+)
+from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
+from flext_dbt_oracle_wms.typings import (
+    FlextDbtOracleWmsTypes,
+    FlextDbtOracleWmsTypes as t,
+)
+from flext_dbt_oracle_wms.utilities import (
+    FlextDbtOracleWmsUtilities,
+    FlextDbtOracleWmsUtilities as u,
+)
 
-if _TYPE_CHECKING:
-    from flext_core import FlextTypes
-    from flext_core.decorators import FlextDecorators as d
-    from flext_core.exceptions import FlextExceptions as e
-    from flext_core.handlers import FlextHandlers as h
-    from flext_core.mixins import FlextMixins as x
-    from flext_core.result import FlextResult as r
-    from flext_core.service import FlextService as s
-    from flext_dbt_oracle_wms import (
-        _utilities,
-        base,
-        cli,
-        client,
-        constants,
-        models,
-        protocols,
-        simple_api,
-        typings,
-        utilities,
-    )
-    from flext_dbt_oracle_wms.__version__ import (
+if _t.TYPE_CHECKING:
+    import flext_dbt_oracle_wms._utilities as _flext_dbt_oracle_wms__utilities
+
+    _utilities = _flext_dbt_oracle_wms__utilities
+    import flext_dbt_oracle_wms.base as _flext_dbt_oracle_wms_base
+
+    base = _flext_dbt_oracle_wms_base
+    import flext_dbt_oracle_wms.cli as _flext_dbt_oracle_wms_cli
+
+    cli = _flext_dbt_oracle_wms_cli
+    import flext_dbt_oracle_wms.client as _flext_dbt_oracle_wms_client
+
+    client = _flext_dbt_oracle_wms_client
+    import flext_dbt_oracle_wms.constants as _flext_dbt_oracle_wms_constants
+
+    constants = _flext_dbt_oracle_wms_constants
+    import flext_dbt_oracle_wms.models as _flext_dbt_oracle_wms_models
+
+    models = _flext_dbt_oracle_wms_models
+    import flext_dbt_oracle_wms.protocols as _flext_dbt_oracle_wms_protocols
+
+    protocols = _flext_dbt_oracle_wms_protocols
+    import flext_dbt_oracle_wms.simple_api as _flext_dbt_oracle_wms_simple_api
+
+    simple_api = _flext_dbt_oracle_wms_simple_api
+    import flext_dbt_oracle_wms.typings as _flext_dbt_oracle_wms_typings
+
+    typings = _flext_dbt_oracle_wms_typings
+    import flext_dbt_oracle_wms.utilities as _flext_dbt_oracle_wms_utilities
+
+    utilities = _flext_dbt_oracle_wms_utilities
+
+    _ = (
+        FlextDbtOracleWms,
+        FlextDbtOracleWmsCliService,
+        FlextDbtOracleWmsClient,
+        FlextDbtOracleWmsConstants,
+        FlextDbtOracleWmsModels,
+        FlextDbtOracleWmsProtocols,
+        FlextDbtOracleWmsServiceBase,
+        FlextDbtOracleWmsTypes,
+        FlextDbtOracleWmsUtilities,
         __author__,
         __author_email__,
         __description__,
@@ -40,41 +110,35 @@ if _TYPE_CHECKING:
         __url__,
         __version__,
         __version_info__,
-    )
-    from flext_dbt_oracle_wms._utilities import FlextDbtOracleWmsClient
-    from flext_dbt_oracle_wms.base import FlextDbtOracleWmsServiceBase
-    from flext_dbt_oracle_wms.cli import (
-        FlextDbtOracleWmsCliService,
+        _utilities,
+        base,
+        c,
+        cli,
+        client,
+        constants,
+        d,
         discover,
+        e,
         extract,
+        h,
         info,
         logger,
+        m,
         main,
+        models,
+        p,
         pipeline,
+        protocols,
+        r,
+        s,
+        simple_api,
+        t,
+        typings,
+        u,
+        utilities,
+        x,
     )
-    from flext_dbt_oracle_wms.constants import (
-        FlextDbtOracleWmsConstants,
-        FlextDbtOracleWmsConstants as c,
-    )
-    from flext_dbt_oracle_wms.models import (
-        FlextDbtOracleWmsModels,
-        FlextDbtOracleWmsModels as m,
-    )
-    from flext_dbt_oracle_wms.protocols import (
-        FlextDbtOracleWmsProtocols,
-        FlextDbtOracleWmsProtocols as p,
-    )
-    from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
-    from flext_dbt_oracle_wms.typings import (
-        FlextDbtOracleWmsTypes,
-        FlextDbtOracleWmsTypes as t,
-    )
-    from flext_dbt_oracle_wms.utilities import (
-        FlextDbtOracleWmsUtilities,
-        FlextDbtOracleWmsUtilities as u,
-    )
-
-_LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
+_LAZY_IMPORTS = merge_lazy_imports(
     ("flext_dbt_oracle_wms._utilities",),
     {
         "FlextDbtOracleWms": "flext_dbt_oracle_wms.simple_api",
@@ -113,7 +177,7 @@ _LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
         "pipeline": "flext_dbt_oracle_wms.cli",
         "protocols": "flext_dbt_oracle_wms.protocols",
         "r": ("flext_core.result", "FlextResult"),
-        "s": ("flext_core.service", "FlextService"),
+        "s": ("flext_dbt_oracle_wms.base", "FlextDbtOracleWmsServiceBase"),
         "simple_api": "flext_dbt_oracle_wms.simple_api",
         "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
         "typings": "flext_dbt_oracle_wms.typings",
@@ -122,6 +186,53 @@ _LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
         "x": ("flext_core.mixins", "FlextMixins"),
     },
 )
+
+__all__ = [
+    "FlextDbtOracleWms",
+    "FlextDbtOracleWmsCliService",
+    "FlextDbtOracleWmsClient",
+    "FlextDbtOracleWmsConstants",
+    "FlextDbtOracleWmsModels",
+    "FlextDbtOracleWmsProtocols",
+    "FlextDbtOracleWmsServiceBase",
+    "FlextDbtOracleWmsTypes",
+    "FlextDbtOracleWmsUtilities",
+    "__author__",
+    "__author_email__",
+    "__description__",
+    "__license__",
+    "__title__",
+    "__url__",
+    "__version__",
+    "__version_info__",
+    "_utilities",
+    "base",
+    "c",
+    "cli",
+    "client",
+    "constants",
+    "d",
+    "discover",
+    "e",
+    "extract",
+    "h",
+    "info",
+    "logger",
+    "m",
+    "main",
+    "models",
+    "p",
+    "pipeline",
+    "protocols",
+    "r",
+    "s",
+    "simple_api",
+    "t",
+    "typings",
+    "u",
+    "utilities",
+    "x",
+]
 
 
 install_lazy_exports(__name__, globals(), _LAZY_IMPORTS)

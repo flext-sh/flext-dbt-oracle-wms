@@ -5,20 +5,29 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from typing import TYPE_CHECKING as _TYPE_CHECKING
+import typing as _t
 
 from flext_core.lazy import install_lazy_exports
+from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 
-if _TYPE_CHECKING:
-    from flext_core import FlextTypes
-    from flext_dbt_oracle_wms._utilities import client
-    from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+if _t.TYPE_CHECKING:
+    import flext_dbt_oracle_wms._utilities.client as _flext_dbt_oracle_wms__utilities_client
 
-_LAZY_IMPORTS: FlextTypes.LazyImportIndex = {
+    client = _flext_dbt_oracle_wms__utilities_client
+
+    _ = (
+        FlextDbtOracleWmsClient,
+        client,
+    )
+_LAZY_IMPORTS = {
     "FlextDbtOracleWmsClient": "flext_dbt_oracle_wms._utilities.client",
     "client": "flext_dbt_oracle_wms._utilities.client",
 }
+
+__all__ = [
+    "FlextDbtOracleWmsClient",
+    "client",
+]
 
 
 install_lazy_exports(__name__, globals(), _LAZY_IMPORTS)
