@@ -24,7 +24,15 @@ if _TYPE_CHECKING:
     from flext_core.typings import FlextTypes as t
     from flext_core.utilities import FlextUtilities as u
     from tests.unit import test_basic, test_simple_api
-    from tests.unit.test_basic import test_package_import
+    from tests.unit.test_basic import (
+        test_basic_import,
+        test_package_import,
+        test_package_structure,
+    )
+    from tests.unit.test_simple_api import (
+        test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result,
+        test_validate_wms_connection_uses_client_result,
+    )
 
 _LAZY_IMPORTS: FlextTypes.LazyImportIndex = {
     "c": ("flext_core.constants", "FlextConstants"),
@@ -37,8 +45,12 @@ _LAZY_IMPORTS: FlextTypes.LazyImportIndex = {
     "s": ("flext_core.service", "FlextService"),
     "t": ("flext_core.typings", "FlextTypes"),
     "test_basic": "tests.unit.test_basic",
+    "test_basic_import": "tests.unit.test_basic",
     "test_package_import": "tests.unit.test_basic",
+    "test_package_structure": "tests.unit.test_basic",
+    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result": "tests.unit.test_simple_api",
     "test_simple_api": "tests.unit.test_simple_api",
+    "test_validate_wms_connection_uses_client_result": "tests.unit.test_simple_api",
     "u": ("flext_core.utilities", "FlextUtilities"),
     "x": ("flext_core.mixins", "FlextMixins"),
 }

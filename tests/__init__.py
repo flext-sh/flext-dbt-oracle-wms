@@ -18,16 +18,7 @@ if _TYPE_CHECKING:
     from flext_core.mixins import FlextMixins as x
     from flext_core.result import FlextResult as r
     from flext_core.service import FlextService as s
-    from tests import (
-        constants,
-        models,
-        protocols,
-        test_basic,
-        test_simple_api,
-        typings,
-        unit,
-        utilities,
-    )
+    from tests import constants, models, protocols, typings, unit, utilities
     from tests.constants import (
         FlextDbtOracleWmsTestConstants,
         FlextDbtOracleWmsTestConstants as c,
@@ -44,7 +35,15 @@ if _TYPE_CHECKING:
         FlextDbtOracleWmsTestTypes,
         FlextDbtOracleWmsTestTypes as t,
     )
-    from tests.unit import test_package_import
+    from tests.unit import (
+        test_basic,
+        test_basic_import,
+        test_package_import,
+        test_package_structure,
+        test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result,
+        test_simple_api,
+        test_validate_wms_connection_uses_client_result,
+    )
     from tests.utilities import (
         FlextDbtOracleWmsTestUtilities,
         FlextDbtOracleWmsTestUtilities as u,
@@ -70,8 +69,6 @@ _LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
         "r": ("flext_core.result", "FlextResult"),
         "s": ("flext_core.service", "FlextService"),
         "t": ("tests.typings", "FlextDbtOracleWmsTestTypes"),
-        "test_basic": "tests.test_basic",
-        "test_simple_api": "tests.test_simple_api",
         "typings": "tests.typings",
         "u": ("tests.utilities", "FlextDbtOracleWmsTestUtilities"),
         "unit": "tests.unit",
