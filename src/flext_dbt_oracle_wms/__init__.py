@@ -1,12 +1,7 @@
 # AUTO-GENERATED FILE — DO NOT EDIT MANUALLY.
 # Regenerate with: make gen
 #
-"""FLEXT DBT ORACLE WMS - Oracle WMS Data Transformations using consolidated DBT patterns.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
-"""
+"""Flext dbt oracle wms package."""
 
 from __future__ import annotations
 
@@ -15,6 +10,7 @@ from typing import TYPE_CHECKING as _TYPE_CHECKING
 
 from flext_core.lazy import install_lazy_exports, merge_lazy_imports
 from flext_dbt_oracle_wms.__version__ import (
+    __all__,
     __author__,
     __author_email__,
     __description__,
@@ -47,15 +43,7 @@ if _TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms._utilities import FlextDbtOracleWmsClient
     from flext_dbt_oracle_wms.base import FlextDbtOracleWmsServiceBase
-    from flext_dbt_oracle_wms.cli import (
-        FlextDbtOracleWmsCliService,
-        discover,
-        extract,
-        info,
-        logger,
-        main,
-        pipeline,
-    )
+    from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, logger
     from flext_dbt_oracle_wms.constants import (
         FlextDbtOracleWmsConstants,
         FlextDbtOracleWmsConstants as c,
@@ -96,17 +84,12 @@ _LAZY_IMPORTS: FlextTypes.LazyImportIndex = merge_lazy_imports(
         "client": "flext_dbt_oracle_wms.client",
         "constants": "flext_dbt_oracle_wms.constants",
         "d": ("flext_core.decorators", "FlextDecorators"),
-        "discover": "flext_dbt_oracle_wms.cli",
         "e": ("flext_core.exceptions", "FlextExceptions"),
-        "extract": "flext_dbt_oracle_wms.cli",
         "h": ("flext_core.handlers", "FlextHandlers"),
-        "info": "flext_dbt_oracle_wms.cli",
         "logger": "flext_dbt_oracle_wms.cli",
         "m": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
-        "main": "flext_dbt_oracle_wms.cli",
         "models": "flext_dbt_oracle_wms.models",
         "p": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
-        "pipeline": "flext_dbt_oracle_wms.cli",
         "protocols": "flext_dbt_oracle_wms.protocols",
         "r": ("flext_core.result", "FlextResult"),
         "s": ("flext_core.service", "FlextService"),
@@ -125,6 +108,7 @@ install_lazy_exports(
     globals(),
     _LAZY_IMPORTS,
     [
+        "__all__",
         "__author__",
         "__author_email__",
         "__description__",

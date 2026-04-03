@@ -1,7 +1,7 @@
 # AUTO-GENERATED FILE — DO NOT EDIT MANUALLY.
 # Regenerate with: make gen
 #
-"""FLEXT DBT Oracle WMS utilities submodules."""
+"""Utilities package."""
 
 from __future__ import annotations
 
@@ -12,12 +12,12 @@ from flext_core.lazy import install_lazy_exports
 
 if _TYPE_CHECKING:
     from flext_core import FlextTypes
-    from flext_dbt_oracle_wms._utilities import client
-    from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+    from flext_dbt_oracle_wms import client
+    from flext_dbt_oracle_wms.client import FlextDbtOracleWmsClient
 
 _LAZY_IMPORTS: FlextTypes.LazyImportIndex = {
-    "FlextDbtOracleWmsClient": "flext_dbt_oracle_wms._utilities.client",
-    "client": "flext_dbt_oracle_wms._utilities.client",
+    "FlextDbtOracleWmsClient": "flext_dbt_oracle_wms.client",
+    "client": "flext_dbt_oracle_wms.client",
 }
 
 
