@@ -7,7 +7,7 @@ from collections.abc import Mapping, MutableMapping, Sequence
 from pydantic import ValidationError
 
 from flext_core import FlextLogger, r
-from flext_dbt_oracle_wms import FlextDbtOracleWmsModels as m, t
+from flext_dbt_oracle_wms import m, t
 from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsClient, FlextOracleWmsSettings
 
