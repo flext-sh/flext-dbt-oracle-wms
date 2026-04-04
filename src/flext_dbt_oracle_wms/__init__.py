@@ -12,16 +12,6 @@ from flext_dbt_oracle_wms.__version__ import *
 
 if _t.TYPE_CHECKING:
     import flext_dbt_oracle_wms._utilities as _flext_dbt_oracle_wms__utilities
-    from flext_dbt_oracle_wms.__version__ import (
-        __author__,
-        __author_email__,
-        __description__,
-        __license__,
-        __title__,
-        __url__,
-        __version__,
-        __version_info__,
-    )
 
     _utilities = _flext_dbt_oracle_wms__utilities
     import flext_dbt_oracle_wms.base as _flext_dbt_oracle_wms_base
