@@ -25,7 +25,7 @@ if _t.TYPE_CHECKING:
 
     _utilities = _flext_dbt_oracle_wms__utilities
     import flext_dbt_oracle_wms.base as _flext_dbt_oracle_wms_base
-    from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+    from flext_dbt_oracle_wms._utilities import FlextDbtOracleWmsClient
 
     base = _flext_dbt_oracle_wms_base
     import flext_dbt_oracle_wms.cli as _flext_dbt_oracle_wms_cli

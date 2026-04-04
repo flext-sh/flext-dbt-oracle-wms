@@ -41,20 +41,14 @@ if _t.TYPE_CHECKING:
     )
 
     unit = _tests_unit
-    import tests.unit.test_basic as _tests_unit_test_basic
-
-    test_basic = _tests_unit_test_basic
-    import tests.unit.test_simple_api as _tests_unit_test_simple_api
-    from tests.unit.test_basic import (
+    import tests.utilities as _tests_utilities
+    from tests.unit import (
+        test_basic,
         test_basic_import,
         test_package_import,
         test_package_structure,
-    )
-
-    test_simple_api = _tests_unit_test_simple_api
-    import tests.utilities as _tests_utilities
-    from tests.unit.test_simple_api import (
         test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result,
+        test_simple_api,
         test_validate_wms_connection_uses_client_result,
     )
 
