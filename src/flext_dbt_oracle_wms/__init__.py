@@ -54,11 +54,15 @@ if _t.TYPE_CHECKING:
     )
 
     protocols = _flext_dbt_oracle_wms_protocols
-    import flext_dbt_oracle_wms.simple_api as _flext_dbt_oracle_wms_simple_api
+    import flext_dbt_oracle_wms.settings as _flext_dbt_oracle_wms_settings
     from flext_dbt_oracle_wms.protocols import (
         FlextDbtOracleWmsProtocols,
         FlextDbtOracleWmsProtocols as p,
     )
+
+    settings = _flext_dbt_oracle_wms_settings
+    import flext_dbt_oracle_wms.simple_api as _flext_dbt_oracle_wms_simple_api
+    from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
     simple_api = _flext_dbt_oracle_wms_simple_api
     import flext_dbt_oracle_wms.typings as _flext_dbt_oracle_wms_typings
@@ -90,6 +94,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
         "FlextDbtOracleWmsModels": "flext_dbt_oracle_wms.models",
         "FlextDbtOracleWmsProtocols": "flext_dbt_oracle_wms.protocols",
         "FlextDbtOracleWmsServiceBase": "flext_dbt_oracle_wms.base",
+        "FlextDbtOracleWmsSettings": "flext_dbt_oracle_wms.settings",
         "FlextDbtOracleWmsTypes": "flext_dbt_oracle_wms.typings",
         "FlextDbtOracleWmsUtilities": "flext_dbt_oracle_wms.utilities",
         "__author__": "flext_dbt_oracle_wms.__version__",
@@ -121,6 +126,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
         "protocols": "flext_dbt_oracle_wms.protocols",
         "r": ("flext_core.result", "FlextResult"),
         "s": ("flext_dbt_oracle_wms.base", "FlextDbtOracleWmsServiceBase"),
+        "settings": "flext_dbt_oracle_wms.settings",
         "simple_api": "flext_dbt_oracle_wms.simple_api",
         "t": ("flext_dbt_oracle_wms.typings", "FlextDbtOracleWmsTypes"),
         "typings": "flext_dbt_oracle_wms.typings",
@@ -138,6 +144,7 @@ __all__ = [
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsProtocols",
     "FlextDbtOracleWmsServiceBase",
+    "FlextDbtOracleWmsSettings",
     "FlextDbtOracleWmsTypes",
     "FlextDbtOracleWmsUtilities",
     "__author__",
@@ -169,6 +176,7 @@ __all__ = [
     "protocols",
     "r",
     "s",
+    "settings",
     "simple_api",
     "t",
     "typings",
