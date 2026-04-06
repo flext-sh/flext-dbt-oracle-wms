@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import shlex
 from collections.abc import Sequence
-from typing import override
+from typing import Self, override
 
 from flext_core import FlextService, r
 from flext_dbt_oracle_wms import (
@@ -73,7 +73,7 @@ class FlextDbtOracleWms(
         return self._workflow_service
 
     @classmethod
-    def create(cls) -> FlextDbtOracleWms:
+    def create(cls) -> Self:
         """Create a new FlextDbtOracleWms instance (factory method)."""
         return cls()
 
