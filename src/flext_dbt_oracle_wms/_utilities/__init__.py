@@ -15,7 +15,10 @@ if _t.TYPE_CHECKING:
     client = _flext_dbt_oracle_wms__utilities_client
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 _LAZY_IMPORTS = {
-    "FlextDbtOracleWmsClient": "flext_dbt_oracle_wms._utilities.client",
+    "FlextDbtOracleWmsClient": (
+        "flext_dbt_oracle_wms._utilities.client",
+        "FlextDbtOracleWmsClient",
+    ),
     "client": "flext_dbt_oracle_wms._utilities.client",
 }
 

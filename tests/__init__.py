@@ -70,11 +70,20 @@ if _t.TYPE_CHECKING:
 _LAZY_IMPORTS = merge_lazy_imports(
     ("tests.unit",),
     {
-        "FlextDbtOracleWmsTestConstants": "tests.constants",
-        "FlextDbtOracleWmsTestModels": "tests.models",
-        "FlextDbtOracleWmsTestProtocols": "tests.protocols",
-        "FlextDbtOracleWmsTestTypes": "tests.typings",
-        "FlextDbtOracleWmsTestUtilities": "tests.utilities",
+        "FlextDbtOracleWmsTestConstants": (
+            "tests.constants",
+            "FlextDbtOracleWmsTestConstants",
+        ),
+        "FlextDbtOracleWmsTestModels": ("tests.models", "FlextDbtOracleWmsTestModels"),
+        "FlextDbtOracleWmsTestProtocols": (
+            "tests.protocols",
+            "FlextDbtOracleWmsTestProtocols",
+        ),
+        "FlextDbtOracleWmsTestTypes": ("tests.typings", "FlextDbtOracleWmsTestTypes"),
+        "FlextDbtOracleWmsTestUtilities": (
+            "tests.utilities",
+            "FlextDbtOracleWmsTestUtilities",
+        ),
         "c": ("tests.constants", "FlextDbtOracleWmsTestConstants"),
         "conftest": "tests.conftest",
         "constants": "tests.constants",
@@ -85,7 +94,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
         "models": "tests.models",
         "p": ("tests.protocols", "FlextDbtOracleWmsTestProtocols"),
         "protocols": "tests.protocols",
-        "pytest_plugins": "tests.conftest",
+        "pytest_plugins": ("tests.conftest", "pytest_plugins"),
         "r": ("flext_core.result", "FlextResult"),
         "s": ("flext_core.service", "FlextService"),
         "t": ("tests.typings", "FlextDbtOracleWmsTestTypes"),

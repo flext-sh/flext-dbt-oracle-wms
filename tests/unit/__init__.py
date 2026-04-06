@@ -47,12 +47,18 @@ _LAZY_IMPORTS = {
     "s": ("flext_core.service", "FlextService"),
     "t": ("flext_core.typings", "FlextTypes"),
     "test_basic": "tests.unit.test_basic",
-    "test_basic_import": "tests.unit.test_basic",
-    "test_package_import": "tests.unit.test_basic",
-    "test_package_structure": "tests.unit.test_basic",
-    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result": "tests.unit.test_simple_api",
+    "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
+    "test_package_import": ("tests.unit.test_basic", "test_package_import"),
+    "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
+    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result": (
+        "tests.unit.test_simple_api",
+        "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
+    ),
     "test_simple_api": "tests.unit.test_simple_api",
-    "test_validate_wms_connection_uses_client_result": "tests.unit.test_simple_api",
+    "test_validate_wms_connection_uses_client_result": (
+        "tests.unit.test_simple_api",
+        "test_validate_wms_connection_uses_client_result",
+    ),
     "u": ("flext_core.utilities", "FlextUtilities"),
     "x": ("flext_core.mixins", "FlextMixins"),
 }
