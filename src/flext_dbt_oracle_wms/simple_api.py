@@ -12,7 +12,7 @@ import shlex
 from collections.abc import Sequence
 from typing import override
 
-from flext_core import FlextService, r
+from flext_core import r, s
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsClient,
     m,
@@ -22,7 +22,7 @@ from flext_dbt_oracle_wms import (
 
 
 class FlextDbtOracleWms(
-    FlextService[m.DbtOracleWms.FlextDbtOracleWmsSettings],
+    s[m.DbtOracleWms.FlextDbtOracleWmsSettings],
 ):
     """Unified DBT Oracle WMS facade for extraction, modeling, and workflow execution."""
 
