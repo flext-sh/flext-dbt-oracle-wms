@@ -129,7 +129,7 @@ def test_cli_executes_extract_command_through_public_facade() -> None:
     assert client.last_entity == "items"
 
 
-def test_cli_uses_default_extract_entity() -> None:
+def testuses_default_extract_entity() -> None:
     facade, client, _ = _build_public_facade()
     service = FlextDbtOracleWmsCliService(service=facade)
     assert service.main(["extract"]) == 0
