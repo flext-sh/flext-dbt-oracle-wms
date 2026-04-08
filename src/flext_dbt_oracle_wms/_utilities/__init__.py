@@ -8,10 +8,7 @@ from __future__ import annotations
 from flext_core.lazy import install_lazy_exports
 
 _LAZY_IMPORTS = {
-    "FlextDbtOracleWmsClient": (
-        "flext_dbt_oracle_wms._utilities.client",
-        "FlextDbtOracleWmsClient",
-    ),
+    "FlextDbtOracleWmsClient": ".client",
 }
 
 
