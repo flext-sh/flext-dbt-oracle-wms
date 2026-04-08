@@ -39,7 +39,7 @@ name = "flext-dbt-oracle-wms"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
 scripts = {"flext-dbt-oracle-wms" = "flext_dbt_oracle_wms.cli:main"}
-urls = {Documentation = "https://github.com/flext-sh/flext/blob/main/README.md", Homepage = "https://github.com/flext-sh/flext"}
+urls = {Documentation = "https://github.com/flext-sh/flext_dbt_oracle_wms/blob/main/README.md", Homepage = "https://github.com/flext-sh/flext_dbt_oracle_wms"}
 version = "0.12.0-dev"
 
 # [MANAGED] consolidated development dependencies

@@ -1,6 +1,6 @@
 """Test models for flext-dbt-oracle-wms.
 
-Provides FlextDbtOracleWmsTestModels, combining FlextTestsModels with
+Provides TestsFlextDbtOracleWmsModels, combining TestsFlextModels with
 FlextDbtOracleWmsModels for test-specific model definitions.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
@@ -14,19 +14,19 @@ from flext_tests import FlextTestsModels
 from flext_dbt_oracle_wms import FlextDbtOracleWmsModels
 
 
-class FlextDbtOracleWmsTestModels(FlextTestsModels, FlextDbtOracleWmsModels):
+class TestsFlextDbtOracleWmsModels(FlextTestsModels, FlextDbtOracleWmsModels):
     """Test models combining FlextTestsModels with flext-dbt-oracle-wms models."""
 
-    class Tests(FlextTestsModels.Tests):
-        """Project-specific test fixtures namespace."""
+    class DbtOracleWms(FlextDbtOracleWmsModels.DbtOracleWms):
+        """DbtOracleWms test models namespace."""
 
-        class DbtOracleWms:
-            """DBT Oracle WMS-specific test fixtures."""
+        class Tests:
+            """Test-specific models."""
 
 
-m = FlextDbtOracleWmsTestModels
+m = TestsFlextDbtOracleWmsModels
 
 __all__ = [
-    "FlextDbtOracleWmsTestModels",
+    "TestsFlextDbtOracleWmsModels",
     "m",
 ]

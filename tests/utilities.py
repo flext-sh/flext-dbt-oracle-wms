@@ -1,6 +1,6 @@
 """Test utilities for flext-dbt-oracle-wms.
 
-Provides FlextDbtOracleWmsTestUtilities, combining FlextTestsUtilities with
+Provides TestsFlextDbtOracleWmsUtilities, combining TestsFlextUtilities with
 FlextDbtOracleWmsUtilities for test-specific utility definitions.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
@@ -14,7 +14,7 @@ from flext_tests import FlextTestsUtilities
 from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities
 
 
-class FlextDbtOracleWmsTestUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):
+class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):
     """Test utilities combining FlextTestsUtilities with flext-dbt-oracle-wms utilities."""
 
     class DbtOracleWms(FlextDbtOracleWmsUtilities.DbtOracleWms):
@@ -24,5 +24,6 @@ class FlextDbtOracleWmsTestUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtili
             """Internal tests declarations."""
 
 
-u = FlextDbtOracleWmsTestUtilities
-__all__ = ["FlextDbtOracleWmsTestUtilities", "u"]
+u = TestsFlextDbtOracleWmsUtilities
+
+__all__ = ["TestsFlextDbtOracleWmsUtilities", "u"]
