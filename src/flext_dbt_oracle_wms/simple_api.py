@@ -77,6 +77,18 @@ class FlextDbtOracleWms(
         """Create a new FlextDbtOracleWms instance (factory method)."""
         return cls()
 
+    def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
+        """Discover Oracle WMS entities through the public domain facade."""
+        return self.client.discover_oracle_wms_entities()
+
+    def extract_oracle_wms_data(
+        self,
+        entity_name: str,
+        filters: t.ConfigurationMapping | None = None,
+    ) -> r[Sequence[t.ConfigurationMapping]]:
+        """Extract Oracle WMS entity records through the public domain facade."""
+        return self.client.extract_oracle_wms_data(entity_name, filters)
+
     @staticmethod
     def _resolve_entity_names(
         inventory_items: t.StrSequence | None,

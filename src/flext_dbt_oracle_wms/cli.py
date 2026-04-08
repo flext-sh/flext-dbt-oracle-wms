@@ -4,31 +4,62 @@ from __future__ import annotations
 
 import sys
 from collections.abc import Mapping
+from typing import ClassVar
 
 from pydantic import ValidationError
 
 from flext_core import FlextLogger, r
 from flext_dbt_oracle_wms import t
-
-from .client import FlextDbtOracleWmsClient
-
-logger = FlextLogger(__name__)
+from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 
 
 class FlextDbtOracleWmsCliService:
     """CLI adapter that calls typed client operations."""
 
+    _logger: ClassVar[FlextLogger] = FlextLogger(__name__)
+    _default_command: ClassVar[str] = "info"
+    _default_entity: ClassVar[str] = "inventory"
+    _service: FlextDbtOracleWms
+
     def __init__(self) -> None:
-        """Initialize CLI service with a DBT Oracle WMS client."""
+        """Initialize CLI service with the canonical DBT Oracle WMS facade."""
         super().__init__()
-        self._client = FlextDbtOracleWmsClient()
+        self._service = FlextDbtOracleWms()
+
+    def execute_command(
+        self,
+        command: str,
+        args: Mapping[str, t.ContainerValue | None] | None = None,
+    ) -> int:
+        """Execute a named CLI command and return an exit code."""
+        handlers = {
+            "discover": self.handle_discover,
+            "extract": self.handle_extract,
+            "pipeline": self.handle_pipeline,
+            "info": self.handle_info,
+        }
+        handler = handlers.get(command)
+        if handler is None:
+            self._logger.error("Unknown command", command=command)
+            return 1
+        result = handler(args)
+        return 1 if result.is_failure else 0
+
+    def main(self, argv: t.StrSequence | None = None) -> int:
+        """Run the package CLI from argv-like input."""
+        command_args = list(argv) if argv is not None else sys.argv[1:]
+        command = command_args[0] if command_args else self._default_command
+        command_options: dict[str, t.ContainerValue | None] = {}
+        if command == "extract" and len(command_args) > 1:
+            command_options["entity"] = command_args[1]
+        return self.execute_command(command, command_options or None)
 
     def handle_discover(
         self,
         _args: Mapping[str, t.ContainerValue | None] | None = None,
     ) -> r[str]:
         """Handle discover command."""
-        result = self._client.discover_oracle_wms_entities()
+        result = self._service.discover_oracle_wms_entities()
         if result.is_failure:
             return r[str].fail(result.error or "Discover failed")
         return r[str].ok("Discovery completed successfully")
@@ -38,7 +69,7 @@ class FlextDbtOracleWmsCliService:
         args: Mapping[str, t.ContainerValue | None] | None = None,
     ) -> r[str]:
         """Handle extract command."""
-        entity = "inventory"
+        entity = self._default_entity
         if args is not None:
             entity_value = args.get("entity")
             try:
@@ -49,7 +80,7 @@ class FlextDbtOracleWmsCliService:
                 validated_entity = ""
             if validated_entity:
                 entity = validated_entity
-        result = self._client.extract_oracle_wms_data(entity, None)
+        result = self._service.extract_oracle_wms_data(entity, None)
         if result.is_failure:
             return r[str].fail(result.error or "Extract failed")
         return r[str].ok("Extraction completed successfully")
@@ -66,50 +97,18 @@ class FlextDbtOracleWmsCliService:
         _args: Mapping[str, t.ContainerValue | None] | None = None,
     ) -> r[str]:
         """Handle full pipeline command."""
-        result = self._client.run_full_oracle_wms_to_dbt_pipeline()
+        result = self._service.run_oracle_wms_to_dbt_workflow(
+            generate_models=False,
+            run_transformations=True,
+        )
         if result.is_failure:
             return r[str].fail(result.error or "Pipeline failed")
         return r[str].ok("Pipeline completed successfully")
 
 
-def discover() -> int:
-    """Execute discover command and return status code."""
-    result = FlextDbtOracleWmsCliService().handle_discover()
-    return 1 if result.is_failure else 0
-
-
-def extract() -> int:
-    """Execute extract command and return status code."""
-    result = FlextDbtOracleWmsCliService().handle_extract()
-    return 1 if result.is_failure else 0
-
-
-def pipeline() -> int:
-    """Execute pipeline command and return status code."""
-    result = FlextDbtOracleWmsCliService().handle_pipeline()
-    return 1 if result.is_failure else 0
-
-
-def info() -> int:
-    """Execute info command and return status code."""
-    result = FlextDbtOracleWmsCliService().handle_info()
-    return 1 if result.is_failure else 0
-
-
 def main() -> int:
-    """Main package CLI entrypoint."""
-    command = sys.argv[1] if len(sys.argv) > 1 else "info"
-    if command == "discover":
-        return discover()
-    if command == "extract":
-        return extract()
-    if command == "pipeline":
-        return pipeline()
-    if command == "info":
-        return info()
-    logger.error("Unknown command", command=command)
-    return 1
+    """Run the DBT Oracle WMS CLI entrypoint."""
+    return FlextDbtOracleWmsCliService().main()
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+__all__ = ["FlextDbtOracleWmsCliService", "main"]

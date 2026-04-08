@@ -26,15 +26,7 @@ if _t.TYPE_CHECKING:
 
     cli = _flext_dbt_oracle_wms_cli
     import flext_dbt_oracle_wms.client as _flext_dbt_oracle_wms_client
-    from flext_dbt_oracle_wms.cli import (
-        FlextDbtOracleWmsCliService,
-        discover,
-        extract,
-        info,
-        logger,
-        main,
-        pipeline,
-    )
+    from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
 
     client = _flext_dbt_oracle_wms_client
     import flext_dbt_oracle_wms.constants as _flext_dbt_oracle_wms_constants
@@ -136,17 +128,12 @@ _LAZY_IMPORTS = merge_lazy_imports(
         "client": "flext_dbt_oracle_wms.client",
         "constants": "flext_dbt_oracle_wms.constants",
         "d": ("flext_core.decorators", "FlextDecorators"),
-        "discover": ("flext_dbt_oracle_wms.cli", "discover"),
         "e": ("flext_core.exceptions", "FlextExceptions"),
-        "extract": ("flext_dbt_oracle_wms.cli", "extract"),
         "h": ("flext_core.handlers", "FlextHandlers"),
-        "info": ("flext_dbt_oracle_wms.cli", "info"),
-        "logger": ("flext_dbt_oracle_wms.cli", "logger"),
         "m": ("flext_dbt_oracle_wms.models", "FlextDbtOracleWmsModels"),
         "main": ("flext_dbt_oracle_wms.cli", "main"),
         "models": "flext_dbt_oracle_wms.models",
         "p": ("flext_dbt_oracle_wms.protocols", "FlextDbtOracleWmsProtocols"),
-        "pipeline": ("flext_dbt_oracle_wms.cli", "pipeline"),
         "protocols": "flext_dbt_oracle_wms.protocols",
         "r": ("flext_core.result", "FlextResult"),
         "s": ("flext_dbt_oracle_wms.base", "FlextDbtOracleWmsServiceBase"),
@@ -192,17 +179,12 @@ __all__ = [
     "client",
     "constants",
     "d",
-    "discover",
     "e",
-    "extract",
     "h",
-    "info",
-    "logger",
     "m",
     "main",
     "models",
     "p",
-    "pipeline",
     "protocols",
     "r",
     "s",
