@@ -83,7 +83,7 @@ class FlextDbtOracleWms(
         inventory_items: t.StrSequence | None,
         shipments: t.StrSequence | None,
     ) -> t.StrSequence | None:
-        entity_names: list[str] = []
+        entity_names: t.MutableSequenceOf[str] = []
         if inventory_items is not None:
             entity_names.append("items")
         if shipments is not None:
@@ -265,7 +265,7 @@ class FlextDbtOracleWms(
             return r[t.Dict].fail(
                 "DBT monitoring is implemented only for dbt run/build"
             )
-        model_names: list[str] = []
+        model_names: t.MutableSequenceOf[str] = []
         if "--models" in command_parts:
             models_index = command_parts.index("--models")
             model_names = command_parts[models_index + 1 :]

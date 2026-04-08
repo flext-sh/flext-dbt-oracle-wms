@@ -5,6 +5,7 @@ from __future__ import annotations
 from enum import StrEnum, unique
 from typing import Final
 
+from flext_dbt_oracle_wms import t
 from flext_meltano import FlextMeltanoConstants
 from flext_oracle_wms import FlextOracleWmsConstants
 
@@ -30,7 +31,7 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants)
                 VIEW = "view"
                 INCREMENTAL = "incremental"
 
-            MATERIALIZATIONS: Final[tuple[str, ...]] = tuple(
+            MATERIALIZATIONS: Final[t.VariadicTuple[str]] = tuple(
                 member.value for member in Materialization.__members__.values()
             )
 

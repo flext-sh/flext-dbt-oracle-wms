@@ -48,7 +48,7 @@ class FlextDbtOracleWmsCliService:
         """Run the package CLI from argv-like input."""
         command_args = list(argv) if argv is not None else sys.argv[1:]
         command = command_args[0] if command_args else self._default_command
-        command_options: dict[str, t.ContainerValue | None] = {}
+        command_options: t.MutableMappingKV[str, t.ContainerValue | None] = {}
         if command == "extract" and len(command_args) > 1:
             command_options["entity"] = command_args[1]
         return self.execute_command(command, command_options or None)

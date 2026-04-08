@@ -97,7 +97,7 @@ class _CliService(u.DbtOracleWms.Service):
 def _build_public_facade(
     *,
     pipeline_should_fail: bool = False,
-) -> tuple[FlextDbtOracleWms, _CliClient, _CliService]:
+) -> t.Triple[FlextDbtOracleWms, _CliClient, _CliService]:
     config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
