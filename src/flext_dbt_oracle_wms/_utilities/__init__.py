@@ -12,7 +12,6 @@ _LAZY_IMPORTS = {
         "flext_dbt_oracle_wms._utilities.client",
         "FlextDbtOracleWmsClient",
     ),
-    "client": "flext_dbt_oracle_wms._utilities.client",
 }
 
 
