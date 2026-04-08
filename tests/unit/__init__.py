@@ -24,10 +24,11 @@ if _t.TYPE_CHECKING:
     import tests.unit.test_simple_api as _tests_unit_test_simple_api
     from tests.unit.test_cli import (
         test_cli_executes_discover_command,
-        test_cli_executes_extract_command_through_public_client,
+        test_cli_executes_extract_command_through_public_facade,
         test_cli_main_defaults_to_info,
         test_cli_returns_failure_for_pipeline_errors,
         test_cli_returns_failure_for_unknown_command,
+        test_cli_runs_pipeline_through_public_facade,
         test_cli_uses_default_extract_entity,
         test_module_main_uses_public_cli_entrypoint,
     )
@@ -45,8 +46,10 @@ if _t.TYPE_CHECKING:
     from flext_core.typings import FlextTypes as t
     from flext_core.utilities import FlextUtilities as u
     from tests.unit.test_simple_api import (
-        test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result,
-        test_validate_wms_connection_uses_client_result,
+        test_discover_oracle_wms_entities_uses_public_client_protocol,
+        test_extract_oracle_wms_data_uses_public_client_protocol,
+        test_run_oracle_wms_to_dbt_workflow_uses_public_protocols,
+        test_validate_wms_connection_uses_public_client_protocol,
     )
 _LAZY_IMPORTS = {
     "c": ("flext_core.constants", "FlextConstants"),
@@ -65,9 +68,9 @@ _LAZY_IMPORTS = {
         "tests.unit.test_cli",
         "test_cli_executes_discover_command",
     ),
-    "test_cli_executes_extract_command_through_public_client": (
+    "test_cli_executes_extract_command_through_public_facade": (
         "tests.unit.test_cli",
-        "test_cli_executes_extract_command_through_public_client",
+        "test_cli_executes_extract_command_through_public_facade",
     ),
     "test_cli_main_defaults_to_info": (
         "tests.unit.test_cli",
@@ -81,9 +84,21 @@ _LAZY_IMPORTS = {
         "tests.unit.test_cli",
         "test_cli_returns_failure_for_unknown_command",
     ),
+    "test_cli_runs_pipeline_through_public_facade": (
+        "tests.unit.test_cli",
+        "test_cli_runs_pipeline_through_public_facade",
+    ),
     "test_cli_uses_default_extract_entity": (
         "tests.unit.test_cli",
         "test_cli_uses_default_extract_entity",
+    ),
+    "test_discover_oracle_wms_entities_uses_public_client_protocol": (
+        "tests.unit.test_simple_api",
+        "test_discover_oracle_wms_entities_uses_public_client_protocol",
+    ),
+    "test_extract_oracle_wms_data_uses_public_client_protocol": (
+        "tests.unit.test_simple_api",
+        "test_extract_oracle_wms_data_uses_public_client_protocol",
     ),
     "test_module_main_uses_public_cli_entrypoint": (
         "tests.unit.test_cli",
@@ -91,14 +106,14 @@ _LAZY_IMPORTS = {
     ),
     "test_package_import": ("tests.unit.test_basic", "test_package_import"),
     "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
-    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result": (
+    "test_run_oracle_wms_to_dbt_workflow_uses_public_protocols": (
         "tests.unit.test_simple_api",
-        "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
+        "test_run_oracle_wms_to_dbt_workflow_uses_public_protocols",
     ),
     "test_simple_api": "tests.unit.test_simple_api",
-    "test_validate_wms_connection_uses_client_result": (
+    "test_validate_wms_connection_uses_public_client_protocol": (
         "tests.unit.test_simple_api",
-        "test_validate_wms_connection_uses_client_result",
+        "test_validate_wms_connection_uses_public_client_protocol",
     ),
     "u": ("flext_core.utilities", "FlextUtilities"),
     "x": ("flext_core.mixins", "FlextMixins"),
@@ -118,17 +133,20 @@ __all__ = [
     "test_basic_import",
     "test_cli",
     "test_cli_executes_discover_command",
-    "test_cli_executes_extract_command_through_public_client",
+    "test_cli_executes_extract_command_through_public_facade",
     "test_cli_main_defaults_to_info",
     "test_cli_returns_failure_for_pipeline_errors",
     "test_cli_returns_failure_for_unknown_command",
+    "test_cli_runs_pipeline_through_public_facade",
     "test_cli_uses_default_extract_entity",
+    "test_discover_oracle_wms_entities_uses_public_client_protocol",
+    "test_extract_oracle_wms_data_uses_public_client_protocol",
     "test_module_main_uses_public_cli_entrypoint",
     "test_package_import",
     "test_package_structure",
-    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
+    "test_run_oracle_wms_to_dbt_workflow_uses_public_protocols",
     "test_simple_api",
-    "test_validate_wms_connection_uses_client_result",
+    "test_validate_wms_connection_uses_public_client_protocol",
     "u",
     "x",
 ]

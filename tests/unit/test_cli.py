@@ -3,120 +3,160 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from typing import override
 
-import pytest
+from flext_dbt_oracle_wms import (
+    FlextDbtOracleWms,
+    FlextDbtOracleWmsClient,
+    FlextDbtOracleWmsCliService,
+    main,
+)
+from tests import m, r, t, u
 
-import flext_dbt_oracle_wms.cli as cli_module
-from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
-from tests import r, t
 
+class _CliClient(FlextDbtOracleWmsClient):
+    def __init__(
+        self,
+        config: m.DbtOracleWms.FlextDbtOracleWmsSettings,
+        *,
+        pipeline_should_fail: bool = False,
+    ) -> None:
+        self.config = config
+        self.last_entity: str | None = None
+        self.pipeline_should_fail = pipeline_should_fail
+        self.pipeline_called = False
 
-class _StubDbtOracleWms:
-    last_entity: str | None = None
-    pipeline_should_fail = False
-    pipeline_generate_models = False
-    pipeline_run_transformations = False
-
+    @override
     def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
         return r[t.StrSequence].ok(["items", "shipments"])
 
+    @override
     def extract_oracle_wms_data(
         self,
         entity_name: str,
         filters: t.ConfigurationMapping | None = None,
     ) -> r[Sequence[t.ConfigurationMapping]]:
         _ = filters
-        type(self).last_entity = entity_name
+        self.last_entity = entity_name
         if entity_name not in {"inventory", "items"}:
             return r[Sequence[t.ConfigurationMapping]].fail("unknown entity")
         return r[Sequence[t.ConfigurationMapping]].ok([
             {"entity": entity_name},
         ])
 
-    def run_oracle_wms_to_dbt_workflow(
+    @override
+    def run_full_oracle_wms_to_dbt_pipeline(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
-        *,
-        generate_models: bool = True,
-        run_transformations: bool = False,
+        entity_names: t.StrSequence | None = None,
+        filters: t.ConfigurationMapping | None = None,
+        model_names: t.StrSequence | None = None,
     ) -> r[t.Dict]:
-        _ = inventory_items
-        _ = shipments
-        type(self).pipeline_generate_models = generate_models
-        type(self).pipeline_run_transformations = run_transformations
-        if type(self).pipeline_should_fail:
+        _ = filters
+        _ = model_names
+        self.pipeline_called = True
+        if self.pipeline_should_fail:
             return r[t.Dict].fail("boom")
-        return r[t.Dict].ok(t.Dict.model_validate({"status": "ok"}))
+        return r[t.Dict].ok(
+            t.Dict.model_validate({
+                "pipeline_status": "completed",
+                "processed_entities": ",".join(entity_names or []),
+                "total_records": 2,
+            }),
+        )
 
 
-def _install_stub_service(monkeypatch: pytest.MonkeyPatch) -> type[_StubDbtOracleWms]:
-    _StubDbtOracleWms.last_entity = None
-    _StubDbtOracleWms.pipeline_should_fail = False
-    _StubDbtOracleWms.pipeline_generate_models = False
-    _StubDbtOracleWms.pipeline_run_transformations = False
-    monkeypatch.setattr(cli_module, "FlextDbtOracleWms", _StubDbtOracleWms)
-    return _StubDbtOracleWms
+class _CliService(u.DbtOracleWms.Service):
+    def __init__(self) -> None:
+        self.config = m.DbtOracleWms.FlextDbtOracleWmsSettings()
+        self.logged_payload: t.Dict | None = None
+
+    @override
+    def track_workflow_execution(
+        self,
+        workflow_name: str,
+        workflow_type: str,
+        entity_names: t.StrSequence | None = None,
+        additional_data: t.ConfigValueMapping | None = None,
+    ) -> t.Dict:
+        _ = entity_names
+        _ = additional_data
+        return t.Dict.model_validate({
+            "tracking_id": f"{workflow_name}:{workflow_type}",
+        })
+
+    @override
+    def log_workflow_completion(
+        self,
+        tracking_info: t.ConfigurationMapping,
+        result: r[t.Dict],
+    ) -> None:
+        _ = tracking_info
+        self.logged_payload = result.value if result.is_success else None
 
 
-def test_cli_main_defaults_to_info(monkeypatch: pytest.MonkeyPatch) -> None:
-    _install_stub_service(monkeypatch)
-    service = FlextDbtOracleWmsCliService()
+def _build_public_facade(
+    *,
+    pipeline_should_fail: bool = False,
+) -> tuple[FlextDbtOracleWms, _CliClient, _CliService]:
+    config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+        oracle_wms_base_url="https://wms.example.com",
+    )
+    client = _CliClient(config, pipeline_should_fail=pipeline_should_fail)
+    helper = _CliService()
+    return (
+        FlextDbtOracleWms(config=config, client=client, service=helper),
+        client,
+        helper,
+    )
+
+
+def test_cli_main_defaults_to_info() -> None:
+    facade, _, _ = _build_public_facade()
+    service = FlextDbtOracleWmsCliService(service=facade)
     assert service.main([]) == 0
 
 
-def test_cli_executes_discover_command(monkeypatch: pytest.MonkeyPatch) -> None:
-    _install_stub_service(monkeypatch)
-    service = FlextDbtOracleWmsCliService()
+def test_cli_executes_discover_command() -> None:
+    facade, _, _ = _build_public_facade()
+    service = FlextDbtOracleWmsCliService(service=facade)
     assert service.execute_command("discover") == 0
 
 
-def test_cli_executes_extract_command_through_public_facade(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    stub_service = _install_stub_service(monkeypatch)
-    service = FlextDbtOracleWmsCliService()
+def test_cli_executes_extract_command_through_public_facade() -> None:
+    facade, client, _ = _build_public_facade()
+    service = FlextDbtOracleWmsCliService(service=facade)
     assert service.main(["extract", "items"]) == 0
-    assert stub_service.last_entity == "items"
+    assert client.last_entity == "items"
 
 
-def test_cli_uses_default_extract_entity(monkeypatch: pytest.MonkeyPatch) -> None:
-    stub_service = _install_stub_service(monkeypatch)
-    service = FlextDbtOracleWmsCliService()
+def test_cli_uses_default_extract_entity() -> None:
+    facade, client, _ = _build_public_facade()
+    service = FlextDbtOracleWmsCliService(service=facade)
     assert service.main(["extract"]) == 0
-    assert stub_service.last_entity == "inventory"
+    assert client.last_entity == "inventory"
 
 
-def test_cli_returns_failure_for_pipeline_errors(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    stub_service = _install_stub_service(monkeypatch)
-    stub_service.pipeline_should_fail = True
-    service = FlextDbtOracleWmsCliService()
+def test_cli_returns_failure_for_pipeline_errors() -> None:
+    facade, _, _ = _build_public_facade(pipeline_should_fail=True)
+    service = FlextDbtOracleWmsCliService(service=facade)
     assert service.execute_command("pipeline") == 1
 
 
-def test_cli_runs_pipeline_through_public_facade(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    stub_service = _install_stub_service(monkeypatch)
-    service = FlextDbtOracleWmsCliService()
+def test_cli_runs_pipeline_through_public_facade() -> None:
+    facade, client, helper = _build_public_facade()
+    service = FlextDbtOracleWmsCliService(service=facade)
     assert service.execute_command("pipeline") == 0
-    assert stub_service.pipeline_generate_models is False
-    assert stub_service.pipeline_run_transformations is True
+    assert client.pipeline_called is True
+    assert helper.logged_payload is not None
+    assert helper.logged_payload["generate_models"] is False
+    assert helper.logged_payload["run_transformations"] is True
 
 
-def test_cli_returns_failure_for_unknown_command(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    _install_stub_service(monkeypatch)
-    service = FlextDbtOracleWmsCliService()
+def test_cli_returns_failure_for_unknown_command() -> None:
+    facade, _, _ = _build_public_facade()
+    service = FlextDbtOracleWmsCliService(service=facade)
     assert service.execute_command("unknown") == 1
 
 
-def test_module_main_uses_public_cli_entrypoint(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    _install_stub_service(monkeypatch)
-    monkeypatch.setattr("sys.argv", ["flext-dbt-oracle-wms", "info"])
-    assert main() == 0
+def test_module_main_uses_public_cli_entrypoint() -> None:
+    assert main(["info"]) == 0

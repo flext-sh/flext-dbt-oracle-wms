@@ -9,22 +9,21 @@ from typing import ClassVar
 from pydantic import ValidationError
 
 from flext_core import FlextLogger, r
-from flext_dbt_oracle_wms import t
-from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
+from flext_dbt_oracle_wms import FlextDbtOracleWms, t
 
 
 class FlextDbtOracleWmsCliService:
-    """CLI adapter that calls typed client operations."""
+    """CLI adapter that calls the public DBT Oracle WMS facade."""
 
     _logger: ClassVar[FlextLogger] = FlextLogger(__name__)
     _default_command: ClassVar[str] = "info"
     _default_entity: ClassVar[str] = "inventory"
     _service: FlextDbtOracleWms
 
-    def __init__(self) -> None:
+    def __init__(self, service: FlextDbtOracleWms | None = None) -> None:
         """Initialize CLI service with the canonical DBT Oracle WMS facade."""
         super().__init__()
-        self._service = FlextDbtOracleWms()
+        self._service = service if service is not None else FlextDbtOracleWms()
 
     def execute_command(
         self,
@@ -106,9 +105,9 @@ class FlextDbtOracleWmsCliService:
         return r[str].ok("Pipeline completed successfully")
 
 
-def main() -> int:
+def main(argv: t.StrSequence | None = None) -> int:
     """Run the DBT Oracle WMS CLI entrypoint."""
-    return FlextDbtOracleWmsCliService().main()
+    return FlextDbtOracleWmsCliService().main(argv)
 
 
 __all__ = ["FlextDbtOracleWmsCliService", "main"]

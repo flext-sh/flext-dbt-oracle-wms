@@ -2,15 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import override
 
-import pytest
-
-import flext_dbt_oracle_wms.simple_api as simple_api_module
-from flext_dbt_oracle_wms import (
-    FlextDbtOracleWms,
-    FlextDbtOracleWmsClient,
-)
+from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsClient
 from tests import m, r, t, u
 
 
@@ -44,10 +39,10 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
         self,
         entity_name: str,
         filters: t.ConfigurationMapping | None = None,
-    ) -> r[list[t.ConfigurationMapping]]:
+    ) -> r[Sequence[t.ConfigurationMapping]]:
         _ = filters
         type(self).extracted_entity = entity_name
-        return r[list[t.ConfigurationMapping]].ok([
+        return r[Sequence[t.ConfigurationMapping]].ok([
             {"entity": entity_name},
         ])
 
@@ -70,12 +65,27 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
         )
 
 
-class _MonitoringService(u.DbtOracleWms.Service):
+class _Service(u.DbtOracleWms.Service):
     logged_tracking_id = ""
     logged_success = False
 
     def __init__(self) -> None:
         self.config = m.DbtOracleWms.FlextDbtOracleWmsSettings()
+
+    @override
+    def generate_workflow_recommendations(
+        self,
+        entities: Sequence[t.ConfigurationMapping] | None = None,
+    ) -> r[t.Dict]:
+        total = len(entities or [])
+        return r[t.Dict].ok(
+            t.Dict.model_validate({
+                "total_entities": total,
+                "recommendation": "",
+                "dbt_threads": "4",
+                "target": "dev",
+            }),
+        )
 
     @override
     def log_workflow_completion(
@@ -101,62 +111,55 @@ class _MonitoringService(u.DbtOracleWms.Service):
         })
 
 
-def test_validate_wms_connection_uses_public_client_factory(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
+def test_validate_wms_connection_uses_public_client_protocol() -> None:
     config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
-    monkeypatch.setattr(
-        simple_api_module,
-        "FlextDbtOracleWmsClient",
-        _SuccessfulConnectionClient,
+    service = FlextDbtOracleWms(
+        config=config,
+        client=_SuccessfulConnectionClient(config),
     )
-    service = FlextDbtOracleWms(config=config)
     result = service.validate_wms_connection()
     assert result.is_success
     assert result.value is True
 
 
-def test_discover_oracle_wms_entities_uses_public_client_factory(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
+def test_discover_oracle_wms_entities_uses_public_client_protocol() -> None:
     config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
-    monkeypatch.setattr(simple_api_module, "FlextDbtOracleWmsClient", _WorkflowClient)
-    service = FlextDbtOracleWms(config=config)
+    service = FlextDbtOracleWms(config=config, client=_WorkflowClient(config))
     result = service.discover_oracle_wms_entities()
     assert result.is_success
     assert result.value == ["items", "shipments"]
 
 
-def test_extract_oracle_wms_data_uses_public_client_factory(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
+def test_extract_oracle_wms_data_uses_public_client_protocol() -> None:
     config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
     _WorkflowClient.extracted_entity = None
-    monkeypatch.setattr(simple_api_module, "FlextDbtOracleWmsClient", _WorkflowClient)
-    service = FlextDbtOracleWms(config=config)
+    workflow_client = _WorkflowClient(config)
+    service = FlextDbtOracleWms(config=config, client=workflow_client)
     result = service.extract_oracle_wms_data("items")
     assert result.is_success
     assert _WorkflowClient.extracted_entity == "items"
 
 
-def test_run_oracle_wms_to_dbt_workflow_uses_public_factories(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
+def test_run_oracle_wms_to_dbt_workflow_uses_public_protocols() -> None:
     config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
     _WorkflowClient.entity_names = None
-    _MonitoringService.logged_tracking_id = ""
-    _MonitoringService.logged_success = False
-    monkeypatch.setattr(simple_api_module, "FlextDbtOracleWmsClient", _WorkflowClient)
-    monkeypatch.setattr(simple_api_module.u.DbtOracleWms, "Service", _MonitoringService)
-    service = FlextDbtOracleWms(config=config)
+    _Service.logged_tracking_id = ""
+    _Service.logged_success = False
+    workflow_client = _WorkflowClient(config)
+    service_helper = _Service()
+    service = FlextDbtOracleWms(
+        config=config,
+        client=workflow_client,
+        service=service_helper,
+    )
     result = service.run_oracle_wms_to_dbt_workflow(
         inventory_items=["item-1"],
         generate_models=False,
@@ -167,5 +170,5 @@ def test_run_oracle_wms_to_dbt_workflow_uses_public_factories(
     assert result.value["processed_entities"] == "items"
     assert result.value["tracking_id"] == "oracle_wms_to_dbt:dbt_oracle_wms"
     assert _WorkflowClient.entity_names == ["items"]
-    assert _MonitoringService.logged_tracking_id == "oracle_wms_to_dbt:dbt_oracle_wms"
-    assert _MonitoringService.logged_success
+    assert _Service.logged_tracking_id == "oracle_wms_to_dbt:dbt_oracle_wms"
+    assert _Service.logged_success

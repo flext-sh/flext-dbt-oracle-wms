@@ -40,7 +40,7 @@ if _t.TYPE_CHECKING:
     test_module_governance = _tests_test_module_governance
     import tests.typings as _tests_typings
     from tests.test_module_governance import (
-        test_public_cli_module_exposes_canonical_entrypoints,
+        test_package_root_exposes_canonical_public_entrypoints,
     )
 
     typings = _tests_typings
@@ -57,17 +57,20 @@ if _t.TYPE_CHECKING:
         test_basic_import,
         test_cli,
         test_cli_executes_discover_command,
-        test_cli_executes_extract_command_through_public_client,
+        test_cli_executes_extract_command_through_public_facade,
         test_cli_main_defaults_to_info,
         test_cli_returns_failure_for_pipeline_errors,
         test_cli_returns_failure_for_unknown_command,
+        test_cli_runs_pipeline_through_public_facade,
         test_cli_uses_default_extract_entity,
+        test_discover_oracle_wms_entities_uses_public_client_protocol,
+        test_extract_oracle_wms_data_uses_public_client_protocol,
         test_module_main_uses_public_cli_entrypoint,
         test_package_import,
         test_package_structure,
-        test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result,
+        test_run_oracle_wms_to_dbt_workflow_uses_public_protocols,
         test_simple_api,
-        test_validate_wms_connection_uses_client_result,
+        test_validate_wms_connection_uses_public_client_protocol,
     )
 
     utilities = _tests_utilities
@@ -113,9 +116,9 @@ _LAZY_IMPORTS = merge_lazy_imports(
         "s": ("flext_core.service", "FlextService"),
         "t": ("tests.typings", "FlextDbtOracleWmsTestTypes"),
         "test_module_governance": "tests.test_module_governance",
-        "test_public_cli_module_exposes_canonical_entrypoints": (
+        "test_package_root_exposes_canonical_public_entrypoints": (
             "tests.test_module_governance",
-            "test_public_cli_module_exposes_canonical_entrypoints",
+            "test_package_root_exposes_canonical_public_entrypoints",
         ),
         "typings": "tests.typings",
         "u": ("tests.utilities", "FlextDbtOracleWmsTestUtilities"),
@@ -155,19 +158,22 @@ __all__ = [
     "test_basic_import",
     "test_cli",
     "test_cli_executes_discover_command",
-    "test_cli_executes_extract_command_through_public_client",
+    "test_cli_executes_extract_command_through_public_facade",
     "test_cli_main_defaults_to_info",
     "test_cli_returns_failure_for_pipeline_errors",
     "test_cli_returns_failure_for_unknown_command",
+    "test_cli_runs_pipeline_through_public_facade",
     "test_cli_uses_default_extract_entity",
+    "test_discover_oracle_wms_entities_uses_public_client_protocol",
+    "test_extract_oracle_wms_data_uses_public_client_protocol",
     "test_module_governance",
     "test_module_main_uses_public_cli_entrypoint",
     "test_package_import",
+    "test_package_root_exposes_canonical_public_entrypoints",
     "test_package_structure",
-    "test_public_cli_module_exposes_canonical_entrypoints",
-    "test_run_oracle_wms_to_dbt_workflow_uses_real_pipeline_result",
+    "test_run_oracle_wms_to_dbt_workflow_uses_public_protocols",
     "test_simple_api",
-    "test_validate_wms_connection_uses_client_result",
+    "test_validate_wms_connection_uses_public_client_protocol",
     "typings",
     "u",
     "unit",

@@ -3,17 +3,17 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, MutableSequence, Sequence
-from typing import Annotated, ClassVar
+from typing import Annotated, ClassVar, override
 
+from flext_dbt_oracle import FlextDbtOracleModels
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from flext_core import FlextSettings, r
 from flext_dbt_oracle_wms import c, t
-from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms import FlextOracleWmsModels
 
 
-class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
+class FlextDbtOracleWmsModels(FlextDbtOracleModels, FlextOracleWmsModels):
     """Pydantic model namespace for DBT Oracle WMS objects."""
 
     class DbtOracleWms:
@@ -92,39 +92,24 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
                     return r[bool].fail("No records to validate")
                 return r[bool].ok(True)
 
-        class DbtModel(FlextMeltanoModels.ArbitraryTypesModel):
-            """Single DBT model metadata payload."""
+        class DbtModel(FlextDbtOracleModels.DbtOracle.Model):
+            """WMS-specific DBT model metadata layered on the canonical DBT model."""
 
-            name: str
-            dbt_model_type: str
-            wms_entity_type: str
-            schema_name: str
-            table_name: str
-            columns: Sequence[t.ConfigurationMapping] = Field(
-                default_factory=lambda: list[t.ConfigurationMapping]()
-            )
-            materialization: str
-            sql_content: str
-            description: str
-            oracle_source: str
-            dependencies: t.StrSequence = Field(default_factory=list)
-            wms_business_rules: t.StrSequence = Field(default_factory=list)
+            wms_entity_type: Annotated[
+                str,
+                Field(description="Oracle WMS entity represented by this model"),
+            ]
+            oracle_source: Annotated[
+                str,
+                Field(description="Oracle WMS source name for this model"),
+            ]
+            wms_business_rules: Annotated[
+                t.StrSequence,
+                Field(description="WMS-specific business rules attached to the model"),
+            ] = Field(default_factory=list)
 
-            def validate_business_rules(self) -> r[bool]:
-                """Validate essential DBT model constraints."""
-                if not self.name:
-                    return r[bool].fail("Model name cannot be empty")
-                if self.materialization not in c.DbtOracleWms.Dbt.MATERIALIZATIONS:
-                    return r[bool].fail("Invalid materialization")
-                return r[bool].ok(True)
-
-        class ModelGenerator:
+        class ModelGenerator(FlextDbtOracleModels.DbtOracle.ModelGenerator):
             """Generator for lightweight DBT model objects."""
-
-            def __init__(self, config: t.ConfigurationMapping) -> None:
-                """Store generation config for later model creation."""
-                super().__init__()
-                self.config = config
 
             def generate_wms_staging_models(
                 self,
@@ -185,9 +170,10 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
             ]
 
     @classmethod
+    @override
     def create_generator(
         cls,
-        config: t.ConfigurationMapping,
+        config: t.StrMapping | None = None,
     ) -> FlextDbtOracleWmsModels.DbtOracleWms.ModelGenerator:
         """Create a model generator with explicit configuration."""
         return cls.DbtOracleWms.ModelGenerator(config)

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import shlex
 from collections.abc import Sequence
-from typing import Self, override
+from typing import override
 
 from flext_core import FlextService, r
 from flext_dbt_oracle_wms import (
@@ -29,6 +29,8 @@ class FlextDbtOracleWms(
     def __init__(
         self,
         config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
+        client: FlextDbtOracleWmsClient | None = None,
+        service: u.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__(
@@ -41,9 +43,8 @@ class FlextDbtOracleWms(
             if config is not None
             else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
         )
-        self._client: FlextDbtOracleWmsClient | None = None
-        self._workflow_service: u.DbtOracleWms.Service | None = None
-        self._monitoring_service: u.DbtOracleWms.Service | None = None
+        self._client = client
+        self._service = service
 
     @property
     def client(self) -> FlextDbtOracleWmsClient:
@@ -59,23 +60,11 @@ class FlextDbtOracleWms(
         return self._wms_config
 
     @property
-    def monitoring_service(self) -> u.DbtOracleWms.Service:
-        """Get the monitoring service instance."""
-        if self._monitoring_service is None:
-            self._monitoring_service = u.DbtOracleWms.Service()
-        return self._monitoring_service
-
-    @property
-    def workflow_service(self) -> u.DbtOracleWms.Service:
+    def service(self) -> u.DbtOracleWms.Service:
         """Get the workflow service instance."""
-        if self._workflow_service is None:
-            self._workflow_service = u.DbtOracleWms.Service()
-        return self._workflow_service
-
-    @classmethod
-    def create(cls) -> Self:
-        """Create a new FlextDbtOracleWms instance (factory method)."""
-        return cls()
+        if self._service is None:
+            self._service = u.DbtOracleWms.Service()
+        return self._service
 
     def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
         """Discover Oracle WMS entities through the public domain facade."""
@@ -208,10 +197,8 @@ class FlextDbtOracleWms(
             return r[t.Dict].fail(
                 generated_models_result.error or "DBT model generation failed",
             )
-        recommendations_result = (
-            self.workflow_service.generate_workflow_recommendations(
-                [{"entity_name": entity_name} for entity_name in entity_names],
-            )
+        recommendations_result = self.service.generate_workflow_recommendations(
+            [{"entity_name": entity_name} for entity_name in entity_names],
         )
         if recommendations_result.is_failure:
             return r[t.Dict].fail(
@@ -312,7 +299,7 @@ class FlextDbtOracleWms(
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients."""
         self.logger.info("Running Oracle WMS-to-DBT workflow")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
-        tracking_info = self.monitoring_service.track_workflow_execution(
+        tracking_info = self.service.track_workflow_execution(
             workflow_name="oracle_wms_to_dbt",
             workflow_type="dbt_oracle_wms",
             entity_names=entity_names,
@@ -333,7 +320,7 @@ class FlextDbtOracleWms(
                 failure_result = r[t.Dict].fail(
                     model_generation_result.error or "DBT model generation failed",
                 )
-                self.monitoring_service.log_workflow_completion(
+                self.service.log_workflow_completion(
                     tracking_context,
                     failure_result,
                 )
@@ -360,7 +347,7 @@ class FlextDbtOracleWms(
             failure_result = r[t.Dict].fail(
                 workflow_result.error or "Oracle WMS workflow execution failed",
             )
-            self.monitoring_service.log_workflow_completion(
+            self.service.log_workflow_completion(
                 tracking_context,
                 failure_result,
             )
@@ -374,7 +361,7 @@ class FlextDbtOracleWms(
                 model_generation_result.value.get("model_names", ""),
             )
         success_result = r[t.Dict].ok(t.Dict.model_validate(workflow_payload))
-        self.monitoring_service.log_workflow_completion(
+        self.service.log_workflow_completion(
             tracking_context,
             success_result,
         )
