@@ -17,12 +17,6 @@ from flext_dbt_oracle_wms import FlextDbtOracleWmsTypes
 class TestsFlextDbtOracleWmsTypes(FlextTestsTypes, FlextDbtOracleWmsTypes):
     """Test types combining FlextTestsTypes with flext-dbt-oracle-wms types."""
 
-    class DbtOracleWms(FlextDbtOracleWmsTypes.DbtOracleWms):
-        """DbtOracleWms test types namespace."""
-
-        class Tests:
-            """Test-specific type aliases."""
-
 
 t = TestsFlextDbtOracleWmsTypes
 
