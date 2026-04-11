@@ -8,14 +8,14 @@ from typing import ClassVar
 
 from pydantic import ValidationError
 
-from flext_core import FlextLogger, r
-from flext_dbt_oracle_wms import FlextDbtOracleWms, t
+from flext_core import r
+from flext_dbt_oracle_wms import FlextDbtOracleWms, p, t, u
 
 
 class FlextDbtOracleWmsCliService:
     """CLI adapter that calls the public DBT Oracle WMS facade."""
 
-    _logger: ClassVar[FlextLogger] = u.fetch_logger(__name__)
+    _logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
     _default_command: ClassVar[str] = "info"
     _default_entity: ClassVar[str] = "inventory"
     _service: FlextDbtOracleWms

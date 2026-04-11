@@ -36,8 +36,10 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
         )
 
     @override
-    def get_connection_profile(self) -> t.ContainerMapping:
-        """Return dbt connection profile for Oracle WMS."""
+    @property
+    @override
+    def connection_profile(self) -> t.ContainerMapping:
+        """Dbt connection profile for Oracle WMS."""
         s = self._dbt_oracle_wms_settings()
         return {
             "type": "oracle_wms",

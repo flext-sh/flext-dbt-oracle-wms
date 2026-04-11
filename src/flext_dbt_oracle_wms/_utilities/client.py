@@ -7,8 +7,8 @@ from typing import ClassVar
 
 from pydantic import ValidationError
 
-from flext_core import FlextLogger, r
-from flext_dbt_oracle_wms import m, t
+from flext_core import r
+from flext_dbt_oracle_wms import m, p, t, u
 from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClient
 
@@ -16,7 +16,7 @@ from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClie
 class FlextDbtOracleWmsClient:
     """DBT Oracle WMS client backed by real WMS and Meltano integrations."""
 
-    _logger: ClassVar[FlextLogger] = u.fetch_logger(__name__)
+    _logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
     def __init__(
         self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
