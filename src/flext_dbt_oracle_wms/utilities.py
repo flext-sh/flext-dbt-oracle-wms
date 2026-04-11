@@ -98,7 +98,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 FlextLogger(__name__).info(
                     "Workflow completion",
                     tracking_id=str(tracking_info.get("tracking_id", "")),
-                    is_success=result.is_success,
+                    success=result.success,
                 )
 
             def track_workflow_execution(

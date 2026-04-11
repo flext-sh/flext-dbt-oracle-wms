@@ -91,7 +91,7 @@ class _CliService(u.DbtOracleWms.Service):
         result: r[t.Dict],
     ) -> None:
         _ = tracking_info
-        self.logged_payload = result.value if result.is_success else None
+        self.logged_payload = result.value if result.success else None
 
 
 def _build_public_facade(

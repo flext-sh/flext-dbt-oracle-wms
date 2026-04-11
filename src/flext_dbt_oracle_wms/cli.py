@@ -42,7 +42,7 @@ class FlextDbtOracleWmsCliService:
             self._logger.error("Unknown command", command=command)
             return 1
         result = handler(args)
-        return 1 if result.is_failure else 0
+        return 1 if result.failure else 0
 
     def main(self, argv: t.StrSequence | None = None) -> int:
         """Run the package CLI from argv-like input."""
@@ -59,7 +59,7 @@ class FlextDbtOracleWmsCliService:
     ) -> r[str]:
         """Handle discover command."""
         result = self._service.discover_oracle_wms_entities()
-        if result.is_failure:
+        if result.failure:
             return r[str].fail(result.error or "Discover failed")
         return r[str].ok("Discovery completed successfully")
 
@@ -80,7 +80,7 @@ class FlextDbtOracleWmsCliService:
             if validated_entity:
                 entity = validated_entity
         result = self._service.extract_oracle_wms_data(entity, None)
-        if result.is_failure:
+        if result.failure:
             return r[str].fail(result.error or "Extract failed")
         return r[str].ok("Extraction completed successfully")
 
@@ -100,7 +100,7 @@ class FlextDbtOracleWmsCliService:
             generate_models=False,
             run_transformations=True,
         )
-        if result.is_failure:
+        if result.failure:
             return r[str].fail(result.error or "Pipeline failed")
         return r[str].ok("Pipeline completed successfully")
 

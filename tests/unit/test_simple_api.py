@@ -94,7 +94,7 @@ class _Service(u.DbtOracleWms.Service):
         result: r[t.Dict],
     ) -> None:
         type(self).logged_tracking_id = str(tracking_info.get("tracking_id", ""))
-        type(self).logged_success = result.is_success
+        type(self).logged_success = result.success
 
     @override
     def track_workflow_execution(
@@ -120,7 +120,7 @@ def test_validate_wms_connection_uses_public_client_protocol() -> None:
         client=_SuccessfulConnectionClient(config),
     )
     result = service.validate_wms_connection()
-    assert result.is_success
+    assert result.success
     assert result.value is True
 
 
@@ -130,7 +130,7 @@ def test_discover_oracle_wms_entities_uses_public_client_protocol() -> None:
     )
     service = FlextDbtOracleWms(config=config, client=_WorkflowClient(config))
     result = service.discover_oracle_wms_entities()
-    assert result.is_success
+    assert result.success
     assert result.value == ["items", "shipments"]
 
 
@@ -142,7 +142,7 @@ def test_extract_oracle_wms_data_uses_public_client_protocol() -> None:
     workflow_client = _WorkflowClient(config)
     service = FlextDbtOracleWms(config=config, client=workflow_client)
     result = service.extract_oracle_wms_data("items")
-    assert result.is_success
+    assert result.success
     assert _WorkflowClient.extracted_entity == "items"
 
 
@@ -165,7 +165,7 @@ def test_run_oracle_wms_to_dbt_workflow_uses_public_protocols() -> None:
         generate_models=False,
         run_transformations=True,
     )
-    assert result.is_success
+    assert result.success
     assert result.value["pipeline_status"] == "completed"
     assert result.value["processed_entities"] == "items"
     assert result.value["tracking_id"] == "oracle_wms_to_dbt:dbt_oracle_wms"

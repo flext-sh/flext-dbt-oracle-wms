@@ -13,13 +13,6 @@ from flext_core.lazy import (
 from flext_dbt_oracle_wms.__version__ import *
 
 if _t.TYPE_CHECKING:
-    from flext_cli.base import s
-
-    from flext_core.decorators import d
-    from flext_core.exceptions import e
-    from flext_core.handlers import h
-    from flext_core.mixins import x
-    from flext_core.result import r
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
     from flext_dbt_oracle_wms.base import FlextDbtOracleWmsServiceBase
     from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
@@ -30,6 +23,7 @@ if _t.TYPE_CHECKING:
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.typings import FlextDbtOracleWmsTypes, t
     from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities, u
+    from flext_meltano import d, e, h, r, s, x
 _LAZY_IMPORTS = merge_lazy_imports(
     ("._utilities",),
     build_lazy_import_map(
@@ -71,12 +65,14 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "FlextDbtOracleWmsUtilities",
                 "u",
             ),
-            "flext_cli.base": ("s",),
-            "flext_core.decorators": ("d",),
-            "flext_core.exceptions": ("e",),
-            "flext_core.handlers": ("h",),
-            "flext_core.mixins": ("x",),
-            "flext_core.result": ("r",),
+            "flext_meltano": (
+                "d",
+                "e",
+                "h",
+                "r",
+                "s",
+                "x",
+            ),
         },
     ),
     exclude_names=(

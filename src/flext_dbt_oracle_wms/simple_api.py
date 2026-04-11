@@ -97,7 +97,7 @@ class FlextDbtOracleWms(
         identifier_fields: t.StrSequence,
     ) -> r[Sequence[t.ConfigurationMapping]]:
         extract_result = self.client.extract_oracle_wms_data(entity_name)
-        if extract_result.is_failure:
+        if extract_result.failure:
             return r[Sequence[t.ConfigurationMapping]].fail(
                 extract_result.error or f"Failed to extract {entity_name}",
             )
@@ -133,7 +133,7 @@ class FlextDbtOracleWms(
         """Extract Oracle WMS metadata from the real domain client."""
         self.logger.info("Extracting Oracle WMS metadata")
         available_entities_result = self.client.discover_oracle_wms_entities()
-        if available_entities_result.is_failure:
+        if available_entities_result.failure:
             return r[t.Dict].fail(
                 available_entities_result.error or "Oracle WMS entity discovery failed",
             )
@@ -145,7 +145,7 @@ class FlextDbtOracleWms(
                 inventory_items,
                 ("item_id", "item_number", "id", "sku"),
             )
-            if inventory_result.is_failure:
+            if inventory_result.failure:
                 return r[t.Dict].fail(
                     inventory_result.error or "Inventory metadata extraction failed",
                 )
@@ -156,7 +156,7 @@ class FlextDbtOracleWms(
                 shipments,
                 ("shipment_id", "tracking_number", "id"),
             )
-            if shipment_result.is_failure:
+            if shipment_result.failure:
                 return r[t.Dict].fail(
                     shipment_result.error or "Shipment metadata extraction failed",
                 )
@@ -183,7 +183,7 @@ class FlextDbtOracleWms(
         entity_names = self._resolve_entity_names(inventory_items, shipments)
         if entity_names is None:
             discovery_result = self.client.discover_oracle_wms_entities()
-            if discovery_result.is_failure:
+            if discovery_result.failure:
                 return r[t.Dict].fail(
                     discovery_result.error or "Oracle WMS entity discovery failed",
                 )
@@ -193,14 +193,14 @@ class FlextDbtOracleWms(
             "output_dir": output_dir or "",
         })
         generated_models_result = generator.generate_wms_staging_models(entity_names)
-        if generated_models_result.is_failure:
+        if generated_models_result.failure:
             return r[t.Dict].fail(
                 generated_models_result.error or "DBT model generation failed",
             )
         recommendations_result = self.service.generate_workflow_recommendations(
             [{"entity_name": entity_name} for entity_name in entity_names],
         )
-        if recommendations_result.is_failure:
+        if recommendations_result.failure:
             return r[t.Dict].fail(
                 recommendations_result.error
                 or "Workflow recommendation generation failed",
@@ -226,7 +226,7 @@ class FlextDbtOracleWms(
             [item_id],
             ("item_id", "item_number", "id", "sku"),
         )
-        if inventory_result.is_failure:
+        if inventory_result.failure:
             return r[t.Dict].fail(
                 inventory_result.error or "Inventory info retrieval failed",
             )
@@ -240,7 +240,7 @@ class FlextDbtOracleWms(
             [shipment_id],
             ("shipment_id", "tracking_number", "id"),
         )
-        if shipment_result.is_failure:
+        if shipment_result.failure:
             return r[t.Dict].fail(
                 shipment_result.error or "Shipment info retrieval failed",
             )
@@ -276,7 +276,7 @@ class FlextDbtOracleWms(
             entity_data={},
             model_names=model_names or None,
         )
-        if execution_result.is_failure:
+        if execution_result.failure:
             return r[t.Dict].fail(
                 execution_result.error or "DBT transformation monitoring failed",
             )
@@ -316,7 +316,7 @@ class FlextDbtOracleWms(
                 inventory_items,
                 shipments,
             )
-            if model_generation_result.is_failure:
+            if model_generation_result.failure:
                 failure_result = r[t.Dict].fail(
                     model_generation_result.error or "DBT model generation failed",
                 )
@@ -343,7 +343,7 @@ class FlextDbtOracleWms(
                 shipments,
             )
         )
-        if workflow_result.is_failure:
+        if workflow_result.failure:
             failure_result = r[t.Dict].fail(
                 workflow_result.error or "Oracle WMS workflow execution failed",
             )
@@ -371,7 +371,7 @@ class FlextDbtOracleWms(
         """Validate the Oracle WMS connection using the real client health check."""
         self.logger.info("Validating Oracle WMS connection")
         connection_result = self.client.test_oracle_wms_connection()
-        if connection_result.is_failure:
+        if connection_result.failure:
             return r[bool].fail(
                 connection_result.error or "Oracle WMS connection validation failed",
             )
