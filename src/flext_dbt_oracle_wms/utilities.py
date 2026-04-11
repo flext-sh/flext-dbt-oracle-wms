@@ -57,13 +57,13 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
             def __init__(
                 self,
-                config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
+                settings: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
             ) -> None:
                 """Initialize service state and default settings."""
                 super().__init__()
-                self.config = (
-                    config
-                    if config is not None
+                self.settings = (
+                    settings
+                    if settings is not None
                     else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
                 )
 
@@ -84,8 +84,8 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                     t.Dict.model_validate({
                         "total_entities": total,
                         "recommendation": recommendation_message,
-                        "dbt_threads": str(self.config.dbt_threads),
-                        "target": str(self.config.dbt_target),
+                        "dbt_threads": str(self.settings.dbt_threads),
+                        "target": str(self.settings.dbt_target),
                     }),
                 )
 

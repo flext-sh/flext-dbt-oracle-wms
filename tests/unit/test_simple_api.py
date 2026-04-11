@@ -10,8 +10,8 @@ from tests import m, r, t, u
 
 
 class _SuccessfulConnectionClient(FlextDbtOracleWmsClient):
-    def __init__(self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings) -> None:
-        self.config = config
+    def __init__(self, settings: m.DbtOracleWms.FlextDbtOracleWmsSettings) -> None:
+        self.settings = settings
 
     @override
     def test_oracle_wms_connection(self) -> r[t.Dict]:
@@ -27,8 +27,8 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
     entity_names: t.StrSequence | None = None
     extracted_entity: str | None = None
 
-    def __init__(self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings) -> None:
-        self.config = config
+    def __init__(self, settings: m.DbtOracleWms.FlextDbtOracleWmsSettings) -> None:
+        self.settings = settings
 
     @override
     def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
@@ -70,7 +70,7 @@ class _Service(u.DbtOracleWms.Service):
     logged_success = False
 
     def __init__(self) -> None:
-        self.config = m.DbtOracleWms.FlextDbtOracleWmsSettings()
+        self.settings = m.DbtOracleWms.FlextDbtOracleWmsSettings()
 
     @override
     def generate_workflow_recommendations(
@@ -102,7 +102,7 @@ class _Service(u.DbtOracleWms.Service):
         workflow_name: str,
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
-        additional_data: t.ConfigValueMapping | None = None,
+        additional_data: t.SettingsValueMapping | None = None,
     ) -> t.Dict:
         _ = entity_names
         _ = additional_data
@@ -112,12 +112,12 @@ class _Service(u.DbtOracleWms.Service):
 
 
 def test_validate_wms_connection_uses_public_client_protocol() -> None:
-    config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
     service = FlextDbtOracleWms(
-        config=config,
-        client=_SuccessfulConnectionClient(config),
+        settings=settings,
+        client=_SuccessfulConnectionClient(settings),
     )
     result = service.validate_wms_connection()
     assert result.success
@@ -125,38 +125,38 @@ def test_validate_wms_connection_uses_public_client_protocol() -> None:
 
 
 def test_discover_oracle_wms_entities_uses_public_client_protocol() -> None:
-    config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
-    service = FlextDbtOracleWms(config=config, client=_WorkflowClient(config))
+    service = FlextDbtOracleWms(settings=settings, client=_WorkflowClient(settings))
     result = service.discover_oracle_wms_entities()
     assert result.success
     assert result.value == ["items", "shipments"]
 
 
 def test_extract_oracle_wms_data_uses_public_client_protocol() -> None:
-    config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
     _WorkflowClient.extracted_entity = None
-    workflow_client = _WorkflowClient(config)
-    service = FlextDbtOracleWms(config=config, client=workflow_client)
+    workflow_client = _WorkflowClient(settings)
+    service = FlextDbtOracleWms(settings=settings, client=workflow_client)
     result = service.extract_oracle_wms_data("items")
     assert result.success
     assert _WorkflowClient.extracted_entity == "items"
 
 
 def test_run_oracle_wms_to_dbt_workflow_uses_public_protocols() -> None:
-    config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
     _WorkflowClient.entity_names = None
     _Service.logged_tracking_id = ""
     _Service.logged_success = False
-    workflow_client = _WorkflowClient(config)
+    workflow_client = _WorkflowClient(settings)
     service_helper = _Service()
     service = FlextDbtOracleWms(
-        config=config,
+        settings=settings,
         client=workflow_client,
         service=service_helper,
     )

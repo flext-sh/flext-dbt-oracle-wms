@@ -17,11 +17,11 @@ from tests import m, r, t, u
 class _CliClient(FlextDbtOracleWmsClient):
     def __init__(
         self,
-        config: m.DbtOracleWms.FlextDbtOracleWmsSettings,
+        settings: m.DbtOracleWms.FlextDbtOracleWmsSettings,
         *,
         pipeline_should_fail: bool = False,
     ) -> None:
-        self.config = config
+        self.settings = settings
         self.last_entity: str | None = None
         self.pipeline_should_fail = pipeline_should_fail
         self.pipeline_called = False
@@ -67,7 +67,7 @@ class _CliClient(FlextDbtOracleWmsClient):
 
 class _CliService(u.DbtOracleWms.Service):
     def __init__(self) -> None:
-        self.config = m.DbtOracleWms.FlextDbtOracleWmsSettings()
+        self.settings = m.DbtOracleWms.FlextDbtOracleWmsSettings()
         self.logged_payload: t.Dict | None = None
 
     @override
@@ -76,7 +76,7 @@ class _CliService(u.DbtOracleWms.Service):
         workflow_name: str,
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
-        additional_data: t.ConfigValueMapping | None = None,
+        additional_data: t.SettingsValueMapping | None = None,
     ) -> t.Dict:
         _ = entity_names
         _ = additional_data
@@ -98,13 +98,13 @@ def _build_public_facade(
     *,
     pipeline_should_fail: bool = False,
 ) -> t.Triple[FlextDbtOracleWms, _CliClient, _CliService]:
-    config = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
-    client = _CliClient(config, pipeline_should_fail=pipeline_should_fail)
+    client = _CliClient(settings, pipeline_should_fail=pipeline_should_fail)
     helper = _CliService()
     return (
-        FlextDbtOracleWms(config=config, client=client, service=helper),
+        FlextDbtOracleWms(settings=settings, client=client, service=helper),
         client,
         helper,
     )

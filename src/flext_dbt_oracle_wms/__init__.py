@@ -23,7 +23,7 @@ if _t.TYPE_CHECKING:
     from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
     from flext_dbt_oracle_wms.typings import FlextDbtOracleWmsTypes, t
     from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities, u
-    from flext_meltano import d, e, h, r, s, x
+    from flext_oracle_wms import d, e, h, r, s, x
 _LAZY_IMPORTS = merge_lazy_imports(
     ("._utilities",),
     build_lazy_import_map(
@@ -65,7 +65,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "FlextDbtOracleWmsUtilities",
                 "u",
             ),
-            "flext_meltano": (
+            "flext_oracle_wms": (
                 "d",
                 "e",
                 "h",

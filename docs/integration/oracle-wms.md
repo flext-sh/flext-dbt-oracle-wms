@@ -343,7 +343,7 @@ sources:
 pip install flext-tap-oracle-wms
 
 # Create tap configuration
-cat > tap-oracle-wms-config.json << 'EOF'
+cat > tap-oracle-wms-settings.json << 'EOF'
 {
   "host": "wms-prod.company.com",
   "port": 1521,
@@ -366,7 +366,7 @@ cat > tap-oracle-wms-config.json << 'EOF'
 EOF
 
 # Test tap discovery
-flext-tap-oracle-wms --config tap-oracle-wms-config.json --discover
+flext-tap-oracle-wms --settings tap-oracle-wms-settings.json --discover
 ```
 
 #### **Data Pipeline Flow**
@@ -425,7 +425,7 @@ END;
 ```sql
 -- dbt incremental model example
 {{
-  config(
+  settings(
     materialized='incremental',
     unique_key='allocation_id',
     on_schema_change='fail'
@@ -506,7 +506,7 @@ GROUP BY order_hdr_id
 ```sql
 -- Partition large fact tables by business date
 {{
-  config(
+  settings(
     materialized='table',
     partition_by='business_date',
     cluster_by=['company_code', 'facility_code']

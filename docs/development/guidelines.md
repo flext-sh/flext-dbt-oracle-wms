@@ -182,7 +182,7 @@ met_wms__kpi_dashboard.sql        -- Metrics for dashboards
 
 ```sql
 {{
-  config(
+  settings(
     materialized='table',                    -- table, view, or incremental
     tags=['marts', 'operational', 'wms'],   -- for selective runs
     schema='wms_marts',                     -- target schema override
@@ -238,7 +238,7 @@ models:
 
 ```sql
 {{
-  config(
+  settings(
     materialized='table',
     tags=['operational', 'allocation', 'wms'],
     schema='wms_operational'
@@ -474,7 +474,7 @@ WHERE available_quantity != (on_hand_quantity - COALESCE(allocated_quantity, 0))
 ```sql
 -- tests/performance/test_model_row_count.sql
 -- Description: Ensure reasonable data volumes
-{{ config(severity='warn') }}
+{{ settings(severity='warn') }}
 
 SELECT
   '{{ this }}' as model_name,
@@ -572,7 +572,7 @@ models:
 -- Purpose: Provides wave-level allocation metrics for warehouse operations
 -- Update: Every 15 minutes via incremental processing
 
-{{ config(materialized='table') }}
+{{ settings(materialized='table') }}
 
 WITH allocation_base AS (
   -- Source: Standardized allocation data from staging layer
@@ -662,7 +662,7 @@ Valid status transitions:
 ```sql
 -- Large fact tables partitioned by business date
 {{
-  config(
+  settings(
     materialized='table',
     partition_by='business_date',
     cluster_by=['company_code', 'facility_code', 'wave_id']
@@ -680,7 +680,7 @@ WHERE business_date = CURRENT_DATE  -- Enables partition pruning
 ```sql
 -- Incremental models for large datasets
 {{
-  config(
+  settings(
     materialized='incremental',
     unique_key='allocation_id',
     on_schema_change='fail',

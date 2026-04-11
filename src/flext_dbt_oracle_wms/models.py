@@ -173,10 +173,10 @@ class FlextDbtOracleWmsModels(FlextDbtOracleModels, FlextOracleWmsModels):
     @override
     def create_generator(
         cls,
-        config: t.StrMapping | None = None,
+        settings: t.StrMapping | None = None,
     ) -> FlextDbtOracleWmsModels.DbtOracleWms.ModelGenerator:
         """Create a model generator with explicit configuration."""
-        return cls.DbtOracleWms.ModelGenerator(config)
+        return cls.DbtOracleWms.ModelGenerator(settings)
 
 
 __all__ = ["FlextDbtOracleWmsModels", "m"]

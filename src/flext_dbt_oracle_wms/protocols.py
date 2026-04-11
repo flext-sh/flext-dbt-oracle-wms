@@ -24,7 +24,7 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
             def run_dbt_models(
                 self,
                 models: t.StrSequence | None = None,
-                config: t.Dict | None = None,
+                settings: t.Dict | None = None,
             ) -> r[t.Dict]:
                 """Run DBT models and return execution metadata."""
                 ...
@@ -32,7 +32,7 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
             def test_dbt_models(
                 self,
                 models: t.StrSequence | None = None,
-                config: t.Dict | None = None,
+                settings: t.Dict | None = None,
             ) -> r[t.Dict]:
                 """Run DBT tests and return status metadata."""
                 ...

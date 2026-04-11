@@ -28,19 +28,19 @@ class FlextDbtOracleWms(
 
     def __init__(
         self,
-        config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
+        settings: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
         client: FlextDbtOracleWmsClient | None = None,
         service: u.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         super().__init__(
-            config_type=None,
-            config_overrides=None,
+            settings_type=None,
+            settings_overrides=None,
             initial_context=None,
         )
         self._wms_config: m.DbtOracleWms.FlextDbtOracleWmsSettings = (
-            config
-            if config is not None
+            settings
+            if settings is not None
             else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
         )
         self._client = client
@@ -55,7 +55,7 @@ class FlextDbtOracleWms(
 
     @property
     @override
-    def config(self) -> m.DbtOracleWms.FlextDbtOracleWmsSettings:
+    def settings(self) -> m.DbtOracleWms.FlextDbtOracleWmsSettings:
         """Get the current configuration."""
         return self._wms_config
 
@@ -189,7 +189,7 @@ class FlextDbtOracleWms(
                 )
             entity_names = discovery_result.value
         generator = m.create_generator({
-            "dbt_target": self.config.dbt_target,
+            "dbt_target": self.settings.dbt_target,
             "output_dir": output_dir or "",
         })
         generated_models_result = generator.generate_wms_staging_models(entity_names)
@@ -383,7 +383,7 @@ class FlextDbtOracleWms(
     ) -> r[m.DbtOracleWms.FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         self.logger.info("Executing DBT Oracle WMS service")
-        return r[m.DbtOracleWms.FlextDbtOracleWmsSettings].ok(self.config)
+        return r[m.DbtOracleWms.FlextDbtOracleWmsSettings].ok(self.settings)
 
 
 __all__ = ["FlextDbtOracleWms"]

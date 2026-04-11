@@ -19,13 +19,13 @@ class FlextDbtOracleWmsClient:
     _logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
     def __init__(
-        self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
+        self, settings: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
     ) -> None:
         """Initialize client with explicit or global settings."""
         super().__init__()
-        self.config = (
-            config
-            if config is not None
+        self.settings = (
+            settings
+            if settings is not None
             else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
         )
         self._meltano_runner = FlextMeltanoLibraryRunner()
@@ -123,8 +123,8 @@ class FlextDbtOracleWmsClient:
         return r[t.Dict].ok(
             t.Dict.model_validate({
                 "status": "connected",
-                "environment": self.config.oracle_wms_environment,
-                "base_url": self.config.oracle_wms_base_url,
+                "environment": self.settings.oracle_wms_environment,
+                "base_url": self.settings.oracle_wms_base_url,
                 "status_code": response.status_code,
             }),
         )
@@ -160,7 +160,7 @@ class FlextDbtOracleWmsClient:
         """Validate extracted records against configured entity requirements."""
         if not records:
             return r[Sequence[t.ScalarMapping]].fail("No records to validate")
-        required_fields = self.config.required_fields_per_entity.get(entity_name, ())
+        required_fields = self.settings.required_fields_per_entity.get(entity_name, ())
         for index, record in enumerate(records):
             missing_fields = [
                 field
@@ -184,8 +184,8 @@ class FlextDbtOracleWmsClient:
             return r[FlextOracleWmsUtilitiesClient.Client].ok(self._wms_client)
         try:
             settings_overrides: t.ConfigurationMapping = (
-                {"base_url": self.config.oracle_wms_base_url}
-                if self.config.oracle_wms_base_url
+                {"base_url": self.settings.oracle_wms_base_url}
+                if self.settings.oracle_wms_base_url
                 else {}
             )
             settings = FlextOracleWmsSettings.fetch_global(overrides=settings_overrides)
@@ -194,7 +194,7 @@ class FlextDbtOracleWmsClient:
                 return r[FlextOracleWmsUtilitiesClient.Client].fail(
                     validation_result.error or "Invalid Oracle WMS settings",
                 )
-            self._wms_client = FlextOracleWmsUtilitiesClient.Client(config=settings)
+            self._wms_client = FlextOracleWmsUtilitiesClient.Client(settings=settings)
             return r[FlextOracleWmsUtilitiesClient.Client].ok(self._wms_client)
         except (ValidationError, TypeError, ValueError) as exc:
             return r[FlextOracleWmsUtilitiesClient.Client].fail(

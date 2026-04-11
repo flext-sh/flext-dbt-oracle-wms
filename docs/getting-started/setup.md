@@ -264,7 +264,7 @@ Verify and customize `dbt_project.yml`:
 # dbt_project.yml
 name: "flext_dbt_oracle_wms"
 version: "0.9.9"
-config-version: 2
+settings-version: 2
 
 profile: "flext_oracle_wms"
 
@@ -427,7 +427,7 @@ If using Singer tap for data extraction:
 pip install flext-tap-oracle-wms
 
 # Create tap configuration
-cat > tap-config.json << 'EOF'
+cat > tap-settings.json << 'EOF'
 {
   "host": "your-oracle-host.com",
   "port": 1521,
@@ -440,7 +440,7 @@ cat > tap-config.json << 'EOF'
 EOF
 
 # Test tap connection
-flext-tap-oracle-wms --config tap-config.json --discover
+flext-tap-oracle-wms --settings tap-settings.json --discover
 ```
 
 ## 🛠️ Development Setup

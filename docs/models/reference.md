@@ -355,7 +355,7 @@ Large models use incremental materialization:
 
 ```sql
 {{
-  config(
+  settings(
     materialized='incremental',
     unique_key='allocation_id',
     on_schema_change='fail'
@@ -375,7 +375,7 @@ SELECT * FROM {{ ref('stg_wms__allocation') }}
 
 ```sql
 {{
-  config(
+  settings(
     materialized='table',
     partition_by='business_date',
     cluster_by=['company_code', 'facility_code']
