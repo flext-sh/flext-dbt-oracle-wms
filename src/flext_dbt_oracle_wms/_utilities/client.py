@@ -16,7 +16,7 @@ from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClie
 class FlextDbtOracleWmsClient:
     """DBT Oracle WMS client backed by real WMS and Meltano integrations."""
 
-    _logger: ClassVar[FlextLogger] = FlextLogger(__name__)
+    _logger: ClassVar[FlextLogger] = u.fetch_logger(__name__)
 
     def __init__(
         self, config: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
@@ -26,7 +26,7 @@ class FlextDbtOracleWmsClient:
         self.config = (
             config
             if config is not None
-            else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
+            else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
         )
         self._meltano_runner = FlextMeltanoLibraryRunner()
         self._transformer = m.DbtOracleWms.FlextDbtOracleWmsTransformer()
@@ -188,7 +188,7 @@ class FlextDbtOracleWmsClient:
                 if self.config.oracle_wms_base_url
                 else {}
             )
-            settings = FlextOracleWmsSettings.get_global(overrides=settings_overrides)
+            settings = FlextOracleWmsSettings.fetch_global(overrides=settings_overrides)
             validation_result = settings.validate_config()
             if validation_result.failure:
                 return r[FlextOracleWmsUtilitiesClient.Client].fail(

@@ -15,7 +15,7 @@ from flext_dbt_oracle_wms import FlextDbtOracleWms, t
 class FlextDbtOracleWmsCliService:
     """CLI adapter that calls the public DBT Oracle WMS facade."""
 
-    _logger: ClassVar[FlextLogger] = FlextLogger(__name__)
+    _logger: ClassVar[FlextLogger] = u.fetch_logger(__name__)
     _default_command: ClassVar[str] = "info"
     _default_entity: ClassVar[str] = "inventory"
     _service: FlextDbtOracleWms

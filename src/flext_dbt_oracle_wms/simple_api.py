@@ -41,7 +41,7 @@ class FlextDbtOracleWms(
         self._wms_config: m.DbtOracleWms.FlextDbtOracleWmsSettings = (
             config
             if config is not None
-            else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
+            else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
         )
         self._client = client
         self._service = service

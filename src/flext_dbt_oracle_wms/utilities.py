@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import ClassVar
 
-from flext_core import FlextLogger, r
+from flext_core import r
 from flext_dbt_oracle_wms import m, t
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import FlextOracleWmsUtilities
@@ -64,7 +64,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 self.config = (
                     config
                     if config is not None
-                    else m.DbtOracleWms.FlextDbtOracleWmsSettings.get_global()
+                    else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
                 )
 
             def generate_workflow_recommendations(
@@ -95,7 +95,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 result: r[t.Dict],
             ) -> None:
                 """Log workflow completion status."""
-                FlextLogger(__name__).info(
+                u.fetch_logger(__name__).info(
                     "Workflow completion",
                     tracking_id=str(tracking_info.get("tracking_id", "")),
                     success=result.success,
@@ -109,7 +109,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 additional_data: t.ConfigValueMapping | None = None,
             ) -> t.Dict:
                 """Return tracking payload for workflow instrumentation."""
-                FlextLogger(__name__).info("Tracking workflow execution")
+                u.fetch_logger(__name__).info("Tracking workflow execution")
                 return t.Dict.model_validate({
                     "workflow_name": workflow_name,
                     "workflow_type": workflow_type,
