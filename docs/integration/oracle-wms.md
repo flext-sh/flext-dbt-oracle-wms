@@ -366,7 +366,7 @@ cat > tap-oracle-wms-settings.json << 'EOF'
 EOF
 
 # Test tap discovery
-flext-tap-oracle-wms --settings tap-oracle-wms-settings.json --discover
+flext-tap-oracle-wms --config tap-oracle-wms-settings.json --discover
 ```
 
 #### **Data Pipeline Flow**

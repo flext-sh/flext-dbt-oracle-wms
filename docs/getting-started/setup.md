@@ -440,7 +440,7 @@ cat > tap-settings.json << 'EOF'
 EOF
 
 # Test tap connection
-flext-tap-oracle-wms --settings tap-settings.json --discover
+flext-tap-oracle-wms --config tap-settings.json --discover
 ```
 
 ## 🛠️ Development Setup
