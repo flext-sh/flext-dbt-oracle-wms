@@ -386,4 +386,4 @@ class FlextDbtOracleWms(
         return r[m.DbtOracleWms.FlextDbtOracleWmsSettings].ok(self.settings)
 
 
-__all__ = ["FlextDbtOracleWms"]
+__all__: list[str] = ["FlextDbtOracleWms"]

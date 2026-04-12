@@ -6,10 +6,8 @@ import sys
 from collections.abc import Mapping
 from typing import ClassVar
 
-from pydantic import ValidationError
-
 from flext_core import r
-from flext_dbt_oracle_wms import FlextDbtOracleWms, p, t, u
+from flext_dbt_oracle_wms import FlextDbtOracleWms, c, p, t, u
 
 
 class FlextDbtOracleWmsCliService:
@@ -75,7 +73,7 @@ class FlextDbtOracleWmsCliService:
                 validated_entity = t.TEXT_VALUE_ADAPTER.validate_python(
                     entity_value,
                 ).strip()
-            except ValidationError:
+            except c.ValidationError:
                 validated_entity = ""
             if validated_entity:
                 entity = validated_entity
@@ -110,4 +108,4 @@ def main(argv: t.StrSequence | None = None) -> int:
     return FlextDbtOracleWmsCliService().main(argv)
 
 
-__all__ = ["FlextDbtOracleWmsCliService", "main"]
+__all__: list[str] = ["FlextDbtOracleWmsCliService", "main"]

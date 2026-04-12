@@ -5,36 +5,33 @@ from __future__ import annotations
 from collections.abc import Mapping, MutableSequence, Sequence
 from typing import Annotated, ClassVar, override
 
-from flext_dbt_oracle import FlextDbtOracleModels
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
-
-from flext_core import FlextSettings, r
-from flext_dbt_oracle_wms import c, t
+from flext_core import FlextSettings
+from flext_dbt_oracle_wms import c, r, t, u
+from flext_meltano import m
 from flext_oracle_wms import FlextOracleWmsModels
 
 
-class FlextDbtOracleWmsModels(FlextDbtOracleModels, FlextOracleWmsModels):
+class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
     """Pydantic model namespace for DBT Oracle WMS objects."""
 
     class DbtOracleWms:
-        """DBT Oracle WMS domain namespace -- m.DbtOracleWms.*."""
+        """DBT Oracle WMS domain namespace."""
 
-        # Models from dbt_models.py
-        class RawItemRecord(BaseModel):
+        class RawItemRecord(m.Value):
             """Raw item record from Oracle WMS."""
 
-            model_config: ClassVar[ConfigDict] = ConfigDict(extra="ignore")
+            model_config: ClassVar[c.ConfigDict] = c.ConfigDict(extra="ignore")
 
-            item_id: Annotated[str, Field(default="")]
-            item_number: Annotated[str, Field(default="")]
-            item_description: Annotated[str, Field(default="")]
+            item_id: Annotated[str, u.Field(default="")]
+            item_number: Annotated[str, u.Field(default="")]
+            item_description: Annotated[str, u.Field(default="")]
 
-        class FlextDbtOracleWmsItemDimension(BaseModel):
+        class FlextDbtOracleWmsItemDimension(m.Value):
             """Item dimension model for WMS analytics."""
 
-            item_id: Annotated[str, Field(default="")]
-            item_number: Annotated[str, Field(default="")]
-            item_description: Annotated[str, Field(default="")]
+            item_id: Annotated[str, u.Field(default="")]
+            item_number: Annotated[str, u.Field(default="")]
+            item_description: Annotated[str, u.Field(default="")]
 
             def to_dbt_dict(self) -> t.ConfigurationMapping:
                 """Convert item dimension to DBT-compatible dictionary."""
@@ -72,14 +69,14 @@ class FlextDbtOracleWmsModels(FlextDbtOracleModels, FlextOracleWmsModels):
                         raw_record = FlextDbtOracleWmsModels.DbtOracleWms.RawItemRecord.model_validate(
                             record,
                         )
-                    except ValidationError:
+                    except c.ValidationError:
                         continue
                     transformed.append(
                         FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension(
                             item_id=raw_record.item_id,
                             item_number=raw_record.item_number,
                             item_description=raw_record.item_description,
-                        ),
+                        )
                     )
                 return transformed
 
@@ -92,24 +89,58 @@ class FlextDbtOracleWmsModels(FlextDbtOracleModels, FlextOracleWmsModels):
                     return r[bool].fail("No records to validate")
                 return r[bool].ok(True)
 
-        class DbtModel(FlextDbtOracleModels.DbtOracle.Model):
-            """WMS-specific DBT model metadata layered on the canonical DBT model."""
+        class DbtModel(m.ArbitraryTypesModel):
+            """WMS-specific DBT model metadata."""
 
+            name: Annotated[str, u.Field(description="DBT model name")]
+            dbt_model_type: Annotated[
+                str,
+                u.Field(description="DBT model classification"),
+            ] = "staging"
+            schema_name: Annotated[
+                str,
+                u.Field(description="Target schema name"),
+            ] = "wms_staging"
+            table_name: Annotated[str, u.Field(description="Target table name")]
+            materialization: Annotated[
+                str,
+                u.Field(description="DBT materialization strategy"),
+            ] = c.DbtOracleWms.Dbt.Materialization.VIEW.value
+            sql_content: Annotated[str, u.Field(description="Model SQL body")]
+            description: Annotated[
+                str,
+                u.Field(description="Human-readable model description"),
+            ] = ""
+            columns: Annotated[
+                Sequence[t.StrMapping],
+                u.Field(description="Column metadata payloads"),
+            ] = u.Field(default_factory=list)
+            dependencies: Annotated[
+                t.StrSequence,
+                u.Field(description="Upstream model dependencies"),
+            ] = u.Field(default_factory=list)
             wms_entity_type: Annotated[
                 str,
-                Field(description="Oracle WMS entity represented by this model"),
+                u.Field(description="Oracle WMS entity represented by this model"),
             ]
             oracle_source: Annotated[
                 str,
-                Field(description="Oracle WMS source name for this model"),
+                u.Field(description="Oracle source for this model"),
             ]
             wms_business_rules: Annotated[
                 t.StrSequence,
-                Field(description="WMS-specific business rules attached to the model"),
-            ] = Field(default_factory=list)
+                u.Field(
+                    description="WMS-specific business rules attached to the model"
+                ),
+            ] = u.Field(default_factory=list)
 
-        class ModelGenerator(FlextDbtOracleModels.DbtOracle.ModelGenerator):
+        class ModelGenerator:
             """Generator for lightweight DBT model objects."""
+
+            def __init__(self, settings: t.StrMapping | None = None) -> None:
+                """Store optional generation-time configuration."""
+                super().__init__()
+                self.settings = settings or {}
 
             def generate_wms_staging_models(
                 self,
@@ -142,31 +173,29 @@ class FlextDbtOracleWmsModels(FlextDbtOracleModels, FlextOracleWmsModels):
 
             required_fields_per_entity: Annotated[
                 Mapping[str, t.StrSequence],
-                Field(
-                    description="Required fields per WMS entity for validation",
-                ),
-            ] = Field(default_factory=dict)
+                u.Field(description="Required fields per WMS entity for validation"),
+            ] = u.Field(default_factory=dict)
             oracle_wms_environment: Annotated[
                 str,
-                Field(
+                u.Field(
                     default="development",
                     description="Oracle WMS environment (development/production)",
                 ),
             ]
             oracle_wms_base_url: Annotated[
                 str,
-                Field(default="", description="Base URL for Oracle WMS API"),
+                u.Field(default="", description="Base URL for Oracle WMS API"),
             ]
             dbt_threads: Annotated[
                 int,
-                Field(
+                u.Field(
                     default=4,
                     description="Number of DBT threads for parallel execution",
                 ),
             ]
             dbt_target: Annotated[
                 str,
-                Field(default="dev", description="DBT target profile (dev/prod)"),
+                u.Field(default="dev", description="DBT target profile (dev/prod)"),
             ]
 
     @classmethod
@@ -176,9 +205,9 @@ class FlextDbtOracleWmsModels(FlextDbtOracleModels, FlextOracleWmsModels):
         settings: t.StrMapping | None = None,
     ) -> FlextDbtOracleWmsModels.DbtOracleWms.ModelGenerator:
         """Create a model generator with explicit configuration."""
-        return cls.DbtOracleWms.ModelGenerator(settings)
+        return cls.DbtOracleWms.ModelGenerator(settings=settings)
 
-
-__all__ = ["FlextDbtOracleWmsModels", "m"]
 
 m = FlextDbtOracleWmsModels
+
+__all__: list[str] = ["FlextDbtOracleWmsModels", "m"]

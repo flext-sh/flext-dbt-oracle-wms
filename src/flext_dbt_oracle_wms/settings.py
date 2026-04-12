@@ -8,18 +8,17 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from pydantic_settings import SettingsConfigDict
-
 from flext_core import FlextSettings
+from flext_dbt_oracle_wms import c
 
 
 @FlextSettings.auto_register("dbt-oracle-wms")
 class FlextDbtOracleWmsSettings(FlextSettings):
     """Runtime configuration for dbt Oracle WMS."""
 
-    model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
+    model_config: ClassVar[c.SettingsConfigDict] = c.SettingsConfigDict(
         env_prefix="FLEXT_DBT_ORACLE_WMS_", extra="ignore"
     )
 
 
-__all__ = ["FlextDbtOracleWmsSettings"]
+__all__: list[str] = ["FlextDbtOracleWmsSettings"]

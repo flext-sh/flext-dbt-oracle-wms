@@ -26,4 +26,4 @@ class TestsFlextDbtOracleWmsProtocols(FlextTestsProtocols, FlextDbtOracleWmsProt
 
 p = TestsFlextDbtOracleWmsProtocols
 
-__all__ = ["TestsFlextDbtOracleWmsProtocols", "p"]
+__all__: list[str] = ["TestsFlextDbtOracleWmsProtocols", "p"]

@@ -9,8 +9,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from pydantic import TypeAdapter
-
+from flext_dbt_oracle_wms import u
 from flext_meltano import FlextMeltanoTypes
 from flext_oracle_wms import FlextOracleWmsTypes
 
@@ -18,7 +17,7 @@ from flext_oracle_wms import FlextOracleWmsTypes
 class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     """MRO facade composing Meltano + OracleWms type namespaces."""
 
-    TEXT_VALUE_ADAPTER: TypeAdapter[FlextMeltanoTypes.TextValue] = TypeAdapter(
+    TEXT_VALUE_ADAPTER: u.TypeAdapter[FlextMeltanoTypes.TextValue] = u.TypeAdapter(
         FlextMeltanoTypes.TextValue
     )
 
@@ -26,7 +25,7 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 # Facade assignment - enables canonical t.* consumption for consumers
 t = FlextDbtOracleWmsTypes
 
-__all__ = [
+__all__: list[str] = [
     "FlextDbtOracleWmsTypes",
     "t",
 ]

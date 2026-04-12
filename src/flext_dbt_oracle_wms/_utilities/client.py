@@ -5,10 +5,8 @@ from __future__ import annotations
 from collections.abc import Mapping, MutableMapping, Sequence
 from typing import ClassVar
 
-from pydantic import ValidationError
-
 from flext_core import r
-from flext_dbt_oracle_wms import m, p, t, u
+from flext_dbt_oracle_wms import c, m, p, t, u
 from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClient
 
@@ -196,10 +194,10 @@ class FlextDbtOracleWmsClient:
                 )
             self._wms_client = FlextOracleWmsUtilitiesClient.Client(settings=settings)
             return r[FlextOracleWmsUtilitiesClient.Client].ok(self._wms_client)
-        except (ValidationError, TypeError, ValueError) as exc:
+        except (c.ValidationError, TypeError, ValueError) as exc:
             return r[FlextOracleWmsUtilitiesClient.Client].fail(
                 f"Oracle WMS client initialization failed: {exc}",
             )
 
 
-__all__ = ["FlextDbtOracleWmsClient"]
+__all__: list[str] = ["FlextDbtOracleWmsClient"]
