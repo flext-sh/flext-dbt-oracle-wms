@@ -102,7 +102,7 @@ class _Service(u.DbtOracleWms.Service):
         workflow_name: str,
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
-        additional_data: t.SettingsValueMapping | None = None,
+        additional_data: t.ConfigValueMapping | None = None,
     ) -> t.Dict:
         _ = entity_names
         _ = additional_data
