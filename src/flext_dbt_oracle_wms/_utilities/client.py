@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping, MutableMapping, Sequence
 from typing import ClassVar
 
-from flext_core import r
+from flext_core import p, r
 from flext_dbt_oracle_wms import c, m, p, t, u
 from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClient
@@ -30,7 +30,7 @@ class FlextDbtOracleWmsClient:
         self._transformer = m.DbtOracleWms.FlextDbtOracleWmsTransformer()
         self._wms_client: FlextOracleWmsUtilitiesClient.Client | None = None
 
-    def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
+    def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         """Discover Oracle WMS entities through the owning domain client."""
         client_result = self._get_wms_client()
         if client_result.failure:
@@ -43,7 +43,7 @@ class FlextDbtOracleWmsClient:
         self,
         entity_name: str,
         filters: t.ConfigurationMapping | None = None,
-    ) -> r[Sequence[t.ConfigurationMapping]]:
+    ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Extract entity records from Oracle WMS using the real domain client."""
         client_result = self._get_wms_client()
         if client_result.failure:
@@ -66,7 +66,7 @@ class FlextDbtOracleWmsClient:
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         """Run discover, extract, validate, and transform pipeline."""
         entities_result = (
             r[t.StrSequence].ok(entity_names)
@@ -102,7 +102,7 @@ class FlextDbtOracleWmsClient:
             }),
         )
 
-    def test_oracle_wms_connection(self) -> r[t.Dict]:
+    def test_oracle_wms_connection(self) -> p.Result[t.Dict]:
         """Validate Oracle WMS connectivity using the real health endpoint."""
         client_result = self._get_wms_client()
         if client_result.failure:
@@ -131,7 +131,7 @@ class FlextDbtOracleWmsClient:
         self,
         entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
         model_names: t.StrSequence | None,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         """Run DBT transformations through flext-meltano."""
         transformed_entities = self._transformer.transform_all_entities(entity_data)
         dbt_result = self._meltano_runner.run_dbt_transformation(model_names)
@@ -154,7 +154,7 @@ class FlextDbtOracleWmsClient:
         self,
         entity_name: str,
         records: Sequence[t.ConfigurationMapping],
-    ) -> r[Sequence[t.ConfigurationMapping]]:
+    ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Validate extracted records against configured entity requirements."""
         if not records:
             return r[Sequence[t.ScalarMapping]].fail("No records to validate")
@@ -176,7 +176,7 @@ class FlextDbtOracleWmsClient:
             )
         return r[Sequence[t.ScalarMapping]].ok(records)
 
-    def _get_wms_client(self) -> r[FlextOracleWmsUtilitiesClient.Client]:
+    def _get_wms_client(self) -> p.Result[FlextOracleWmsUtilitiesClient.Client]:
         """Create and cache the real Oracle WMS client."""
         if self._wms_client is not None:
             return r[FlextOracleWmsUtilitiesClient.Client].ok(self._wms_client)

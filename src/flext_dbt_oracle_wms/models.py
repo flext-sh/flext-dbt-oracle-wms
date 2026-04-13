@@ -6,7 +6,7 @@ from collections.abc import Mapping, MutableSequence, Sequence
 from typing import Annotated, ClassVar, override
 
 from flext_core import FlextSettings
-from flext_dbt_oracle_wms import c, r, t, u
+from flext_dbt_oracle_wms import c, p, r, t, u
 from flext_meltano import m
 from flext_oracle_wms import FlextOracleWmsModels
 
@@ -83,7 +83,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             def validate_business_rules(
                 self,
                 records: Sequence[t.ConfigurationMapping],
-            ) -> r[bool]:
+            ) -> p.Result[bool]:
                 """Validate business rules for WMS records."""
                 if not records:
                     return r[bool].fail("No records to validate")
@@ -145,7 +145,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             def generate_wms_staging_models(
                 self,
                 oracle_sources: t.StrSequence,
-            ) -> r[Sequence[FlextDbtOracleWmsModels.DbtOracleWms.DbtModel]]:
+            ) -> p.Result[Sequence[FlextDbtOracleWmsModels.DbtOracleWms.DbtModel]]:
                 """Create one staging model per source name."""
                 models = [
                     FlextDbtOracleWmsModels.DbtOracleWms.DbtModel(

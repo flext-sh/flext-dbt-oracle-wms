@@ -12,7 +12,7 @@ import shlex
 from collections.abc import Sequence
 from typing import override
 
-from flext_core import r, s
+from flext_core import p, r, s
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsClient,
     m,
@@ -66,7 +66,7 @@ class FlextDbtOracleWms(
             self._service = u.DbtOracleWms.Service()
         return self._service
 
-    def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
+    def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         """Discover Oracle WMS entities through the public domain facade."""
         return self.client.discover_oracle_wms_entities()
 
@@ -74,7 +74,7 @@ class FlextDbtOracleWms(
         self,
         entity_name: str,
         filters: t.ConfigurationMapping | None = None,
-    ) -> r[Sequence[t.ConfigurationMapping]]:
+    ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Extract Oracle WMS entity records through the public domain facade."""
         return self.client.extract_oracle_wms_data(entity_name, filters)
 
@@ -95,7 +95,7 @@ class FlextDbtOracleWms(
         entity_name: str,
         requested_identifiers: t.StrSequence | None,
         identifier_fields: t.StrSequence,
-    ) -> r[Sequence[t.ConfigurationMapping]]:
+    ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         extract_result = self.client.extract_oracle_wms_data(entity_name)
         if extract_result.failure:
             return r[Sequence[t.ConfigurationMapping]].fail(
@@ -129,7 +129,7 @@ class FlextDbtOracleWms(
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         """Extract Oracle WMS metadata from the real domain client."""
         self.logger.info("Extracting Oracle WMS metadata")
         available_entities_result = self.client.discover_oracle_wms_entities()
@@ -177,7 +177,7 @@ class FlextDbtOracleWms(
         inventory_items: t.StrSequence | None = None,
         shipments: t.StrSequence | None = None,
         output_dir: str | None = None,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         """Generate DBT model metadata from real entity selections."""
         self.logger.info("Generating DBT models from Oracle WMS")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -218,7 +218,7 @@ class FlextDbtOracleWms(
             }),
         )
 
-    def get_wms_inventory_info(self, item_id: str) -> r[t.Dict]:
+    def get_wms_inventory_info(self, item_id: str) -> p.Result[t.Dict]:
         """Get inventory item data from the Oracle WMS domain client."""
         self.logger.info("Getting WMS inventory info: %s", item_id)
         inventory_result = self._extract_entity_records(
@@ -232,7 +232,7 @@ class FlextDbtOracleWms(
             )
         return r[t.Dict].ok(t.Dict.model_validate(dict(inventory_result.value[0])))
 
-    def get_wms_shipment_info(self, shipment_id: str) -> r[t.Dict]:
+    def get_wms_shipment_info(self, shipment_id: str) -> p.Result[t.Dict]:
         """Get shipment data from the Oracle WMS domain client."""
         self.logger.info("Getting WMS shipment info: %s", shipment_id)
         shipment_result = self._extract_entity_records(
@@ -250,7 +250,7 @@ class FlextDbtOracleWms(
         self,
         command: str,
         timeout_seconds: int = 300,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         """Run and monitor a real DBT transformation through flext-meltano."""
         self.logger.info("Monitoring DBT execution: %s", command)
         command_parts = shlex.split(command)
@@ -295,7 +295,7 @@ class FlextDbtOracleWms(
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients."""
         self.logger.info("Running Oracle WMS-to-DBT workflow")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -367,7 +367,7 @@ class FlextDbtOracleWms(
         )
         return success_result
 
-    def validate_wms_connection(self) -> r[bool]:
+    def validate_wms_connection(self) -> p.Result[bool]:
         """Validate the Oracle WMS connection using the real client health check."""
         self.logger.info("Validating Oracle WMS connection")
         connection_result = self.client.test_oracle_wms_connection()
@@ -380,7 +380,7 @@ class FlextDbtOracleWms(
     @override
     def execute(
         self,
-    ) -> r[m.DbtOracleWms.FlextDbtOracleWmsSettings]:
+    ) -> p.Result[m.DbtOracleWms.FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         self.logger.info("Executing DBT Oracle WMS service")
         return r[m.DbtOracleWms.FlextDbtOracleWmsSettings].ok(self.settings)

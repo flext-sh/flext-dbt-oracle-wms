@@ -5,7 +5,6 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Protocol, runtime_checkable
 
-from flext_core import r
 from flext_dbt_oracle_wms import t
 from flext_meltano import FlextMeltanoProtocols
 from flext_oracle_wms import FlextOracleWmsProtocols
@@ -25,7 +24,7 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
                 self,
                 models: t.StrSequence | None = None,
                 settings: t.Dict | None = None,
-            ) -> r[t.Dict]:
+            ) -> p.Result[t.Dict]:
                 """Run DBT models and return execution metadata."""
                 ...
 
@@ -33,7 +32,7 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
                 self,
                 models: t.StrSequence | None = None,
                 settings: t.Dict | None = None,
-            ) -> r[t.Dict]:
+            ) -> p.Result[t.Dict]:
                 """Run DBT tests and return status metadata."""
                 ...
 
@@ -45,7 +44,7 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
                 self,
                 wms_config: t.Dict,
                 extraction_config: t.Dict,
-            ) -> r[Sequence[t.Dict]]:
+            ) -> p.Result[Sequence[t.Dict]]:
                 """Extract inventory records from Oracle WMS."""
                 ...
 

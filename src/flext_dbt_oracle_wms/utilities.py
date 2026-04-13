@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import ClassVar
 
-from flext_core import r
+from flext_core import p, r
 from flext_dbt_oracle_wms import m, t
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import FlextOracleWmsUtilities
@@ -22,7 +22,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
         @staticmethod
         def extract_wms_inventory_data(
             extraction_config: Mapping[str, t.ContainerValue | None],
-        ) -> r[
+        ) -> p.Result[
             Mapping[
                 str,
                 Mapping[str, t.ContainerValue | None]
@@ -47,7 +47,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
             @staticmethod
             def generate_wms_inventory_dimension(
                 inventory_config: Mapping[str, t.ContainerValue | None],
-            ) -> r[str]:
+            ) -> p.Result[str]:
                 """Generate SQL for inventory dimension model."""
                 _ = inventory_config
                 return r[str].ok("select * from {{ ref('stg_wms_inventory') }}")
@@ -70,7 +70,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
             def generate_workflow_recommendations(
                 self,
                 entities: Sequence[t.ConfigurationMapping] | None = None,
-            ) -> r[t.Dict]:
+            ) -> p.Result[t.Dict]:
                 """Generate simple workflow recommendations for entity processing."""
                 entity_list = entities or []
                 total = len(entity_list)

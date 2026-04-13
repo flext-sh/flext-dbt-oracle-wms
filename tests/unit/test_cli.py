@@ -11,7 +11,7 @@ from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsCliService,
     main,
 )
-from tests import m, r, t, u
+from tests import m, p, r, t, u
 
 
 class _CliClient(FlextDbtOracleWmsClient):
@@ -27,7 +27,7 @@ class _CliClient(FlextDbtOracleWmsClient):
         self.pipeline_called = False
 
     @override
-    def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
+    def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         return r[t.StrSequence].ok(["items", "shipments"])
 
     @override
@@ -35,7 +35,7 @@ class _CliClient(FlextDbtOracleWmsClient):
         self,
         entity_name: str,
         filters: t.ConfigurationMapping | None = None,
-    ) -> r[Sequence[t.ConfigurationMapping]]:
+    ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         _ = filters
         self.last_entity = entity_name
         if entity_name not in {"inventory", "items"}:
@@ -50,7 +50,7 @@ class _CliClient(FlextDbtOracleWmsClient):
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         _ = filters
         _ = model_names
         self.pipeline_called = True

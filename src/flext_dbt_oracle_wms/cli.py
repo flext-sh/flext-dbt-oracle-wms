@@ -6,7 +6,7 @@ import sys
 from collections.abc import Mapping
 from typing import ClassVar
 
-from flext_core import r
+from flext_core import p, r
 from flext_dbt_oracle_wms import FlextDbtOracleWms, c, p, t, u
 
 
@@ -54,7 +54,7 @@ class FlextDbtOracleWmsCliService:
     def handle_discover(
         self,
         _args: Mapping[str, t.ContainerValue | None] | None = None,
-    ) -> r[str]:
+    ) -> p.Result[str]:
         """Handle discover command."""
         result = self._service.discover_oracle_wms_entities()
         if result.failure:
@@ -64,7 +64,7 @@ class FlextDbtOracleWmsCliService:
     def handle_extract(
         self,
         args: Mapping[str, t.ContainerValue | None] | None = None,
-    ) -> r[str]:
+    ) -> p.Result[str]:
         """Handle extract command."""
         entity = self._default_entity
         if args is not None:
@@ -85,14 +85,14 @@ class FlextDbtOracleWmsCliService:
     def handle_info(
         self,
         _args: Mapping[str, t.ContainerValue | None] | None = None,
-    ) -> r[str]:
+    ) -> p.Result[str]:
         """Handle package info command."""
         return r[str].ok("FLEXT DBT Oracle WMS")
 
     def handle_pipeline(
         self,
         _args: Mapping[str, t.ContainerValue | None] | None = None,
-    ) -> r[str]:
+    ) -> p.Result[str]:
         """Handle full pipeline command."""
         result = self._service.run_oracle_wms_to_dbt_workflow(
             generate_models=False,

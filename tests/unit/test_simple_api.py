@@ -6,7 +6,7 @@ from collections.abc import Sequence
 from typing import override
 
 from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsClient
-from tests import m, r, t, u
+from tests import m, p, r, t, u
 
 
 class _SuccessfulConnectionClient(FlextDbtOracleWmsClient):
@@ -14,7 +14,7 @@ class _SuccessfulConnectionClient(FlextDbtOracleWmsClient):
         self.settings = settings
 
     @override
-    def test_oracle_wms_connection(self) -> r[t.Dict]:
+    def test_oracle_wms_connection(self) -> p.Result[t.Dict]:
         return r[t.Dict].ok(
             t.Dict.model_validate({
                 "status": "connected",
@@ -31,7 +31,7 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
         self.settings = settings
 
     @override
-    def discover_oracle_wms_entities(self) -> r[t.StrSequence]:
+    def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         return r[t.StrSequence].ok(["items", "shipments"])
 
     @override
@@ -39,7 +39,7 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
         self,
         entity_name: str,
         filters: t.ConfigurationMapping | None = None,
-    ) -> r[Sequence[t.ConfigurationMapping]]:
+    ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         _ = filters
         type(self).extracted_entity = entity_name
         return r[Sequence[t.ConfigurationMapping]].ok([
@@ -52,7 +52,7 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         _ = filters
         _ = model_names
         type(self).entity_names = entity_names
@@ -76,7 +76,7 @@ class _Service(u.DbtOracleWms.Service):
     def generate_workflow_recommendations(
         self,
         entities: Sequence[t.ConfigurationMapping] | None = None,
-    ) -> r[t.Dict]:
+    ) -> p.Result[t.Dict]:
         total = len(entities or [])
         return r[t.Dict].ok(
             t.Dict.model_validate({
