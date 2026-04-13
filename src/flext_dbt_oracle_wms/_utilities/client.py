@@ -5,10 +5,9 @@ from __future__ import annotations
 from collections.abc import Mapping, MutableMapping, Sequence
 from typing import ClassVar
 
-from flext_core import p, r
 from flext_dbt_oracle_wms import c, m, p, t, u
 from flext_meltano import FlextMeltanoLibraryRunner
-from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClient
+from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClient, r
 
 
 class FlextDbtOracleWmsClient:

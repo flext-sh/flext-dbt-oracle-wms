@@ -6,8 +6,7 @@ import sys
 from collections.abc import Mapping
 from typing import ClassVar
 
-from flext_core import p, r
-from flext_dbt_oracle_wms import FlextDbtOracleWms, c, p, t, u
+from flext_dbt_oracle_wms import FlextDbtOracleWms, c, p, r, t, u
 
 
 class FlextDbtOracleWmsCliService:

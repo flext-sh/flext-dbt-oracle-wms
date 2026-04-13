@@ -12,10 +12,12 @@ import shlex
 from collections.abc import Sequence
 from typing import override
 
-from flext_core import p, r, s
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsClient,
     m,
+    p,
+    r,
+    s,
     t,
     u,
 )
@@ -309,7 +311,7 @@ class FlextDbtOracleWms(
             "workflow_name": "oracle_wms_to_dbt",
             "workflow_type": "dbt_oracle_wms",
         }
-        model_generation_result: r[t.Dict] | None = None
+        model_generation_result: p.Result[t.Dict] | None = None
         model_names: t.StrSequence | None = None
         if generate_models:
             model_generation_result = self.generate_dbt_models_from_wms(
@@ -325,10 +327,11 @@ class FlextDbtOracleWms(
                     failure_result,
                 )
                 return failure_result
+            generated_model_payload = dict(model_generation_result.value)
             model_names = [
                 name
                 for name in str(
-                    model_generation_result.value.get("model_names", ""),
+                    generated_model_payload.get("model_names", ""),
                 ).split(",")
                 if name
             ]
@@ -357,8 +360,9 @@ class FlextDbtOracleWms(
         workflow_payload["run_transformations"] = run_transformations
         workflow_payload["tracking_id"] = str(tracking_info.get("tracking_id", ""))
         if model_generation_result is not None:
+            generated_model_payload = dict(model_generation_result.value)
             workflow_payload["generated_models"] = str(
-                model_generation_result.value.get("model_names", ""),
+                generated_model_payload.get("model_names", ""),
             )
         success_result = r[t.Dict].ok(t.Dict.model_validate(workflow_payload))
         self.service.log_workflow_completion(
