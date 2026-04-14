@@ -37,7 +37,7 @@
   - [Getting Help](#getting-help)
   - [Contributing](#contributing)
 - [�"� Roadmap](#roadmap)
-  - [Current Version (v0.7.0)](#current-version-v070)
+  - [Current Version (v0.12.0-dev)](#current-version-v070)
   - [Upcoming Features](#upcoming-features)
 <!-- TOC END -->
 
@@ -311,7 +311,7 @@ models/
 
 ## �"� Roadmap
 
-### Current Version (v0.7.0)
+### Current Version (v0.12.0-dev)
 
 - ✅ Complete Oracle WMS entity coverage
 - ✅ Staging and marts layer models
