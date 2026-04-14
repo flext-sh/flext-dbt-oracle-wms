@@ -91,7 +91,7 @@ class _Service(u.DbtOracleWms.Service):
     def log_workflow_completion(
         self,
         tracking_info: t.ConfigurationMapping,
-        result: r[t.Dict],
+        result: p.Result[t.Dict],
     ) -> None:
         type(self).logged_tracking_id = str(tracking_info.get("tracking_id", ""))
         type(self).logged_success = result.success

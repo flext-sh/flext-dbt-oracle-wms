@@ -91,7 +91,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
             def log_workflow_completion(
                 self,
                 tracking_info: t.ConfigurationMapping,
-                result: r[t.Dict],
+                result: p.Result[t.Dict],
             ) -> None:
                 """Log workflow completion status."""
                 u.fetch_logger(__name__).info(

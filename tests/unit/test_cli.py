@@ -88,7 +88,7 @@ class _CliService(u.DbtOracleWms.Service):
     def log_workflow_completion(
         self,
         tracking_info: t.ConfigurationMapping,
-        result: r[t.Dict],
+        result: p.Result[t.Dict],
     ) -> None:
         _ = tracking_info
         self.logged_payload = result.value if result.success else None

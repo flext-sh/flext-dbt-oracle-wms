@@ -24,7 +24,7 @@ from flext_dbt_oracle_wms import (
 
 
 class FlextDbtOracleWms(
-    s[m.DbtOracleWms.FlextDbtOracleWmsSettings],
+    s,
 ):
     """Unified DBT Oracle WMS facade for extraction, modeling, and workflow execution."""
 
