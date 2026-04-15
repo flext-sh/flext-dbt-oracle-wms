@@ -11,6 +11,19 @@ _LAZY_IMPORTS = build_lazy_import_map(
         ".test_cli": ("test_cli",),
         ".test_module_governance": ("test_module_governance",),
         ".test_simple_api": ("test_simple_api",),
+        "flext_dbt_oracle_wms": (
+            "c",
+            "d",
+            "e",
+            "h",
+            "m",
+            "p",
+            "r",
+            "s",
+            "t",
+            "u",
+            "x",
+        ),
     },
 )
 
