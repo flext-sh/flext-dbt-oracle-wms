@@ -38,6 +38,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "__version__",
                 "__version_info__",
             ),
+            "._utilities.client": ("FlextDbtOracleWmsClient",),
             ".base": ("FlextDbtOracleWmsServiceBase",),
             ".cli": (
                 "FlextDbtOracleWmsCliService",
