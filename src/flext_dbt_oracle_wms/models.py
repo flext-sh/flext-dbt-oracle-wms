@@ -20,7 +20,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
         class RawItemRecord(m.Value):
             """Raw item record from Oracle WMS."""
 
-            model_config: ClassVar[c.ConfigDict] = c.ConfigDict(extra="ignore")
+            model_config: ClassVar[m.ConfigDict] = m.ConfigDict(extra="ignore")
 
             item_id: Annotated[str, u.Field(default="")]
             item_number: Annotated[str, u.Field(default="")]
