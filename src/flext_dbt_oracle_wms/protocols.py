@@ -5,12 +5,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Protocol, runtime_checkable
 
-from flext_dbt_oracle_wms import t
+from flext_dbt_oracle_wms import m, t
 from flext_meltano import FlextMeltanoProtocols
-from flext_oracle_wms import FlextOracleWmsProtocols
+from flext_oracle_wms import p
 
 
-class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):
+class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, p):
     """Namespace for DBT Oracle WMS protocol contracts."""
 
     class DbtOracleWms:
@@ -23,16 +23,16 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
             def run_dbt_models(
                 self,
                 models: t.StrSequence | None = None,
-                settings: t.Dict | None = None,
-            ) -> p.Result[t.Dict]:
+                settings: m.Dict | None = None,
+            ) -> p.Result[m.Dict]:
                 """Run DBT models and return execution metadata."""
                 ...
 
             def test_dbt_models(
                 self,
                 models: t.StrSequence | None = None,
-                settings: t.Dict | None = None,
-            ) -> p.Result[t.Dict]:
+                settings: m.Dict | None = None,
+            ) -> p.Result[m.Dict]:
                 """Run DBT tests and return status metadata."""
                 ...
 
@@ -42,13 +42,13 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
 
             def extract_wms_inventory_data(
                 self,
-                wms_config: t.Dict,
-                extraction_config: t.Dict,
-            ) -> p.Result[Sequence[t.Dict]]:
+                wms_config: m.Dict,
+                extraction_config: m.Dict,
+            ) -> p.Result[Sequence[m.Dict]]:
                 """Extract inventory records from Oracle WMS."""
                 ...
 
 
-__all__: list[str] = ["FlextDbtOracleWmsProtocols", "p"]
-
 p = FlextDbtOracleWmsProtocols
+
+__all__: list[str] = ["FlextDbtOracleWmsProtocols", "p"]

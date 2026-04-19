@@ -69,7 +69,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
             def generate_workflow_recommendations(
                 self,
                 entities: Sequence[t.ConfigurationMapping] | None = None,
-            ) -> p.Result[t.Dict]:
+            ) -> p.Result[m.Dict]:
                 """Generate simple workflow recommendations for entity processing."""
                 entity_list = entities or []
                 total = len(entity_list)
@@ -79,8 +79,8 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                     > FlextDbtOracleWmsUtilities.DbtOracleWms.PERFORMANCE_RECOMMENDATION_THRESHOLD
                 ):
                     recommendation_message = "Process entities in smaller batches"
-                return r[t.Dict].ok(
-                    t.Dict.model_validate({
+                return r[m.Dict].ok(
+                    m.Dict.model_validate({
                         "total_entities": total,
                         "recommendation": recommendation_message,
                         "dbt_threads": str(self.settings.dbt_threads),
@@ -91,7 +91,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
             def log_workflow_completion(
                 self,
                 tracking_info: t.ConfigurationMapping,
-                result: p.Result[t.Dict],
+                result: p.Result[m.Dict],
             ) -> None:
                 """Log workflow completion status."""
                 u.fetch_logger(__name__).info(
@@ -106,10 +106,10 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
                 workflow_type: str,
                 entity_names: t.StrSequence | None = None,
                 additional_data: t.ConfigValueMapping | None = None,
-            ) -> t.Dict:
+            ) -> m.Dict:
                 """Return tracking payload for workflow instrumentation."""
                 u.fetch_logger(__name__).info("Tracking workflow execution")
-                return t.Dict.model_validate({
+                return m.Dict.model_validate({
                     "workflow_name": workflow_name,
                     "workflow_type": workflow_type,
                     "entity_names": ",".join(entity_names or []),

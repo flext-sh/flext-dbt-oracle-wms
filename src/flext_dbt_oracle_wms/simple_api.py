@@ -131,12 +131,12 @@ class FlextDbtOracleWms(
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         """Extract Oracle WMS metadata from the real domain client."""
         self.logger.info("Extracting Oracle WMS metadata")
         available_entities_result = self.client.discover_oracle_wms_entities()
         if available_entities_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 available_entities_result.error or "Oracle WMS entity discovery failed",
             )
         inventory_records: Sequence[t.ConfigurationMapping] = []
@@ -148,7 +148,7 @@ class FlextDbtOracleWms(
                 ("item_id", "item_number", "id", "sku"),
             )
             if inventory_result.failure:
-                return r[t.Dict].fail(
+                return r[m.Dict].fail(
                     inventory_result.error or "Inventory metadata extraction failed",
                 )
             inventory_records = inventory_result.value
@@ -159,12 +159,12 @@ class FlextDbtOracleWms(
                 ("shipment_id", "tracking_number", "id"),
             )
             if shipment_result.failure:
-                return r[t.Dict].fail(
+                return r[m.Dict].fail(
                     shipment_result.error or "Shipment metadata extraction failed",
                 )
             shipment_records = shipment_result.value
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "status": "metadata_extracted",
                 "available_entities": ",".join(available_entities_result.value),
                 "inventory_count": len(inventory_records),
@@ -179,14 +179,14 @@ class FlextDbtOracleWms(
         inventory_items: t.StrSequence | None = None,
         shipments: t.StrSequence | None = None,
         output_dir: str | None = None,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         """Generate DBT model metadata from real entity selections."""
         self.logger.info("Generating DBT models from Oracle WMS")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
         if entity_names is None:
             discovery_result = self.client.discover_oracle_wms_entities()
             if discovery_result.failure:
-                return r[t.Dict].fail(
+                return r[m.Dict].fail(
                     discovery_result.error or "Oracle WMS entity discovery failed",
                 )
             entity_names = discovery_result.value
@@ -196,20 +196,20 @@ class FlextDbtOracleWms(
         })
         generated_models_result = generator.generate_wms_staging_models(entity_names)
         if generated_models_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 generated_models_result.error or "DBT model generation failed",
             )
         recommendations_result = self.service.generate_workflow_recommendations(
             [{"entity_name": entity_name} for entity_name in entity_names],
         )
         if recommendations_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 recommendations_result.error
                 or "Workflow recommendation generation failed",
             )
         generated_models = generated_models_result.value
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "status": "models_generated",
                 "model_count": len(generated_models),
                 "model_names": ",".join(model.name for model in generated_models),
@@ -220,7 +220,7 @@ class FlextDbtOracleWms(
             }),
         )
 
-    def get_wms_inventory_info(self, item_id: str) -> p.Result[t.Dict]:
+    def get_wms_inventory_info(self, item_id: str) -> p.Result[m.Dict]:
         """Get inventory item data from the Oracle WMS domain client."""
         self.logger.info("Getting WMS inventory info: %s", item_id)
         inventory_result = self._extract_entity_records(
@@ -229,12 +229,12 @@ class FlextDbtOracleWms(
             ("item_id", "item_number", "id", "sku"),
         )
         if inventory_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 inventory_result.error or "Inventory info retrieval failed",
             )
-        return r[t.Dict].ok(t.Dict.model_validate(dict(inventory_result.value[0])))
+        return r[m.Dict].ok(m.Dict.model_validate(dict(inventory_result.value[0])))
 
-    def get_wms_shipment_info(self, shipment_id: str) -> p.Result[t.Dict]:
+    def get_wms_shipment_info(self, shipment_id: str) -> p.Result[m.Dict]:
         """Get shipment data from the Oracle WMS domain client."""
         self.logger.info("Getting WMS shipment info: %s", shipment_id)
         shipment_result = self._extract_entity_records(
@@ -243,28 +243,28 @@ class FlextDbtOracleWms(
             ("shipment_id", "tracking_number", "id"),
         )
         if shipment_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 shipment_result.error or "Shipment info retrieval failed",
             )
-        return r[t.Dict].ok(t.Dict.model_validate(dict(shipment_result.value[0])))
+        return r[m.Dict].ok(m.Dict.model_validate(dict(shipment_result.value[0])))
 
     def monitor_dbt_execution(
         self,
         command: str,
         timeout_seconds: int = 300,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         """Run and monitor a real DBT transformation through flext-meltano."""
         self.logger.info("Monitoring DBT execution: %s", command)
         command_parts = shlex.split(command)
         if not command_parts:
-            return r[t.Dict].fail("DBT command cannot be empty")
+            return r[m.Dict].fail("DBT command cannot be empty")
         if command_parts[0] != "dbt":
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 "DBT monitoring requires a command beginning with 'dbt'"
             )
         dbt_subcommand = command_parts[1] if len(command_parts) > 1 else "run"
         if dbt_subcommand not in {"run", "build"}:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 "DBT monitoring is implemented only for dbt run/build"
             )
         model_names: t.MutableSequenceOf[str] = []
@@ -279,15 +279,15 @@ class FlextDbtOracleWms(
             model_names=model_names or None,
         )
         if execution_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 execution_result.error or "DBT transformation monitoring failed",
             )
         execution_payload = dict(execution_result.value)
         execution_payload["command"] = command
         execution_payload["dbt_subcommand"] = dbt_subcommand
         execution_payload["requested_timeout_seconds"] = timeout_seconds
-        return r[t.Dict].ok(
-            t.Dict.model_validate(execution_payload),
+        return r[m.Dict].ok(
+            m.Dict.model_validate(execution_payload),
         )
 
     def run_oracle_wms_to_dbt_workflow(
@@ -297,7 +297,7 @@ class FlextDbtOracleWms(
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients."""
         self.logger.info("Running Oracle WMS-to-DBT workflow")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -311,7 +311,7 @@ class FlextDbtOracleWms(
             "workflow_name": "oracle_wms_to_dbt",
             "workflow_type": "dbt_oracle_wms",
         }
-        model_generation_result: p.Result[t.Dict] | None = None
+        model_generation_result: p.Result[m.Dict] | None = None
         model_names: t.StrSequence | None = None
         if generate_models:
             model_generation_result = self.generate_dbt_models_from_wms(
@@ -319,7 +319,7 @@ class FlextDbtOracleWms(
                 shipments,
             )
             if model_generation_result.failure:
-                failure_result = r[t.Dict].fail(
+                failure_result = r[m.Dict].fail(
                     model_generation_result.error or "DBT model generation failed",
                 )
                 self.service.log_workflow_completion(
@@ -347,7 +347,7 @@ class FlextDbtOracleWms(
             )
         )
         if workflow_result.failure:
-            failure_result = r[t.Dict].fail(
+            failure_result = r[m.Dict].fail(
                 workflow_result.error or "Oracle WMS workflow execution failed",
             )
             self.service.log_workflow_completion(
@@ -364,7 +364,7 @@ class FlextDbtOracleWms(
             workflow_payload["generated_models"] = str(
                 generated_model_payload.get("model_names", ""),
             )
-        success_result = r[t.Dict].ok(t.Dict.model_validate(workflow_payload))
+        success_result = r[m.Dict].ok(m.Dict.model_validate(workflow_payload))
         self.service.log_workflow_completion(
             tracking_context,
             success_result,

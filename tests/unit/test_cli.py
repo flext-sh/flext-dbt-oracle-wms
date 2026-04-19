@@ -50,14 +50,14 @@ class _CliClient(FlextDbtOracleWmsClient):
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         _ = filters
         _ = model_names
         self.pipeline_called = True
         if self.pipeline_should_fail:
-            return r[t.Dict].fail("boom")
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+            return r[m.Dict].fail("boom")
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "pipeline_status": "completed",
                 "processed_entities": ",".join(entity_names or []),
                 "total_records": 2,
@@ -68,7 +68,7 @@ class _CliClient(FlextDbtOracleWmsClient):
 class _CliService(u.DbtOracleWms.Service):
     def __init__(self) -> None:
         self.settings = m.DbtOracleWms.FlextDbtOracleWmsSettings()
-        self.logged_payload: t.Dict | None = None
+        self.logged_payload: m.Dict | None = None
 
     @override
     def track_workflow_execution(
@@ -77,10 +77,10 @@ class _CliService(u.DbtOracleWms.Service):
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
         additional_data: t.ConfigValueMapping | None = None,
-    ) -> t.Dict:
+    ) -> m.Dict:
         _ = entity_names
         _ = additional_data
-        return t.Dict.model_validate({
+        return m.Dict.model_validate({
             "tracking_id": f"{workflow_name}:{workflow_type}",
         })
 
@@ -88,7 +88,7 @@ class _CliService(u.DbtOracleWms.Service):
     def log_workflow_completion(
         self,
         tracking_info: t.ConfigurationMapping,
-        result: p.Result[t.Dict],
+        result: p.Result[m.Dict],
     ) -> None:
         _ = tracking_info
         self.logged_payload = result.value if result.success else None

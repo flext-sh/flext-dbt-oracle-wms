@@ -65,7 +65,7 @@ class FlextDbtOracleWmsClient:
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         """Run discover, extract, validate, and transform pipeline."""
         entities_result = (
             r[t.StrSequence].ok(entity_names)
@@ -73,27 +73,27 @@ class FlextDbtOracleWmsClient:
             else self.discover_oracle_wms_entities()
         )
         if entities_result.failure:
-            return r[t.Dict].fail(entities_result.error or "Entity discovery failed")
+            return r[m.Dict].fail(entities_result.error or "Entity discovery failed")
         entity_list = entities_result.value
         extracted: MutableMapping[str, Sequence[t.ConfigurationMapping]] = {}
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.failure:
-                return r[t.Dict].fail(extract_result.error or "Extraction failed")
+                return r[m.Dict].fail(extract_result.error or "Extraction failed")
             validate_result = self.validate_oracle_wms_data(
                 entity_name,
                 extract_result.value,
             )
             if validate_result.failure:
-                return r[t.Dict].fail(validate_result.error or "Validation failed")
+                return r[m.Dict].fail(validate_result.error or "Validation failed")
             extracted[entity_name] = list(validate_result.value)
         transform_result = self.transform_with_dbt(extracted, model_names)
         if transform_result.failure:
-            return r[t.Dict].fail(transform_result.error or "Transformation failed")
+            return r[m.Dict].fail(transform_result.error or "Transformation failed")
         self._logger.info("Completed Oracle WMS to DBT pipeline")
         tr_val = transform_result.value
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "processed_entities": ",".join(extracted.keys()),
                 "total_records": sum(len(records) for records in extracted.values()),
                 "transformation_status": str(tr_val.get("status", "")),
@@ -101,24 +101,24 @@ class FlextDbtOracleWmsClient:
             }),
         )
 
-    def test_oracle_wms_connection(self) -> p.Result[t.Dict]:
+    def test_oracle_wms_connection(self) -> p.Result[m.Dict]:
         """Validate Oracle WMS connectivity using the real health endpoint."""
         client_result = self._get_wms_client()
         if client_result.failure:
-            return r[t.Dict].fail(client_result.error or "WMS client unavailable")
+            return r[m.Dict].fail(client_result.error or "WMS client unavailable")
         start_result = client_result.value.start()
         if start_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 start_result.error or "Oracle WMS client startup failed",
             )
         health_result = client_result.value.health_check()
         if health_result.failure:
-            return r[t.Dict].fail(
+            return r[m.Dict].fail(
                 health_result.error or "Oracle WMS health check failed"
             )
         response = health_result.value
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "status": "connected",
                 "environment": self.settings.oracle_wms_environment,
                 "base_url": self.settings.oracle_wms_base_url,
@@ -130,15 +130,15 @@ class FlextDbtOracleWmsClient:
         self,
         entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
         model_names: t.StrSequence | None,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         """Run DBT transformations through flext-meltano."""
         transformed_entities = self._transformer.transform_all_entities(entity_data)
         dbt_result = self._meltano_runner.run_dbt_transformation(model_names)
         if dbt_result.failure:
-            return r[t.Dict].fail(dbt_result.error or "DBT transformation failed")
+            return r[m.Dict].fail(dbt_result.error or "DBT transformation failed")
         execution_result = dbt_result.value
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "transformed_tables": ",".join(sorted(transformed_entities.keys())),
                 "requested_models": ",".join(model_names or []),
                 "models_run": str(execution_result.get("models_run", "")),

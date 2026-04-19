@@ -642,7 +642,7 @@ dbt docs serve --profiles-dir profiles --port 8080
 Valid status transitions:
 
 - CREATED → RELEASED → PICKING → PICKED → PACKED → SHIPPED
-- t.RecursiveContainer status → CANCELLED (exception handling)
+- t.Container status → CANCELLED (exception handling)
 
 ### Wave Assignment
 

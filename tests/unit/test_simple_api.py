@@ -14,9 +14,9 @@ class _SuccessfulConnectionClient(FlextDbtOracleWmsClient):
         self.settings = settings
 
     @override
-    def test_oracle_wms_connection(self) -> p.Result[t.Dict]:
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+    def test_oracle_wms_connection(self) -> p.Result[m.Dict]:
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "status": "connected",
                 "base_url": "https://wms.example.com",
             }),
@@ -52,12 +52,12 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         _ = filters
         _ = model_names
         type(self).entity_names = entity_names
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "pipeline_status": "completed",
                 "processed_entities": ",".join(entity_names or []),
                 "total_records": 4,
@@ -76,10 +76,10 @@ class _Service(u.DbtOracleWms.Service):
     def generate_workflow_recommendations(
         self,
         entities: Sequence[t.ConfigurationMapping] | None = None,
-    ) -> p.Result[t.Dict]:
+    ) -> p.Result[m.Dict]:
         total = len(entities or [])
-        return r[t.Dict].ok(
-            t.Dict.model_validate({
+        return r[m.Dict].ok(
+            m.Dict.model_validate({
                 "total_entities": total,
                 "recommendation": "",
                 "dbt_threads": "4",
@@ -91,7 +91,7 @@ class _Service(u.DbtOracleWms.Service):
     def log_workflow_completion(
         self,
         tracking_info: t.ConfigurationMapping,
-        result: p.Result[t.Dict],
+        result: p.Result[m.Dict],
     ) -> None:
         type(self).logged_tracking_id = str(tracking_info.get("tracking_id", ""))
         type(self).logged_success = result.success
@@ -103,10 +103,10 @@ class _Service(u.DbtOracleWms.Service):
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
         additional_data: t.ConfigValueMapping | None = None,
-    ) -> t.Dict:
+    ) -> m.Dict:
         _ = entity_names
         _ = additional_data
-        return t.Dict.model_validate({
+        return m.Dict.model_validate({
             "tracking_id": f"{workflow_name}:{workflow_type}",
         })
 
