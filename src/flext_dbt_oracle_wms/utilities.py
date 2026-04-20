@@ -10,10 +10,10 @@ from typing import ClassVar
 
 from flext_dbt_oracle_wms import m, p, r, t
 from flext_meltano import FlextMeltanoUtilities
-from flext_oracle_wms import FlextOracleWmsUtilities
+from flext_oracle_wms import u
 
 
-class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities):
+class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, u):
     """Namespace with utility helpers for extraction and modeling."""
 
     class DbtOracleWms:
@@ -23,20 +23,18 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: Mapping[str, t.ContainerValue | None],
+            extraction_config: Mapping[str, t.Container | None],
         ) -> p.Result[
             Mapping[
                 str,
-                Mapping[str, t.ContainerValue | None]
-                | Sequence[t.ContainerValue | None],
+                Mapping[str, t.Container | None] | Sequence[t.Container | None],
             ]
         ]:
             """Return basic extraction metadata for inventory loads."""
             return r[
                 Mapping[
                     str,
-                    Mapping[str, t.ContainerValue | None]
-                    | Sequence[t.ContainerValue | None],
+                    Mapping[str, t.Container | None] | Sequence[t.Container | None],
                 ]
             ].ok({
                 "extraction_config": extraction_config,
@@ -48,7 +46,7 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
             @staticmethod
             def generate_wms_inventory_dimension(
-                inventory_config: Mapping[str, t.ContainerValue | None],
+                inventory_config: Mapping[str, t.Container | None],
             ) -> p.Result[str]:
                 """Generate SQL for inventory dimension model."""
                 _ = inventory_config
