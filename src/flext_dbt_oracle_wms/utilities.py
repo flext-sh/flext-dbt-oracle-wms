@@ -8,9 +8,10 @@ from collections.abc import (
 )
 from typing import ClassVar
 
-from flext_dbt_oracle_wms import m, p, r, t
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import u
+
+from flext_dbt_oracle_wms import m, p, r, t
 
 
 class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, u):

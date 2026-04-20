@@ -10,9 +10,10 @@ from collections.abc import (
 from typing import Annotated, ClassVar, override
 
 from flext_core import FlextSettings
-from flext_dbt_oracle_wms import c, p, r, t, u
 from flext_meltano import m
 from flext_oracle_wms import FlextOracleWmsModels
+
+from flext_dbt_oracle_wms import c, p, r, t, u
 
 
 class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
