@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, MutableSequence, Sequence
+from collections.abc import (
+    Mapping,
+    MutableSequence,
+    Sequence,
+)
 from typing import Annotated, ClassVar, override
 
 from flext_core import FlextSettings

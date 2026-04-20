@@ -9,7 +9,9 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 from __future__ import annotations
 
 import shlex
-from collections.abc import Sequence
+from collections.abc import (
+    Sequence,
+)
 from typing import override
 
 from flext_dbt_oracle_wms import (

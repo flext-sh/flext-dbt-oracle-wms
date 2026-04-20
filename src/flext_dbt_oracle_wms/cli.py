@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import sys
-from collections.abc import Mapping
+from collections.abc import (
+    Mapping,
+)
 from typing import ClassVar
 
 from flext_dbt_oracle_wms import FlextDbtOracleWms, c, p, r, t, u

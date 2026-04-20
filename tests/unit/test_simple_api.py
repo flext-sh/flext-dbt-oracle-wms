@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import (
+    Sequence,
+)
 from typing import override
 
 from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsClient
