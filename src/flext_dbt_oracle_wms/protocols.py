@@ -7,13 +7,13 @@ from collections.abc import (
 )
 from typing import Protocol, runtime_checkable
 
-from flext_meltano import FlextMeltanoProtocols
-from flext_oracle_wms import p
+from flext_meltano import p
+from flext_oracle_wms import FlextOracleWmsProtocols
 
 from flext_dbt_oracle_wms import m, t
 
 
-class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, p):
+class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
     """Namespace for DBT Oracle WMS protocol contracts."""
 
     class DbtOracleWms:

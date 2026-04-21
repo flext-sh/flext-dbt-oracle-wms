@@ -8,13 +8,13 @@ from collections.abc import (
 )
 from typing import ClassVar
 
-from flext_meltano import FlextMeltanoUtilities
-from flext_oracle_wms import u
+from flext_meltano import u
+from flext_oracle_wms import FlextOracleWmsUtilities
 
 from flext_dbt_oracle_wms import m, p, r, t
 
 
-class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, u):
+class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
     """Namespace with utility helpers for extraction and modeling."""
 
     class DbtOracleWms:

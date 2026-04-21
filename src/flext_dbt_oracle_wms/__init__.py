@@ -14,7 +14,7 @@ from flext_core.lazy import (
 from flext_dbt_oracle_wms.__version__ import *
 
 if _t.TYPE_CHECKING:
-    from flext_oracle_wms import d, e, h, r, s, x
+    from flext_meltano import d, e, h, r, s, x
 
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
     from flext_dbt_oracle_wms.base import FlextDbtOracleWmsServiceBase
@@ -68,7 +68,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "FlextDbtOracleWmsUtilities",
                 "u",
             ),
-            "flext_oracle_wms": (
+            "flext_meltano": (
                 "d",
                 "e",
                 "h",
