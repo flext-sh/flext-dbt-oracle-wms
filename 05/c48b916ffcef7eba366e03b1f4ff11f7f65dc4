@@ -1,0 +1,18 @@
+src/flext_dbt_oracle_wms/utilities.py
+  h_9db9d35f50cf33 11-12,17
+src/flext_dbt_oracle_wms/protocols.py
+  h_9db9d35f50cf33 10-11,16
+src/flext_dbt_oracle_wms/constants.py
+  h_9db9d35f50cf33 8,14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.0",
+  "base_commit_sha": "05c48b916ffcef7eba366e03b1f4ff11f7f65dc4",
+  "prompts": {},
+  "humans": {
+    "h_9db9d35f50cf33": {
+      "author": "FLEXT Bot"
+    }
+  }
+}
