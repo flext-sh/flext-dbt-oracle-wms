@@ -1,0 +1,26 @@
+docs/guides/development.md
+  h_9db9d35f50cf33 84,137,154,193,196,202,295,353,356,405
+docs/development/guidelines.md
+  h_9db9d35f50cf33 645,790,810
+src/flext_dbt_oracle_wms/cli.py
+  h_9db9d35f50cf33 30,50,57,67,88,95
+src/flext_dbt_oracle_wms/typings.py
+  h_9db9d35f50cf33 21
+docs/guides/testing.md
+  h_9db9d35f50cf33 528
+src/flext_dbt_oracle_wms/utilities.py
+  h_9db9d35f50cf33 27,31,38,50
+docs/guides/troubleshooting.md
+  h_9db9d35f50cf33 52,61-63,141,155,675,678
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "d7478bada98a70d0e37905c78d200ef6659316a3",
+  "prompts": {},
+  "humans": {
+    "h_9db9d35f50cf33": {
+      "author": "FLEXT Bot"
+    }
+  }
+}
