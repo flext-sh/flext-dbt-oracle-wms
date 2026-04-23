@@ -1,0 +1,14 @@
+src/flext_dbt_oracle_wms/simple_api.py
+  h_9db9d35f50cf33 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "6f15113fad17952f231804833571097240c9b6c4",
+  "prompts": {},
+  "humans": {
+    "h_9db9d35f50cf33": {
+      "author": "FLEXT Bot"
+    }
+  }
+}
