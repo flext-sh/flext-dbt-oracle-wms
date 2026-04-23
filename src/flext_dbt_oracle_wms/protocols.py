@@ -10,7 +10,8 @@ from typing import Protocol, runtime_checkable
 from flext_meltano import p
 from flext_oracle_wms import FlextOracleWmsProtocols
 
-from flext_dbt_oracle_wms import m, t
+from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms.typings import t
 
 
 class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):

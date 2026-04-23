@@ -7,7 +7,8 @@ from collections.abc import (
 )
 from typing import override
 
-from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 from tests import m, p, r, t, u
 
 

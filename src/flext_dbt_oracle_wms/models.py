@@ -9,11 +9,12 @@ from collections.abc import (
 )
 from typing import Annotated, ClassVar
 
-from flext_core import FlextSettings
+from flext_core import FlextSettings, p, r, u
 from flext_meltano import m
 from flext_oracle_wms import FlextOracleWmsModels
 
-from flext_dbt_oracle_wms import c, p, r, t, u
+from flext_dbt_oracle_wms.constants import c
+from flext_dbt_oracle_wms.typings import t
 
 
 class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
