@@ -18,7 +18,7 @@ from flext_dbt_oracle_wms import c, m, p, t, u
 class FlextDbtOracleWmsClient:
     """DBT Oracle WMS client backed by real WMS and Meltano integrations."""
 
-    _logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
+    logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
     def __init__(
         self, settings: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
@@ -95,7 +95,7 @@ class FlextDbtOracleWmsClient:
         transform_result = self.transform_with_dbt(extracted, model_names)
         if transform_result.failure:
             return r[m.Dict].fail(transform_result.error or "Transformation failed")
-        self._logger.info("Completed Oracle WMS to DBT pipeline")
+        self.logger.info("Completed Oracle WMS to DBT pipeline")
         tr_val = transform_result.value
         return r[m.Dict].ok(
             m.Dict.model_validate({

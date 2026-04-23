@@ -14,7 +14,7 @@ from flext_dbt_oracle_wms import FlextDbtOracleWms, c, p, r, t, u
 class FlextDbtOracleWmsCliService:
     """CLI adapter that calls the public DBT Oracle WMS facade."""
 
-    _logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
+    logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
     _default_command: ClassVar[str] = "info"
     _default_entity: ClassVar[str] = "inventory"
     _service: FlextDbtOracleWms
@@ -38,7 +38,7 @@ class FlextDbtOracleWmsCliService:
         }
         handler = handlers.get(command)
         if handler is None:
-            self._logger.error("Unknown command", command=command)
+            self.logger.error("Unknown command", command=command)
             return 1
         result = handler(args)
         return 1 if result.failure else 0
@@ -54,7 +54,7 @@ class FlextDbtOracleWmsCliService:
 
     def handle_discover(
         self,
-        _args: Mapping[str, t.JsonValue | None] | None = None,
+        args: Mapping[str, t.JsonValue | None] | None = None,
     ) -> p.Result[str]:
         """Handle discover command."""
         result = self._service.discover_oracle_wms_entities()
@@ -85,14 +85,14 @@ class FlextDbtOracleWmsCliService:
 
     def handle_info(
         self,
-        _args: Mapping[str, t.JsonValue | None] | None = None,
+        args: Mapping[str, t.JsonValue | None] | None = None,
     ) -> p.Result[str]:
         """Handle package info command."""
         return r[str].ok("FLEXT DBT Oracle WMS")
 
     def handle_pipeline(
         self,
-        _args: Mapping[str, t.JsonValue | None] | None = None,
+        args: Mapping[str, t.JsonValue | None] | None = None,
     ) -> p.Result[str]:
         """Handle full pipeline command."""
         result = self._service.run_oracle_wms_to_dbt_workflow(
