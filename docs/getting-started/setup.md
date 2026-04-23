@@ -488,7 +488,7 @@ Create `.vscode/settings.json`:
 
 ```bash
 # Run all quality checks
-make validate
+make val
 
 # Individual checks
 make lint          # SQL and Python linting

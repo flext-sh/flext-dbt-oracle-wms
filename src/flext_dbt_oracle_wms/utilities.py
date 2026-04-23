@@ -24,18 +24,18 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: Mapping[str, t.Container | None],
+            extraction_config: Mapping[str, t.JsonValue | None],
         ) -> p.Result[
             Mapping[
                 str,
-                Mapping[str, t.Container | None] | Sequence[t.Container | None],
+                Mapping[str, t.JsonValue | None] | Sequence[t.JsonValue | None],
             ]
         ]:
             """Return basic extraction metadata for inventory loads."""
             return r[
                 Mapping[
                     str,
-                    Mapping[str, t.Container | None] | Sequence[t.Container | None],
+                    Mapping[str, t.JsonValue | None] | Sequence[t.JsonValue | None],
                 ]
             ].ok({
                 "extraction_config": extraction_config,
@@ -47,7 +47,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
 
             @staticmethod
             def generate_wms_inventory_dimension(
-                inventory_config: Mapping[str, t.Container | None],
+                inventory_config: Mapping[str, t.JsonValue | None],
             ) -> p.Result[str]:
                 """Generate SQL for inventory dimension model."""
                 _ = inventory_config

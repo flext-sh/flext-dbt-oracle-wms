@@ -642,7 +642,7 @@ dbt docs serve --profiles-dir profiles --port 8080
 Valid status transitions:
 
 - CREATED → RELEASED → PICKING → PICKED → PACKED → SHIPPED
-- t.Container status → CANCELLED (exception handling)
+- t.JsonValue status → CANCELLED (exception handling)
 
 ### Wave Assignment
 
@@ -787,7 +787,7 @@ cat target/compiled/flext_dbt_oracle_wms/models/staging/stg_wms__new_entity.sql
 
 ```bash
 # Run all quality checks before committing
-make validate
+make val
 
 # Individual quality checks
 make lint        # SQL and Python linting
@@ -807,7 +807,7 @@ git add models/marts/operational/opr_wms__allocation_metrics.sql
 git commit -m "feat: add allocation performance metrics model"
 
 # Quality validation
-make validate
+make val
 
 # Push and create PR
 git push origin feature/new-allocation-metrics

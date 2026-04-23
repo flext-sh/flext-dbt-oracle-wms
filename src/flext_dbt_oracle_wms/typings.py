@@ -18,7 +18,7 @@ from flext_dbt_oracle_wms import u
 class FlextDbtOracleWmsTypes(t, FlextOracleWmsTypes):
     """MRO facade composing Meltano + OracleWms type namespaces."""
 
-    TEXT_VALUE_ADAPTER: u.TypeAdapter[t.TextValue] = u.TypeAdapter(t.TextValue)
+    TEXT_VALUE_ADAPTER: u.TypeAdapter[t.StrictStr] = u.TypeAdapter(t.StrictStr)
 
 
 # Facade assignment - enables canonical t.* consumption for consumers
