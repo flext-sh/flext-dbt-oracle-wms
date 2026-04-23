@@ -7,7 +7,7 @@ from collections.abc import (
     MutableSequence,
     Sequence,
 )
-from typing import Annotated, ClassVar, override
+from typing import Annotated, ClassVar
 
 from flext_core import FlextSettings
 from flext_meltano import m
@@ -204,7 +204,6 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             ]
 
     @classmethod
-    @override
     def create_generator(
         cls,
         settings: t.StrMapping | None = None,
