@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sys
 from collections.abc import (
+    Callable,
     Mapping,
 )
 from typing import ClassVar
@@ -30,17 +31,17 @@ class FlextDbtOracleWmsCliService:
         args: Mapping[str, t.JsonValue | None] | None = None,
     ) -> int:
         """Execute a named CLI command and return an exit code."""
-        handlers = {
+        callables: Mapping[str, Callable[[], p.Result[str]]] = {
             "discover": self.handle_discover,
-            "extract": self.handle_extract,
+            "extract": lambda: self.handle_extract(args),
             "pipeline": self.handle_pipeline,
             "info": self.handle_info,
         }
-        handler = handlers.get(command)
-        if handler is None:
+        func = callables.get(command)
+        if func is None:
             self.logger.error("Unknown command", command=command)
             return 1
-        result = handler(args)
+        result = func()
         return 1 if result.failure else 0
 
     def main(self, argv: t.StrSequence | None = None) -> int:
@@ -52,10 +53,7 @@ class FlextDbtOracleWmsCliService:
             command_options["entity"] = command_args[1]
         return self.execute_command(command, command_options or None)
 
-    def handle_discover(
-        self,
-        args: Mapping[str, t.JsonValue | None] | None = None,
-    ) -> p.Result[str]:
+    def handle_discover(self) -> p.Result[str]:
         """Handle discover command."""
         result = self._service.discover_oracle_wms_entities()
         if result.failure:
@@ -83,17 +81,11 @@ class FlextDbtOracleWmsCliService:
             return r[str].fail(result.error or "Extract failed")
         return r[str].ok("Extraction completed successfully")
 
-    def handle_info(
-        self,
-        args: Mapping[str, t.JsonValue | None] | None = None,
-    ) -> p.Result[str]:
+    def handle_info(self) -> p.Result[str]:
         """Handle package info command."""
         return r[str].ok("FLEXT DBT Oracle WMS")
 
-    def handle_pipeline(
-        self,
-        args: Mapping[str, t.JsonValue | None] | None = None,
-    ) -> p.Result[str]:
+    def handle_pipeline(self) -> p.Result[str]:
         """Handle full pipeline command."""
         result = self._service.run_oracle_wms_to_dbt_workflow(
             generate_models=False,
