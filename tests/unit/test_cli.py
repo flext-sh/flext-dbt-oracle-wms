@@ -1,11 +1,11 @@
-"""Unit tests for the DBT Oracle WMS CLI service."""
+"""Behavior contract for flext_dbt_oracle_wms CLI service — public API only."""
 
 from __future__ import annotations
 
-from collections.abc import (
-    Sequence,
-)
+from collections.abc import Sequence
 from typing import override
+
+from flext_tests import tm
 
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
@@ -39,9 +39,7 @@ class _CliClient(FlextDbtOracleWmsClient):
         self.last_entity = entity_name
         if entity_name not in {"inventory", "items"}:
             return r[Sequence[t.ConfigurationMapping]].fail("unknown entity")
-        return r[Sequence[t.ConfigurationMapping]].ok([
-            {"entity": entity_name},
-        ])
+        return r[Sequence[t.ConfigurationMapping]].ok([{"entity": entity_name}])
 
     @override
     def run_full_oracle_wms_to_dbt_pipeline(
@@ -109,53 +107,49 @@ def _build_public_facade(
     )
 
 
-def test_cli_main_defaults_to_info() -> None:
-    facade, _, _ = _build_public_facade()
-    service = FlextDbtOracleWmsCliService(service=facade)
-    assert service.main([]) == 0
+class TestsFlextDbtOracleWmsCli:
+    """Behavior contract for FlextDbtOracleWmsCliService public commands."""
 
+    def test_main_with_empty_args_returns_info_exit_code(self) -> None:
+        facade, _, _ = _build_public_facade()
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.that(service.main([]), eq=0)
 
-def test_cli_executes_discover_command() -> None:
-    facade, _, _ = _build_public_facade()
-    service = FlextDbtOracleWmsCliService(service=facade)
-    assert service.execute_command("discover") == 0
+    def test_execute_command_discover_returns_success(self) -> None:
+        facade, _, _ = _build_public_facade()
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.that(service.execute_command("discover"), eq=0)
 
+    def test_main_extract_with_entity_invokes_client(self) -> None:
+        facade, client, _ = _build_public_facade()
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.that(service.main(["extract", "items"]), eq=0)
+        tm.that(client.last_entity, eq="items")
 
-def test_cli_executes_extract_command_through_public_facade() -> None:
-    facade, client, _ = _build_public_facade()
-    service = FlextDbtOracleWmsCliService(service=facade)
-    assert service.main(["extract", "items"]) == 0
-    assert client.last_entity == "items"
+    def test_main_extract_without_entity_defaults_to_inventory(self) -> None:
+        facade, client, _ = _build_public_facade()
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.that(service.main(["extract"]), eq=0)
+        tm.that(client.last_entity, eq="inventory")
 
+    def test_execute_command_pipeline_returns_failure_on_error(self) -> None:
+        facade, _, _ = _build_public_facade(pipeline_should_fail=True)
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.that(service.execute_command("pipeline"), eq=1)
 
-def testuses_default_extract_entity() -> None:
-    facade, client, _ = _build_public_facade()
-    service = FlextDbtOracleWmsCliService(service=facade)
-    assert service.main(["extract"]) == 0
-    assert client.last_entity == "inventory"
+    def test_execute_command_pipeline_runs_through_facade(self) -> None:
+        facade, client, helper = _build_public_facade()
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.that(service.execute_command("pipeline"), eq=0)
+        tm.that(client.pipeline_called, eq=True)
+        assert helper.logged_payload is not None
+        tm.that(helper.logged_payload["generate_models"], eq=False)
+        tm.that(helper.logged_payload["run_transformations"], eq=True)
 
+    def test_execute_command_unknown_returns_failure(self) -> None:
+        facade, _, _ = _build_public_facade()
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.that(service.execute_command("unknown"), eq=1)
 
-def test_cli_returns_failure_for_pipeline_errors() -> None:
-    facade, _, _ = _build_public_facade(pipeline_should_fail=True)
-    service = FlextDbtOracleWmsCliService(service=facade)
-    assert service.execute_command("pipeline") == 1
-
-
-def test_cli_runs_pipeline_through_public_facade() -> None:
-    facade, client, helper = _build_public_facade()
-    service = FlextDbtOracleWmsCliService(service=facade)
-    assert service.execute_command("pipeline") == 0
-    assert client.pipeline_called is True
-    assert helper.logged_payload is not None
-    assert helper.logged_payload["generate_models"] is False
-    assert helper.logged_payload["run_transformations"] is True
-
-
-def test_cli_returns_failure_for_unknown_command() -> None:
-    facade, _, _ = _build_public_facade()
-    service = FlextDbtOracleWmsCliService(service=facade)
-    assert service.execute_command("unknown") == 1
-
-
-def test_module_main_uses_public_cli_entrypoint() -> None:
-    assert main(["info"]) == 0
+    def test_module_main_uses_public_cli_entrypoint(self) -> None:
+        tm.that(main(["info"]), eq=0)

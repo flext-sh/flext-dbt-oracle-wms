@@ -1,11 +1,11 @@
-"""Unit tests for the DBT Oracle WMS simple facade."""
+"""Behavior contract for FlextDbtOracleWms simple facade — public API only."""
 
 from __future__ import annotations
 
-from collections.abc import (
-    Sequence,
-)
+from collections.abc import Sequence
 from typing import override
+
+from flext_tests import tm
 
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
@@ -45,9 +45,7 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         _ = filters
         type(self).extracted_entity = entity_name
-        return r[Sequence[t.ConfigurationMapping]].ok([
-            {"entity": entity_name},
-        ])
+        return r[Sequence[t.ConfigurationMapping]].ok([{"entity": entity_name}])
 
     @override
     def run_full_oracle_wms_to_dbt_pipeline(
@@ -114,64 +112,64 @@ class _Service(u.DbtOracleWms.Service):
         })
 
 
-def test_validate_wms_connection_uses_public_client_protocol() -> None:
-    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
-        oracle_wms_base_url="https://wms.example.com",
-    )
-    service = FlextDbtOracleWms(
-        settings=settings,
-        client=_SuccessfulConnectionClient(settings),
-    )
-    result = service.validate_wms_connection()
-    assert result.success
-    assert result.value is True
+class TestsFlextDbtOracleWmsSimpleApi:
+    """Behavior contract for FlextDbtOracleWms public methods."""
 
+    def test_validate_wms_connection_uses_public_client_protocol(self) -> None:
+        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+            oracle_wms_base_url="https://wms.example.com",
+        )
+        service = FlextDbtOracleWms(
+            settings=settings,
+            client=_SuccessfulConnectionClient(settings),
+        )
+        result = service.validate_wms_connection()
+        tm.ok(result)
+        tm.that(result.value, eq=True)
 
-def test_discover_oracle_wms_entities_uses_public_client_protocol() -> None:
-    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
-        oracle_wms_base_url="https://wms.example.com",
-    )
-    service = FlextDbtOracleWms(settings=settings, client=_WorkflowClient(settings))
-    result = service.discover_oracle_wms_entities()
-    assert result.success
-    assert result.value == ["items", "shipments"]
+    def test_discover_oracle_wms_entities_uses_public_client_protocol(self) -> None:
+        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+            oracle_wms_base_url="https://wms.example.com",
+        )
+        service = FlextDbtOracleWms(settings=settings, client=_WorkflowClient(settings))
+        result = service.discover_oracle_wms_entities()
+        tm.ok(result)
+        tm.that(result.value, eq=["items", "shipments"])
 
+    def test_extract_oracle_wms_data_uses_public_client_protocol(self) -> None:
+        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+            oracle_wms_base_url="https://wms.example.com",
+        )
+        _WorkflowClient.extracted_entity = None
+        workflow_client = _WorkflowClient(settings)
+        service = FlextDbtOracleWms(settings=settings, client=workflow_client)
+        result = service.extract_oracle_wms_data("items")
+        tm.ok(result)
+        tm.that(_WorkflowClient.extracted_entity, eq="items")
 
-def test_extract_oracle_wms_data_uses_public_client_protocol() -> None:
-    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
-        oracle_wms_base_url="https://wms.example.com",
-    )
-    _WorkflowClient.extracted_entity = None
-    workflow_client = _WorkflowClient(settings)
-    service = FlextDbtOracleWms(settings=settings, client=workflow_client)
-    result = service.extract_oracle_wms_data("items")
-    assert result.success
-    assert _WorkflowClient.extracted_entity == "items"
-
-
-def test_run_oracle_wms_to_dbt_workflow_uses_public_protocols() -> None:
-    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
-        oracle_wms_base_url="https://wms.example.com",
-    )
-    _WorkflowClient.entity_names = None
-    _Service.logged_tracking_id = ""
-    _Service.logged_success = False
-    workflow_client = _WorkflowClient(settings)
-    service_helper = _Service()
-    service = FlextDbtOracleWms(
-        settings=settings,
-        client=workflow_client,
-        service=service_helper,
-    )
-    result = service.run_oracle_wms_to_dbt_workflow(
-        inventory_items=["item-1"],
-        generate_models=False,
-        run_transformations=True,
-    )
-    assert result.success
-    assert result.value["pipeline_status"] == "completed"
-    assert result.value["processed_entities"] == "items"
-    assert result.value["tracking_id"] == "oracle_wms_to_dbt:dbt_oracle_wms"
-    assert _WorkflowClient.entity_names == ["items"]
-    assert _Service.logged_tracking_id == "oracle_wms_to_dbt:dbt_oracle_wms"
-    assert _Service.logged_success
+    def test_run_oracle_wms_to_dbt_workflow_uses_public_protocols(self) -> None:
+        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+            oracle_wms_base_url="https://wms.example.com",
+        )
+        _WorkflowClient.entity_names = None
+        _Service.logged_tracking_id = ""
+        _Service.logged_success = False
+        workflow_client = _WorkflowClient(settings)
+        service_helper = _Service()
+        service = FlextDbtOracleWms(
+            settings=settings,
+            client=workflow_client,
+            service=service_helper,
+        )
+        result = service.run_oracle_wms_to_dbt_workflow(
+            inventory_items=["item-1"],
+            generate_models=False,
+            run_transformations=True,
+        )
+        tm.ok(result)
+        tm.that(result.value["pipeline_status"], eq="completed")
+        tm.that(result.value["processed_entities"], eq="items")
+        tm.that(result.value["tracking_id"], eq="oracle_wms_to_dbt:dbt_oracle_wms")
+        tm.that(_WorkflowClient.entity_names, eq=["items"])
+        tm.that(_Service.logged_tracking_id, eq="oracle_wms_to_dbt:dbt_oracle_wms")
+        tm.that(_Service.logged_success, eq=True)
