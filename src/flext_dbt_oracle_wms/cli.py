@@ -74,7 +74,7 @@ class FlextDbtOracleWmsCliService:
         if args is not None:
             entity_value = args.get("entity")
             try:
-                validated_entity = t.TEXT_VALUE_ADAPTER.validate_python(
+                validated_entity = t.DbtOracleWms.TEXT_VALUE_ADAPTER.validate_python(
                     entity_value,
                 ).strip()
             except c.ValidationError:
