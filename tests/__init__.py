@@ -19,6 +19,9 @@ if _t.TYPE_CHECKING:
     from tests.models import TestsFlextDbtOracleWmsModels, m
     from tests.protocols import TestsFlextDbtOracleWmsProtocols, p
     from tests.typings import TestsFlextDbtOracleWmsTypes, t
+    from tests.unit.test_cli import TestsFlextDbtOracleWmsCli
+    from tests.unit.test_module_governance import TestsFlextDbtOracleWmsModuleGovernance
+    from tests.unit.test_simple_api import TestsFlextDbtOracleWmsSimpleApi
     from tests.utilities import TestsFlextDbtOracleWmsUtilities, u
 _LAZY_IMPORTS = merge_lazy_imports(
     (".unit",),
@@ -40,6 +43,9 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "TestsFlextDbtOracleWmsTypes",
                 "t",
             ),
+            ".unit.test_cli": ("TestsFlextDbtOracleWmsCli",),
+            ".unit.test_module_governance": ("TestsFlextDbtOracleWmsModuleGovernance",),
+            ".unit.test_simple_api": ("TestsFlextDbtOracleWmsSimpleApi",),
             ".utilities": (
                 "TestsFlextDbtOracleWmsUtilities",
                 "u",
@@ -77,9 +83,12 @@ _LAZY_IMPORTS = merge_lazy_imports(
 install_lazy_exports(__name__, globals(), _LAZY_IMPORTS)
 
 __all__: list[str] = [
+    "TestsFlextDbtOracleWmsCli",
     "TestsFlextDbtOracleWmsConstants",
     "TestsFlextDbtOracleWmsModels",
+    "TestsFlextDbtOracleWmsModuleGovernance",
     "TestsFlextDbtOracleWmsProtocols",
+    "TestsFlextDbtOracleWmsSimpleApi",
     "TestsFlextDbtOracleWmsTypes",
     "TestsFlextDbtOracleWmsUtilities",
     "c",

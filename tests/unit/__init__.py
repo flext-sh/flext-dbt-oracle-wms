@@ -7,9 +7,9 @@ from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 _LAZY_IMPORTS = build_lazy_import_map(
     {
-        ".test_cli": ("test_cli",),
-        ".test_module_governance": ("test_module_governance",),
-        ".test_simple_api": ("test_simple_api",),
+        ".test_cli": ("TestsFlextDbtOracleWmsCli",),
+        ".test_module_governance": ("TestsFlextDbtOracleWmsModuleGovernance",),
+        ".test_simple_api": ("TestsFlextDbtOracleWmsSimpleApi",),
     },
 )
 
