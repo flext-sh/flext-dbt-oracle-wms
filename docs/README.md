@@ -37,7 +37,7 @@
   - [Getting Help](#getting-help)
   - [Contributing](#contributing)
 - [�"� Roadmap](#roadmap)
-  - [Current Version (v0.12.0-dev)](#current-version-v070)
+  - [Current Version (v0.12.0-dev)](#current-version-v0120-dev)
   - [Upcoming Features](#upcoming-features)
 <!-- TOC END -->
 
