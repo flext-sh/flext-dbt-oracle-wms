@@ -1,3 +1,7 @@
+<!-- TOC START -->
+- [Next Pages](#next-pages)
+<!-- TOC END -->
+
 <!-- AUTO-GENERATED — DO NOT EDIT MANUALLY -->
 
 # flext-dbt-oracle-wms API Overview
@@ -7,9 +11,9 @@
 - Description: FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT
 - Project class: `integration`
 - Keywords: `data-transformation`, `dbt`, `enterprise`, `flext`, `sql`, `typed`
-- Main facades: `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsTypes`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase`, `FlextDbtOracleWmsSettings`, `FlextDbtOracleWmsUtilities` (+2 more)
+- Main facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsUtilities`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsServiceBase`, `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsSettings` (+2 more)
 - Alias exports: `c`, `d`, `e`, `h`, `m`, `p`, `r`, `s`, `t`, `u`, `x`
-- Public symbol exports: `main`, `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsTypes`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase`, `FlextDbtOracleWmsSettings`, `FlextDbtOracleWmsUtilities`, `FlextDbtOracleWmsCliService` (+1 more)
+- Public symbol exports: `FlextDbtOracleWms`, `main`, `FlextDbtOracleWmsUtilities`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsServiceBase`, `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsSettings`, `FlextDbtOracleWmsProtocols` (+1 more)
 - Exported module shortcuts: _none_
 - Generated module pages: `10`
 

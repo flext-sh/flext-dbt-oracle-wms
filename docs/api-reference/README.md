@@ -1,3 +1,9 @@
+<!-- TOC START -->
+- [Source of Truth](#source-of-truth)
+- [Generated Pages](#generated-pages)
+- [Surface Summary](#surface-summary)
+<!-- TOC END -->
+
 <!-- AUTO-GENERATED — DO NOT EDIT MANUALLY -->
 
 # flext-dbt-oracle-wms API Reference
@@ -19,7 +25,7 @@ This section is generated from public exports and real docstrings.
 
 ## Surface Summary
 
-- Primary facades: `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsTypes`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase` (+4 more)
+- Primary facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsUtilities`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsServiceBase`, `FlextDbtOracleWmsCliService` (+4 more)
 - Generated module pages: `10`
 
 - [Back to project docs](../index.md)
