@@ -13,10 +13,9 @@ from __future__ import annotations
 from typing import override
 
 from flext_core import FlextSettings
-from flext_meltano import FlextMeltanoDbtServiceBase
-
 from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 from flext_dbt_oracle_wms.typings import t
+from flext_meltano import FlextMeltanoDbtServiceBase
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):

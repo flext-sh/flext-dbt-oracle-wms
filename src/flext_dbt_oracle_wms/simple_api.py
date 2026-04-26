@@ -15,7 +15,6 @@ from collections.abc import (
 from typing import override
 
 from flext_core import p, r, s
-
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.models import m
 from flext_dbt_oracle_wms.typings import t
