@@ -10,9 +10,18 @@ from flext_core.lazy import (
     install_lazy_exports,
     merge_lazy_imports,
 )
-from flext_dbt_oracle_wms.__version__ import *
 
 if _t.TYPE_CHECKING:
+    from flext_dbt_oracle_wms.__version__ import (
+        __author__,
+        __author_email__,
+        __description__,
+        __license__,
+        __title__,
+        __url__,
+        __version__,
+        __version_info__,
+    )
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
     from flext_dbt_oracle_wms.base import FlextDbtOracleWmsServiceBase
     from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
