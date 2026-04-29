@@ -17,6 +17,7 @@ from typing import override
 from flext_core import p, r, s
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.typings import t
 from flext_dbt_oracle_wms.utilities import u
 
@@ -28,7 +29,7 @@ class FlextDbtOracleWms(
 
     def __init__(
         self,
-        settings: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
+        settings: FlextDbtOracleWmsSettings | None = None,
         client: FlextDbtOracleWmsClient | None = None,
         service: u.DbtOracleWms.Service | None = None,
     ) -> None:
@@ -38,10 +39,10 @@ class FlextDbtOracleWms(
             settings_overrides=None,
             initial_context=None,
         )
-        self._wms_config: m.DbtOracleWms.FlextDbtOracleWmsSettings = (
+        self._wms_config: FlextDbtOracleWmsSettings = (
             settings
             if settings is not None
-            else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
+            else FlextDbtOracleWmsSettings.fetch_global()
         )
         self._client = client
         self._service = service
@@ -55,7 +56,7 @@ class FlextDbtOracleWms(
 
     @property
     @override
-    def settings(self) -> m.DbtOracleWms.FlextDbtOracleWmsSettings:
+    def settings(self) -> FlextDbtOracleWmsSettings:
         """Get the current configuration."""
         return self._wms_config
 
@@ -382,10 +383,10 @@ class FlextDbtOracleWms(
     @override
     def execute(
         self,
-    ) -> p.Result[m.DbtOracleWms.FlextDbtOracleWmsSettings]:
+    ) -> p.Result[FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         self.logger.info("Executing DBT Oracle WMS service")
-        return r[m.DbtOracleWms.FlextDbtOracleWmsSettings].ok(self.settings)
+        return r[FlextDbtOracleWmsSettings].ok(self.settings)
 
 
 __all__: list[str] = ["FlextDbtOracleWms"]

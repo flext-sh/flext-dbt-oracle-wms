@@ -9,7 +9,7 @@ from collections.abc import (
 )
 from typing import Annotated, ClassVar
 
-from flext_core import FlextSettings, p, r, u
+from flext_core import p, r, u
 from flext_dbt_oracle_wms.constants import c
 from flext_dbt_oracle_wms.typings import t
 from flext_meltano import m
@@ -184,36 +184,6 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                 return r[Sequence[FlextDbtOracleWmsModels.DbtOracleWms.DbtModel]].ok(
                     models
                 )
-
-        class FlextDbtOracleWmsSettings(FlextSettings):
-            """Runtime settings for DBT Oracle WMS transformations."""
-
-            required_fields_per_entity: Annotated[
-                Mapping[str, t.StrSequence],
-                u.Field(description="Required fields per WMS entity for validation"),
-            ] = u.Field(default_factory=dict)
-            oracle_wms_environment: Annotated[
-                str,
-                u.Field(
-                    default="development",
-                    description="Oracle WMS environment (development/production)",
-                ),
-            ]
-            oracle_wms_base_url: Annotated[
-                str,
-                u.Field(default="", description="Base URL for Oracle WMS API"),
-            ]
-            dbt_threads: Annotated[
-                int,
-                u.Field(
-                    default=4,
-                    description="Number of DBT threads for parallel execution",
-                ),
-            ]
-            dbt_target: Annotated[
-                str,
-                u.Field(default="dev", description="DBT target profile (dev/prod)"),
-            ]
 
     @classmethod
     def create_generator(

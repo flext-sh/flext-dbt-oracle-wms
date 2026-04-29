@@ -13,7 +13,7 @@ from __future__ import annotations
 from typing import override
 
 from flext_core import FlextSettings
-from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.typings import t
 from flext_meltano import FlextMeltanoDbtServiceBase
 
@@ -29,11 +29,11 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
 
     def _dbt_oracle_wms_settings(
         self,
-    ) -> FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings:
+    ) -> FlextDbtOracleWmsSettings:
         """Return the typed dbt-oracle-wms settings namespace."""
         return FlextSettings.fetch_global().fetch_namespace(
             "dbt_oracle_wms",
-            FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsSettings,
+            FlextDbtOracleWmsSettings,
         )
 
     @override

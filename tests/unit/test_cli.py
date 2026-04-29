@@ -10,6 +10,7 @@ from flext_tests import tm
 from flext_dbt_oracle_wms import r
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 from tests.models import m
 from tests.protocols import p
@@ -20,7 +21,7 @@ from tests.utilities import u
 class _CliClient(FlextDbtOracleWmsClient):
     def __init__(
         self,
-        settings: m.DbtOracleWms.FlextDbtOracleWmsSettings,
+        settings: FlextDbtOracleWmsSettings,
         *,
         pipeline_should_fail: bool = False,
     ) -> None:
@@ -68,7 +69,7 @@ class _CliClient(FlextDbtOracleWmsClient):
 
 class _CliService(u.DbtOracleWms.Service):
     def __init__(self) -> None:
-        self.settings = m.DbtOracleWms.FlextDbtOracleWmsSettings()
+        self.settings = FlextDbtOracleWmsSettings()
         self.logged_payload: m.Dict | None = None
 
     @override
@@ -99,7 +100,7 @@ def _build_public_facade(
     *,
     pipeline_should_fail: bool = False,
 ) -> t.Triple[FlextDbtOracleWms, _CliClient, _CliService]:
-    settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+    settings = FlextDbtOracleWmsSettings(
         oracle_wms_base_url="https://wms.example.com",
     )
     client = _CliClient(settings, pipeline_should_fail=pipeline_should_fail)

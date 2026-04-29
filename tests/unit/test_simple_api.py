@@ -9,6 +9,7 @@ from flext_tests import tm
 
 from flext_dbt_oracle_wms import r
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 from tests.models import m
 from tests.protocols import p
@@ -17,7 +18,7 @@ from tests.utilities import u
 
 
 class _SuccessfulConnectionClient(FlextDbtOracleWmsClient):
-    def __init__(self, settings: m.DbtOracleWms.FlextDbtOracleWmsSettings) -> None:
+    def __init__(self, settings: FlextDbtOracleWmsSettings) -> None:
         self.settings = settings
 
     @override
@@ -34,7 +35,7 @@ class _WorkflowClient(FlextDbtOracleWmsClient):
     entity_names: t.StrSequence | None = None
     extracted_entity: str | None = None
 
-    def __init__(self, settings: m.DbtOracleWms.FlextDbtOracleWmsSettings) -> None:
+    def __init__(self, settings: FlextDbtOracleWmsSettings) -> None:
         self.settings = settings
 
     @override
@@ -75,7 +76,7 @@ class _Service(u.DbtOracleWms.Service):
     logged_success = False
 
     def __init__(self) -> None:
-        self.settings = m.DbtOracleWms.FlextDbtOracleWmsSettings()
+        self.settings = FlextDbtOracleWmsSettings()
 
     @override
     def generate_workflow_recommendations(
@@ -120,7 +121,7 @@ class TestsFlextDbtOracleWmsSimpleApi:
     """Behavior contract for FlextDbtOracleWms public methods."""
 
     def test_validate_wms_connection_uses_public_client_protocol(self) -> None:
-        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+        settings = FlextDbtOracleWmsSettings(
             oracle_wms_base_url="https://wms.example.com",
         )
         service = FlextDbtOracleWms(
@@ -132,7 +133,7 @@ class TestsFlextDbtOracleWmsSimpleApi:
         tm.that(result.value, eq=True)
 
     def test_discover_oracle_wms_entities_uses_public_client_protocol(self) -> None:
-        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+        settings = FlextDbtOracleWmsSettings(
             oracle_wms_base_url="https://wms.example.com",
         )
         service = FlextDbtOracleWms(settings=settings, client=_WorkflowClient(settings))
@@ -141,7 +142,7 @@ class TestsFlextDbtOracleWmsSimpleApi:
         tm.that(result.value, eq=["items", "shipments"])
 
     def test_extract_oracle_wms_data_uses_public_client_protocol(self) -> None:
-        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+        settings = FlextDbtOracleWmsSettings(
             oracle_wms_base_url="https://wms.example.com",
         )
         _WorkflowClient.extracted_entity = None
@@ -152,7 +153,7 @@ class TestsFlextDbtOracleWmsSimpleApi:
         tm.that(_WorkflowClient.extracted_entity, eq="items")
 
     def test_run_oracle_wms_to_dbt_workflow_uses_public_protocols(self) -> None:
-        settings = m.DbtOracleWms.FlextDbtOracleWmsSettings(
+        settings = FlextDbtOracleWmsSettings(
             oracle_wms_base_url="https://wms.example.com",
         )
         _WorkflowClient.entity_names = None

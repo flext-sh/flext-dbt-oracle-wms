@@ -10,6 +10,7 @@ from collections.abc import (
 from typing import ClassVar
 
 from flext_dbt_oracle_wms import c, m, p, t, u
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClient, r
 
@@ -19,15 +20,13 @@ class FlextDbtOracleWmsClient:
 
     logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
-    def __init__(
-        self, settings: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None
-    ) -> None:
+    def __init__(self, settings: FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize client with explicit or global settings."""
         super().__init__()
         self.settings = (
             settings
             if settings is not None
-            else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
+            else FlextDbtOracleWmsSettings.fetch_global()
         )
         self._meltano_runner = FlextMeltanoLibraryRunner()
         self._transformer = m.DbtOracleWms.FlextDbtOracleWmsTransformer()

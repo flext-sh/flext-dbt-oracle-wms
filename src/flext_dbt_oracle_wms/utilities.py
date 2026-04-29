@@ -9,7 +9,8 @@ from collections.abc import (
 from typing import ClassVar
 
 from flext_core import p, r
-from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms import m
+from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.typings import t
 from flext_meltano import u
 from flext_oracle_wms import FlextOracleWmsUtilities
@@ -59,14 +60,14 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
 
             def __init__(
                 self,
-                settings: m.DbtOracleWms.FlextDbtOracleWmsSettings | None = None,
+                settings: FlextDbtOracleWmsSettings | None = None,
             ) -> None:
                 """Initialize service state and default settings."""
                 super().__init__()
                 self.settings = (
                     settings
                     if settings is not None
-                    else m.DbtOracleWms.FlextDbtOracleWmsSettings.fetch_global()
+                    else FlextDbtOracleWmsSettings.fetch_global()
                 )
 
             def generate_workflow_recommendations(
