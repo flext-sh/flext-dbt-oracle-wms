@@ -87,7 +87,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                         "total_entities": total,
                         "recommendation": recommendation_message,
                         "dbt_threads": str(self.settings.dbt_threads),
-                        "target": str(self.settings.dbt_target),
+                        "target": self.settings.dbt_target,
                     }),
                 )
 
