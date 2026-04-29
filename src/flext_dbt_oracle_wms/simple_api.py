@@ -218,7 +218,7 @@ class FlextDbtOracleWms(
             }),
         )
 
-    def get_wms_inventory_info(self, item_id: str) -> p.Result[m.Dict]:
+    def fetch_wms_inventory_info(self, item_id: str) -> p.Result[m.Dict]:
         """Get inventory item data from the Oracle WMS domain client."""
         self.logger.info("Getting WMS inventory info: %s", item_id)
         inventory_result = self._extract_entity_records(
@@ -232,7 +232,7 @@ class FlextDbtOracleWms(
             )
         return r[m.Dict].ok(m.Dict.model_validate(dict(inventory_result.value[0])))
 
-    def get_wms_shipment_info(self, shipment_id: str) -> p.Result[m.Dict]:
+    def fetch_wms_shipment_info(self, shipment_id: str) -> p.Result[m.Dict]:
         """Get shipment data from the Oracle WMS domain client."""
         self.logger.info("Getting WMS shipment info: %s", shipment_id)
         shipment_result = self._extract_entity_records(

@@ -27,16 +27,28 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
 
             model_config: ClassVar[m.ConfigDict] = m.ConfigDict(extra="ignore")
 
-            item_id: Annotated[str, u.Field(default="")]
-            item_number: Annotated[str, u.Field(default="")]
-            item_description: Annotated[str, u.Field(default="")]
+            item_id: Annotated[
+                str, u.Field(default="", description="Unique item identifier")
+            ]
+            item_number: Annotated[
+                str, u.Field(default="", description="Item number code")
+            ]
+            item_description: Annotated[
+                str, u.Field(default="", description="Description of the item")
+            ]
 
         class FlextDbtOracleWmsItemDimension(m.Value):
             """Item dimension model for WMS analytics."""
 
-            item_id: Annotated[str, u.Field(default="")]
-            item_number: Annotated[str, u.Field(default="")]
-            item_description: Annotated[str, u.Field(default="")]
+            item_id: Annotated[
+                str, u.Field(default="", description="Unique item identifier")
+            ]
+            item_number: Annotated[
+                str, u.Field(default="", description="Item number code")
+            ]
+            item_description: Annotated[
+                str, u.Field(default="", description="Description of the item")
+            ]
 
             def to_dbt_dict(self) -> t.ConfigurationMapping:
                 """Convert item dimension to DBT-compatible dictionary."""
@@ -119,11 +131,11 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             columns: Annotated[
                 Sequence[t.StrMapping],
                 u.Field(description="Column metadata payloads"),
-            ] = u.Field(default_factory=list)
+            ] = u.Field(default_factory=tuple)
             dependencies: Annotated[
                 t.StrSequence,
                 u.Field(description="Upstream model dependencies"),
-            ] = u.Field(default_factory=list)
+            ] = u.Field(default_factory=tuple)
             wms_entity_type: Annotated[
                 str,
                 u.Field(description="Oracle WMS entity represented by this model"),
@@ -137,7 +149,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                 u.Field(
                     description="WMS-specific business rules attached to the model"
                 ),
-            ] = u.Field(default_factory=list)
+            ] = u.Field(default_factory=tuple)
 
         class ModelGenerator:
             """Generator for lightweight DBT model objects."""
