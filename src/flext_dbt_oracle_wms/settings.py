@@ -6,7 +6,6 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from collections.abc import Mapping
 from typing import Annotated, ClassVar
 
 from flext_core import FlextSettings, m, t, u
@@ -21,7 +20,7 @@ class FlextDbtOracleWmsSettings(FlextSettings):
     )
 
     required_fields_per_entity: Annotated[
-        Mapping[str, t.StrSequence],
+        t.MappingKV[str, t.StrSequence],
         u.Field(description="Required fields per WMS entity for validation"),
     ] = u.Field(default_factory=dict)
     oracle_wms_environment: Annotated[

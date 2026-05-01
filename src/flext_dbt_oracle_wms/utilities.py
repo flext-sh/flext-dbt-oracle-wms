@@ -2,10 +2,6 @@
 
 from __future__ import annotations
 
-from collections.abc import (
-    Mapping,
-    Sequence,
-)
 from typing import ClassVar
 
 from flext_core import p, r
@@ -26,18 +22,19 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
 
         @staticmethod
         def extract_wms_inventory_data(
-            extraction_config: Mapping[str, t.JsonValue | None],
+            extraction_config: t.MappingKV[str, t.JsonValue | None],
         ) -> p.Result[
-            Mapping[
+            t.MappingKV[
                 str,
-                Mapping[str, t.JsonValue | None] | Sequence[t.JsonValue | None],
+                t.MappingKV[str, t.JsonValue | None] | t.SequenceOf[t.JsonValue | None],
             ]
         ]:
             """Return basic extraction metadata for inventory loads."""
             return r[
-                Mapping[
+                t.MappingKV[
                     str,
-                    Mapping[str, t.JsonValue | None] | Sequence[t.JsonValue | None],
+                    t.MappingKV[str, t.JsonValue | None]
+                    | t.SequenceOf[t.JsonValue | None],
                 ]
             ].ok({
                 "extraction_config": extraction_config,
@@ -49,7 +46,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
 
             @staticmethod
             def generate_wms_inventory_dimension(
-                inventory_config: Mapping[str, t.JsonValue | None],
+                inventory_config: t.MappingKV[str, t.JsonValue | None],
             ) -> p.Result[str]:
                 """Generate SQL for inventory dimension model."""
                 _ = inventory_config
@@ -72,7 +69,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
 
             def generate_workflow_recommendations(
                 self,
-                entities: Sequence[t.ConfigurationMapping] | None = None,
+                entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
             ) -> p.Result[m.Dict]:
                 """Generate simple workflow recommendations for entity processing."""
                 entity_list = entities or []

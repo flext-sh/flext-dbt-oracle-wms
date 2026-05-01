@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections.abc import (
-    Mapping,
     MutableMapping,
     Sequence,
 )
@@ -78,7 +77,7 @@ class FlextDbtOracleWmsClient:
         if entities_result.failure:
             return r[m.Dict].fail(entities_result.error or "Entity discovery failed")
         entity_list = entities_result.value
-        extracted: MutableMapping[str, Sequence[t.ConfigurationMapping]] = {}
+        extracted: MutableMapping[str, t.SequenceOf[t.ConfigurationMapping]] = {}
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.failure:
@@ -131,7 +130,7 @@ class FlextDbtOracleWmsClient:
 
     def transform_with_dbt(
         self,
-        entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
+        entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
         model_names: t.StrSequence | None,
     ) -> p.Result[m.Dict]:
         """Run DBT transformations through flext-meltano."""
@@ -155,7 +154,7 @@ class FlextDbtOracleWmsClient:
     def validate_oracle_wms_data(
         self,
         entity_name: str,
-        records: Sequence[t.ConfigurationMapping],
+        records: t.SequenceOf[t.ConfigurationMapping],
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Validate extracted records against configured entity requirements."""
         if not records:

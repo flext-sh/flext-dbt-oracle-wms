@@ -138,8 +138,8 @@ class FlextDbtOracleWms(
             return r[m.Dict].fail(
                 available_entities_result.error or "Oracle WMS entity discovery failed",
             )
-        inventory_records: Sequence[t.ConfigurationMapping] = []
-        shipment_records: Sequence[t.ConfigurationMapping] = []
+        inventory_records: t.SequenceOf[t.ConfigurationMapping] = []
+        shipment_records: t.SequenceOf[t.ConfigurationMapping] = []
         if include_inventory_details:
             inventory_result = self._extract_entity_records(
                 "items",

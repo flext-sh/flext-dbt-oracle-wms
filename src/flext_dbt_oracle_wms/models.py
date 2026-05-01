@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections.abc import (
-    Mapping,
     MutableSequence,
     Sequence,
 )
@@ -63,18 +62,18 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
 
             def transform_all_entities(
                 self,
-                entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
-            ) -> Mapping[str, Sequence[t.ConfigurationMapping]]:
+                entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
+            ) -> t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]:
                 """Transform all WMS entities to DBT-compatible format."""
-                items: Sequence[
+                items: t.SequenceOf[
                     FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
                 ] = self.transform_items(entity_data.get("items", []))
                 return {"items": [item.to_dbt_dict() for item in items]}
 
             def transform_items(
                 self,
-                records: Sequence[t.ConfigurationMapping],
-            ) -> Sequence[
+                records: t.SequenceOf[t.ConfigurationMapping],
+            ) -> t.SequenceOf[
                 FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
             ]:
                 """Transform item records to item dimension models."""
@@ -99,7 +98,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
 
             def validate_business_rules(
                 self,
-                records: Sequence[t.ConfigurationMapping],
+                records: t.SequenceOf[t.ConfigurationMapping],
             ) -> p.Result[bool]:
                 """Validate business rules for WMS records."""
                 if not records:
@@ -129,7 +128,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                 u.Field(description="Human-readable model description"),
             ] = ""
             columns: Annotated[
-                Sequence[t.StrMapping],
+                t.SequenceOf[t.StrMapping],
                 u.Field(description="Column metadata payloads"),
             ] = u.Field(default_factory=tuple)
             dependencies: Annotated[

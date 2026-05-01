@@ -5,7 +5,6 @@ from __future__ import annotations
 import sys
 from collections.abc import (
     Callable,
-    Mapping,
 )
 from typing import ClassVar
 
@@ -32,10 +31,10 @@ class FlextDbtOracleWmsCliService:
     def execute_command(
         self,
         command: str,
-        args: Mapping[str, t.JsonValue | None] | None = None,
+        args: t.MappingKV[str, t.JsonValue | None] | None = None,
     ) -> int:
         """Execute a named CLI command and return an exit code."""
-        callables: Mapping[str, Callable[[], p.Result[str]]] = {
+        callables: t.MappingKV[str, Callable[[], p.Result[str]]] = {
             "discover": self.handle_discover,
             "extract": lambda: self.handle_extract(args),
             "pipeline": self.handle_pipeline,
@@ -66,7 +65,7 @@ class FlextDbtOracleWmsCliService:
 
     def handle_extract(
         self,
-        args: Mapping[str, t.JsonValue | None] | None = None,
+        args: t.MappingKV[str, t.JsonValue | None] | None = None,
     ) -> p.Result[str]:
         """Handle extract command."""
         entity = self._default_entity

@@ -81,7 +81,7 @@ class _Service(u.DbtOracleWms.Service):
     @override
     def generate_workflow_recommendations(
         self,
-        entities: Sequence[t.ConfigurationMapping] | None = None,
+        entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
     ) -> p.Result[m.Dict]:
         total = len(entities or [])
         return r[m.Dict].ok(
