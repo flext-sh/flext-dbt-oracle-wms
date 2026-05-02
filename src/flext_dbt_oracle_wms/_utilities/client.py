@@ -197,7 +197,8 @@ class FlextDbtOracleWmsClient:
             return r[FlextOracleWmsUtilitiesClient.Client].ok(self._wms_client)
         except (c.ValidationError, TypeError, ValueError) as exc:
             return r[FlextOracleWmsUtilitiesClient.Client].fail_op(
-                "Oracle WMS client initialization", exc,
+                "Oracle WMS client initialization",
+                exc,
             )
 
 
