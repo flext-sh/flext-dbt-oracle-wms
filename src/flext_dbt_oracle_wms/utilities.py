@@ -41,17 +41,6 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                 "inventory_records": [],
             })
 
-        class WmsDimensionalModeling:
-            """DBT SQL generation helpers for dimensional models."""
-
-            @staticmethod
-            def generate_wms_inventory_dimension(
-                inventory_config: t.MappingKV[str, t.JsonValue | None],
-            ) -> p.Result[str]:
-                """Generate SQL for inventory dimension model."""
-                _ = inventory_config
-                return r[str].ok("select * from {{ ref('stg_wms_inventory') }}")
-
         class Service:
             """Workflow and monitoring service helpers — u.DbtOracleWms.Service.*."""
 
