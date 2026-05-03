@@ -23,7 +23,6 @@ if _t.TYPE_CHECKING:
         __version_info__,
     )
     from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
-    from flext_dbt_oracle_wms.base import FlextDbtOracleWmsServiceBase
     from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
     from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants, c
     from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m
@@ -48,7 +47,6 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "__version_info__",
             ),
             "._utilities.client": ("FlextDbtOracleWmsClient",),
-            ".base": ("FlextDbtOracleWmsServiceBase",),
             ".cli": (
                 "FlextDbtOracleWmsCliService",
                 "main",
@@ -117,7 +115,6 @@ __all__: list[str] = [
     "FlextDbtOracleWmsConstants",
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsProtocols",
-    "FlextDbtOracleWmsServiceBase",
     "FlextDbtOracleWmsSettings",
     "FlextDbtOracleWmsTypes",
     "FlextDbtOracleWmsUtilities",
