@@ -5,7 +5,6 @@ from __future__ import annotations
 from enum import StrEnum, unique
 from typing import Final
 
-from flext_dbt_oracle_wms import t
 from flext_meltano import c
 from flext_oracle_wms import FlextOracleWmsConstants
 
@@ -20,8 +19,6 @@ class FlextDbtOracleWmsConstants(c, FlextOracleWmsConstants):
             """DBT constants and enum values."""
 
             PROJECT_NAME: Final[str] = "flext_dbt_oracle_wms"
-            PROFILE: Final[str] = "flext_oracle_wms"
-            SCHEMA_PREFIX: Final[str] = "wms"
 
             @unique
             class Materialization(StrEnum):
@@ -30,10 +27,6 @@ class FlextDbtOracleWmsConstants(c, FlextOracleWmsConstants):
                 TABLE = "table"
                 VIEW = "view"
                 INCREMENTAL = "incremental"
-
-            MATERIALIZATIONS: Final[t.VariadicTuple[str]] = tuple(
-                member.value for member in Materialization.__members__.values()
-            )
 
 
 c = FlextDbtOracleWmsConstants
