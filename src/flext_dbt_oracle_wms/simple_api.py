@@ -78,9 +78,9 @@ class FlextDbtOracleWms(
         filters: t.ConfigurationMapping | None = None,
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Extract Oracle WMS entity records through the public domain facade."""
-        extracted: p.Result[
-            Sequence[t.ConfigurationMapping]
-        ] = self.client.extract_oracle_wms_data(entity_name, filters)
+        extracted: p.Result[Sequence[t.ConfigurationMapping]] = (
+            self.client.extract_oracle_wms_data(entity_name, filters)
+        )
         return extracted
 
     @staticmethod
