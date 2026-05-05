@@ -69,7 +69,8 @@ class FlextDbtOracleWms(
 
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         """Discover Oracle WMS entities through the public domain facade."""
-        return self.client.discover_oracle_wms_entities()
+        discovered: p.Result[t.StrSequence] = self.client.discover_oracle_wms_entities()
+        return discovered
 
     def extract_oracle_wms_data(
         self,
@@ -77,7 +78,10 @@ class FlextDbtOracleWms(
         filters: t.ConfigurationMapping | None = None,
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Extract Oracle WMS entity records through the public domain facade."""
-        return self.client.extract_oracle_wms_data(entity_name, filters)
+        extracted: p.Result[
+            Sequence[t.ConfigurationMapping]
+        ] = self.client.extract_oracle_wms_data(entity_name, filters)
+        return extracted
 
     @staticmethod
     def _resolve_entity_names(
