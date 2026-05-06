@@ -20,6 +20,43 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
         """DBT Oracle WMS protocol namespace."""
 
         @runtime_checkable
+        class Client(Protocol):
+            """Protocol for the public Oracle WMS workflow client surface."""
+
+            def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
+                """Discover available Oracle WMS entities."""
+                ...
+
+            def extract_oracle_wms_data(
+                self,
+                entity_name: str,
+                filters: t.ConfigurationMapping | None = None,
+            ) -> p.Result[Sequence[t.ConfigurationMapping]]:
+                """Extract records for a specific Oracle WMS entity."""
+                ...
+
+            def run_full_oracle_wms_to_dbt_pipeline(
+                self,
+                entity_names: t.StrSequence | None = None,
+                filters: t.ConfigurationMapping | None = None,
+                model_names: t.StrSequence | None = None,
+            ) -> p.Result[m.Dict]:
+                """Run the full Oracle WMS to DBT workflow."""
+                ...
+
+            def test_oracle_wms_connection(self) -> p.Result[m.Dict]:
+                """Validate Oracle WMS connectivity."""
+                ...
+
+            def transform_with_dbt(
+                self,
+                entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
+                model_names: t.StrSequence | None,
+            ) -> p.Result[m.Dict]:
+                """Run DBT transformations for extracted entity data."""
+                ...
+
+        @runtime_checkable
         class Dbt(Protocol):
             """Protocol for DBT operation execution."""
 

@@ -14,7 +14,8 @@ from collections.abc import (
 )
 from typing import override
 
-from flext_core import p, r, s
+from flext_core import r, s
+from flext_dbt_oracle_wms import p
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.models import m
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
@@ -30,7 +31,7 @@ class FlextDbtOracleWms(
     def __init__(
         self,
         settings: FlextDbtOracleWmsSettings | None = None,
-        client: FlextDbtOracleWmsClient | None = None,
+        client: p.DbtOracleWms.Client | None = None,
         service: u.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
@@ -44,11 +45,11 @@ class FlextDbtOracleWms(
             if settings is not None
             else FlextDbtOracleWmsSettings.fetch_global()
         )
-        self._client = client
+        self._client: p.DbtOracleWms.Client | None = client
         self._service = service
 
     @property
-    def client(self) -> FlextDbtOracleWmsClient:
+    def client(self) -> p.DbtOracleWms.Client:
         """Get the DBT Oracle WMS client instance."""
         if self._client is None:
             self._client = FlextDbtOracleWmsClient(self._wms_config)
