@@ -236,7 +236,7 @@ class FlextDbtOracleWms(
             return r[m.Dict].fail(
                 inventory_result.error or "Inventory info retrieval failed",
             )
-        return r[m.Dict].ok(m.Dict.model_validate(dict(inventory_result.value[0])))
+        return r[m.Dict].ok(m.Dict.model_validate(inventory_result.value[0]))
 
     def fetch_wms_shipment_info(self, shipment_id: str) -> p.Result[m.Dict]:
         """Get shipment data from the Oracle WMS domain client."""
@@ -250,7 +250,7 @@ class FlextDbtOracleWms(
             return r[m.Dict].fail(
                 shipment_result.error or "Shipment info retrieval failed",
             )
-        return r[m.Dict].ok(m.Dict.model_validate(dict(shipment_result.value[0])))
+        return r[m.Dict].ok(m.Dict.model_validate(shipment_result.value[0]))
 
     def monitor_dbt_execution(
         self,
