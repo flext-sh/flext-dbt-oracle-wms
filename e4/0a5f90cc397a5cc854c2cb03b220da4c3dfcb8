@@ -1,0 +1,33 @@
+tests/settings.py
+  h_5cf852cc46bf92 1-17
+tests/__init__.py
+  s_1aca2b1c94e9fc::t_ff718b613fa993 17-18,22,32-35,48,107-108
+src/flext_dbt_oracle_wms/simple_api.py
+  h_5cf852cc46bf92 318,342,367-368
+tests/base.py
+  h_5cf852cc46bf92 1-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "e40a5f90cc397a5cc854c2cb03b220da4c3dfcb8",
+  "prompts": {},
+  "humans": {
+    "h_5cf852cc46bf92": {
+      "author": "FLEXT Bot <team@flext.sh>"
+    },
+    "h_9db9d35f50cf33": {
+      "author": "FLEXT Bot"
+    }
+  },
+  "sessions": {
+    "s_1aca2b1c94e9fc": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "ce2bbb45-e9bf-4d0e-b1f1-79cea59375ea",
+        "model": "unknown"
+      },
+      "human_author": "FLEXT Bot <team@flext.sh>"
+    }
+  }
+}
