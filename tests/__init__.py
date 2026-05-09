@@ -14,10 +14,12 @@ from flext_core.lazy import (
 if _t.TYPE_CHECKING:
     from flext_tests import td, tf, tk, tm, tv
 
-    from flext_dbt_oracle_wms import d, e, h, r, s, x
+    from flext_dbt_oracle_wms import d, e, h, r, x
+    from tests.base import TestsFlextDbtOracleWmsServiceBase, s
     from tests.constants import TestsFlextDbtOracleWmsConstants, c
     from tests.models import TestsFlextDbtOracleWmsModels, m
     from tests.protocols import TestsFlextDbtOracleWmsProtocols, p
+    from tests.settings import TestsFlextDbtOracleWmsSettings
     from tests.typings import TestsFlextDbtOracleWmsTypes, t
     from tests.unit.test_cli import TestsFlextDbtOracleWmsCli
     from tests.unit.test_module_governance import TestsFlextDbtOracleWmsModuleGovernance
@@ -27,6 +29,10 @@ _LAZY_IMPORTS = merge_lazy_imports(
     (".unit",),
     build_lazy_import_map(
         {
+            ".base": (
+                "TestsFlextDbtOracleWmsServiceBase",
+                "s",
+            ),
             ".constants": (
                 "TestsFlextDbtOracleWmsConstants",
                 "c",
@@ -39,6 +45,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "TestsFlextDbtOracleWmsProtocols",
                 "p",
             ),
+            ".settings": ("TestsFlextDbtOracleWmsSettings",),
             ".typings": (
                 "TestsFlextDbtOracleWmsTypes",
                 "t",
@@ -55,7 +62,6 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "e",
                 "h",
                 "r",
-                "s",
                 "x",
             ),
             "flext_tests": (
@@ -98,6 +104,8 @@ __all__: list[str] = [
     "TestsFlextDbtOracleWmsModels",
     "TestsFlextDbtOracleWmsModuleGovernance",
     "TestsFlextDbtOracleWmsProtocols",
+    "TestsFlextDbtOracleWmsServiceBase",
+    "TestsFlextDbtOracleWmsSettings",
     "TestsFlextDbtOracleWmsSimpleApi",
     "TestsFlextDbtOracleWmsTypes",
     "TestsFlextDbtOracleWmsUtilities",
