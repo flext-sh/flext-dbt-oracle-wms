@@ -4,8 +4,6 @@
 
 These pages are generated from public modules and their docstrings.
 
-- [flext_dbt_oracle_wms](flext_dbt_oracle_wms.md)
-- [flext_dbt_oracle_wms.base](base.md)
 - [flext_dbt_oracle_wms.cli](cli.md)
 - [flext_dbt_oracle_wms.constants](constants.md)
 - [flext_dbt_oracle_wms.models](models.md)

@@ -2,7 +2,7 @@
 
 # flext-dbt-oracle-wms Documentation
 
-- Version: `unknown`
+- Version: `0.12.0-dev`
 - Project class: `integration`
 - Package: `flext_dbt_oracle_wms`
 - Description: FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT
