@@ -1,35 +1,5 @@
 # Model Reference
 
-<!-- TOC START -->
-- [📊 Model Architecture Overview](#model-architecture-overview)
-- [🔵 Staging Models](#staging-models)
-  - [stg_wms\_\_allocation](#stgwmsallocation)
-  - [stg_wms\_\_inventory](#stgwmsinventory)
-  - [stg_wms\_\_order_hdr](#stgwmsorderhdr)
-  - [stg_wms\_\_order_dtl](#stgwmsorderdtl)
-- [🟢 Mart Models](#mart-models)
-  - [marts/operational/opr_wms\_\_allocation_summary](#martsoperationaloprwmsallocationsummary)
-  - [marts/analytical/ana_wms\_\_inventory_analysis](#martsanalyticalanawmsinventoryanalysis)
-  - [marts/metrics/met_wms\_\_kpi_dashboard](#martsmetricsmetwmskpidashboard)
-- [🔗 Model Dependencies](#model-dependencies)
-  - [Dependency Graph](#dependency-graph)
-- [📈 Performance Considerations](#performance-considerations)
-  - [Materialization Strategy](#materialization-strategy)
-  - [Incremental Processing](#incremental-processing)
-  - [Partitioning Strategy](#partitioning-strategy)
-- [🧪 Testing Strategy](#testing-strategy)
-  - [Data Quality Tests](#data-quality-tests)
-  - [Performance Tests](#performance-tests)
-- [📊 Usage Patterns](#usage-patterns)
-  - [Common Query Patterns](#common-query-patterns)
-- [🔄 Data Refresh Strategy](#data-refresh-strategy)
-  - [Refresh Schedule](#refresh-schedule)
-  - [Refresh Commands](#refresh-commands)
-- [📚 Documentation](#documentation)
-  - [Model Documentation](#model-documentation)
-  - [Automated Documentation Generation](#automated-documentation-generation)
-<!-- TOC END -->
-
 **Complete Data Model Documentation for FLEXT DBT Oracle WMS**
 
 This reference provides comprehensive documentation for all data models in the FLEXT DBT Oracle WMS project, including staging models, mart models, and their relationships.

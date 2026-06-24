@@ -1,34 +1,5 @@
 # Oracle WMS Integration Guide
 
-<!-- TOC START -->
-- [🏢 Oracle WMS Overview](#oracle-wms-overview)
-  - [What is Oracle WMS](#what-is-oracle-wms)
-  - [FLEXT Integration Benefits](#flext-integration-benefits)
-- [📊 Oracle WMS Data Model](#oracle-wms-data-model)
-  - [Core Business Entities](#core-business-entities)
-  - [Reference Data Entities](#reference-data-entities)
-- [🔌 Database Connection Setup](#database-connection-setup)
-  - [Oracle Database Requirements](#oracle-database-requirements)
-  - [Connection Configuration](#connection-configuration)
-  - [Connection Testing](#connection-testing)
-- [📁 Source Configuration](#source-configuration)
-  - [dbt Sources Definition](#dbt-sources-definition)
-- [🔄 Data Integration Patterns](#data-integration-patterns)
-  - [Singer Tap Integration](#singer-tap-integration)
-  - [Real-time Data Considerations](#real-time-data-considerations)
-- [🏗️ WMS-Specific Transformations](#wms-specific-transformations)
-  - [Business Logic Implementation](#business-logic-implementation)
-- [📊 Performance Optimization](#performance-optimization)
-  - [Oracle-Specific Optimizations](#oracle-specific-optimizations)
-- [🧪 WMS Data Quality Rules](#wms-data-quality-rules)
-  - [Business Rule Validation](#business-rule-validation)
-- [📈 Monitoring and Alerting](#monitoring-and-alerting)
-  - [Data Quality Monitoring](#data-quality-monitoring)
-- [🔧 Troubleshooting](#troubleshooting)
-  - [Common Integration Issues](#common-integration-issues)
-- [📚 Additional Resources](#additional-resources)
-<!-- TOC END -->
-
 **Complete Integration Guide for Oracle Warehouse Management System**
 
 This guide covers the integration between FLEXT DBT and Oracle WMS, including data sources, connection setup, and WMS-specific considerations.

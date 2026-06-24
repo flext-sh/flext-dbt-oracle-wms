@@ -1,42 +1,5 @@
 # Quick Start Guide
 
-<!-- TOC START -->
-- [🚀 Prerequisites Check](#prerequisites-check)
-- [⚡ Quick Installation](#quick-installation)
-  - [1. Clone and Setup (2 minutes)](#1-clone-and-setup-2-minutes)
-  - [2. Configure Oracle Connection (3 minutes)](#2-configure-oracle-connection-3-minutes)
-  - [3. Setup dbt Profile (2 minutes)](#3-setup-dbt-profile-2-minutes)
-  - [4. Test Connection (1 minute)](#4-test-connection-1-minute)
-  - [5. Run Your First Models (2 minutes)](#5-run-your-first-models-2-minutes)
-- [🎯 Quick Validation](#quick-validation)
-  - [Check Your Data](#check-your-data)
-  - [Verify Model Count](#verify-model-count)
-- [📊 Quick Dashboard](#quick-dashboard)
-  - [Generate Documentation](#generate-documentation)
-  - [Key Views to Check](#key-views-to-check)
-- [🧪 Quick Quality Check](#quick-quality-check)
-- [🎨 Common First Tasks](#common-first-tasks)
-  - [1. Explore Staging Data](#1-explore-staging-data)
-  - [2. Build Operational Marts](#2-build-operational-marts)
-  - [3. Generate KPI Models](#3-generate-kpi-models)
-- [🚨 Quick Troubleshooting](#quick-troubleshooting)
-  - [Connection Issues](#connection-issues)
-  - [Model Compilation Issues](#model-compilation-issues)
-  - [Data Issues](#data-issues)
-- [🎯 Next Steps](#next-steps)
-  - [Immediate Actions (Next 30 minutes)](#immediate-actions-next-30-minutes)
-  - [This Week](#this-week)
-  - [This Month](#this-month)
-- [📚 Key Resources](#key-resources)
-  - [Essential Documentation](#essential-documentation)
-  - [Common Commands](#common-commands)
-  - [Configuration Files](#configuration-files)
-- [🎉 Success Checklist](#success-checklist)
-- [🆘 Getting Stuck](#getting-stuck)
-  - [Common Issues](#common-issues)
-  - [Get Help](#get-help)
-<!-- TOC END -->
-
 **Get FLEXT DBT Oracle WMS running in 10 minutes**
 
 This guide gets you up and running with FLEXT DBT Oracle WMS quickly. For detailed setup, see the [Setup Guide](setup.md).
