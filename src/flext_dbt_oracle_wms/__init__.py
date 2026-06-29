@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-import typing as _t
+from typing import TYPE_CHECKING
 
 from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 from flext_dbt_oracle_wms.__version__ import (
@@ -17,7 +17,7 @@ from flext_dbt_oracle_wms.__version__ import (
     __version_info__,
 )
 
-if _t.TYPE_CHECKING:
+if TYPE_CHECKING:
     from flext_dbt_oracle_wms.cli import (
         FlextDbtOracleWmsCliService as FlextDbtOracleWmsCliService,
         main as main,
@@ -120,33 +120,5 @@ install_lazy_exports(
     __name__,
     globals(),
     _LAZY_IMPORTS,
-    public_exports=(
-        "FlextDbtOracleWmsCliService",
-        "FlextDbtOracleWmsConstants",
-        "FlextDbtOracleWmsModels",
-        "FlextDbtOracleWmsProtocols",
-        "FlextDbtOracleWmsSettings",
-        "FlextDbtOracleWmsTypes",
-        "FlextDbtOracleWmsUtilities",
-        "__author__",
-        "__author_email__",
-        "__description__",
-        "__license__",
-        "__title__",
-        "__url__",
-        "__version__",
-        "__version_info__",
-        "c",
-        "d",
-        "e",
-        "h",
-        "m",
-        "main",
-        "p",
-        "r",
-        "s",
-        "t",
-        "u",
-        "x",
-    ),
+    public_exports=__all__,
 )
