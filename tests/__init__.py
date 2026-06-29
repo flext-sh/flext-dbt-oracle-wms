@@ -12,9 +12,19 @@ from flext_core.lazy import (
 )
 
 if _t.TYPE_CHECKING:
-    from flext_tests import td as td, tf as tf, tk as tk, tm as tm, tv as tv
+    from flext_tests import (
+        d as d,
+        e as e,
+        h as h,
+        r as r,
+        td as td,
+        tf as tf,
+        tk as tk,
+        tm as tm,
+        tv as tv,
+        x as x,
+    )
 
-    from flext_dbt_oracle_wms import d as d, e as e, h as h, r as r, x as x
     from tests.base import (
         TestsFlextDbtOracleWmsServiceBase as TestsFlextDbtOracleWmsServiceBase,
         s as s,
@@ -59,6 +69,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "TestsFlextDbtOracleWmsServiceBase",
                 "s",
             ),
+            ".conftest": ("conftest",),
             ".constants": (
                 "TestsFlextDbtOracleWmsConstants",
                 "c",
@@ -76,6 +87,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "TestsFlextDbtOracleWmsTypes",
                 "t",
             ),
+            ".unit": ("unit",),
             ".unit.test_cli": ("TestsFlextDbtOracleWmsCli",),
             ".unit.test_module_governance": ("TestsFlextDbtOracleWmsModuleGovernance",),
             ".unit.test_simple_api": ("TestsFlextDbtOracleWmsSimpleApi",),
@@ -83,19 +95,17 @@ _LAZY_IMPORTS = merge_lazy_imports(
                 "TestsFlextDbtOracleWmsUtilities",
                 "u",
             ),
-            "flext_dbt_oracle_wms": (
+            "flext_tests": (
                 "d",
                 "e",
                 "h",
                 "r",
-                "x",
-            ),
-            "flext_tests": (
                 "td",
                 "tf",
                 "tk",
                 "tm",
                 "tv",
+                "x",
             ),
         },
     ),
@@ -122,33 +132,4 @@ _LAZY_IMPORTS = merge_lazy_imports(
 )
 
 
-install_lazy_exports(__name__, globals(), _LAZY_IMPORTS)
-
-__all__: list[str] = [
-    "TestsFlextDbtOracleWmsCli",
-    "TestsFlextDbtOracleWmsConstants",
-    "TestsFlextDbtOracleWmsModels",
-    "TestsFlextDbtOracleWmsModuleGovernance",
-    "TestsFlextDbtOracleWmsProtocols",
-    "TestsFlextDbtOracleWmsServiceBase",
-    "TestsFlextDbtOracleWmsSettings",
-    "TestsFlextDbtOracleWmsSimpleApi",
-    "TestsFlextDbtOracleWmsTypes",
-    "TestsFlextDbtOracleWmsUtilities",
-    "c",
-    "d",
-    "e",
-    "h",
-    "m",
-    "p",
-    "r",
-    "s",
-    "t",
-    "td",
-    "tf",
-    "tk",
-    "tm",
-    "tv",
-    "u",
-    "x",
-]
+install_lazy_exports(__name__, globals(), _LAZY_IMPORTS, publish_all=False)
