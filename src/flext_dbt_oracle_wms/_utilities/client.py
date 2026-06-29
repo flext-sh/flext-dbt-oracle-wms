@@ -134,7 +134,15 @@ class FlextDbtOracleWmsClient:
         model_names: t.StrSequence | None,
     ) -> p.Result[m.Dict]:
         """Run DBT transformations through flext-meltano."""
-        transformed_entities = self._transformer.transform_all_entities(entity_data)
+        transformed_entities_result = self._transformer.transform_all_entities(
+            entity_data
+        )
+        if transformed_entities_result.failure:
+            return r[m.Dict].fail(
+                transformed_entities_result.error
+                or "Oracle WMS data transformation failed",
+            )
+        transformed_entities = transformed_entities_result.value
         dbt_result = self._meltano_runner.run_dbt_transformation(model_names)
         if dbt_result.failure:
             return r[m.Dict].fail(dbt_result.error or "DBT transformation failed")

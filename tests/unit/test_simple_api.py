@@ -129,7 +129,7 @@ class TestsFlextDbtOracleWmsSimpleApi:
             client=_SuccessfulConnectionClient(settings),
         )
         result = service.validate_wms_connection()
-        tm.ok(result)
+        tm.that(result.success, eq=True)
         tm.that(result.value, eq=True)
 
     def test_discover_oracle_wms_entities_uses_public_client_protocol(self) -> None:
@@ -138,7 +138,7 @@ class TestsFlextDbtOracleWmsSimpleApi:
         )
         service = FlextDbtOracleWms(settings=settings, client=_WorkflowClient(settings))
         result = service.discover_oracle_wms_entities()
-        tm.ok(result)
+        tm.that(result.success, eq=True)
         tm.that(result.value, eq=["items", "shipments"])
 
     def test_extract_oracle_wms_data_uses_public_client_protocol(self) -> None:
@@ -171,7 +171,7 @@ class TestsFlextDbtOracleWmsSimpleApi:
             generate_models=False,
             run_transformations=True,
         )
-        tm.ok(result)
+        tm.that(result.success, eq=True)
         tm.that(result.value["pipeline_status"], eq="completed")
         tm.that(result.value["processed_entities"], eq="items")
         tm.that(result.value["tracking_id"], eq="oracle_wms_to_dbt:dbt_oracle_wms")

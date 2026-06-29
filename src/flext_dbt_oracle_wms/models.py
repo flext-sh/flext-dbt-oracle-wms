@@ -21,7 +21,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
     class DbtOracleWms:
         """DBT Oracle WMS domain namespace."""
 
-        class RawItemRecord(m.Value):
+        class RawItemRecord(m.ImmutableValueModel):
             """Raw item record from Oracle WMS."""
 
             model_config: ClassVar[m.ConfigDict] = m.ConfigDict(extra="ignore")
@@ -36,7 +36,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                 str, u.Field(default="", description="Description of the item")
             ]
 
-        class FlextDbtOracleWmsItemDimension(m.Value):
+        class FlextDbtOracleWmsItemDimension(m.ImmutableValueModel):
             """Item dimension model for WMS analytics."""
 
             item_id: Annotated[
@@ -63,30 +63,42 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             def transform_all_entities(
                 self,
                 entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
-            ) -> t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]:
+            ) -> p.Result[t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]]:
                 """Transform all WMS entities to DBT-compatible format."""
-                items: t.SequenceOf[
-                    FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
-                ] = self.transform_items(entity_data.get("items", []))
-                return {"items": [item.to_dbt_dict() for item in items]}
+                items_result = self.transform_items(entity_data.get("items", []))
+                if items_result.failure:
+                    return r[
+                        t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]
+                    ].fail(
+                        items_result.error or "Item transformation failed",
+                    )
+                return r[t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]].ok({
+                    "items": [item.to_dbt_dict() for item in items_result.value],
+                })
 
             def transform_items(
                 self,
                 records: t.SequenceOf[t.ConfigurationMapping],
-            ) -> t.SequenceOf[
-                FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
+            ) -> p.Result[
+                Sequence[
+                    FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
+                ]
             ]:
                 """Transform item records to item dimension models."""
                 transformed: MutableSequence[
                     FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
                 ] = []
-                for record in records:
+                for index, record in enumerate(records):
                     try:
                         raw_record = FlextDbtOracleWmsModels.DbtOracleWms.RawItemRecord.model_validate(
                             record,
                         )
-                    except c.ValidationError:
-                        continue
+                    except c.ValidationError as exc:
+                        return r[
+                            Sequence[
+                                FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
+                            ]
+                        ].fail(f"Invalid item record at index {index}: {exc}")
                     transformed.append(
                         FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension(
                             item_id=raw_record.item_id,
@@ -94,7 +106,11 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                             item_description=raw_record.item_description,
                         )
                     )
-                return transformed
+                return r[
+                    Sequence[
+                        FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
+                    ]
+                ].ok(transformed)
 
             def validate_business_rules(
                 self,

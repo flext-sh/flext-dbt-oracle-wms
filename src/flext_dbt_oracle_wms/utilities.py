@@ -30,6 +30,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
             ]
         ]:
             """Return basic extraction metadata for inventory loads."""
+            inventory_records: t.SequenceOf[t.JsonValue | None] = ()
             return r[
                 t.MappingKV[
                     str,
@@ -38,7 +39,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                 ]
             ].ok({
                 "extraction_config": extraction_config,
-                "inventory_records": [],
+                "inventory_records": inventory_records,
             })
 
         class Service:
