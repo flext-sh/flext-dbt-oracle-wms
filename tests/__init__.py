@@ -3,12 +3,64 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from flext_core.lazy import (
     build_lazy_import_map,
     install_lazy_exports,
     merge_lazy_imports,
 )
 
+if TYPE_CHECKING:
+    from flext_tests import (
+        d as d,
+        e as e,
+        h as h,
+        r as r,
+        td as td,
+        tf as tf,
+        tk as tk,
+        tm as tm,
+        tv as tv,
+        x as x,
+    )
+
+    from tests.base import (
+        TestsFlextDbtOracleWmsServiceBase as TestsFlextDbtOracleWmsServiceBase,
+        s as s,
+    )
+    from tests.constants import (
+        TestsFlextDbtOracleWmsConstants as TestsFlextDbtOracleWmsConstants,
+        c as c,
+    )
+    from tests.models import (
+        TestsFlextDbtOracleWmsModels as TestsFlextDbtOracleWmsModels,
+        m as m,
+    )
+    from tests.protocols import (
+        TestsFlextDbtOracleWmsProtocols as TestsFlextDbtOracleWmsProtocols,
+        p as p,
+    )
+    from tests.settings import (
+        TestsFlextDbtOracleWmsSettings as TestsFlextDbtOracleWmsSettings,
+    )
+    from tests.typings import (
+        TestsFlextDbtOracleWmsTypes as TestsFlextDbtOracleWmsTypes,
+        t as t,
+    )
+    from tests.unit.test_cli import (
+        TestsFlextDbtOracleWmsCli as TestsFlextDbtOracleWmsCli,
+    )
+    from tests.unit.test_module_governance import (
+        TestsFlextDbtOracleWmsModuleGovernance as TestsFlextDbtOracleWmsModuleGovernance,
+    )
+    from tests.unit.test_simple_api import (
+        TestsFlextDbtOracleWmsSimpleApi as TestsFlextDbtOracleWmsSimpleApi,
+    )
+    from tests.utilities import (
+        TestsFlextDbtOracleWmsUtilities as TestsFlextDbtOracleWmsUtilities,
+        u as u,
+    )
 _LAZY_IMPORTS = merge_lazy_imports(
     (".unit",),
     build_lazy_import_map(
