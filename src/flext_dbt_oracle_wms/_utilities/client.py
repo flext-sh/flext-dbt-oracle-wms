@@ -11,7 +11,7 @@ from typing import ClassVar
 from flext_dbt_oracle_wms import c, m, p, t, u
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_meltano import FlextMeltanoLibraryRunner
-from flext_oracle_wms import FlextOracleWmsSettings, FlextOracleWmsUtilitiesClient, r
+from flext_oracle_wms import FlextOracleWmsSettings, r, u as oracle_wms_u
 
 
 class FlextDbtOracleWmsClient:
@@ -29,7 +29,7 @@ class FlextDbtOracleWmsClient:
         )
         self._meltano_runner = FlextMeltanoLibraryRunner()
         self._transformer = m.DbtOracleWms.FlextDbtOracleWmsTransformer()
-        self._wms_client: FlextOracleWmsUtilitiesClient.Client | None = None
+        self._wms_client: oracle_wms_u.OracleWms.Client | None = None
 
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         """Discover Oracle WMS entities through the owning domain client."""
@@ -185,10 +185,10 @@ class FlextDbtOracleWmsClient:
             )
         return r[Sequence[t.ScalarMapping]].ok(records)
 
-    def _get_wms_client(self) -> p.Result[FlextOracleWmsUtilitiesClient.Client]:
+    def _get_wms_client(self) -> p.Result[oracle_wms_u.OracleWms.Client]:
         """Create and cache the real Oracle WMS client."""
         if self._wms_client is not None:
-            return r[FlextOracleWmsUtilitiesClient.Client].ok(self._wms_client)
+            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
         try:
             settings_overrides: t.ConfigurationMapping = (
                 {"base_url": self.settings.oracle_wms_base_url}
@@ -198,13 +198,13 @@ class FlextDbtOracleWmsClient:
             settings = FlextOracleWmsSettings.fetch_global(overrides=settings_overrides)
             validation_result = settings.validate_config()
             if validation_result.failure:
-                return r[FlextOracleWmsUtilitiesClient.Client].fail(
+                return r[oracle_wms_u.OracleWms.Client].fail(
                     validation_result.error or "Invalid Oracle WMS settings",
                 )
-            self._wms_client = FlextOracleWmsUtilitiesClient.Client(settings=settings)
-            return r[FlextOracleWmsUtilitiesClient.Client].ok(self._wms_client)
+            self._wms_client = oracle_wms_u.OracleWms.Client(settings=settings)
+            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
         except c.EXC_VALIDATION_TYPE_VALUE as exc:
-            return r[FlextOracleWmsUtilitiesClient.Client].fail_op(
+            return r[oracle_wms_u.OracleWms.Client].fail_op(
                 "Oracle WMS client initialization",
                 exc,
             )

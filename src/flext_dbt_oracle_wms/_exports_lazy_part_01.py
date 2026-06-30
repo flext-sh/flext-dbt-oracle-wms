@@ -7,7 +7,7 @@ from flext_core.lazy import build_lazy_import_map
 
 FLEXT_DBT_ORACLE_WMS_LAZY_IMPORTS_PART_01 = build_lazy_import_map(
     {
-        "._utilities.client": ("FlextDbtOracleWmsClient",),
+        "._utilities": ("_utilities",),
         ".base": (
             "FlextDbtOracleWmsServiceBase",
             "s",
