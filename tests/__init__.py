@@ -25,39 +25,39 @@ if TYPE_CHECKING:
         x as x,
     )
 
-    from flext_dbt_oracle_wms.tests.base import (
+    from tests.base import (
         TestsFlextDbtOracleWmsServiceBase as TestsFlextDbtOracleWmsServiceBase,
         s as s,
     )
-    from flext_dbt_oracle_wms.tests.constants import (
+    from tests.constants import (
         TestsFlextDbtOracleWmsConstants as TestsFlextDbtOracleWmsConstants,
         c as c,
     )
-    from flext_dbt_oracle_wms.tests.models import (
+    from tests.models import (
         TestsFlextDbtOracleWmsModels as TestsFlextDbtOracleWmsModels,
         m as m,
     )
-    from flext_dbt_oracle_wms.tests.protocols import (
+    from tests.protocols import (
         TestsFlextDbtOracleWmsProtocols as TestsFlextDbtOracleWmsProtocols,
         p as p,
     )
-    from flext_dbt_oracle_wms.tests.settings import (
+    from tests.settings import (
         TestsFlextDbtOracleWmsSettings as TestsFlextDbtOracleWmsSettings,
     )
-    from flext_dbt_oracle_wms.tests.typings import (
+    from tests.typings import (
         TestsFlextDbtOracleWmsTypes as TestsFlextDbtOracleWmsTypes,
         t as t,
     )
-    from flext_dbt_oracle_wms.tests.unit.test_cli import (
+    from tests.unit.test_cli import (
         TestsFlextDbtOracleWmsCli as TestsFlextDbtOracleWmsCli,
     )
-    from flext_dbt_oracle_wms.tests.unit.test_module_governance import (
+    from tests.unit.test_module_governance import (
         TestsFlextDbtOracleWmsModuleGovernance as TestsFlextDbtOracleWmsModuleGovernance,
     )
-    from flext_dbt_oracle_wms.tests.unit.test_simple_api import (
+    from tests.unit.test_simple_api import (
         TestsFlextDbtOracleWmsSimpleApi as TestsFlextDbtOracleWmsSimpleApi,
     )
-    from flext_dbt_oracle_wms.tests.utilities import (
+    from tests.utilities import (
         TestsFlextDbtOracleWmsUtilities as TestsFlextDbtOracleWmsUtilities,
         u as u,
     )
