@@ -1,7 +1,7 @@
-"""Test models for flext-dbt-oracle-wms tests.
+"""Test models for flext-dbt-oracle-wms.
 
-Provides TestsFlextDbtOracleWmsModels, extending FlextTestsModels with
-flext-dbt-oracle-wms-specific models using COMPOSITION INHERITANCE.
+Provides TestsFlextDbtOracleWmsModels, combining TestsFlextModels with
+FlextDbtOracleWmsModels for test-specific model definitions.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
@@ -15,31 +15,18 @@ from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels
 
 
 class TestsFlextDbtOracleWmsModels(FlextTestsModels, FlextDbtOracleWmsModels):
-    """Models for flext-dbt-oracle-wms tests using COMPOSITION INHERITANCE.
+    """Test models combining FlextTestsModels with flext-dbt-oracle-wms models."""
 
-    MANDATORY: Inherits from BOTH:
-    1. FlextTestsModels - for test infrastructure (.Tests.*)
-    2. FlextDbtOracleWmsModels - for domain models
+    class DbtOracleWms(FlextDbtOracleWmsModels.DbtOracleWms):
+        """DbtOracleWms test models namespace."""
 
-    Access patterns:
-    - tm.Tests.* (generic test models from FlextTestsModels)
-    - tm.* (DBT Oracle WMS domain models)
-    - m.* (production models via alternative alias)
-    """
-
-    class Tests(FlextTestsModels.Tests):
-        """Project-specific test fixtures namespace."""
-
-        class DbtOracleWms:
-            """DBT Oracle WMS-specific test fixtures."""
+        class Tests:
+            """Test-specific models."""
 
 
-# Short aliases per FLEXT convention
-tm = TestsFlextDbtOracleWmsModels
 m = TestsFlextDbtOracleWmsModels
 
-__all__ = [
+__all__: list[str] = [
     "TestsFlextDbtOracleWmsModels",
     "m",
-    "tm",
 ]

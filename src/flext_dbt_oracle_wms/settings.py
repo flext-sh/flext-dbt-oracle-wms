@@ -1,4 +1,4 @@
-"""FLEXT Module.
+"""FlextDbtOracleWmsSettings - Configuration for flext-dbt-oracle-wms.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
@@ -6,34 +6,45 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import Annotated
+from typing import Annotated, ClassVar
 
-from flext_core import FlextLogger, FlextSettings
-from pydantic import Field
-
-logger = FlextLogger(__name__)
+from flext_core import FlextSettingsBase
+from flext_dbt_oracle_wms import m, t, u
 
 
-class FlextDbtOracleWmsSettings(FlextSettings):
-    """Runtime settings for DBT Oracle WMS transformations."""
+class FlextDbtOracleWmsSettings(FlextSettingsBase):
+    """Runtime configuration for dbt Oracle WMS."""
+
+    model_config: ClassVar[m.SettingsConfigDict] = m.SettingsConfigDict(
+        env_prefix="FLEXT_DBT_ORACLE_WMS_", extra="ignore"
+    )
 
     required_fields_per_entity: Annotated[
-        dict[str, list[str]],
-        Field(
-            default_factory=dict,
-            description="Required fields per WMS entity for validation",
-        ),
-    ]
+        t.MappingKV[str, t.StrSequence],
+        u.Field(description="Required fields per WMS entity for validation"),
+    ] = u.Field(default_factory=dict)
     oracle_wms_environment: Annotated[
         str,
-        Field(
+        u.Field(
             default="development",
             description="Oracle WMS environment (development/production)",
         ),
     ]
     oracle_wms_base_url: Annotated[
-        str, Field(default="", description="Base URL for Oracle WMS API")
+        str,
+        u.Field(default="", description="Base URL for Oracle WMS API"),
+    ]
+    dbt_threads: Annotated[
+        int,
+        u.Field(
+            default=4,
+            description="Number of DBT threads for parallel execution",
+        ),
+    ]
+    dbt_target: Annotated[
+        str,
+        u.Field(default="dev", description="DBT target profile (dev/prod)"),
     ]
 
 
-__all__ = ["FlextDbtOracleWmsSettings"]
+__all__: list[str] = ["FlextDbtOracleWmsSettings"]

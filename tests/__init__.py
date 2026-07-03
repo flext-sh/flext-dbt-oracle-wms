@@ -1,94 +1,140 @@
-# AUTO-GENERATED FILE — DO NOT EDIT MANUALLY.
-# Regenerate with: make codegen
-#
-"""Tests for flext-dbt-oracle-wms.
-
-This module is part of the FLEXT ecosystem. Docstrings follow PEP 257 and Google style.
-
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT.
-"""
+# AUTO-GENERATED FILE — Regenerate with: make gen
+"""Tests package."""
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
-from flext_core.lazy import cleanup_submodule_namespace, lazy_getattr
+from flext_core.lazy import (
+    build_lazy_import_map,
+    install_lazy_exports,
+    merge_lazy_imports,
+)
 
 if TYPE_CHECKING:
+    from flext_tests import (
+        d as d,
+        e as e,
+        h as h,
+        r as r,
+        td as td,
+        tf as tf,
+        tk as tk,
+        tm as tm,
+        tv as tv,
+        x as x,
+    )
+
+    from tests.base import (
+        TestsFlextDbtOracleWmsServiceBase as TestsFlextDbtOracleWmsServiceBase,
+        s as s,
+    )
     from tests.constants import (
-        TestsFlextDbtOracleWmsConstants,
-        TestsFlextDbtOracleWmsConstants as c,
+        TestsFlextDbtOracleWmsConstants as TestsFlextDbtOracleWmsConstants,
+        c as c,
     )
-    from tests.models import TestsFlextDbtOracleWmsModels, m, tm
-    from tests.protocols import TestsFlextDbtOracleWmsProtocols, p
+    from tests.models import (
+        TestsFlextDbtOracleWmsModels as TestsFlextDbtOracleWmsModels,
+        m as m,
+    )
+    from tests.protocols import (
+        TestsFlextDbtOracleWmsProtocols as TestsFlextDbtOracleWmsProtocols,
+        p as p,
+    )
+    from tests.settings import (
+        TestsFlextDbtOracleWmsSettings as TestsFlextDbtOracleWmsSettings,
+    )
     from tests.typings import (
-        TestsFlextDbtOracleWmsTypes,
-        TestsFlextDbtOracleWmsTypes as t,
+        TestsFlextDbtOracleWmsTypes as TestsFlextDbtOracleWmsTypes,
+        t as t,
     )
-    from tests.unit.test_basic import (
-        test_basic_import,
-        test_package_import,
-        test_package_structure,
+    from tests.unit.test_cli import (
+        TestsFlextDbtOracleWmsCli as TestsFlextDbtOracleWmsCli,
+    )
+    from tests.unit.test_module_governance import (
+        TestsFlextDbtOracleWmsModuleGovernance as TestsFlextDbtOracleWmsModuleGovernance,
+    )
+    from tests.unit.test_simple_api import (
+        TestsFlextDbtOracleWmsSimpleApi as TestsFlextDbtOracleWmsSimpleApi,
     )
     from tests.utilities import (
-        TestsFlextDbtOracleWmsUtilities,
-        TestsFlextDbtOracleWmsUtilities as u,
+        TestsFlextDbtOracleWmsUtilities as TestsFlextDbtOracleWmsUtilities,
+        u as u,
     )
-
-# Lazy import mapping: export_name -> (module_path, attr_name)
-_LAZY_IMPORTS: dict[str, tuple[str, str]] = {
-    "TestsFlextDbtOracleWmsConstants": (
-        "tests.constants",
-        "TestsFlextDbtOracleWmsConstants",
+_LAZY_IMPORTS = merge_lazy_imports(
+    (".unit",),
+    build_lazy_import_map(
+        {
+            ".base": (
+                "TestsFlextDbtOracleWmsServiceBase",
+                "s",
+            ),
+            ".conftest": ("conftest",),
+            ".constants": (
+                "TestsFlextDbtOracleWmsConstants",
+                "c",
+            ),
+            ".models": (
+                "TestsFlextDbtOracleWmsModels",
+                "m",
+            ),
+            ".protocols": (
+                "TestsFlextDbtOracleWmsProtocols",
+                "p",
+            ),
+            ".settings": ("TestsFlextDbtOracleWmsSettings",),
+            ".typings": (
+                "TestsFlextDbtOracleWmsTypes",
+                "t",
+            ),
+            ".unit": ("unit",),
+            ".unit.test_cli": ("TestsFlextDbtOracleWmsCli",),
+            ".unit.test_module_governance": ("TestsFlextDbtOracleWmsModuleGovernance",),
+            ".unit.test_simple_api": ("TestsFlextDbtOracleWmsSimpleApi",),
+            ".utilities": (
+                "TestsFlextDbtOracleWmsUtilities",
+                "u",
+            ),
+            "flext_tests": (
+                "d",
+                "e",
+                "h",
+                "r",
+                "td",
+                "tf",
+                "tk",
+                "tm",
+                "tv",
+                "x",
+            ),
+        },
     ),
-    "TestsFlextDbtOracleWmsModels": ("tests.models", "TestsFlextDbtOracleWmsModels"),
-    "TestsFlextDbtOracleWmsProtocols": (
-        "tests.protocols",
-        "TestsFlextDbtOracleWmsProtocols",
+    exclude_names=(
+        "cleanup_submodule_namespace",
+        "install_lazy_exports",
+        "lazy_getattr",
+        "logger",
+        "merge_lazy_imports",
+        "output",
+        "output_reporting",
+        "pytest_addoption",
+        "pytest_collect_file",
+        "pytest_collection_modifyitems",
+        "pytest_configure",
+        "pytest_runtest_setup",
+        "pytest_runtest_teardown",
+        "pytest_sessionfinish",
+        "pytest_sessionstart",
+        "pytest_terminal_summary",
+        "pytest_warning_recorded",
     ),
-    "TestsFlextDbtOracleWmsTypes": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
-    "TestsFlextDbtOracleWmsUtilities": (
-        "tests.utilities",
-        "TestsFlextDbtOracleWmsUtilities",
-    ),
-    "c": ("tests.constants", "TestsFlextDbtOracleWmsConstants"),
-    "m": ("tests.models", "m"),
-    "p": ("tests.protocols", "p"),
-    "t": ("tests.typings", "TestsFlextDbtOracleWmsTypes"),
-    "test_basic_import": ("tests.unit.test_basic", "test_basic_import"),
-    "test_package_import": ("tests.unit.test_basic", "test_package_import"),
-    "test_package_structure": ("tests.unit.test_basic", "test_package_structure"),
-    "tm": ("tests.models", "tm"),
-    "u": ("tests.utilities", "TestsFlextDbtOracleWmsUtilities"),
-}
-
-__all__ = [
-    "TestsFlextDbtOracleWmsConstants",
-    "TestsFlextDbtOracleWmsModels",
-    "TestsFlextDbtOracleWmsProtocols",
-    "TestsFlextDbtOracleWmsTypes",
-    "TestsFlextDbtOracleWmsUtilities",
-    "c",
-    "m",
-    "p",
-    "t",
-    "test_basic_import",
-    "test_package_import",
-    "test_package_structure",
-    "tm",
-    "u",
-]
+    module_name=__name__,
+)
 
 
-def __getattr__(name: str) -> Any:
-    """Lazy-load module attributes on first access (PEP 562)."""
-    return lazy_getattr(name, _LAZY_IMPORTS, globals(), __name__)
-
-
-def __dir__() -> list[str]:
-    """Return list of available attributes for dir() and autocomplete."""
-    return sorted(__all__)
-
-
-cleanup_submodule_namespace(__name__, _LAZY_IMPORTS)
+install_lazy_exports(
+    __name__,
+    globals(),
+    _LAZY_IMPORTS,
+    publish_all=False,
+)
