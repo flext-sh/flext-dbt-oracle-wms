@@ -8,9 +8,11 @@ from collections.abc import (
 )
 from typing import Annotated, ClassVar
 
-from flext_core import p, r, u
+from flext_core import r
 from flext_dbt_oracle_wms.constants import c
+from flext_dbt_oracle_wms.protocols import p
 from flext_dbt_oracle_wms.typings import t
+from flext_dbt_oracle_wms.utilities import u
 from flext_meltano import m
 from flext_oracle_wms import FlextOracleWmsModels
 
