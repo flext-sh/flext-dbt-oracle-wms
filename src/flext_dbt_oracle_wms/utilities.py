@@ -5,11 +5,10 @@ from __future__ import annotations
 from typing import ClassVar
 
 from flext_core import r
-from flext_dbt_oracle_wms import m
 from flext_dbt_oracle_wms.protocols import p
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.typings import t
-from flext_meltano import u
+from flext_meltano import m, u
 from flext_oracle_wms import FlextOracleWmsUtilities
 
 

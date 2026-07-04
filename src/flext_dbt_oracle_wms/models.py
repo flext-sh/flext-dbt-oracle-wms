@@ -10,10 +10,9 @@ from typing import Annotated, ClassVar
 
 from flext_core import r
 from flext_dbt_oracle_wms.constants import c
-from flext_dbt_oracle_wms.protocols import p
 from flext_dbt_oracle_wms.typings import t
 from flext_dbt_oracle_wms.utilities import u
-from flext_meltano import m
+from flext_meltano import m, p
 from flext_oracle_wms import FlextOracleWmsModels
 
 
