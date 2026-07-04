@@ -6,14 +6,17 @@ from collections.abc import (
     MutableSequence,
     Sequence,
 )
-from typing import Annotated, ClassVar
+from typing import TYPE_CHECKING, Annotated, ClassVar
 
 from flext_core import r
 from flext_dbt_oracle_wms.constants import c
 from flext_dbt_oracle_wms.typings import t
 from flext_dbt_oracle_wms.utilities import u
-from flext_meltano import m, p
+from flext_meltano import m
 from flext_oracle_wms import FlextOracleWmsModels
+
+if TYPE_CHECKING:
+    from flext_meltano import p
 
 
 class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
@@ -28,26 +31,32 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             model_config: ClassVar[m.ConfigDict] = m.ConfigDict(extra="ignore")
 
             item_id: Annotated[
-                str, u.Field(default="", description="Unique item identifier")
+                str,
+                u.Field(default="", description="Unique item identifier"),
             ]
             item_number: Annotated[
-                str, u.Field(default="", description="Item number code")
+                str,
+                u.Field(default="", description="Item number code"),
             ]
             item_description: Annotated[
-                str, u.Field(default="", description="Description of the item")
+                str,
+                u.Field(default="", description="Description of the item"),
             ]
 
         class FlextDbtOracleWmsItemDimension(m.ImmutableValueModel):
             """Item dimension model for WMS analytics."""
 
             item_id: Annotated[
-                str, u.Field(default="", description="Unique item identifier")
+                str,
+                u.Field(default="", description="Unique item identifier"),
             ]
             item_number: Annotated[
-                str, u.Field(default="", description="Item number code")
+                str,
+                u.Field(default="", description="Item number code"),
             ]
             item_description: Annotated[
-                str, u.Field(default="", description="Description of the item")
+                str,
+                u.Field(default="", description="Description of the item"),
             ]
 
             def to_dbt_dict(self) -> t.ConfigurationMapping:
@@ -105,7 +114,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                             item_id=raw_record.item_id,
                             item_number=raw_record.item_number,
                             item_description=raw_record.item_description,
-                        )
+                        ),
                     )
                 return r[
                     Sequence[
@@ -163,7 +172,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             wms_business_rules: Annotated[
                 t.StrSequence,
                 u.Field(
-                    description="WMS-specific business rules attached to the model"
+                    description="WMS-specific business rules attached to the model",
                 ),
             ] = u.Field(default_factory=tuple)
 
@@ -198,7 +207,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                     for source in oracle_sources
                 ]
                 return r[Sequence[FlextDbtOracleWmsModels.DbtOracleWms.DbtModel]].ok(
-                    models
+                    models,
                 )
 
     @classmethod

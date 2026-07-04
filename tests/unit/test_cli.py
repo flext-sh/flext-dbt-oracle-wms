@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from flext_tests import tm
 
@@ -13,9 +13,11 @@ from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 from tests.models import m
-from tests.protocols import p
 from tests.typings import t
 from tests.utilities import u
+
+if TYPE_CHECKING:
+    from tests.protocols import p
 
 
 class _CliClient(FlextDbtOracleWmsClient):

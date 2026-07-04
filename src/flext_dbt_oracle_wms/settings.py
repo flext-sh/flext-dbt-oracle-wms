@@ -16,7 +16,8 @@ class FlextDbtOracleWmsSettings(FlextSettingsBase):
     """Runtime configuration for dbt Oracle WMS."""
 
     model_config: ClassVar[m.SettingsConfigDict] = m.SettingsConfigDict(
-        env_prefix="FLEXT_DBT_ORACLE_WMS_", extra="ignore"
+        env_prefix="FLEXT_DBT_ORACLE_WMS_",
+        extra="ignore",
     )
 
     required_fields_per_entity: Annotated[

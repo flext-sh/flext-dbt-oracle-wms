@@ -37,7 +37,7 @@ class FlextDbtOracleWmsClient:
         client_result = self._get_wms_client()
         if client_result.failure:
             return r[t.StrSequence].fail(
-                client_result.error or "WMS client unavailable"
+                client_result.error or "WMS client unavailable",
             )
         return client_result.value.discover_entities()
 
@@ -117,7 +117,7 @@ class FlextDbtOracleWmsClient:
         health_result = client_result.value.health_check()
         if health_result.failure:
             return r[m.Dict].fail(
-                health_result.error or "Oracle WMS health check failed"
+                health_result.error or "Oracle WMS health check failed",
             )
         response = health_result.value
         return r[m.Dict].ok(
@@ -136,7 +136,7 @@ class FlextDbtOracleWmsClient:
     ) -> p.Result[m.Dict]:
         """Run DBT transformations through flext-meltano."""
         transformed_entities_result = self._transformer.transform_all_entities(
-            entity_data
+            entity_data,
         )
         if transformed_entities_result.failure:
             return r[m.Dict].fail(

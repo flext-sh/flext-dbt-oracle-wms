@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from flext_core import r, s
-from flext_dbt_oracle_wms import p
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.typings import t
 from flext_dbt_oracle_wms.utilities import u
+
+if TYPE_CHECKING:
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):

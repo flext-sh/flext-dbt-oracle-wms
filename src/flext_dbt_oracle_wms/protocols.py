@@ -2,14 +2,18 @@
 
 from __future__ import annotations
 
-from collections.abc import (
-    Sequence,
-)
-from typing import Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from flext_dbt_oracle_wms.typings import t
-from flext_meltano import m, p
+from flext_meltano import p
 from flext_oracle_wms import FlextOracleWmsProtocols
+
+if TYPE_CHECKING:
+    from collections.abc import (
+        Sequence,
+    )
+
+    from flext_dbt_oracle_wms.typings import t
+    from flext_meltano import m
 
 
 class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):

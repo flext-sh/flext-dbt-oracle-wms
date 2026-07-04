@@ -8,10 +8,14 @@ Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integrati
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms import p
+from typing import TYPE_CHECKING
+
 from flext_dbt_oracle_wms._simple_api_workflow import FlextDbtOracleWmsWorkflow
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms.utilities import u
+
+if TYPE_CHECKING:
+    from flext_dbt_oracle_wms import p
+    from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms.utilities import u
 
 
 class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
