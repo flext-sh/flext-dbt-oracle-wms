@@ -27,7 +27,7 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
     @property
     @override
     def settings(self) -> FlextDbtOracleWmsSettings:
-        """Return the typed dbt-oracle-wms settings namespace."""
+        """The typed dbt-oracle-wms settings namespace."""
         return FlextDbtOracleWmsSettings.fetch_global()
 
     @property

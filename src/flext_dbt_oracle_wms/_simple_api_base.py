@@ -44,7 +44,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
 
     @property
     def client(self) -> p.DbtOracleWms.Client:
-        """Get the DBT Oracle WMS client instance."""
+        """The DBT Oracle WMS client instance."""
         if self._client is None:
             self._client = FlextDbtOracleWmsClient(self._wms_config)
         return self._client
@@ -52,12 +52,12 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     @property
     @override
     def settings(self) -> FlextDbtOracleWmsSettings:
-        """Get the current configuration."""
+        """The current configuration."""
         return self._wms_config
 
     @property
     def service(self) -> u.DbtOracleWms.Service:
-        """Get the workflow service instance."""
+        """The workflow service instance."""
         if self._service is None:
             self._service = u.DbtOracleWms.Service()
         return self._service
