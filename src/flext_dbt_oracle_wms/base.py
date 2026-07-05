@@ -8,21 +8,22 @@ from __future__ import annotations
 
 from typing import Annotated, override
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, t
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, t
 from flext_meltano import FlextMeltanoDbtServiceBase, u
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
     """Base class for flext-dbt-oracle-wms services."""
 
-    settings_type: Annotated[
-        type | None,
-        u.Field(description="Settings class for DBT Oracle WMS service initialization"),
-    ] = FlextDbtOracleWmsSettings
     dbt_project_name: Annotated[
         t.NonEmptyStr,
         u.Field(description="Canonical dbt project name for DBT Oracle WMS services"),
     ] = c.DbtOracleWms.Dbt.PROJECT_NAME
+
+    @classmethod
+    def _runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
+        """Return runtime bootstrap options for DBT Oracle WMS services."""
+        return m.RuntimeBootstrapOptions(settings_type=FlextDbtOracleWmsSettings)
 
     @property
     @override

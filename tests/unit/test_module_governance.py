@@ -55,4 +55,4 @@ class TestsFlextDbtOracleWmsModuleGovernance:
 
     def test_public_facade_constructs_with_defaults(self) -> None:
         facade = FlextDbtOracleWms()
-        tm.that(isinstance(facade, FlextDbtOracleWms), eq=True)
+        tm.that(facade.settings.oracle_wms_environment, eq="development")
