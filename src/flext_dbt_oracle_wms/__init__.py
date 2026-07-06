@@ -19,7 +19,13 @@ from flext_dbt_oracle_wms.__version__ import (
 from flext_dbt_oracle_wms._exports import FLEXT_DBT_ORACLE_WMS_LAZY_IMPORTS
 
 if TYPE_CHECKING:
-    from flext_core._root_typing_parts import d as d, e as e, h as h, r as r, x as x
+    from flext_core._root_typing_parts.facades import (
+        d as d,
+        e as e,
+        h as h,
+        r as r,
+        x as x,
+    )
     from flext_dbt_oracle_wms.base import (
         FlextDbtOracleWmsServiceBase as FlextDbtOracleWmsServiceBase,
         s as s,
