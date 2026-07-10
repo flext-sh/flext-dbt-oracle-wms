@@ -18,6 +18,10 @@ from flext_dbt_oracle_wms.__version__ import (
 )
 
 if TYPE_CHECKING:
+    from flext_dbt_oracle_wms._settings import (
+        FlextDbtOracleWmsSettings as FlextDbtOracleWmsSettings,
+        settings as settings,
+    )
     from flext_dbt_oracle_wms.base import (
         FlextDbtOracleWmsServiceBase as FlextDbtOracleWmsServiceBase,
         s as s,
