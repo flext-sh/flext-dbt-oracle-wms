@@ -37,10 +37,10 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
         active_settings = settings
         return {
             "type": "oracle_wms",
-            "base_url": active_settings.oracle_wms_base_url,
-            "environment": active_settings.oracle_wms_environment,
-            "target": active_settings.dbt_target,
-            "threads": active_settings.dbt_threads,
+            "base_url": active_settings.DbtOracleWms.oracle_wms_base_url,
+            "environment": active_settings.DbtOracleWms.oracle_wms_environment,
+            "target": active_settings.DbtOracleWms.dbt_target,
+            "threads": active_settings.DbtOracleWms.dbt_threads,
             "project": self.dbt_project_name,
         }
 

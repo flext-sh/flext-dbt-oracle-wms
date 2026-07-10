@@ -63,8 +63,8 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                     m.Dict.model_validate({
                         "total_entities": total,
                         "recommendation": recommendation_message,
-                        "dbt_threads": str(settings.dbt_threads),
-                        "target": settings.dbt_target,
+                        "dbt_threads": str(settings.DbtOracleWms.dbt_threads),
+                        "target": settings.DbtOracleWms.dbt_target,
                     }),
                 )
 
