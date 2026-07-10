@@ -27,7 +27,6 @@ class _CliClient(FlextDbtOracleWmsClient):
         *,
         pipeline_should_fail: bool = False,
     ) -> None:
-        self.settings = settings
         self.last_entity: str | None = None
         self.pipeline_should_fail = pipeline_should_fail
         self.pipeline_called = False
@@ -71,7 +70,7 @@ class _CliClient(FlextDbtOracleWmsClient):
 
 class _CliService(u.DbtOracleWms.Service):
     def __init__(self) -> None:
-        self.settings = FlextDbtOracleWmsSettings()
+        FlextDbtOracleWmsSettings()
         self.logged_payload: m.Dict | None = None
 
     @override

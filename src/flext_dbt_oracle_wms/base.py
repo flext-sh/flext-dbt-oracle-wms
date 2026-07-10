@@ -29,13 +29,12 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
     @override
     def settings(self) -> FlextDbtOracleWmsSettings:
         """The typed dbt-oracle-wms settings namespace."""
-        return FlextDbtOracleWmsSettings.fetch_global()
 
     @property
     @override
     def connection_profile(self) -> t.JsonMapping:
         """Dbt connection profile for Oracle WMS-backed workflows."""
-        active_settings = self.settings
+        active_settings = settings
         return {
             "type": "oracle_wms",
             "base_url": active_settings.oracle_wms_base_url,

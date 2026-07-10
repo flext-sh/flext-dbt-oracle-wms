@@ -5,9 +5,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, override
 
 from flext_core import r
+from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms._simple_api_models import FlextDbtOracleWmsModelsApi
 from flext_dbt_oracle_wms.models import m
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
@@ -122,7 +122,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
     ) -> p.Result[FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         self.logger.info("Executing DBT Oracle WMS service")
-        return r[FlextDbtOracleWmsSettings].ok(self.settings)
+        return r[FlextDbtOracleWmsSettings].ok(settings)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsWorkflow"]

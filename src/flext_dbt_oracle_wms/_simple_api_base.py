@@ -6,9 +6,9 @@ from collections.abc import Sequence
 from typing import TYPE_CHECKING, override
 
 from flext_core import r, s
+from flext_dbt_oracle_wms import t
+from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms.typings import t
 from flext_dbt_oracle_wms.utilities import u
 
 if TYPE_CHECKING:
@@ -18,7 +18,6 @@ if TYPE_CHECKING:
 class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     """Shared runtime dependencies and low-level entity access."""
 
-    _wms_config: FlextDbtOracleWmsSettings = u.PrivateAttr()
     _client: p.DbtOracleWms.Client | None = u.PrivateAttr(default_factory=lambda: None)
     _service: u.DbtOracleWms.Service | None = u.PrivateAttr(
         default_factory=lambda: None,
@@ -36,11 +35,6 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
             settings_overrides=None,
             initial_context=None,
         )
-        self._wms_config = (
-            settings
-            if settings is not None
-            else FlextDbtOracleWmsSettings.fetch_global()
-        )
         self._client = client
         self._service = service
 
@@ -48,14 +42,14 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     def client(self) -> p.DbtOracleWms.Client:
         """The DBT Oracle WMS client instance."""
         if self._client is None:
-            self._client = FlextDbtOracleWmsClient(self._wms_config)
+            self._client = FlextDbtOracleWmsClient(self.settings)
         return self._client
 
     @property
     @override
     def settings(self) -> FlextDbtOracleWmsSettings:
         """The current configuration."""
-        return self._wms_config
+        return self.settings
 
     @property
     def service(self) -> u.DbtOracleWms.Service:

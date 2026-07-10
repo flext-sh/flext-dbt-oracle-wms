@@ -182,7 +182,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
             def __init__(self, settings: t.StrMapping | None = None) -> None:
                 """Store optional generation-time configuration."""
                 super().__init__()
-                self.settings = settings or {}
+                settings = settings or {}
 
             def generate_wms_staging_models(
                 self,

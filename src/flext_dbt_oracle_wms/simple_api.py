@@ -14,7 +14,7 @@ from flext_dbt_oracle_wms._simple_api_workflow import FlextDbtOracleWmsWorkflow
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
-    from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
     from flext_dbt_oracle_wms.utilities import u
 
 

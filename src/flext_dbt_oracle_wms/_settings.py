@@ -8,43 +8,50 @@ from __future__ import annotations
 
 from typing import Annotated, ClassVar
 
-from flext_meltano import FlextMeltanoSettings, m, t, u
+from pydantic import Field
+from pydantic_settings import SettingsConfigDict
+
+from flext_meltano import FlextMeltanoSettings
 
 
 class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
     """Runtime configuration for dbt Oracle WMS."""
 
-    model_config: ClassVar[m.SettingsConfigDict] = m.SettingsConfigDict(
+    model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         env_prefix="FLEXT_DBT_ORACLE_WMS_",
         extra="ignore",
     )
 
     required_fields_per_entity: Annotated[
-        t.MappingKV[str, t.StrSequence],
-        u.Field(description="Required fields per WMS entity for validation"),
-    ] = u.Field(default_factory=dict)
+        dict[str, list[str]],
+        Field(description="Required fields per WMS entity for validation"),
+    ] = Field(default_factory=dict)
     oracle_wms_environment: Annotated[
         str,
-        u.Field(
+        Field(
             default="development",
             description="Oracle WMS environment (development/production)",
         ),
     ]
     oracle_wms_base_url: Annotated[
         str,
-        u.Field(default="", description="Base URL for Oracle WMS API"),
+        Field(default="", description="Base URL for Oracle WMS API"),
     ]
     dbt_threads: Annotated[
         int,
-        u.Field(
+        Field(
             default=4,
             description="Number of DBT threads for parallel execution",
         ),
     ]
     dbt_target: Annotated[
         str,
-        u.Field(default="dev", description="DBT target profile (dev/prod)"),
+        Field(default="dev", description="DBT target profile (dev/prod)"),
     ]
 
 
-__all__: list[str] = ["FlextDbtOracleWmsSettings"]
+
+settings: FlextDbtOracleWmsSettings = FlextDbtOracleWmsSettings.fetch_global()
+"""Pre-instantiated project settings singleton — ``from flext_dbt_oracle_wms import settings``."""
+
+__all__: list[str] = ["FlextDbtOracleWmsSettings", "settings"]

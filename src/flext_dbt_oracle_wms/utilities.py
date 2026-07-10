@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.typings import t
 from flext_meltano import m, u
 from flext_oracle_wms import FlextOracleWmsUtilities
@@ -47,18 +46,6 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
         class Service:
             """Workflow and monitoring service helpers — u.DbtOracleWms.Service.*."""
 
-            def __init__(
-                self,
-                settings: FlextDbtOracleWmsSettings | None = None,
-            ) -> None:
-                """Initialize service state and default settings."""
-                super().__init__()
-                self.settings = (
-                    settings
-                    if settings is not None
-                    else FlextDbtOracleWmsSettings.fetch_global()
-                )
-
             def generate_workflow_recommendations(
                 self,
                 entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
@@ -76,8 +63,8 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                     m.Dict.model_validate({
                         "total_entities": total,
                         "recommendation": recommendation_message,
-                        "dbt_threads": str(self.settings.dbt_threads),
-                        "target": self.settings.dbt_target,
+                        "dbt_threads": str(settings.dbt_threads),
+                        "target": settings.dbt_target,
                     }),
                 )
 

@@ -41,7 +41,6 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
         records_by_entity: dict[str, Sequence[t.ConfigurationMapping]] | None = None,
         pipeline: p.Result[m.Dict] | None = None,
     ) -> None:
-        self.settings = settings
         self._connection = (
             connection
             if connection is not None
@@ -103,7 +102,7 @@ class _FakeWmsService(u.DbtOracleWms.Service):
     """Deterministic workflow-service fake with no interaction-capture state."""
 
     def __init__(self, tracking_id: str = "trk-fixed") -> None:
-        self.settings = FlextDbtOracleWmsSettings()
+        FlextDbtOracleWmsSettings()
         self._tracking_id = tracking_id
 
     @override

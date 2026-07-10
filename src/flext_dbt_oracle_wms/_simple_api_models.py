@@ -11,7 +11,7 @@ from flext_dbt_oracle_wms.models import m
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
-    from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
     from flext_dbt_oracle_wms.typings import t
     from flext_dbt_oracle_wms.utilities import u
 
@@ -45,7 +45,7 @@ class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):
                 )
             entity_names = discovery_result.value
         generator = m.create_generator({
-            "dbt_target": self.settings.dbt_target,
+            "dbt_target": settings.dbt_target,
             "output_dir": output_dir or "",
         })
         generated_models_result = generator.generate_wms_staging_models(entity_names)
