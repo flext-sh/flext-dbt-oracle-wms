@@ -30,7 +30,10 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         service: u.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
+        # NOTE (multi-agent): mro-rn88 — pass the injected settings to the ServiceBase
+        # runtime so self.settings resolves the override (not just the global singleton).
         super().__init__(
+            runtime_settings=settings,
             settings_type=None,
             settings_overrides=None,
             initial_context=None,
@@ -48,8 +51,13 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     @property
     @override
     def settings(self) -> FlextDbtOracleWmsSettings:
-        """The current configuration."""
-        return self.settings
+        """The current configuration from the injected runtime (typed narrowing)."""
+        # NOTE (multi-agent): mro-rn88 — delegate to the ServiceBase runtime settings
+        # (was a self-recursive return self.settings); narrow to the typed subclass.
+        runtime_settings = super().settings
+        if isinstance(runtime_settings, FlextDbtOracleWmsSettings):
+            return runtime_settings
+        return FlextDbtOracleWmsSettings.fetch_global()
 
     @property
     def service(self) -> u.DbtOracleWms.Service:

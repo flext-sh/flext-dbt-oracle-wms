@@ -55,4 +55,5 @@ class TestsFlextDbtOracleWmsModuleGovernance:
 
     def test_public_facade_constructs_with_defaults(self) -> None:
         facade = FlextDbtOracleWms()
-        tm.that(facade.settings.oracle_wms_environment, eq="development")
+        # NOTE (multi-agent): mro-rn88 — project fields live under the DbtOracleWms namespace.
+        tm.that(facade.settings.DbtOracleWms.oracle_wms_environment, eq="development")

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-
 from collections.abc import (
     MutableMapping,
     Sequence,
@@ -11,6 +10,7 @@ from collections.abc import (
 from typing import ClassVar
 
 from flext_dbt_oracle_wms import c, p, t, u
+from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.models import m
 from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsSettings, r, u as oracle_wms_u
@@ -21,12 +21,20 @@ class FlextDbtOracleWmsClient:
 
     logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
-    def __init__(self) -> None:
+    def __init__(self, settings: FlextDbtOracleWmsSettings | None = None) -> None:
         """Initialize client with explicit or global settings."""
         super().__init__()
+        # NOTE (multi-agent): mro-rn88 — hold the effective settings (injected override or
+        # global singleton) and read it via self.settings, never a bare module global.
+        self._settings = settings or FlextDbtOracleWmsSettings.fetch_global()
         self._meltano_runner = FlextMeltanoLibraryRunner()
         self._transformer = m.DbtOracleWms.FlextDbtOracleWmsTransformer()
         self._wms_client: oracle_wms_u.OracleWms.Client | None = None
+
+    @property
+    def settings(self) -> FlextDbtOracleWmsSettings:
+        """The effective dbt Oracle WMS settings for this client."""
+        return self._settings
 
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         """Discover Oracle WMS entities through the owning domain client."""
@@ -119,8 +127,8 @@ class FlextDbtOracleWmsClient:
         return r[m.Dict].ok(
             m.Dict.model_validate({
                 "status": "connected",
-                "environment": settings.DbtOracleWms.oracle_wms_environment,
-                "base_url": settings.DbtOracleWms.oracle_wms_base_url,
+                "environment": self.settings.DbtOracleWms.oracle_wms_environment,
+                "base_url": self.settings.DbtOracleWms.oracle_wms_base_url,
                 "status_code": response.status_code,
             }),
         )
@@ -164,7 +172,7 @@ class FlextDbtOracleWmsClient:
         """Validate extracted records against configured entity requirements."""
         if not records:
             return r[Sequence[t.ScalarMapping]].fail("No records to validate")
-        required_fields = json.loads(settings.DbtOracleWms.required_fields_per_entity or "{}").get(entity_name, ())
+        required_fields = json.loads(self.settings.DbtOracleWms.required_fields_per_entity or "{}").get(entity_name, ())
         for index, record in enumerate(records):
             missing_fields = [
                 field
@@ -188,17 +196,14 @@ class FlextDbtOracleWmsClient:
             return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
         try:
             settings_overrides: t.ConfigurationMapping = (
-                {"base_url": settings.DbtOracleWms.oracle_wms_base_url}
-                if settings.DbtOracleWms.oracle_wms_base_url
+                {"base_url": self.settings.DbtOracleWms.oracle_wms_base_url}
+                if self.settings.DbtOracleWms.oracle_wms_base_url
                 else {}
             )
-            settings = FlextOracleWmsSettings.fetch_global(overrides=settings_overrides)
-            validation_result = settings.validate_config()
-            if validation_result.failure:
-                return r[oracle_wms_u.OracleWms.Client].fail(
-                    validation_result.error or "Invalid Oracle WMS settings",
-                )
-            self._wms_client = oracle_wms_u.OracleWms.Client(settings=settings)
+            # NOTE (multi-agent): mro-rn88 — fetch_global already validates via pydantic on
+            # construction; the removed validate_config() method no longer exists.
+            wms_settings = FlextOracleWmsSettings.fetch_global(overrides=settings_overrides)
+            self._wms_client = oracle_wms_u.OracleWms.Client(settings=wms_settings)
             return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
         except c.EXC_VALIDATION_TYPE_VALUE as exc:
             return r[oracle_wms_u.OracleWms.Client].fail_op(

@@ -122,7 +122,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
     ) -> p.Result[FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         self.logger.info("Executing DBT Oracle WMS service")
-        return r[FlextDbtOracleWmsSettings].ok(settings)
+        return r[FlextDbtOracleWmsSettings].ok(self.settings)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsWorkflow"]

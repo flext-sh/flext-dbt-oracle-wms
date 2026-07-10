@@ -45,7 +45,7 @@ class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):
                 )
             entity_names = discovery_result.value
         generator = m.create_generator({
-            "dbt_target": settings.DbtOracleWms.dbt_target,
+            "dbt_target": self.settings.DbtOracleWms.dbt_target,
             "output_dir": output_dir or "",
         })
         generated_models_result = generator.generate_wms_staging_models(entity_names)
