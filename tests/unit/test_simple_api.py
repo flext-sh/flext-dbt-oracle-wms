@@ -10,7 +10,7 @@ from flext_tests import tm
 
 from flext_dbt_oracle_wms import r
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.settings import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 from tests.models import m
 from tests.typings import t
