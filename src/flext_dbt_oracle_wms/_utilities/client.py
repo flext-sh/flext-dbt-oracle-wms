@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 from collections.abc import (
     MutableMapping,
     Sequence,
@@ -162,7 +164,7 @@ class FlextDbtOracleWmsClient:
         """Validate extracted records against configured entity requirements."""
         if not records:
             return r[Sequence[t.ScalarMapping]].fail("No records to validate")
-        required_fields = settings.DbtOracleWms.required_fields_per_entity.get(entity_name, ())
+        required_fields = json.loads(settings.DbtOracleWms.required_fields_per_entity or "{}").get(entity_name, ())
         for index, record in enumerate(records):
             missing_fields = [
                 field
