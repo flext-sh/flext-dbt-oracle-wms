@@ -29,7 +29,10 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
     class _DbtOracleWms(BaseModel):
         """Namespaced dbt Oracle WMS settings."""
 
-        required_fields_per_entity: Annotated[str, Field(default="{}", description="Required fields per WMS entity (JSON)")]
+        required_fields_per_entity: Annotated[
+            str,
+            Field(default="{}", description="Required fields per WMS entity (JSON)"),
+        ]
         oracle_wms_environment: Annotated[
             str,
             Field(
@@ -43,7 +46,9 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         ]
         dbt_threads: Annotated[
             int,
-            Field(default=4, description="Number of DBT threads for parallel execution"),
+            Field(
+                default=4, description="Number of DBT threads for parallel execution"
+            ),
         ]
         dbt_target: Annotated[
             str,

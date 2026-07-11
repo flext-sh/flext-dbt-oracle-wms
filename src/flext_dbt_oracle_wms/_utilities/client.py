@@ -172,7 +172,9 @@ class FlextDbtOracleWmsClient:
         """Validate extracted records against configured entity requirements."""
         if not records:
             return r[Sequence[t.ScalarMapping]].fail("No records to validate")
-        required_fields = json.loads(self.settings.DbtOracleWms.required_fields_per_entity or "{}").get(entity_name, ())
+        required_fields = json.loads(
+            self.settings.DbtOracleWms.required_fields_per_entity or "{}"
+        ).get(entity_name, ())
         for index, record in enumerate(records):
             missing_fields = [
                 field
@@ -202,7 +204,9 @@ class FlextDbtOracleWmsClient:
             )
             # NOTE (multi-agent): mro-rn88 — fetch_global already validates via pydantic on
             # construction; the removed validate_config() method no longer exists.
-            wms_settings = FlextOracleWmsSettings.fetch_global(overrides=settings_overrides)
+            wms_settings = FlextOracleWmsSettings.fetch_global(
+                overrides=settings_overrides
+            )
             self._wms_client = oracle_wms_u.OracleWms.Client(settings=wms_settings)
             return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
         except c.EXC_VALIDATION_TYPE_VALUE as exc:
