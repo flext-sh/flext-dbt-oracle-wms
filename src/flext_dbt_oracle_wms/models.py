@@ -145,11 +145,11 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
 
             workflow_name: Annotated[str, u.Field(description="Workflow name")]
             workflow_type: Annotated[str, u.Field(description="Workflow type")]
+            tracking_id: Annotated[str, u.Field(description="Tracking identifier")]
             entity_names: Annotated[
                 t.StrSequence,
                 u.Field(default_factory=tuple, description="Entities in scope"),
             ]
-            tracking_id: Annotated[str, u.Field(description="Tracking identifier")]
             status: Annotated[
                 str,
                 u.Field(default="running", description="Tracking status"),

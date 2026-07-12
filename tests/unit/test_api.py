@@ -26,24 +26,31 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
     that flow back to the facade caller.
     """
 
-    _connection: p.Result[m.Dict]
+    _connection: p.Result[m.DbtOracleWms.ConnectionStatus]
     _entities: p.Result[t.StrSequence]
     _records_by_entity: dict[str, Sequence[t.ConfigurationMapping]]
-    _pipeline: p.Result[m.Dict]
+    _pipeline: p.Result[m.DbtOracleWms.PipelineResult]
 
     def __init__(
         self,
         settings: FlextDbtOracleWmsSettings,
         *,
-        connection: p.Result[m.Dict] | None = None,
+        connection: p.Result[m.DbtOracleWms.ConnectionStatus] | None = None,
         entities: p.Result[t.StrSequence] | None = None,
         records_by_entity: dict[str, Sequence[t.ConfigurationMapping]] | None = None,
-        pipeline: p.Result[m.Dict] | None = None,
+        pipeline: p.Result[m.DbtOracleWms.PipelineResult] | None = None,
     ) -> None:
         self._connection = (
             connection
             if connection is not None
-            else r[m.Dict].ok(m.Dict.model_validate({"status": "connected"}))
+            else r[m.DbtOracleWms.ConnectionStatus].ok(
+                m.DbtOracleWms.ConnectionStatus(
+                    status="connected",
+                    environment="development",
+                    base_url="",
+                    status_code=200,
+                ),
+            )
         )
         self._entities = (
             entities
@@ -54,17 +61,18 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
         self._pipeline = (
             pipeline
             if pipeline is not None
-            else r[m.Dict].ok(
-                m.Dict.model_validate({
-                    "pipeline_status": "completed",
-                    "processed_entities": "",
-                    "total_records": 0,
-                }),
+            else r[m.DbtOracleWms.PipelineResult].ok(
+                m.DbtOracleWms.PipelineResult(
+                    processed_entities=(),
+                    total_records=0,
+                    transformation_status="success",
+                    pipeline_status="completed",
+                ),
             )
         )
 
     @override
-    def test_oracle_wms_connection(self) -> p.Result[m.Dict]:
+    def test_oracle_wms_connection(self) -> p.Result[m.DbtOracleWms.ConnectionStatus]:
         return self._connection
 
     @override
@@ -87,14 +95,16 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> p.Result[m.Dict]:
+    ) -> p.Result[m.DbtOracleWms.PipelineResult]:
         _ = filters
         _ = model_names
         if self._pipeline.failure:
             return self._pipeline
-        payload = dict(self._pipeline.value)
-        payload["processed_entities"] = ",".join(entity_names or [])
-        return r[m.Dict].ok(m.Dict.model_validate(payload))
+        return r[m.DbtOracleWms.PipelineResult].ok(
+            self._pipeline.value.model_copy(
+                update={"processed_entities": tuple(entity_names or ())},
+            ),
+        )
 
 
 class _FakeWmsService(u.DbtOracleWms.Service):
@@ -108,21 +118,21 @@ class _FakeWmsService(u.DbtOracleWms.Service):
     def generate_workflow_recommendations(
         self,
         entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
-    ) -> p.Result[m.Dict]:
-        return r[m.Dict].ok(
-            m.Dict.model_validate({
-                "total_entities": len(entities or []),
-                "recommendation": "",
-                "dbt_threads": "4",
-                "target": "dev",
-            }),
+    ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
+        return r[m.DbtOracleWms.WorkflowRecommendation].ok(
+            m.DbtOracleWms.WorkflowRecommendation(
+                total_entities=len(entities or []),
+                recommendation="",
+                dbt_threads="4",
+                target="dev",
+            ),
         )
 
     @override
     def log_workflow_completion(
         self,
-        tracking_info: t.ConfigurationMapping,
-        result: p.Result[m.Dict],
+        tracking_info: m.DbtOracleWms.WorkflowTracking,
+        result: p.Result[m.DbtOracleWms.WorkflowResult],
     ) -> None:
         _ = tracking_info
         _ = result
@@ -134,12 +144,18 @@ class _FakeWmsService(u.DbtOracleWms.Service):
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
         additional_data: t.ConfigValueMapping | None = None,
-    ) -> m.Dict:
+    ) -> m.DbtOracleWms.WorkflowTracking:
         _ = workflow_name
         _ = workflow_type
         _ = entity_names
         _ = additional_data
-        return m.Dict.model_validate({"tracking_id": self._tracking_id})
+        return m.DbtOracleWms.WorkflowTracking(
+            workflow_name="oracle_wms_to_dbt",
+            workflow_type="dbt_oracle_wms",
+            tracking_id=self._tracking_id,
+            entity_names=(),
+            status="running",
+        )
 
 
 class TestsFlextDbtOracleWmsApi:
@@ -175,7 +191,9 @@ class TestsFlextDbtOracleWmsApi:
         settings = self._settings()
         client = _FakeWmsClient(
             settings,
-            connection=r[m.Dict].fail("Oracle WMS endpoint unreachable"),
+            connection=r[m.DbtOracleWms.ConnectionStatus].fail(
+                "Oracle WMS endpoint unreachable"
+            ),
         )
         facade = self._facade(client=client)
 
@@ -224,12 +242,13 @@ class TestsFlextDbtOracleWmsApi:
         settings = self._settings()
         client = _FakeWmsClient(
             settings,
-            pipeline=r[m.Dict].ok(
-                m.Dict.model_validate({
-                    "pipeline_status": "completed",
-                    "processed_entities": "",
-                    "total_records": 4,
-                }),
+            pipeline=r[m.DbtOracleWms.PipelineResult].ok(
+                m.DbtOracleWms.PipelineResult(
+                    processed_entities=(),
+                    total_records=4,
+                    transformation_status="success",
+                    pipeline_status="completed",
+                ),
             ),
         )
         facade = self._facade(client=client, service=_FakeWmsService("trk-77"))
@@ -241,9 +260,9 @@ class TestsFlextDbtOracleWmsApi:
         )
 
         tm.that(result.success, eq=True)
-        tm.that(result.value["pipeline_status"], eq="completed")
-        tm.that(result.value["processed_entities"], eq="items")
-        tm.that(result.value["tracking_id"], eq="trk-77")
+        tm.that(result.value.workflow_status, eq="completed")
+        tm.that(result.value.entity_names, eq=("items",))
+        tm.that(result.value.tracking_id, eq="trk-77")
 
     def test_run_workflow_default_path_extracts_metadata(self) -> None:
         settings = self._settings()
@@ -263,14 +282,16 @@ class TestsFlextDbtOracleWmsApi:
         )
 
         tm.that(result.success, eq=True)
-        tm.that(result.value["status"], eq="metadata_extracted")
-        tm.that(result.value["tracking_id"], eq="trk-42")
+        tm.that(result.value.workflow_status, eq="metadata_extracted")
+        tm.that(result.value.tracking_id, eq="trk-42")
 
     def test_run_workflow_propagates_pipeline_failure(self) -> None:
         settings = self._settings()
         client = _FakeWmsClient(
             settings,
-            pipeline=r[m.Dict].fail("pipeline transformation aborted"),
+            pipeline=r[m.DbtOracleWms.PipelineResult].fail(
+                "pipeline transformation aborted"
+            ),
         )
         facade = self._facade(client=client, service=_FakeWmsService())
 
