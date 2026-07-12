@@ -34,7 +34,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> p.Result[m.Dict]:
+    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients."""
         self.logger.info("Running Oracle WMS-to-DBT workflow")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -43,12 +43,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             workflow_type="dbt_oracle_wms",
             entity_names=entity_names,
         )
-        tracking_context: t.ConfigurationMapping = {
-            "tracking_id": str(tracking_info.get("tracking_id", "")),
-            "workflow_name": "oracle_wms_to_dbt",
-            "workflow_type": "dbt_oracle_wms",
-        }
-        generated_models: str | None = None
+        generated_models: t.StrSequence = ()
         model_names: t.StrSequence | None = None
         if generate_models:
             model_generation_result = self.generate_dbt_models_from_wms(
@@ -56,23 +51,13 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
                 shipments,
             )
             if model_generation_result.failure:
-                failure_result = r[m.Dict].fail(
+                failure_result = r[m.DbtOracleWms.WorkflowResult].fail(
                     model_generation_result.error or "DBT model generation failed",
                 )
-                self.service.log_workflow_completion(
-                    tracking_context,
-                    failure_result,
-                )
+                self.service.log_workflow_completion(tracking_info, failure_result)
                 return failure_result
-            generated_model_payload = dict(model_generation_result.value)
-            model_names = [
-                name
-                for name in str(
-                    generated_model_payload.get("model_names", ""),
-                ).split(",")
-                if name
-            ]
-            generated_models = str(generated_model_payload.get("model_names", ""))
+            generated_models = model_generation_result.value.model_names
+            model_names = generated_models or None
         workflow_result = (
             self.client.run_full_oracle_wms_to_dbt_pipeline(
                 entity_names=entity_names,
@@ -85,25 +70,37 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             )
         )
         if workflow_result.failure:
-            failure_result = r[m.Dict].fail(
+            failure_result = r[m.DbtOracleWms.WorkflowResult].fail(
                 workflow_result.error or "Oracle WMS workflow execution failed",
             )
-            self.service.log_workflow_completion(
-                tracking_context,
-                failure_result,
-            )
+            self.service.log_workflow_completion(tracking_info, failure_result)
             return failure_result
-        workflow_payload = dict(workflow_result.value)
-        workflow_payload["generate_models"] = generate_models
-        workflow_payload["run_transformations"] = run_transformations
-        workflow_payload["tracking_id"] = str(tracking_info.get("tracking_id", ""))
-        if generated_models is not None:
-            workflow_payload["generated_models"] = generated_models
-        success_result = r[m.Dict].ok(m.Dict.model_validate(workflow_payload))
-        self.service.log_workflow_completion(
-            tracking_context,
-            success_result,
+        workflow_value = workflow_result.value
+        if isinstance(workflow_value, m.DbtOracleWms.PipelineResult):
+            processed: t.StrSequence = workflow_value.processed_entities
+            total_records = workflow_value.total_records
+            transformation_status = workflow_value.transformation_status
+            workflow_status = workflow_value.pipeline_status
+        else:
+            processed = workflow_value.available_entities
+            total_records = (
+                workflow_value.inventory_count + workflow_value.shipment_count
+            )
+            transformation_status = workflow_value.status
+            workflow_status = workflow_value.status
+        success_result = r[m.DbtOracleWms.WorkflowResult].ok(
+            m.DbtOracleWms.WorkflowResult(
+                tracking_id=tracking_info.tracking_id,
+                generate_models=generate_models,
+                run_transformations=run_transformations,
+                generated_models=generated_models,
+                entity_names=tuple(processed),
+                total_records=total_records,
+                transformation_status=transformation_status,
+                workflow_status=workflow_status,
+            ),
         )
+        self.service.log_workflow_completion(tracking_info, success_result)
         return success_result
 
     def validate_wms_connection(self) -> p.Result[bool]:
