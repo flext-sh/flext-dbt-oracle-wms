@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from flext_core import r
-from flext_dbt_oracle_wms._simple_api_base import FlextDbtOracleWmsBase
 from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms.services.base import FlextDbtOracleWmsBase
 
 if TYPE_CHECKING:
     from collections.abc import Sequence

@@ -156,11 +156,11 @@ class FlextDbtOracleWmsClient:
             m.Dict.model_validate({
                 "transformed_tables": ",".join(sorted(transformed_entities.keys())),
                 "requested_models": ",".join(model_names or []),
-                "models_run": str(execution_result.get("models_run", "")),
-                "execution_method": str(
-                    execution_result.get("execution_method", ""),
-                ),
-                "status": "success" if execution_result.get("success") else "failed",
+                # NOTE (multi-agent): mro-wgwh.4 — real CommandExecutionResult fields only;
+                # the model has no models_run/execution_method keys (was fabricated .get()).
+                "models_run": str(len(model_names or [])),
+                "execution_method": type(self._meltano_runner).__name__,
+                "status": "success" if execution_result.success else "failed",
             }),
         )
 

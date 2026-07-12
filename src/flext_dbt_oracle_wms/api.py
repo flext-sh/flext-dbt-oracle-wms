@@ -1,16 +1,20 @@
-"""FLEXT DBT ORACLE WMS API - Unified facade for DBT Oracle WMS operations.
+"""Public API facade for DBT Oracle WMS operations.
+
+MRO facade composing the service mixins from ``services/`` (canonical FLEXT
+structure per AGENTS.md §U15).
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
-
-Unified facade for FLEXT DBT Oracle WMS operations with complete FLEXT integration.
 """
 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from flext_dbt_oracle_wms._simple_api_workflow import FlextDbtOracleWmsWorkflow
+# NOTE (multi-agent): mro-wgwh.4 — canonical api.py replaces the parallel
+# simple_api branch (operator order: simple_api must not exist); behavior lives
+# in services/* mixins composed by MRO.
+from flext_dbt_oracle_wms.services.workflow import FlextDbtOracleWmsWorkflow
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
@@ -31,4 +35,6 @@ class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
         super().__init__(settings=settings, client=client, service=service)
 
 
-__all__: list[str] = ["FlextDbtOracleWms"]
+dbt_oracle_wms = FlextDbtOracleWms
+
+__all__: list[str] = ["FlextDbtOracleWms", "dbt_oracle_wms"]

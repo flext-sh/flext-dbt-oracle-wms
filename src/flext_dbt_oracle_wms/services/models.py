@@ -6,8 +6,8 @@ import shlex
 from typing import TYPE_CHECKING
 
 from flext_core import r
-from flext_dbt_oracle_wms._simple_api_metadata import FlextDbtOracleWmsMetadata
 from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms.services.metadata import FlextDbtOracleWmsMetadata
 from flext_dbt_oracle_wms.utilities import u
 
 if TYPE_CHECKING:

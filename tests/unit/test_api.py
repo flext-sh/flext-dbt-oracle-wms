@@ -1,4 +1,4 @@
-"""Behavior contract for FlextDbtOracleWms simple facade — public API only."""
+"""Behavior contract for the FlextDbtOracleWms API facade — public API only."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from flext_tests import tm
 
 from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, r
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
+from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 from tests.models import m
 from tests.typings import t
 from tests.utilities import u
@@ -142,7 +142,7 @@ class _FakeWmsService(u.DbtOracleWms.Service):
         return m.Dict.model_validate({"tracking_id": self._tracking_id})
 
 
-class TestsFlextDbtOracleWmsSimpleApi:
+class TestsFlextDbtOracleWmsApi:
     """Behavior contract for FlextDbtOracleWms public methods."""
 
     _BASE_URL = "https://wms.example.com"

@@ -48,14 +48,14 @@ if TYPE_CHECKING:
         TestsFlextDbtOracleWmsTypes as TestsFlextDbtOracleWmsTypes,
         t as t,
     )
+    from tests.unit.test_api import (
+        TestsFlextDbtOracleWmsApi as TestsFlextDbtOracleWmsApi,
+    )
     from tests.unit.test_cli import (
         TestsFlextDbtOracleWmsCli as TestsFlextDbtOracleWmsCli,
     )
     from tests.unit.test_module_governance import (
         TestsFlextDbtOracleWmsModuleGovernance as TestsFlextDbtOracleWmsModuleGovernance,
-    )
-    from tests.unit.test_simple_api import (
-        TestsFlextDbtOracleWmsSimpleApi as TestsFlextDbtOracleWmsSimpleApi,
     )
     from tests.utilities import (
         TestsFlextDbtOracleWmsUtilities as TestsFlextDbtOracleWmsUtilities,
@@ -90,7 +90,7 @@ _LAZY_IMPORTS = merge_lazy_imports(
             ".unit": ("unit",),
             ".unit.test_cli": ("TestsFlextDbtOracleWmsCli",),
             ".unit.test_module_governance": ("TestsFlextDbtOracleWmsModuleGovernance",),
-            ".unit.test_simple_api": ("TestsFlextDbtOracleWmsSimpleApi",),
+            ".unit.test_api": ("TestsFlextDbtOracleWmsApi",),
             ".utilities": (
                 "TestsFlextDbtOracleWmsUtilities",
                 "u",

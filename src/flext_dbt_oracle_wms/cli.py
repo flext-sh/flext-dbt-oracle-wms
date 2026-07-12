@@ -6,8 +6,8 @@ import sys
 from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
+from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.constants import c
-from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.typings import t
 from flext_dbt_oracle_wms.utilities import u
 

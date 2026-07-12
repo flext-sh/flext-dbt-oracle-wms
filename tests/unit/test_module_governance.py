@@ -5,8 +5,8 @@ from __future__ import annotations
 import pytest
 from flext_tests import tm
 
+from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
-from flext_dbt_oracle_wms.simple_api import FlextDbtOracleWms
 
 __all__: list[str] = ["TestsFlextDbtOracleWmsModuleGovernance"]
 

@@ -9,7 +9,7 @@ _LAZY_IMPORTS = build_lazy_import_map(
     {
         ".test_cli": ("TestsFlextDbtOracleWmsCli",),
         ".test_module_governance": ("TestsFlextDbtOracleWmsModuleGovernance",),
-        ".test_simple_api": ("TestsFlextDbtOracleWmsSimpleApi",),
+        ".test_api": ("TestsFlextDbtOracleWmsApi",),
         "flext_tests": (
             "c",
             "d",
