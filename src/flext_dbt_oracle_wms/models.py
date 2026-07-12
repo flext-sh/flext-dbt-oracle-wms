@@ -2,21 +2,12 @@
 
 from __future__ import annotations
 
-from collections.abc import (
-    MutableSequence,
-    Sequence,
-)
-from typing import TYPE_CHECKING, Annotated, ClassVar
+from typing import Annotated, ClassVar
 
-from flext_core import r
 from flext_dbt_oracle_wms.constants import c
 from flext_dbt_oracle_wms.typings import t
-from flext_dbt_oracle_wms.utilities import u
-from flext_meltano import m
+from flext_meltano import m, u
 from flext_oracle_wms import FlextOracleWmsModels
-
-if TYPE_CHECKING:
-    from flext_meltano import p
 
 
 class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
@@ -74,77 +65,12 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                 u.Field(default="", description="Description of the item"),
             ]
 
-            def to_dbt_dict(self) -> t.ConfigurationMapping:
-                """Convert item dimension to DBT-compatible dictionary."""
-                return {
-                    "item_id": self.item_id,
-                    "item_number": self.item_number,
-                    "item_description": self.item_description,
-                }
+            # NOTE (multi-agent, bead mro-wfc8): to_dbt_dict() removed — model_dump()
+            # emits the identical DBT-compatible mapping (fields are 1:1); dict helpers
+            # do not belong on models (flext-law §2a).
 
-        class FlextDbtOracleWmsTransformer:
-            """Transformer for WMS entity data to DBT models."""
-
-            def transform_all_entities(
-                self,
-                entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
-            ) -> p.Result[t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]]:
-                """Transform all WMS entities to DBT-compatible format."""
-                items_result = self.transform_items(entity_data.get("items", []))
-                if items_result.failure:
-                    return r[
-                        t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]
-                    ].fail(
-                        items_result.error or "Item transformation failed",
-                    )
-                return r[t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]].ok({
-                    "items": [item.to_dbt_dict() for item in items_result.value],
-                })
-
-            def transform_items(
-                self,
-                records: t.SequenceOf[t.ConfigurationMapping],
-            ) -> p.Result[
-                Sequence[
-                    FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
-                ]
-            ]:
-                """Transform item records to item dimension models."""
-                transformed: MutableSequence[
-                    FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
-                ] = []
-                for index, record in enumerate(records):
-                    try:
-                        raw_record = FlextDbtOracleWmsModels.DbtOracleWms.RawItemRecord.model_validate(
-                            record,
-                        )
-                    except c.ValidationError as exc:
-                        return r[
-                            Sequence[
-                                FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
-                            ]
-                        ].fail(f"Invalid item record at index {index}: {exc}")
-                    transformed.append(
-                        FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension(
-                            item_id=raw_record.item_id,
-                            item_number=raw_record.item_number,
-                            item_description=raw_record.item_description,
-                        ),
-                    )
-                return r[
-                    Sequence[
-                        FlextDbtOracleWmsModels.DbtOracleWms.FlextDbtOracleWmsItemDimension
-                    ]
-                ].ok(transformed)
-
-            def validate_business_rules(
-                self,
-                records: t.SequenceOf[t.ConfigurationMapping],
-            ) -> p.Result[bool]:
-                """Validate business rules for WMS records."""
-                if not records:
-                    return r[bool].fail("No records to validate")
-                return r[bool].ok(True)
+        # NOTE (multi-agent, bead mro-wfc8): FlextDbtOracleWmsTransformer moved to
+        # u.DbtOracleWms.Transformer (behavior belongs in utilities, not among models; §2a).
 
         class DbtModel(m.ArbitraryTypesModel):
             """WMS-specific DBT model metadata."""
@@ -191,47 +117,12 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                 ),
             ] = u.Field(default_factory=tuple)
 
-        class ModelGenerator:
-            """Generator for lightweight DBT model objects."""
+        # NOTE (multi-agent, bead mro-wfc8): ModelGenerator moved to
+        # u.DbtOracleWms.ModelBuilder.generate_wms_staging_models (behavior belongs in
+        # utilities, not among models; §2a). The unused settings parameter was dropped.
 
-            def __init__(self, settings: t.StrMapping | None = None) -> None:
-                """Store optional generation-time configuration."""
-                super().__init__()
-                settings = settings or {}
-
-            def generate_wms_staging_models(
-                self,
-                oracle_sources: t.StrSequence,
-            ) -> p.Result[Sequence[FlextDbtOracleWmsModels.DbtOracleWms.DbtModel]]:
-                """Create one staging model per source name."""
-                models = [
-                    FlextDbtOracleWmsModels.DbtOracleWms.DbtModel(
-                        name=f"stg_wms_{source}",
-                        dbt_model_type="staging",
-                        wms_entity_type=source,
-                        schema_name="wms_staging",
-                        table_name=f"stg_{source}",
-                        columns=[],
-                        materialization=c.DbtOracleWms.Dbt.Materialization.VIEW.value,
-                        sql_content=f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
-                        description=f"Staging model for {source}",
-                        oracle_source=source,
-                        dependencies=[],
-                        wms_business_rules=[],
-                    )
-                    for source in oracle_sources
-                ]
-                return r[Sequence[FlextDbtOracleWmsModels.DbtOracleWms.DbtModel]].ok(
-                    models,
-                )
-
-    @classmethod
-    def create_generator(
-        cls,
-        settings: t.StrMapping | None = None,
-    ) -> FlextDbtOracleWmsModels.DbtOracleWms.ModelGenerator:
-        """Create a model generator with explicit configuration."""
-        return cls.DbtOracleWms.ModelGenerator(settings=settings)
+    # NOTE (multi-agent, bead mro-wfc8): create_generator removed with ModelGenerator —
+    # callers use u.DbtOracleWms.ModelBuilder.generate_wms_staging_models directly (§2a).
 
 
 m = FlextDbtOracleWmsModels

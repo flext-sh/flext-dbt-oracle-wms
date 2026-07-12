@@ -28,7 +28,7 @@ class FlextDbtOracleWmsClient:
         # global singleton) and read it via self.settings, never a bare module global.
         self._settings = settings or FlextDbtOracleWmsSettings.fetch_global()
         self._meltano_runner = FlextMeltanoLibraryRunner()
-        self._transformer = m.DbtOracleWms.FlextDbtOracleWmsTransformer()
+        self._transformer = u.DbtOracleWms.Transformer()
         self._wms_client: oracle_wms_u.OracleWms.Client | None = None
 
     @property
