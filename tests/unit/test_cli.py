@@ -11,12 +11,10 @@ from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, r
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
-from tests.models import m
-from tests.typings import t
-from tests.utilities import u
+from tests import m, t, u
 
 if TYPE_CHECKING:
-    from tests.protocols import p
+    from tests import p
 
 
 class _CliClient(FlextDbtOracleWmsClient):
@@ -152,7 +150,7 @@ class TestsFlextDbtOracleWmsCli:
         service = FlextDbtOracleWmsCliService(service=facade)
         tm.that(service.execute_command("pipeline"), eq=0)
         tm.that(client.pipeline_called, eq=True)
-        assert helper.logged_payload is not None
+        tm.that(helper.logged_payload, none=False)
         tm.that(helper.logged_payload.generate_models, eq=False)
         tm.that(helper.logged_payload.run_transformations, eq=True)
 

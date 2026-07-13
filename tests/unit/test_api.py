@@ -11,12 +11,10 @@ from flext_tests import tm
 from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, r
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
-from tests.models import m
-from tests.typings import t
-from tests.utilities import u
+from tests import m, t, u
 
 if TYPE_CHECKING:
-    from tests.protocols import p
+    from tests import p
 
 
 class _FakeWmsClient(FlextDbtOracleWmsClient):
