@@ -6,15 +6,13 @@ from collections.abc import MutableSequence, Sequence
 from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
+from flext_dbt_oracle_wms import c, m, t
 from flext_dbt_oracle_wms._settings import settings
-from flext_dbt_oracle_wms.constants import c
-from flext_dbt_oracle_wms.models import m
-from flext_dbt_oracle_wms.typings import t
 from flext_meltano import u
 from flext_oracle_wms import FlextOracleWmsUtilities
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms.protocols import p
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):

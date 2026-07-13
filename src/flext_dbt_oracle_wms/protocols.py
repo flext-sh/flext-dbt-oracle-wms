@@ -12,8 +12,7 @@ if TYPE_CHECKING:
         Sequence,
     )
 
-    from flext_dbt_oracle_wms.models import m
-    from flext_dbt_oracle_wms.typings import t
+    from flext_dbt_oracle_wms import m, t
 
 
 class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):

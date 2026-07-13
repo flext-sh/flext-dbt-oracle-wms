@@ -5,14 +5,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, override
 
 from flext_core import r
+from flext_dbt_oracle_wms import m
 from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms.models import m
 from flext_dbt_oracle_wms.services.models import FlextDbtOracleWmsModelsApi
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
-    from flext_dbt_oracle_wms.typings import t
-    from flext_dbt_oracle_wms.utilities import u
+    from flext_dbt_oracle_wms import p, t, u
 
 
 class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):

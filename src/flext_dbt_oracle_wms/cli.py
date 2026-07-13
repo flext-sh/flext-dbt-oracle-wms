@@ -6,17 +6,15 @@ import sys
 from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
+from flext_dbt_oracle_wms import c, t, u
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
-from flext_dbt_oracle_wms.constants import c
-from flext_dbt_oracle_wms.typings import t
-from flext_dbt_oracle_wms.utilities import u
 
 if TYPE_CHECKING:
     from collections.abc import (
         Callable,
     )
 
-    from flext_dbt_oracle_wms.protocols import p
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsCliService:
