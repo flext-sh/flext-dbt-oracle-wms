@@ -148,6 +148,9 @@ omit = [ "*/dependency_injector/providers.pyx" ]
 known_first_party = [ "flext_core", "flext_dbt_oracle_wms", "flext_meltano", "flext_oracle_wms" ]
 pep621_dev_dependency_groups = [ "dev" ]
 
+[tool.hatch.build.targets.wheel]
+packages = [ "src/flext_dbt_oracle_wms" ]
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
