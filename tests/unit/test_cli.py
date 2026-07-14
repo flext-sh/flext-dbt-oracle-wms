@@ -3,18 +3,19 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, override
+from typing import override
 
 from flext_tests import tm
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, r
+from flext_dbt_oracle_wms import (
+    FlextDbtOracleWms,
+    FlextDbtOracleWmsCliService,
+    FlextDbtOracleWmsSettings,
+    main,
+    r,
+)
 from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
-from flext_dbt_oracle_wms.api import FlextDbtOracleWms
-from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
-from tests import m, t, u
-
-if TYPE_CHECKING:
-    from tests import p
+from tests import m, p, t, u
 
 
 class _CliClient(FlextDbtOracleWmsClient):
@@ -71,7 +72,6 @@ class _CliService(u.DbtOracleWms.Service):
         FlextDbtOracleWmsSettings()
         self.logged_payload: m.DbtOracleWms.WorkflowResult | None = None
 
-    @override
     def track_workflow_execution(
         self,
         workflow_name: str,
@@ -89,7 +89,6 @@ class _CliService(u.DbtOracleWms.Service):
             status="running",
         )
 
-    @override
     def log_workflow_completion(
         self,
         tracking_info: m.DbtOracleWms.WorkflowTracking,
