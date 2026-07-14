@@ -4,10 +4,8 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from flext_core import r, s
-from flext_dbt_oracle_wms import p, t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+from flext_core import s
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p, r, t, u
 
 
 class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
@@ -40,7 +38,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     def client(self) -> p.DbtOracleWms.Client:
         """The DBT Oracle WMS client instance."""
         if self._client is None:
-            self._client = FlextDbtOracleWmsClient(settings)
+            self._client = u.DbtOracleWms()
         return self._client
 
     @property

@@ -4,9 +4,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_core import r
-from flext_dbt_oracle_wms import m, p, t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, m, p, r, settings, t, u
 from flext_dbt_oracle_wms.services.models import FlextDbtOracleWmsModelsApi
 
 
