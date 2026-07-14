@@ -44,7 +44,7 @@ if TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms.protocols import (
         FlextDbtOracleWmsProtocols as FlextDbtOracleWmsProtocols,
-        p as p,
+        p,
     )
     from flext_dbt_oracle_wms.typings import (
         FlextDbtOracleWmsTypes as FlextDbtOracleWmsTypes,
@@ -52,7 +52,7 @@ if TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms.utilities import (
         FlextDbtOracleWmsUtilities as FlextDbtOracleWmsUtilities,
-        u as u,
+        u,
     )
     from flext_oracle_wms import d as d, e as e, h as h, r as r, x as x
 _LAZY_IMPORTS = build_lazy_import_map(
