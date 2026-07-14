@@ -22,6 +22,10 @@ if TYPE_CHECKING:
         FlextDbtOracleWmsSettings as FlextDbtOracleWmsSettings,
         settings as settings,
     )
+    from flext_dbt_oracle_wms.api import (
+        FlextDbtOracleWms as FlextDbtOracleWms,
+        dbt_oracle_wms as dbt_oracle_wms,
+    )
     from flext_dbt_oracle_wms.base import (
         FlextDbtOracleWmsServiceBase as FlextDbtOracleWmsServiceBase,
         s as s,
@@ -40,7 +44,7 @@ if TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms.protocols import (
         FlextDbtOracleWmsProtocols as FlextDbtOracleWmsProtocols,
-        p as p,
+        p,
     )
     from flext_dbt_oracle_wms.typings import (
         FlextDbtOracleWmsTypes as FlextDbtOracleWmsTypes,
@@ -48,11 +52,12 @@ if TYPE_CHECKING:
     )
     from flext_dbt_oracle_wms.utilities import (
         FlextDbtOracleWmsUtilities as FlextDbtOracleWmsUtilities,
-        u as u,
+        u,
     )
     from flext_oracle_wms import d as d, e as e, h as h, r as r, x as x
 _LAZY_IMPORTS = build_lazy_import_map(
     {
+        ".api": ("FlextDbtOracleWms", "dbt_oracle_wms"),
         "._settings": ("FlextDbtOracleWmsSettings", "settings"),
         ".base": (
             "FlextDbtOracleWmsServiceBase",
@@ -94,6 +99,7 @@ _LAZY_IMPORTS = build_lazy_import_map(
 
 
 __all__: tuple[str, ...] = (
+    "FlextDbtOracleWms",
     "FlextDbtOracleWmsCliService",
     "FlextDbtOracleWmsConstants",
     "FlextDbtOracleWmsModels",
@@ -112,6 +118,7 @@ __all__: tuple[str, ...] = (
     "__version_info__",
     "c",
     "d",
+    "dbt_oracle_wms",
     "e",
     "h",
     "m",
