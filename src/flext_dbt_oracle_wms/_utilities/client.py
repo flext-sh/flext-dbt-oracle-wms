@@ -8,10 +8,9 @@ from collections.abc import (
 )
 from typing import ClassVar
 
-from flext_dbt_oracle_wms import c, m, p, t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, r, settings, t, u
 from flext_meltano import FlextMeltanoLibraryRunner
-from flext_oracle_wms import FlextOracleWmsSettings, r, u as oracle_wms_u
+from flext_oracle_wms import FlextOracleWmsSettings
 
 
 class FlextDbtOracleWmsClient:
@@ -23,11 +22,11 @@ class FlextDbtOracleWmsClient:
         """Initialize client with explicit or global settings."""
         super().__init__()
         # NOTE (multi-agent): mro-rn88 — hold the effective settings (injected override or
-        # global singleton) and read it via self.settings, never a bare module global.
+        # global singleton) and read it via settings, never a bare module global.
         self._settings = settings or FlextDbtOracleWmsSettings.fetch_global()
         self._meltano_runner = FlextMeltanoLibraryRunner()
         self._transformer = u.DbtOracleWms.Transformer()
-        self._wms_client: oracle_wms_u.OracleWms.Client | None = None
+        self._wms_client: u.OracleWms.Client | None = None
 
     @property
     def settings(self) -> FlextDbtOracleWmsSettings:
@@ -137,8 +136,8 @@ class FlextDbtOracleWmsClient:
         return r[m.DbtOracleWms.ConnectionStatus].ok(
             m.DbtOracleWms.ConnectionStatus(
                 status="connected",
-                environment=self.settings.DbtOracleWms.oracle_wms_environment,
-                base_url=self.settings.DbtOracleWms.oracle_wms_base_url,
+                environment=settings.DbtOracleWms.oracle_wms_environment,
+                base_url=settings.DbtOracleWms.oracle_wms_base_url,
                 status_code=response.status_code,
             ),
         )
@@ -174,7 +173,7 @@ class FlextDbtOracleWmsClient:
         """Validate extracted records against configured entity requirements."""
         if not records:
             return r[Sequence[t.ScalarMapping]].fail("No records to validate")
-        required_fields = self.settings.DbtOracleWms.required_fields_per_entity.get(
+        required_fields = settings.DbtOracleWms.required_fields_per_entity.get(
             entity_name,
             (),
         )
@@ -195,14 +194,14 @@ class FlextDbtOracleWmsClient:
             )
         return r[Sequence[t.ScalarMapping]].ok(records)
 
-    def _get_wms_client(self) -> p.Result[oracle_wms_u.OracleWms.Client]:
+    def _get_wms_client(self) -> p.Result[u.OracleWms.Client]:
         """Create and cache the real Oracle WMS client."""
         if self._wms_client is not None:
-            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
+            return r[u.OracleWms.Client].ok(self._wms_client)
         try:
             settings_overrides: t.ConfigurationMapping = (
-                {"base_url": self.settings.DbtOracleWms.oracle_wms_base_url}
-                if self.settings.DbtOracleWms.oracle_wms_base_url
+                {"base_url": settings.DbtOracleWms.oracle_wms_base_url}
+                if settings.DbtOracleWms.oracle_wms_base_url
                 else {}
             )
             # NOTE (multi-agent): mro-rn88 — fetch_global already validates via pydantic on
@@ -210,10 +209,10 @@ class FlextDbtOracleWmsClient:
             wms_settings = FlextOracleWmsSettings.fetch_global(
                 overrides=settings_overrides
             )
-            self._wms_client = oracle_wms_u.OracleWms.Client(settings=wms_settings)
-            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
+            self._wms_client = u.OracleWms.Client(settings=wms_settings)
+            return r[u.OracleWms.Client].ok(self._wms_client)
         except c.EXC_VALIDATION_TYPE_VALUE as exc:
-            return r[oracle_wms_u.OracleWms.Client].fail_op(
+            return r[u.OracleWms.Client].fail_op(
                 "Oracle WMS client initialization",
                 exc,
             )
