@@ -36,7 +36,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
         class WmsItem(m.ImmutableValueModel):
             """WMS item record / dimension (single typed model)."""
 
-            model_config: ClassVar[m.ConfigDict] = m.ConfigDict(extra="ignore")
+            model_config: ClassVar[p.ConfigDict] = m.ConfigDict(extra="ignore")
 
             item_id: Annotated[
                 str,

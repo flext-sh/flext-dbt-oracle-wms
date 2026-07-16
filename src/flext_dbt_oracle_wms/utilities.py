@@ -29,7 +29,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
             def generate_workflow_recommendations(
                 self,
                 entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
-            ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
+            ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
                 """Generate simple workflow recommendations for entity processing."""
                 entity_list = entities or []
                 total = len(entity_list)
@@ -39,7 +39,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                     > FlextDbtOracleWmsUtilities.DbtOracleWms.PERFORMANCE_RECOMMENDATION_THRESHOLD
                 ):
                     recommendation_message = "Process entities in smaller batches"
-                return r[m.DbtOracleWms.WorkflowRecommendation].ok(
+                return r[p.DbtOracleWms.WorkflowRecommendation].ok(
                     m.DbtOracleWms.WorkflowRecommendation(
                         total_entities=total,
                         recommendation=recommendation_message,
@@ -51,7 +51,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
             def log_workflow_completion(
                 self,
                 tracking_info: m.DbtOracleWms.WorkflowTracking,
-                result: p.Result[m.DbtOracleWms.WorkflowResult],
+                result: p.Result[p.DbtOracleWms.WorkflowResult],
             ) -> None:
                 """Log workflow completion status."""
                 u.fetch_logger(__name__).info(
@@ -66,7 +66,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                 workflow_type: str,
                 entity_names: t.StrSequence | None = None,
                 additional_data: t.ConfigValueMapping | None = None,
-            ) -> m.DbtOracleWms.WorkflowTracking:
+            ) -> p.DbtOracleWms.WorkflowTracking:
                 """Return typed tracking model for workflow instrumentation."""
                 _ = additional_data
                 u.fetch_logger(__name__).info("Tracking workflow execution")
@@ -84,7 +84,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
             def transform_all_entities(
                 self,
                 entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
-            ) -> p.Result[m.DbtOracleWms.EntityTransformationSet]:
+            ) -> p.Result[p.DbtOracleWms.EntityTransformationSet]:
                 """Transform WMS entities into a typed transformation set."""
                 # NOTE (multi-agent, bead mro-wfc8.3): returns a typed model (no
                 # item.model_dump() roundtrip; WmsItems are surfaced directly).
@@ -98,18 +98,18 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
             def transform_items(
                 self,
                 records: t.SequenceOf[t.ConfigurationMapping],
-            ) -> p.Result[Sequence[m.DbtOracleWms.WmsItem]]:
+            ) -> p.Result[Sequence[p.DbtOracleWms.WmsItem]]:
                 """Transform item records to typed WmsItem models."""
-                transformed: MutableSequence[m.DbtOracleWms.WmsItem] = []
+                transformed: MutableSequence[p.DbtOracleWms.WmsItem] = []
                 for index, record in enumerate(records):
                     try:
                         item = m.DbtOracleWms.WmsItem.model_validate(record)
                     except c.ValidationError as exc:
-                        return r[Sequence[m.DbtOracleWms.WmsItem]].fail(
+                        return r[Sequence[p.DbtOracleWms.WmsItem]].fail(
                             f"Invalid item record at index {index}: {exc}",
                         )
                     transformed.append(item)
-                return r[Sequence[m.DbtOracleWms.WmsItem]].ok(transformed)
+                return r[Sequence[p.DbtOracleWms.WmsItem]].ok(transformed)
 
             def validate_business_rules(
                 self,
@@ -126,7 +126,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
             @staticmethod
             def generate_wms_staging_models(
                 oracle_sources: t.StrSequence,
-            ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
+            ) -> p.Result[Sequence[p.DbtOracleWms.DbtModel]]:
                 """Create one staging model per source name."""
                 models = [
                     m.DbtOracleWms.DbtModel(
@@ -145,7 +145,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                     )
                     for source in oracle_sources
                 ]
-                return r[Sequence[m.DbtOracleWms.DbtModel]].ok(
+                return r[Sequence[p.DbtOracleWms.DbtModel]].ok(
                     models,
                 )
 

@@ -27,7 +27,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
+    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients."""
         self.logger.info("Running Oracle WMS-to-DBT workflow")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -46,7 +46,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             if model_generation_result.failure:
                 return self._log_and_return(
                     tracking_info,
-                    r[m.DbtOracleWms.WorkflowResult].fail(
+                    r[p.DbtOracleWms.WorkflowResult].fail(
                         model_generation_result.error or "DBT model generation failed",
                     ),
                 )
@@ -91,8 +91,8 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
     def _log_and_return(
         self,
         tracking_info: m.DbtOracleWms.WorkflowTracking,
-        result: p.Result[m.DbtOracleWms.WorkflowResult],
-    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
+        result: p.Result[p.DbtOracleWms.WorkflowResult],
+    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
         """Log workflow completion and pass the result through unchanged."""
         self.service.log_workflow_completion(tracking_info, result)
         return result

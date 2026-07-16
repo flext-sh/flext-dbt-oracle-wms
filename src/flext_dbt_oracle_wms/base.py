@@ -22,7 +22,7 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
     ] = c.DbtOracleWms.Dbt.PROJECT_NAME
 
     @classmethod
-    def _runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
+    def _runtime_bootstrap_options(cls) -> p.RuntimeBootstrapOptions:
         """Return runtime bootstrap options for DBT Oracle WMS services."""
         return m.RuntimeBootstrapOptions(settings_type=FlextDbtOracleWmsSettings)
 

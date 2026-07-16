@@ -69,7 +69,7 @@ class FlextDbtOracleWmsClient:
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> p.Result[m.DbtOracleWms.PipelineResult]:
+    ) -> p.Result[p.DbtOracleWms.PipelineResult]:
         """Run discover, extract, validate, and transform pipeline."""
         entities_result = (
             r[t.StrSequence].ok(entity_names)
@@ -77,7 +77,7 @@ class FlextDbtOracleWmsClient:
             else self.discover_oracle_wms_entities()
         )
         if entities_result.failure:
-            return r[m.DbtOracleWms.PipelineResult].fail(
+            return r[p.DbtOracleWms.PipelineResult].fail(
                 entities_result.error or "Entity discovery failed",
             )
         entity_list = entities_result.value
@@ -85,7 +85,7 @@ class FlextDbtOracleWmsClient:
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.failure:
-                return r[m.DbtOracleWms.PipelineResult].fail(
+                return r[p.DbtOracleWms.PipelineResult].fail(
                     extract_result.error or "Extraction failed",
                 )
             validate_result = self.validate_oracle_wms_data(
@@ -93,18 +93,18 @@ class FlextDbtOracleWmsClient:
                 extract_result.value,
             )
             if validate_result.failure:
-                return r[m.DbtOracleWms.PipelineResult].fail(
+                return r[p.DbtOracleWms.PipelineResult].fail(
                     validate_result.error or "Validation failed",
                 )
             extracted[entity_name] = list(validate_result.value)
         transform_result = self.transform_with_dbt(extracted, model_names)
         if transform_result.failure:
-            return r[m.DbtOracleWms.PipelineResult].fail(
+            return r[p.DbtOracleWms.PipelineResult].fail(
                 transform_result.error or "Transformation failed",
             )
         self.logger.info("Completed Oracle WMS to DBT pipeline")
         command_result = transform_result.value
-        return r[m.DbtOracleWms.PipelineResult].ok(
+        return r[p.DbtOracleWms.PipelineResult].ok(
             m.DbtOracleWms.PipelineResult(
                 processed_entities=tuple(extracted.keys()),
                 total_records=sum(len(records) for records in extracted.values()),
@@ -115,25 +115,25 @@ class FlextDbtOracleWmsClient:
             ),
         )
 
-    def test_oracle_wms_connection(self) -> p.Result[m.DbtOracleWms.ConnectionStatus]:
+    def test_oracle_wms_connection(self) -> p.Result[p.DbtOracleWms.ConnectionStatus]:
         """Validate Oracle WMS connectivity using the real health endpoint."""
         client_result = self._get_wms_client()
         if client_result.failure:
-            return r[m.DbtOracleWms.ConnectionStatus].fail(
+            return r[p.DbtOracleWms.ConnectionStatus].fail(
                 client_result.error or "WMS client unavailable",
             )
         start_result = client_result.value.start()
         if start_result.failure:
-            return r[m.DbtOracleWms.ConnectionStatus].fail(
+            return r[p.DbtOracleWms.ConnectionStatus].fail(
                 start_result.error or "Oracle WMS client startup failed",
             )
         health_result = client_result.value.health_check()
         if health_result.failure:
-            return r[m.DbtOracleWms.ConnectionStatus].fail(
+            return r[p.DbtOracleWms.ConnectionStatus].fail(
                 health_result.error or "Oracle WMS health check failed",
             )
         response = health_result.value
-        return r[m.DbtOracleWms.ConnectionStatus].ok(
+        return r[p.DbtOracleWms.ConnectionStatus].ok(
             m.DbtOracleWms.ConnectionStatus(
                 status="connected",
                 environment=settings.DbtOracleWms.oracle_wms_environment,
@@ -146,19 +146,19 @@ class FlextDbtOracleWmsClient:
         self,
         entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
         model_names: t.StrSequence | None,
-    ) -> p.Result[m.Meltano.CommandExecutionResult]:
+    ) -> p.Result[p.Meltano.CommandExecutionResult]:
         """Run DBT transformations through flext-meltano."""
         transformed_entities_result = self._transformer.transform_all_entities(
             entity_data,
         )
         if transformed_entities_result.failure:
-            return r[m.Meltano.CommandExecutionResult].fail(
+            return r[p.Meltano.CommandExecutionResult].fail(
                 transformed_entities_result.error
                 or "Oracle WMS data transformation failed",
             )
         dbt_result = self._meltano_runner.run_dbt_transformation(model_names)
         if dbt_result.failure:
-            return r[m.Meltano.CommandExecutionResult].fail(
+            return r[p.Meltano.CommandExecutionResult].fail(
                 dbt_result.error or "DBT transformation failed",
             )
         # NOTE (multi-agent, bead mro-wfc8.3): return the typed meltano command result

@@ -7,7 +7,7 @@ from collections.abc import (
 )
 from typing import Protocol, runtime_checkable
 
-from flext_dbt_oracle_wms import m, t
+from flext_dbt_oracle_wms import t
 from flext_meltano import p
 from flext_oracle_wms import FlextOracleWmsProtocols
 
@@ -39,13 +39,13 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
                 entity_names: t.StrSequence | None = None,
                 filters: t.ConfigurationMapping | None = None,
                 model_names: t.StrSequence | None = None,
-            ) -> p.Result[m.DbtOracleWms.PipelineResult]:
+            ) -> p.Result[p.DbtOracleWms.PipelineResult]:
                 """Run the full Oracle WMS to DBT workflow."""
                 ...
 
             def test_oracle_wms_connection(
                 self,
-            ) -> p.Result[m.DbtOracleWms.ConnectionStatus]:
+            ) -> p.Result[p.DbtOracleWms.ConnectionStatus]:
                 """Validate Oracle WMS connectivity."""
                 ...
 
@@ -53,7 +53,7 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
                 self,
                 entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
                 model_names: t.StrSequence | None,
-            ) -> p.Result[m.Meltano.CommandExecutionResult]:
+            ) -> p.Result[p.Meltano.CommandExecutionResult]:
                 """Run DBT transformations for extracted entity data."""
                 ...
 
@@ -64,7 +64,7 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
             def generate_workflow_recommendations(
                 self,
                 entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
-            ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
+            ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
                 """Generate workflow recommendations for entity processing."""
                 ...
 
@@ -74,7 +74,7 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
                 workflow_type: str,
                 entity_names: t.StrSequence | None = None,
                 additional_data: t.ConfigValueMapping | None = None,
-            ) -> m.DbtOracleWms.WorkflowTracking:
+            ) -> p.DbtOracleWms.WorkflowTracking:
                 """Return a typed tracking model for workflow instrumentation."""
                 ...
 

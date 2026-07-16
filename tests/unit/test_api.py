@@ -21,24 +21,24 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
     that flow back to the facade caller.
     """
 
-    _connection: p.Result[m.DbtOracleWms.ConnectionStatus]
+    _connection: p.Result[p.DbtOracleWms.ConnectionStatus]
     _entities: p.Result[t.StrSequence]
     _records_by_entity: dict[str, Sequence[t.ConfigurationMapping]]
-    _pipeline: p.Result[m.DbtOracleWms.PipelineResult]
+    _pipeline: p.Result[p.DbtOracleWms.PipelineResult]
 
     def __init__(
         self,
         settings: FlextDbtOracleWmsSettings,
         *,
-        connection: p.Result[m.DbtOracleWms.ConnectionStatus] | None = None,
+        connection: p.Result[p.DbtOracleWms.ConnectionStatus] | None = None,
         entities: p.Result[t.StrSequence] | None = None,
         records_by_entity: dict[str, Sequence[t.ConfigurationMapping]] | None = None,
-        pipeline: p.Result[m.DbtOracleWms.PipelineResult] | None = None,
+        pipeline: p.Result[p.DbtOracleWms.PipelineResult] | None = None,
     ) -> None:
         self._connection = (
             connection
             if connection is not None
-            else r[m.DbtOracleWms.ConnectionStatus].ok(
+            else r[p.DbtOracleWms.ConnectionStatus].ok(
                 m.DbtOracleWms.ConnectionStatus(
                     status="connected",
                     environment="development",
@@ -56,7 +56,7 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
         self._pipeline = (
             pipeline
             if pipeline is not None
-            else r[m.DbtOracleWms.PipelineResult].ok(
+            else r[p.DbtOracleWms.PipelineResult].ok(
                 m.DbtOracleWms.PipelineResult(
                     processed_entities=(),
                     total_records=0,
@@ -67,7 +67,7 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
         )
 
     @override
-    def test_oracle_wms_connection(self) -> p.Result[m.DbtOracleWms.ConnectionStatus]:
+    def test_oracle_wms_connection(self) -> p.Result[p.DbtOracleWms.ConnectionStatus]:
         return self._connection
 
     @override
@@ -90,12 +90,12 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> p.Result[m.DbtOracleWms.PipelineResult]:
+    ) -> p.Result[p.DbtOracleWms.PipelineResult]:
         _ = filters
         _ = model_names
         if self._pipeline.failure:
             return self._pipeline
-        return r[m.DbtOracleWms.PipelineResult].ok(
+        return r[p.DbtOracleWms.PipelineResult].ok(
             self._pipeline.value.model_copy(
                 update={"processed_entities": tuple(entity_names or ())},
             ),
@@ -113,8 +113,8 @@ class _FakeWmsService(u.DbtOracleWms.Service):
     def generate_workflow_recommendations(
         self,
         entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
-    ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
-        return r[m.DbtOracleWms.WorkflowRecommendation].ok(
+    ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
+        return r[p.DbtOracleWms.WorkflowRecommendation].ok(
             m.DbtOracleWms.WorkflowRecommendation(
                 total_entities=len(entities or []),
                 recommendation="",
@@ -127,7 +127,7 @@ class _FakeWmsService(u.DbtOracleWms.Service):
     def log_workflow_completion(
         self,
         tracking_info: m.DbtOracleWms.WorkflowTracking,
-        result: p.Result[m.DbtOracleWms.WorkflowResult],
+        result: p.Result[p.DbtOracleWms.WorkflowResult],
     ) -> None:
         _ = tracking_info
         _ = result
@@ -139,7 +139,7 @@ class _FakeWmsService(u.DbtOracleWms.Service):
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
         additional_data: t.ConfigValueMapping | None = None,
-    ) -> m.DbtOracleWms.WorkflowTracking:
+    ) -> p.DbtOracleWms.WorkflowTracking:
         _ = workflow_name
         _ = workflow_type
         _ = entity_names
@@ -186,7 +186,7 @@ class TestsFlextDbtOracleWmsApi:
         settings = self._settings()
         client = _FakeWmsClient(
             settings,
-            connection=r[m.DbtOracleWms.ConnectionStatus].fail(
+            connection=r[p.DbtOracleWms.ConnectionStatus].fail(
                 "Oracle WMS endpoint unreachable"
             ),
         )
@@ -237,7 +237,7 @@ class TestsFlextDbtOracleWmsApi:
         settings = self._settings()
         client = _FakeWmsClient(
             settings,
-            pipeline=r[m.DbtOracleWms.PipelineResult].ok(
+            pipeline=r[p.DbtOracleWms.PipelineResult].ok(
                 m.DbtOracleWms.PipelineResult(
                     processed_entities=(),
                     total_records=4,
@@ -284,7 +284,7 @@ class TestsFlextDbtOracleWmsApi:
         settings = self._settings()
         client = _FakeWmsClient(
             settings,
-            pipeline=r[m.DbtOracleWms.PipelineResult].fail(
+            pipeline=r[p.DbtOracleWms.PipelineResult].fail(
                 "pipeline transformation aborted"
             ),
         )

@@ -51,13 +51,13 @@ class _CliClient(FlextDbtOracleWmsClient):
         entity_names: t.StrSequence | None = None,
         filters: t.ConfigurationMapping | None = None,
         model_names: t.StrSequence | None = None,
-    ) -> p.Result[m.DbtOracleWms.PipelineResult]:
+    ) -> p.Result[p.DbtOracleWms.PipelineResult]:
         _ = filters
         _ = model_names
         self.pipeline_called = True
         if self.pipeline_should_fail:
-            return r[m.DbtOracleWms.PipelineResult].fail("boom")
-        return r[m.DbtOracleWms.PipelineResult].ok(
+            return r[p.DbtOracleWms.PipelineResult].fail("boom")
+        return r[p.DbtOracleWms.PipelineResult].ok(
             m.DbtOracleWms.PipelineResult(
                 processed_entities=tuple(entity_names or ()),
                 total_records=2,
@@ -78,7 +78,7 @@ class _CliService(u.DbtOracleWms.Service):
         workflow_type: str,
         entity_names: t.StrSequence | None = None,
         additional_data: t.ConfigValueMapping | None = None,
-    ) -> m.DbtOracleWms.WorkflowTracking:
+    ) -> p.DbtOracleWms.WorkflowTracking:
         _ = entity_names
         _ = additional_data
         return m.DbtOracleWms.WorkflowTracking(
@@ -92,7 +92,7 @@ class _CliService(u.DbtOracleWms.Service):
     def log_workflow_completion(
         self,
         tracking_info: m.DbtOracleWms.WorkflowTracking,
-        result: p.Result[m.DbtOracleWms.WorkflowResult],
+        result: p.Result[p.DbtOracleWms.WorkflowResult],
     ) -> None:
         _ = tracking_info
         self.logged_payload = result.value if result.success else None
