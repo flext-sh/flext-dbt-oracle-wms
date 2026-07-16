@@ -70,7 +70,7 @@ class _CliClient(FlextDbtOracleWmsClient):
 class _CliService(u.DbtOracleWms.Service):
     def __init__(self) -> None:
         FlextDbtOracleWmsSettings()
-        self.logged_payload: m.DbtOracleWms.WorkflowResult | None = None
+        self.logged_payload: p.DbtOracleWms.WorkflowResult | None = None
 
     def track_workflow_execution(
         self,
@@ -91,7 +91,7 @@ class _CliService(u.DbtOracleWms.Service):
 
     def log_workflow_completion(
         self,
-        tracking_info: m.DbtOracleWms.WorkflowTracking,
+        tracking_info: p.DbtOracleWms.WorkflowTracking,
         result: p.Result[p.DbtOracleWms.WorkflowResult],
     ) -> None:
         _ = tracking_info

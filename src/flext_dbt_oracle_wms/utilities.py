@@ -50,7 +50,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
 
             def log_workflow_completion(
                 self,
-                tracking_info: m.DbtOracleWms.WorkflowTracking,
+                tracking_info: p.DbtOracleWms.WorkflowTracking,
                 result: p.Result[p.DbtOracleWms.WorkflowResult],
             ) -> None:
                 """Log workflow completion status."""
@@ -89,7 +89,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                 # NOTE (multi-agent, bead mro-wfc8.3): returns a typed model (no
                 # item.model_dump() roundtrip; WmsItems are surfaced directly).
                 return self.transform_items(entity_data.get("items", [])).map(
-                    lambda items: m.DbtOracleWms.EntityTransformationSet(
+                    lambda items: p.DbtOracleWms.EntityTransformationSet(
                         entity_names=("items",),
                         items=tuple(items),
                     ),

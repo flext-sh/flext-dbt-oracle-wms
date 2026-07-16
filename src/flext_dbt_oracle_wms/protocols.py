@@ -7,7 +7,7 @@ from collections.abc import (
 )
 from typing import Protocol, runtime_checkable
 
-from flext_dbt_oracle_wms import t
+from flext_dbt_oracle_wms import p, t
 from flext_meltano import p
 from flext_oracle_wms import FlextOracleWmsProtocols
 

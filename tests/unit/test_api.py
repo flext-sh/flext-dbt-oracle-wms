@@ -126,7 +126,7 @@ class _FakeWmsService(u.DbtOracleWms.Service):
     @override
     def log_workflow_completion(
         self,
-        tracking_info: m.DbtOracleWms.WorkflowTracking,
+        tracking_info: p.DbtOracleWms.WorkflowTracking,
         result: p.Result[p.DbtOracleWms.WorkflowResult],
     ) -> None:
         _ = tracking_info

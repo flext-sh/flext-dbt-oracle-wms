@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import Annotated, ClassVar
 
-from flext_dbt_oracle_wms import c, t
-from flext_meltano import m, u
+from flext_dbt_oracle_wms import c, p, t
+from flext_meltano import m, p, u
 from flext_oracle_wms import FlextOracleWmsModels
 
 

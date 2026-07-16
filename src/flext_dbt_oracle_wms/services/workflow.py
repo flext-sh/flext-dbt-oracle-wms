@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, m, p, r, settings, t, u
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p, r, settings, t, u
 from flext_dbt_oracle_wms.services.models import FlextDbtOracleWmsModelsApi
 
 
@@ -59,7 +59,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
                 entity_names=entity_names,
                 model_names=model_names,
             ).map(
-                lambda pipeline: m.DbtOracleWms.WorkflowResult(
+                lambda pipeline: p.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=True,
@@ -75,7 +75,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
                 inventory_items,
                 shipments,
             ).map(
-                lambda metadata: m.DbtOracleWms.WorkflowResult(
+                lambda metadata: p.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=False,
@@ -90,7 +90,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
 
     def _log_and_return(
         self,
-        tracking_info: m.DbtOracleWms.WorkflowTracking,
+        tracking_info: p.DbtOracleWms.WorkflowTracking,
         result: p.Result[p.DbtOracleWms.WorkflowResult],
     ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
         """Log workflow completion and pass the result through unchanged."""
