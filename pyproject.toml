@@ -20,12 +20,12 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "click>=8.3.3",
-  "flext-core",
-  "flext-meltano",
-  "flext-oracle-wms",
-  "pydantic-core>=2.46.3",
-  "pydantic>=2.13.3",
+    "click>=8.3.3",
+    "flext-core @ git+https://github.com/flext-sh/flext-core.git@0.12.0-dev",
+    "flext-meltano @ git+https://github.com/flext-sh/flext-meltano.git@0.12.0-dev",
+    "flext-oracle-wms @ git+https://github.com/flext-sh/flext-oracle-wms.git@0.12.0-dev",
+    "pydantic-core>=2.46.3",
+    "pydantic>=2.13.3",
 ]
 description = "FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT"
 keywords = [ "data-transformation", "dbt", "enterprise", "flext", "sql", "typed" ]
@@ -33,7 +33,7 @@ license = "MIT"
 name = "flext-dbt-oracle-wms"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
-version = "0.12.0"
+version = "0.12.0.rc0"
 
 [[project.authors]]
 email = "team@flext.sh"
@@ -737,16 +737,6 @@ all = true
 in_place = true
 sort_first = [ "build-system", "dependency-groups", "project", "tool" ]
 
-[tool.uv.sources.flext-core]
-workspace = true
-
-[tool.uv.sources.flext-meltano]
-workspace = true
-
-[tool.uv.sources.flext-oracle-wms]
-workspace = true
-
-# [MANAGED] yamlfix
 [tool.yamlfix]
 explicit_start = false
 line_length = 88
