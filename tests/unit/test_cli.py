@@ -72,6 +72,7 @@ class _CliService(u.DbtOracleWms.Service):
         FlextDbtOracleWmsSettings()
         self.logged_payload: m.DbtOracleWms.WorkflowResult | None = None
 
+    @override
     def track_workflow_execution(
         self,
         workflow_name: str,
@@ -89,6 +90,7 @@ class _CliService(u.DbtOracleWms.Service):
             status="running",
         )
 
+    @override
     def log_workflow_completion(
         self,
         tracking_info: m.DbtOracleWms.WorkflowTracking,
@@ -149,9 +151,10 @@ class TestsFlextDbtOracleWmsCli:
         service = FlextDbtOracleWmsCliService(service=facade)
         tm.that(service.execute_command("pipeline"), eq=0)
         tm.that(client.pipeline_called, eq=True)
-        tm.that(helper.logged_payload, none=False)
-        tm.that(helper.logged_payload.generate_models, eq=False)
-        tm.that(helper.logged_payload.run_transformations, eq=True)
+        payload = helper.logged_payload
+        assert payload is not None
+        tm.that(payload.generate_models, eq=False)
+        tm.that(payload.run_transformations, eq=True)
 
     def test_execute_command_unknown_returns_failure(self) -> None:
         facade, _, _ = _build_public_facade()
