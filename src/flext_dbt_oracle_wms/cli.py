@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 import sys
-from collections.abc import (
-    Callable,
-)
-from typing import ClassVar
+from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
 from flext_dbt_oracle_wms import c, p, t, u
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
+
+if TYPE_CHECKING:
+    from collections.abc import (
+        Callable,
+    )
 
 
 class FlextDbtOracleWmsCliService:
