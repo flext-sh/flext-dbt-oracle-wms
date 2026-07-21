@@ -2,10 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import (
-    MutableMapping,
-    Sequence,
-)
+from collections.abc import MutableMapping, Sequence
 from typing import ClassVar
 
 from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, r, settings, t, u

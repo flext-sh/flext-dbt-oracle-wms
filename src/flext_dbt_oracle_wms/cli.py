@@ -10,9 +10,7 @@ from flext_dbt_oracle_wms import c, p, t, u
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 
 if TYPE_CHECKING:
-    from collections.abc import (
-        Callable,
-    )
+    from collections.abc import Callable
 
 
 class FlextDbtOracleWmsCliService:

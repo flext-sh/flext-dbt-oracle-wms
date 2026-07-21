@@ -5,13 +5,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
 from flext_dbt_oracle_wms import p
-from flext_meltano import p
 from flext_oracle_wms import FlextOracleWmsProtocols
 
 if TYPE_CHECKING:
-    from collections.abc import (
-        Sequence,
-    )
+    from collections.abc import Sequence
 
     from flext_dbt_oracle_wms import t
 
