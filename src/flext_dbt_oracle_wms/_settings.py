@@ -21,9 +21,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
     """Runtime configuration for dbt Oracle WMS; fields under ``settings.DbtOracleWms.*``."""
 
     model_config = SettingsConfigDict(
-        env_prefix="FLEXT_DBT_ORACLE_WMS_",
-        env_nested_delimiter="__",
-        extra="ignore",
+        env_prefix="FLEXT_DBT_ORACLE_WMS_", env_nested_delimiter="__", extra="ignore"
     )
 
     class _DbtOracleWms(BaseModel):
@@ -44,8 +42,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
             ),
         ]
         oracle_wms_base_url: Annotated[
-            str,
-            Field(default="", description="Base URL for Oracle WMS API"),
+            str, Field(default="", description="Base URL for Oracle WMS API")
         ]
         dbt_threads: Annotated[
             int,
@@ -54,8 +51,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
             ),
         ]
         dbt_target: Annotated[
-            str,
-            Field(default="dev", description="DBT target profile (dev/prod)"),
+            str, Field(default="dev", description="DBT target profile (dev/prod)")
         ]
 
     if TYPE_CHECKING:

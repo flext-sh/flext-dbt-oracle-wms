@@ -19,7 +19,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
 
     _client: p.DbtOracleWms.Client | None = u.PrivateAttr(default_factory=lambda: None)
     _service: u.DbtOracleWms.Service | None = u.PrivateAttr(
-        default_factory=lambda: None,
+        default_factory=lambda: None
     )
 
     def __init__(
@@ -71,9 +71,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         return discovered
 
     def extract_oracle_wms_data(
-        self,
-        entity_name: str,
-        filters: t.ConfigurationMapping | None = None,
+        self, entity_name: str, filters: t.ConfigurationMapping | None = None
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Extract Oracle WMS entity records through the public domain facade."""
         extracted: p.Result[Sequence[t.ConfigurationMapping]] = (
@@ -83,8 +81,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
 
     @staticmethod
     def _resolve_entity_names(
-        inventory_items: t.StrSequence | None,
-        shipments: t.StrSequence | None,
+        inventory_items: t.StrSequence | None, shipments: t.StrSequence | None
     ) -> t.StrSequence | None:
         entity_names: t.MutableSequenceOf[str] = []
         if inventory_items is not None:
@@ -102,7 +99,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         extract_result = self.client.extract_oracle_wms_data(entity_name)
         if extract_result.failure:
             return r[Sequence[t.ConfigurationMapping]].fail(
-                extract_result.error or f"Failed to extract {entity_name}",
+                extract_result.error or f"Failed to extract {entity_name}"
             )
         if requested_identifiers is None:
             return r[Sequence[t.ConfigurationMapping]].ok(extract_result.value)
@@ -121,7 +118,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         ]
         if not filtered_records:
             return r[Sequence[t.ConfigurationMapping]].fail(
-                f"No {entity_name} records matched the requested identifiers",
+                f"No {entity_name} records matched the requested identifiers"
             )
         return r[Sequence[t.ConfigurationMapping]].ok(filtered_records)
 

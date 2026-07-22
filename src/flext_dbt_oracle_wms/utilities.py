@@ -30,8 +30,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
             """Workflow and monitoring service helpers — u.DbtOracleWms.Service.*."""
 
             def generate_workflow_recommendations(
-                self,
-                entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
+                self, entities: t.SequenceOf[t.ConfigurationMapping] | None = None
             ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
                 """Generate simple workflow recommendations for entity processing."""
                 entity_list = entities or []
@@ -48,7 +47,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                         recommendation=recommendation_message,
                         dbt_threads=str(settings.DbtOracleWms.dbt_threads),
                         target=settings.DbtOracleWms.dbt_target,
-                    ),
+                    )
                 )
 
             def log_workflow_completion(
@@ -93,14 +92,12 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                 # item.model_dump() roundtrip; WmsItems are surfaced directly).
                 return self.transform_items(entity_data.get("items", [])).map(
                     lambda items: m.DbtOracleWms.EntityTransformationSet(
-                        entity_names=("items",),
-                        items=tuple(items),
-                    ),
+                        entity_names=("items",), items=tuple(items)
+                    )
                 )
 
             def transform_items(
-                self,
-                records: t.SequenceOf[t.ConfigurationMapping],
+                self, records: t.SequenceOf[t.ConfigurationMapping]
             ) -> p.Result[Sequence[m.DbtOracleWms.WmsItem]]:
                 """Transform item records to typed WmsItem models."""
                 transformed: MutableSequence[m.DbtOracleWms.WmsItem] = []
@@ -109,14 +106,13 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                         item = m.DbtOracleWms.WmsItem.model_validate(record)
                     except c.ValidationError as exc:
                         return r[Sequence[m.DbtOracleWms.WmsItem]].fail(
-                            f"Invalid item record at index {index}: {exc}",
+                            f"Invalid item record at index {index}: {exc}"
                         )
                     transformed.append(item)
                 return r[Sequence[m.DbtOracleWms.WmsItem]].ok(transformed)
 
             def validate_business_rules(
-                self,
-                records: t.SequenceOf[t.ConfigurationMapping],
+                self, records: t.SequenceOf[t.ConfigurationMapping]
             ) -> p.Result[bool]:
                 """Validate business rules for WMS records."""
                 if not records:
@@ -148,9 +144,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                     )
                     for source in oracle_sources
                 ]
-                return r[Sequence[m.DbtOracleWms.DbtModel]].ok(
-                    models,
-                )
+                return r[Sequence[m.DbtOracleWms.DbtModel]].ok(models)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsUtilities", "u"]

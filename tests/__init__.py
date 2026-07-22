@@ -33,20 +33,13 @@ if TYPE_CHECKING:
         u,
     )
 
-_LAZY_IMPORTS = build_lazy_import_map(
-    {
-        ".constants": ("TestsFlextDbtOracleWmsConstants", "c"),
-        ".typings": ("TestsFlextDbtOracleWmsTypes", "t"),
-        ".protocols": ("TestsFlextDbtOracleWmsProtocols", "p"),
-        ".models": ("TestsFlextDbtOracleWmsModels", "m"),
-        ".utilities": ("TestsFlextDbtOracleWmsUtilities", "u"),
-        ".base": ("TestsFlextDbtOracleWmsServiceBase", "s"),
-    },
-)
+_LAZY_IMPORTS = build_lazy_import_map({
+    ".constants": ("TestsFlextDbtOracleWmsConstants", "c"),
+    ".typings": ("TestsFlextDbtOracleWmsTypes", "t"),
+    ".protocols": ("TestsFlextDbtOracleWmsProtocols", "p"),
+    ".models": ("TestsFlextDbtOracleWmsModels", "m"),
+    ".utilities": ("TestsFlextDbtOracleWmsUtilities", "u"),
+    ".base": ("TestsFlextDbtOracleWmsServiceBase", "s"),
+})
 
-install_lazy_exports(
-    __name__,
-    globals(),
-    _LAZY_IMPORTS,
-    publish_all=False,
-)
+install_lazy_exports(__name__, globals(), _LAZY_IMPORTS, publish_all=False)

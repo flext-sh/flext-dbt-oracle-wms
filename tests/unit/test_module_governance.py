@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import pytest
-from flext_tests import tm
 
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
+from flext_tests import tm
 
 __all__: list[str] = ["TestsFlextDbtOracleWmsModuleGovernance"]
 
@@ -15,17 +15,10 @@ class TestsFlextDbtOracleWmsModuleGovernance:
     """Behavior contract for flext_dbt_oracle_wms package entrypoints."""
 
     @pytest.mark.parametrize(
-        ("command", "expected_exit_code"),
-        [
-            ("info", 0),
-            ("unknown", 1),
-            ("", 1),
-        ],
+        ("command", "expected_exit_code"), [("info", 0), ("unknown", 1), ("", 1)]
     )
     def test_execute_command_maps_command_to_exit_code(
-        self,
-        command: str,
-        expected_exit_code: int,
+        self, command: str, expected_exit_code: int
     ) -> None:
         service = FlextDbtOracleWmsCliService()
         tm.that(service.execute_command(command), eq=expected_exit_code)
@@ -36,17 +29,8 @@ class TestsFlextDbtOracleWmsModuleGovernance:
         tm.that(result.success, eq=True)
         tm.that(result.value, eq="FLEXT DBT Oracle WMS")
 
-    @pytest.mark.parametrize(
-        "argv",
-        [
-            [],
-            ["info"],
-        ],
-    )
-    def test_main_entrypoint_defaults_to_info_success(
-        self,
-        argv: list[str],
-    ) -> None:
+    @pytest.mark.parametrize("argv", [[], ["info"]])
+    def test_main_entrypoint_defaults_to_info_success(self, argv: list[str]) -> None:
         tm.that(main(argv), eq=0)
 
     def test_module_main_matches_service_main(self) -> None:

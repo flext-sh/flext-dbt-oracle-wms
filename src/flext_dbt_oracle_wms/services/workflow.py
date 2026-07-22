@@ -45,14 +45,13 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         model_names: t.StrSequence | None = None
         if generate_models:
             model_generation_result = self.generate_dbt_models_from_wms(
-                inventory_items,
-                shipments,
+                inventory_items, shipments
             )
             if model_generation_result.failure:
                 return self._log_and_return(
                     tracking_info,
                     r[m.DbtOracleWms.WorkflowResult].fail(
-                        model_generation_result.error or "DBT model generation failed",
+                        model_generation_result.error or "DBT model generation failed"
                     ),
                 )
             generated_models = model_generation_result.value.model_names
@@ -61,8 +60,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         # WorkflowResult directly — no runtime isinstance type-switch (flext-law §4).
         if run_transformations:
             workflow_result = self.client.run_full_oracle_wms_to_dbt_pipeline(
-                entity_names=entity_names,
-                model_names=model_names,
+                entity_names=entity_names, model_names=model_names
             ).map(
                 lambda pipeline: m.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
@@ -73,13 +71,10 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
                     total_records=pipeline.total_records,
                     transformation_status=pipeline.transformation_status,
                     workflow_status=pipeline.pipeline_status,
-                ),
+                )
             )
         else:
-            workflow_result = self.extract_wms_metadata(
-                inventory_items,
-                shipments,
-            ).map(
+            workflow_result = self.extract_wms_metadata(inventory_items, shipments).map(
                 lambda metadata: m.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
@@ -89,7 +84,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
                     total_records=metadata.inventory_count + metadata.shipment_count,
                     transformation_status=metadata.status,
                     workflow_status=metadata.status,
-                ),
+                )
             )
         return self._log_and_return(tracking_info, workflow_result)
 
@@ -108,14 +103,12 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         connection_result = self.client.test_oracle_wms_connection()
         if connection_result.failure:
             return r[bool].fail(
-                connection_result.error or "Oracle WMS connection validation failed",
+                connection_result.error or "Oracle WMS connection validation failed"
             )
         return r[bool].ok(True)
 
     @override
-    def execute(
-        self,
-    ) -> p.Result[FlextDbtOracleWmsSettings]:
+    def execute(self) -> p.Result[FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         self.logger.info("Executing DBT Oracle WMS service")
         return r[FlextDbtOracleWmsSettings].ok(self.settings)
