@@ -133,7 +133,7 @@ $env:PATH = "$env:ORACLE_HOME;$env:PATH"
 
 ```bash
 # Test Oracle client installation
-python -c "import cx_Oracle; print('Oracle client installed successfully')"
+python -c "import cx_Oracle; u.Cli.print('Oracle client installed successfully')"
 ```
 
 ### 4. dbt Installation and Setup
