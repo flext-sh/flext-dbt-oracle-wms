@@ -136,7 +136,7 @@ except ImportError as e:
 
 #### Problem: MyPy errors
 
-```python
+```text
 from flext_core import t
 
 # Error
@@ -277,9 +277,9 @@ content = """dn: cn=test,dc=example,dc=com
 cn: test
 objectClass: inetOrgPerson"""
 
-result = ldif.parse(content)
+result = ldif.parse_string(content)
 if result.failure:
-    print(f"Parse error: {result.failure()}")
+    print(f"Parse error: {result.error}")
     print(f"Content: {repr(content)}")
 ```
 
@@ -341,12 +341,14 @@ settings = FlextLdifSettings(
     handle_schema_extensions=True,
 )
 
-print(f"Config: {settings.dict()}")
+print(f"Config: {settings.model_dump()}")
 ```
 
 **Enable server servers:**
 
 ```python
+from flext_ldif import FlextLdifSettings
+
 settings = FlextLdifSettings(
     servers_enabled=True, source_server="oid", target_server="oud"
 )
@@ -362,11 +364,11 @@ sample_ldif = """dn: cn=test,dc=example,dc=com
 cn: test
 objectClass: inetOrgPerson"""
 
-result = ldif.parse(sample_ldif)
+result = ldif.parse_string(sample_ldif)
 if result.success:
     print("Sample parsing successful")
 else:
-    print(f"Sample parsing failed: {result.failure()}")
+    print(f"Sample parsing failed: {result.error}")
 ```
 
 ### 7. Performance Issues
@@ -420,6 +422,8 @@ settings = FlextLdifSettings(
 **Enable parallel processing:**
 
 ```python
+from flext_ldif import FlextLdifSettings
+
 settings = FlextLdifSettings(
     parallel_processing=True,
     max_workers=4,  # Adjust based on CPU cores
