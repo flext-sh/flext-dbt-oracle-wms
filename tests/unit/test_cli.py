@@ -20,10 +20,7 @@ from tests import m, p, t, u
 
 class _CliClient(FlextDbtOracleWmsClient):
     def __init__(
-        self,
-        settings: FlextDbtOracleWmsSettings,
-        *,
-        pipeline_should_fail: bool = False,
+        self, settings: FlextDbtOracleWmsSettings, *, pipeline_should_fail: bool = False
     ) -> None:
         self.last_entity: str | None = None
         self.pipeline_should_fail = pipeline_should_fail
@@ -35,9 +32,7 @@ class _CliClient(FlextDbtOracleWmsClient):
 
     @override
     def extract_oracle_wms_data(
-        self,
-        entity_name: str,
-        filters: t.ConfigurationMapping | None = None,
+        self, entity_name: str, filters: t.ConfigurationMapping | None = None
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         _ = filters
         self.last_entity = entity_name
@@ -63,7 +58,7 @@ class _CliClient(FlextDbtOracleWmsClient):
                 total_records=2,
                 transformation_status="success",
                 pipeline_status="completed",
-            ),
+            )
         )
 
 
@@ -101,12 +96,9 @@ class _CliService(u.DbtOracleWms.Service):
 
 
 def _build_public_facade(
-    *,
-    pipeline_should_fail: bool = False,
+    *, pipeline_should_fail: bool = False
 ) -> t.Triple[FlextDbtOracleWms, _CliClient, _CliService]:
-    settings = FlextDbtOracleWmsSettings(
-        oracle_wms_base_url="https://wms.example.com",
-    )
+    settings = FlextDbtOracleWmsSettings(oracle_wms_base_url="https://wms.example.com")
     client = _CliClient(settings, pipeline_should_fail=pipeline_should_fail)
     helper = _CliService()
     return (

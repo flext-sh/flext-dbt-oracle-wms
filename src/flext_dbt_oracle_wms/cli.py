@@ -27,9 +27,7 @@ class FlextDbtOracleWmsCliService:
         self._service = service if service is not None else FlextDbtOracleWms()
 
     def execute_command(
-        self,
-        command: str,
-        args: t.MappingKV[str, t.JsonValue | None] | None = None,
+        self, command: str, args: t.MappingKV[str, t.JsonValue | None] | None = None
     ) -> int:
         """Execute a named CLI command and return an exit code."""
         callables: t.MappingKV[str, Callable[[], p.Result[str]]] = {
@@ -62,22 +60,14 @@ class FlextDbtOracleWmsCliService:
         return r[str].ok("Discovery completed successfully")
 
     def handle_extract(
-        self,
-        args: t.MappingKV[str, t.JsonValue | None] | None = None,
+        self, args: t.MappingKV[str, t.JsonValue | None] | None = None
     ) -> p.Result[str]:
         """Handle extract command."""
         entity = self._default_entity
         if args is not None:
             entity_value = args.get("entity")
             try:
-                validated_entity = (
-                    t
-                    .str_adapter()
-                    .validate_python(
-                        entity_value,
-                    )
-                    .strip()
-                )
+                validated_entity = t.str_adapter().validate_python(entity_value).strip()
             except c.ValidationError:
                 validated_entity = ""
             if validated_entity:
@@ -94,8 +84,7 @@ class FlextDbtOracleWmsCliService:
     def handle_pipeline(self) -> p.Result[str]:
         """Handle full pipeline command."""
         result = self._service.run_oracle_wms_to_dbt_workflow(
-            generate_models=False,
-            run_transformations=True,
+            generate_models=False, run_transformations=True
         )
         if result.failure:
             return r[str].fail(result.error or "Pipeline failed")

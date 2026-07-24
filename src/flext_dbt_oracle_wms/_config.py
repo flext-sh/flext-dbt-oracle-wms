@@ -23,15 +23,13 @@ from flext_meltano import FlextMeltanoConfig
 class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
     """DbtOracleWms config auto-loaded from ``config/*.yaml`` and validated via models."""
 
-    CONFIG_DIR: ClassVar[str] = str(
-        Path(__file__).resolve().parents[2] / "config",
-    )
+    CONFIG_DIR: ClassVar[str] = str(Path(__file__).resolve().parents[2] / "config")
 
     @cached_property
     def DbtOracleWms(self) -> FlextDbtOracleWmsConfigModels.DbtOracleWms:
         """Validated ``DbtOracleWms`` business-rule config namespace."""
         root = FlextDbtOracleWmsConfigModels.Root.model_validate(
-            dict(self.model_extra or {}),
+            dict(self.model_extra or {})
         )
         return root.DbtOracleWms
 

@@ -44,7 +44,7 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
                     environment="development",
                     base_url="",
                     status_code=200,
-                ),
+                )
             )
         )
         self._entities = (
@@ -62,7 +62,7 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
                     total_records=0,
                     transformation_status="success",
                     pipeline_status="completed",
-                ),
+                )
             )
         )
 
@@ -76,9 +76,7 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
 
     @override
     def extract_oracle_wms_data(
-        self,
-        entity_name: str,
-        filters: t.ConfigurationMapping | None = None,
+        self, entity_name: str, filters: t.ConfigurationMapping | None = None
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         _ = filters
         records = self._records_by_entity.get(entity_name, [{"entity": entity_name}])
@@ -97,8 +95,8 @@ class _FakeWmsClient(FlextDbtOracleWmsClient):
             return self._pipeline
         return r[p.DbtOracleWms.PipelineResult].ok(
             self._pipeline.value.model_copy(
-                update={"processed_entities": tuple(entity_names or ())},
-            ),
+                update={"processed_entities": tuple(entity_names or ())}
+            )
         )
 
 
@@ -111,8 +109,7 @@ class _FakeWmsService(u.DbtOracleWms.Service):
 
     @override
     def generate_workflow_recommendations(
-        self,
-        entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
+        self, entities: t.SequenceOf[t.ConfigurationMapping] | None = None
     ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
         return r[p.DbtOracleWms.WorkflowRecommendation].ok(
             m.DbtOracleWms.WorkflowRecommendation(
@@ -120,7 +117,7 @@ class _FakeWmsService(u.DbtOracleWms.Service):
                 recommendation="",
                 dbt_threads="4",
                 target="dev",
-            ),
+            )
         )
 
     @override
@@ -199,8 +196,7 @@ class TestsFlextDbtOracleWmsApi:
     def test_discover_entities_returns_the_client_entity_list(self) -> None:
         settings = self._settings()
         client = _FakeWmsClient(
-            settings,
-            entities=r[t.StrSequence].ok(["items", "shipments"]),
+            settings, entities=r[t.StrSequence].ok(["items", "shipments"])
         )
         facade = self._facade(client=client)
 
@@ -212,8 +208,7 @@ class TestsFlextDbtOracleWmsApi:
     def test_discover_entities_propagates_client_discovery_failure(self) -> None:
         settings = self._settings()
         client = _FakeWmsClient(
-            settings,
-            entities=r[t.StrSequence].fail("entity catalog unavailable"),
+            settings, entities=r[t.StrSequence].fail("entity catalog unavailable")
         )
         facade = self._facade(client=client)
 
@@ -223,8 +218,7 @@ class TestsFlextDbtOracleWmsApi:
 
     @pytest.mark.parametrize("entity_name", ["items", "shipments"])
     def test_extract_returns_records_for_the_requested_entity(
-        self,
-        entity_name: str,
+        self, entity_name: str
     ) -> None:
         facade = self._facade()
 
@@ -243,15 +237,13 @@ class TestsFlextDbtOracleWmsApi:
                     total_records=4,
                     transformation_status="success",
                     pipeline_status="completed",
-                ),
+                )
             ),
         )
         facade = self._facade(client=client, service=_FakeWmsService("trk-77"))
 
         result = facade.run_oracle_wms_to_dbt_workflow(
-            inventory_items=["item-1"],
-            generate_models=False,
-            run_transformations=True,
+            inventory_items=["item-1"], generate_models=False, run_transformations=True
         )
 
         tm.that(result.success, eq=True)
@@ -271,9 +263,7 @@ class TestsFlextDbtOracleWmsApi:
         facade = self._facade(client=client, service=_FakeWmsService("trk-42"))
 
         result = facade.run_oracle_wms_to_dbt_workflow(
-            inventory_items=["item-1"],
-            generate_models=False,
-            run_transformations=False,
+            inventory_items=["item-1"], generate_models=False, run_transformations=False
         )
 
         tm.that(result.success, eq=True)
@@ -291,9 +281,7 @@ class TestsFlextDbtOracleWmsApi:
         facade = self._facade(client=client, service=_FakeWmsService())
 
         result = facade.run_oracle_wms_to_dbt_workflow(
-            inventory_items=["item-1"],
-            generate_models=False,
-            run_transformations=True,
+            inventory_items=["item-1"], generate_models=False, run_transformations=True
         )
 
         tm.fail(result, has="aborted")

@@ -23,8 +23,7 @@ class FlextDbtOracleWmsConfigModels:
 
         project_name: str = Field(description="DBT project name.")
         threads: int = Field(
-            ge=1,
-            description="Number of DBT threads for parallel execution.",
+            ge=1, description="Number of DBT threads for parallel execution."
         )
         target: str = Field(description="DBT target profile.")
         materialization: str = Field(description="Default DBT materialization.")
@@ -51,8 +50,7 @@ class FlextDbtOracleWmsConfigModels:
         model_config = ConfigDict(frozen=True, extra="forbid")
 
         performance_recommendation_threshold: int = Field(
-            ge=1,
-            description="Threshold for performance recommendations.",
+            ge=1, description="Threshold for performance recommendations."
         )
 
     class DbtOracleWms(BaseModel):
@@ -61,16 +59,16 @@ class FlextDbtOracleWmsConfigModels:
         model_config = ConfigDict(frozen=True, extra="forbid")
 
         dbt: FlextDbtOracleWmsConfigModels.Dbt = Field(
-            description="DBT runtime defaults.",
+            description="DBT runtime defaults."
         )
         defaults: FlextDbtOracleWmsConfigModels.Defaults = Field(
-            description="DBT model defaults.",
+            description="DBT model defaults."
         )
         oracle_wms: FlextDbtOracleWmsConfigModels.OracleWms = Field(
-            description="Oracle WMS integration defaults.",
+            description="Oracle WMS integration defaults."
         )
         runtime: FlextDbtOracleWmsConfigModels.Runtime = Field(
-            description="Runtime behavior defaults.",
+            description="Runtime behavior defaults."
         )
 
     class Root(BaseModel):
@@ -79,7 +77,7 @@ class FlextDbtOracleWmsConfigModels:
         model_config = ConfigDict(frozen=True, extra="ignore")
 
         DbtOracleWms: FlextDbtOracleWmsConfigModels.DbtOracleWms = Field(
-            description="DBT Oracle WMS business-rule config namespace.",
+            description="DBT Oracle WMS business-rule config namespace."
         )
 
 

@@ -28,9 +28,7 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
                 ...
 
             def extract_oracle_wms_data(
-                self,
-                entity_name: str,
-                filters: t.ConfigurationMapping | None = None,
+                self, entity_name: str, filters: t.ConfigurationMapping | None = None
             ) -> p.Result[Sequence[t.ConfigurationMapping]]:
                 """Extract records for a specific Oracle WMS entity."""
                 ...
@@ -63,8 +61,7 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
             """Protocol for the workflow/monitoring service surface."""
 
             def generate_workflow_recommendations(
-                self,
-                entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
+                self, entities: t.SequenceOf[t.ConfigurationMapping] | None = None
             ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
                 """Generate workflow recommendations for entity processing."""
                 ...
