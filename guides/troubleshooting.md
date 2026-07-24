@@ -85,7 +85,7 @@ git status
 
 #### Problem: ModuleNotFoundError
 
-```python
+```text
 # Error
 ModuleNotFoundError: No module named 'flext_core'
 ```
@@ -178,7 +178,7 @@ mypy src/ --show-error-codes | grep "error-code"
 
 #### Problem: Tests failing
 
-```python
+```text
 # Error
 AssertionError: Expected success but got failure
 ```
@@ -216,7 +216,7 @@ def test_with_debug():
 
 #### Problem: Configuration not loading
 
-```python
+```text
 # Error
 ValidationError: field required
 ```
@@ -261,7 +261,7 @@ print(f"Config: {settings.dict()}")
 
 #### Problem: LDIF parsing fails
 
-```python
+```text
 # Error
 LdifParsingException: Invalid LDIF format
 ```
@@ -322,7 +322,7 @@ def validate_ldif_content(content: str) -> t.StringList:
 
 #### Problem: Migration fails
 
-```python
+```text
 # Error
 LdifMigrationException: Server compatibility error
 ```
