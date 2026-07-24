@@ -12,24 +12,22 @@ from flext_dbt_oracle_wms import (
     main,
     r,
 )
-from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_tests import tm
 from tests import m, p, t, u
 
 
-class _CliClient(FlextDbtOracleWmsClient):
+class _CliClient:
     def __init__(
         self, settings: FlextDbtOracleWmsSettings, *, pipeline_should_fail: bool = False
     ) -> None:
+        self._settings = settings
         self.last_entity: str | None = None
         self.pipeline_should_fail = pipeline_should_fail
         self.pipeline_called = False
 
-    @override
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         return r[t.StrSequence].ok(["items", "shipments"])
 
-    @override
     def extract_oracle_wms_data(
         self, entity_name: str, filters: t.ConfigurationMapping | None = None
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
@@ -39,7 +37,6 @@ class _CliClient(FlextDbtOracleWmsClient):
             return r[Sequence[t.ConfigurationMapping]].fail("unknown entity")
         return r[Sequence[t.ConfigurationMapping]].ok([{"entity": entity_name}])
 
-    @override
     def run_full_oracle_wms_to_dbt_pipeline(
         self,
         entity_names: t.StrSequence | None = None,
