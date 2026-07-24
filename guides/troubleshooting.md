@@ -136,7 +136,7 @@ except ImportError as e:
 
 #### Problem: MyPy errors
 
-```text
+```python
 from flext_core import t
 
 # Error
@@ -254,7 +254,7 @@ for key, value in os.environ.items():
 
 # Load and print configuration
 settings = FlextSettings()
-print(f"Config: {settings.dict()}")
+print(f"Config: {settings.model_dump()}")
 ```
 
 ### 5. LDIF Processing Issues
@@ -443,8 +443,8 @@ logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
-# Use FLEXT logger
-logger = FlextLogger.get_logger(__name__)
+# Use a logger for the current module
+logger = logging.getLogger(__name__)
 logger.debug("Debug message")
 logger.info("Info message")
 logger.warning("Warning message")
@@ -580,6 +580,7 @@ monitor_memory()
 from __future__ import annotations
 
 # Monitor CPU usage
+import os
 import psutil
 import time
 
