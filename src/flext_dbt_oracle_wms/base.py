@@ -8,41 +8,37 @@ from __future__ import annotations
 
 from typing import Annotated, override
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, t
-from flext_meltano import FlextMeltanoDbtServiceBase, u
+# NOTE (multi-agent): mro-rn88 — import `settings` singleton for strict `from <pkg> import settings` access.
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, settings, t
+from flext_meltano import FlextMeltanoDbtServiceBase, p, u
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
     """Base class for flext-dbt-oracle-wms services."""
 
-    settings_type: Annotated[
-        type | None,
-        u.Field(description="Settings class for DBT Oracle WMS service initialization"),
-    ] = FlextDbtOracleWmsSettings
     dbt_project_name: Annotated[
         t.NonEmptyStr,
         u.Field(description="Canonical dbt project name for DBT Oracle WMS services"),
     ] = c.DbtOracleWms.Dbt.PROJECT_NAME
 
-    @property
-    @override
-    def settings(self) -> FlextDbtOracleWmsSettings:
-        """Return the typed dbt-oracle-wms settings namespace."""
-        return FlextDbtOracleWmsSettings.fetch_global()
+    @classmethod
+    def _runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
+        """Return runtime bootstrap options for DBT Oracle WMS services."""
+        return m.RuntimeBootstrapOptions(settings_type=FlextDbtOracleWmsSettings)
 
     @property
     @override
-    def connection_profile(self) -> t.JsonMapping:
+    def connection_profile(self) -> p.Meltano.DbtConnectionProfile:
         """Dbt connection profile for Oracle WMS-backed workflows."""
-        active_settings = self.settings
-        return {
-            "type": "oracle_wms",
-            "base_url": active_settings.oracle_wms_base_url,
-            "environment": active_settings.oracle_wms_environment,
-            "target": active_settings.dbt_target,
-            "threads": active_settings.dbt_threads,
-            "project": self.dbt_project_name,
-        }
+        # NOTE (multi-agent): mro-rn88 ADR-006 thin-driver — typed connection_profile.
+        wms = settings.DbtOracleWms
+        return m.DbtOracleWms.DbtConnectionProfile(
+            base_url=wms.oracle_wms_base_url,
+            environment=wms.oracle_wms_environment,
+            target=wms.dbt_target,
+            threads=wms.dbt_threads,
+            project=self.dbt_project_name,
+        )
 
 
 s = FlextDbtOracleWmsServiceBase
