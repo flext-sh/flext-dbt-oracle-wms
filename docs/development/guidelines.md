@@ -859,8 +859,8 @@ perf(marts): optimize allocation summary query performance
 
 ### FLEXT Framework
 
-- **[Clean Architecture Guide](https://github.com/organization/flext/tree/main/flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
-- **[Domain-Driven Design](https://github.com/organization/flext/tree/main/flext-core/docs/guides/domain-driven-design.md)** - DDD implementation patterns
+- **[Clean Architecture Guide](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
+- **[Domain-Driven Design](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/guides/domain-driven-design.md)** - DDD implementation patterns
 
 ______________________________________________________________________
 
