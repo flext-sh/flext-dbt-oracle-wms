@@ -159,15 +159,11 @@ def process(data: t.JsonMapping) -> p.Result[ProcessedData]:
 **Run MyPy with details:**
 
 ```bash
-mypy src/module.py --show-error-codes --show-traceback
-```
-
+mypy src/module.py --show-error-codes --show-traceback```
 **Check specific error:**
 
 ```bash
-mypy src/ --show-error-codes | grep "error-code"
-```
-
+mypy src/ --show-error-codes | grep "error-code"```
 ### 3. Test Failures
 
 #### Problem: Tests failing
@@ -210,17 +206,13 @@ def test_with_debug():
 
 ```text
 # Error
-ValidationError: field required
-```
-
+ValidationError: field required```
 #### Solutions
 
 **Check environment variables:**
 
 ```bash
-env | grep FLEXT_
-```
-
+env | grep FLEXT_```
 **Validate configuration:**
 
 ```python
@@ -251,9 +243,7 @@ print(f"Config: {settings.model_dump()}")```
 
 ```text
 # Error
-LdifParsingException: Invalid LDIF format
-```
-
+LdifParsingException: Invalid LDIF format```
 #### Solutions
 
 **Check LDIF content:**
@@ -306,9 +296,7 @@ def validate_ldif_content(content: str) -> t.StringList:
 
 ```text
 # Error
-LdifMigrationException: Server compatibility error
-```
-
+LdifMigrationException: Server compatibility error```
 #### Solutions
 
 **Check server configuration:**
@@ -659,7 +647,7 @@ def process(data: dict) -> ProcessedData:
 
    ```python
 
-from **future** import annotations
+from __future__ import annotations
 from flext_core import p, r
 
    def process_data(data: dict) -> p.Result[dict]:
@@ -674,13 +662,12 @@ from flext_core import p, r
 1. **Use Type Hints**
 
    ```python
-from __future__ import annotations
-from flext_core import p, t
+   from __future__ import annotations
+   from flext_core import p, t
 
    # ✅ GOOD
    def process(items: t.SequenceOf[Item]) -> p.Result[Sequence[ProcessedItem]]:
        pass
-
 
    # ❌ BAD
    def process(items):
@@ -691,7 +678,7 @@ from flext_core import p, t
 
    ```python
 
-from **future** import annotations
+   from __future__ import annotations
 
    def test_process_data():
        # Test success case
