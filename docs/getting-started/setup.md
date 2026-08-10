@@ -572,7 +572,7 @@ dbt run --fail-fast --threads 1
 
 Now that you have FLEXT DBT Oracle WMS set up:
 
-1. **Explore Models** - Check the [Model Reference](../models/reference.md)
+1. **Explore Models** - Check the [Model Reference](../reference.md)
 1. **Run Your First Transformation** - Follow the [Quick Start Guide](quickstart.md)
 1. **Understand the Data** - Review [Oracle WMS Integration](../integration/oracle-wms.md)
 1. **Set Up Development** - Read the [Development Guide](../development/guidelines.md)
