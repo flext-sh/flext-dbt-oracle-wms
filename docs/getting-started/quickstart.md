@@ -243,7 +243,7 @@ dbt test --select stg_wms__allocation
 
 ### Immediate Actions (Next 30 minutes)
 
-1. **Explore Models** - Check [Model Reference](../models/reference.md)
+1. **Explore Models** - Check [Model Reference](../reference.md)
 1. **Review Data Quality** - Run `dbt test` and investigate failures
 1. **Check Performance** - Monitor model execution times
 
@@ -263,7 +263,7 @@ dbt test --select stg_wms__allocation
 
 ### Essential Documentation
 
-- **[Model Reference](../models/reference.md)** - Complete model documentation
+- **[Model Reference](../reference.md)** - Complete model documentation
 - **[Setup Guide](setup.md)** - Detailed installation instructions
 - **[Oracle WMS Integration](../integration/oracle-wms.md)** - WMS-specific guidance
 
@@ -312,7 +312,7 @@ After completing this guide, you should have:
 - **Check Logs** - `logs/dbt.log` for detailed errors
 - **Debug Mode** - `dbt debug` for connection issues
 - **Compile Check** - `dbt compile` for SQL issues
-- **Documentation** - [Troubleshooting Guide](../examples/troubleshooting.md)
+- **Documentation** - [Troubleshooting Guide](../guides/troubleshooting.md)
 
 ______________________________________________________________________
 

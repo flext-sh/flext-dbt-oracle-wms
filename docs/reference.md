@@ -3,14 +3,14 @@
 <!-- TOC START -->
 - [📊 Model Architecture Overview](#model-architecture-overview)
 - [🔵 Staging Models](#staging-models)
-  - [stg_wms\_\_allocation](#stgwmsallocation)
-  - [stg_wms\_\_inventory](#stgwmsinventory)
-  - [stg_wms\_\_order_hdr](#stgwmsorderhdr)
-  - [stg_wms\_\_order_dtl](#stgwmsorderdtl)
+  - [stg_wms\_\_allocation](#stg_wms__allocation)
+  - [stg_wms\_\_inventory](#stg_wms__inventory)
+  - [stg_wms\_\_order_hdr](#stg_wms__order_hdr)
+  - [stg_wms\_\_order_dtl](#stg_wms__order_dtl)
 - [🟢 Mart Models](#mart-models)
-  - [marts/operational/opr_wms\_\_allocation_summary](#martsoperationaloprwmsallocationsummary)
-  - [marts/analytical/ana_wms\_\_inventory_analysis](#martsanalyticalanawmsinventoryanalysis)
-  - [marts/metrics/met_wms\_\_kpi_dashboard](#martsmetricsmetwmskpidashboard)
+  - [marts/operational/opr_wms\_\_allocation_summary](#martsoperationalopr_wms__allocation_summary)
+  - [marts/analytical/ana_wms\_\_inventory_analysis](#martsanalyticalana_wms__inventory_analysis)
+  - [marts/metrics/met_wms\_\_kpi_dashboard](#martsmetricsmet_wms__kpi_dashboard)
 - [🔗 Model Dependencies](#model-dependencies)
   - [Dependency Graph](#dependency-graph)
 - [📈 Performance Considerations](#performance-considerations)
@@ -569,4 +569,4 @@ dbt docs serve --port 8080
 
 ______________________________________________________________________
 
-This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](../development/guidelines.md).
+This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](development/guidelines.md).
