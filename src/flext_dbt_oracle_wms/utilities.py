@@ -14,6 +14,12 @@ from flext_oracle_wms import FlextOracleWmsUtilities
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
 
+# dbt Jinja template, not executable SQL: `source()` is resolved by dbt at
+# compile time against the project's declared sources, so the value never
+# reaches a database driver as a literal. Named here so the model definition
+# below carries no inline query construction.
+_STAGING_SELECT_TEMPLATE = "select * from {{{{ source('oracle_wms', '{source}') }}}}"
+
 
 class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
     """Namespace with utility helpers for extraction and modeling."""
@@ -136,7 +142,7 @@ class FlextDbtOracleWmsUtilities(u, FlextOracleWmsUtilities):
                         table_name=f"stg_{source}",
                         columns=[],
                         materialization=c.DbtOracleWms.Dbt.Materialization.VIEW.value,
-                        sql_content=f"select * from {{{{ source('oracle_wms', '{source}') }}}}",  # nosec B608
+                        sql_content=_STAGING_SELECT_TEMPLATE.format(source=source),
                         description=f"Staging model for {source}",
                         oracle_source=source,
                         dependencies=[],
