@@ -122,7 +122,7 @@ class FlextDbtOracleWmsModels(m, FlextOracleWmsModels):
                 u.Field(description="Typed meltano dbt command execution result"),
             ]
 
-            @u.computed_field(return_type=str)
+            @u.computed_field
             @property
             def status(self) -> str:
                 """Overall status derived from the command result."""
