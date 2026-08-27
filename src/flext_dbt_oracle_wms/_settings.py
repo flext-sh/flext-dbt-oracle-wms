@@ -11,10 +11,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Annotated
 
-from pydantic import BaseModel, Field
 from pydantic_settings import SettingsConfigDict
 
-from flext_meltano import FlextMeltanoSettings
+from flext_meltano import FlextMeltanoSettings, m
 
 
 class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
@@ -24,40 +23,40 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         env_prefix="FLEXT_DBT_ORACLE_WMS_", env_nested_delimiter="__", extra="ignore"
     )
 
-    class _DbtOracleWms(BaseModel):
+    class _DbtOracleWms(m.BaseModel):
         """Namespaced dbt Oracle WMS settings."""
 
         required_fields_per_entity: Annotated[
             dict[str, tuple[str, ...]],
-            Field(
+            m.Field(
                 default_factory=dict,
                 description="Required fields per WMS entity (typed mapping)",
             ),
         ]
         oracle_wms_environment: Annotated[
             str,
-            Field(
+            m.Field(
                 default="development",
                 description="Oracle WMS environment (development/production)",
             ),
         ]
         oracle_wms_base_url: Annotated[
-            str, Field(default="", description="Base URL for Oracle WMS API")
+            str, m.Field(default="", description="Base URL for Oracle WMS API")
         ]
         dbt_threads: Annotated[
             int,
-            Field(
+            m.Field(
                 default=4, description="Number of DBT threads for parallel execution"
             ),
         ]
         dbt_target: Annotated[
-            str, Field(default="dev", description="DBT target profile (dev/prod)")
+            str, m.Field(default="dev", description="DBT target profile (dev/prod)")
         ]
 
     if TYPE_CHECKING:
         DbtOracleWms: _DbtOracleWms
     else:
-        DbtOracleWms: _DbtOracleWms = Field(
+        DbtOracleWms: _DbtOracleWms = m.Field(
             default_factory=_DbtOracleWms,
             description="Namespaced dbt Oracle WMS settings.",
         )

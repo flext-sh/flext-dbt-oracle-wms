@@ -57,6 +57,34 @@ class _CliClient:
             )
         )
 
+    def test_oracle_wms_connection(self) -> p.Result[m.DbtOracleWms.ConnectionStatus]:
+        return r[m.DbtOracleWms.ConnectionStatus].ok(
+            m.DbtOracleWms.ConnectionStatus(
+                status="connected",
+                environment="development",
+                base_url="",
+                status_code=200,
+            )
+        )
+
+    def transform_with_dbt(
+        self,
+        entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
+        model_names: t.StrSequence | None,
+    ) -> p.Result[m.Meltano.CommandExecutionResult]:
+        _ = entity_data
+        _ = model_names
+        return r[m.Meltano.CommandExecutionResult].ok(
+            m.Meltano.CommandExecutionResult(
+                command=("dbt", "run"),
+                success=True,
+                exit_code=0,
+                output="",
+                error="",
+                execution_time=0.0,
+            )
+        )
+
 
 class _CliService(u.DbtOracleWms.Service):
     def __init__(self) -> None:

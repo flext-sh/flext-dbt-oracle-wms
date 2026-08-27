@@ -98,6 +98,24 @@ class _FakeWmsClient:
             )
         )
 
+    def transform_with_dbt(
+        self,
+        entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
+        model_names: t.StrSequence | None,
+    ) -> p.Result[m.Meltano.CommandExecutionResult]:
+        _ = entity_data
+        _ = model_names
+        return r[m.Meltano.CommandExecutionResult].ok(
+            m.Meltano.CommandExecutionResult(
+                command=("dbt", "run"),
+                success=True,
+                exit_code=0,
+                output="",
+                error="",
+                execution_time=0.0,
+            )
+        )
+
 
 class _FakeWmsService(u.DbtOracleWms.Service):
     """Deterministic workflow-service fake with no interaction-capture state."""
