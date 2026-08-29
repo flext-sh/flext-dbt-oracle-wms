@@ -42,7 +42,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        43      def extract_oracle_wms_data(
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 2 · 🟠 CRITICAL · CODE_SMELL · `plsql:S1192`
 **Local**: `tests/data_quality/test_cross_model_consistency.sql:11` · **Effort**: 4min
@@ -61,7 +61,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        15      and a.order_dtl_id = od.order_detail_id
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 3 · 🟠 CRITICAL · CODE_SMELL · `plsql:S1192`
 **Local**: `tests/data_quality/test_cross_model_consistency.sql:12` · **Effort**: 4min
@@ -80,7 +80,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        16  where od.order_detail_id is null
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 4 · 🟠 CRITICAL · CODE_SMELL · `plsql:S1192`
 **Local**: `tests/data_quality/test_cross_model_consistency.sql:18` · **Effort**: 4min
@@ -99,7 +99,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        22  -- Test 2: Inventory allocations should not exceed available quantity
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 5 · 🟠 CRITICAL · CODE_SMELL · `plsql:S1192`
 **Local**: `tests/marts/test_opr_wms__allocation_summary_kpis.sql:6` · **Effort**: 4min
@@ -118,7 +118,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        10  union all
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 6 · 🟠 CRITICAL · CODE_SMELL · `plsql:S1192`
 **Local**: `tests/staging/test_stg_wms__allocation_business_rules.sql:6` · **Effort**: 4min
@@ -137,7 +137,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        10  
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 7 · 🟡 MAJOR · VULNERABILITY · `githubactions:S8264`
 **Local**: `.github/workflows/docs.yml:18` · **Effort**: 5min
@@ -156,7 +156,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        22  concurrency:
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 8 · 🟡 MAJOR · VULNERABILITY · `githubactions:S8233`
 **Local**: `.github/workflows/docs.yml:19` · **Effort**: 5min
@@ -175,7 +175,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        23    group: pages
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 9 · 🟡 MAJOR · VULNERABILITY · `githubactions:S8233`
 **Local**: `.github/workflows/docs.yml:20` · **Effort**: 5min
@@ -194,7 +194,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        24    cancel-in-progress: false
 ```
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 10 · 🟡 MAJOR · VULNERABILITY · `text:S8565`
 **Local**: `pyproject.toml:-` · **Effort**: 5min
@@ -202,7 +202,7 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
 > Dependency versions are not predictable if the lock file (uv.lock, poetry.lock, pdm.lock or pylock.toml) is missing.
 
 
-**Decisão**: 
+**Decisão**: pendente
 
 ### 11 · ⚪ MINOR · CODE_SMELL · `python:S7504`
 **Local**: `conftest.py:20` · **Effort**: 5min
@@ -221,5 +221,4 @@ Cada issue traz a **mensagem do SonarQube** (descreve o problema e o impacto), o
        24                  sys.modules.pop(module_name, None)
 ```
 
-**Decisão**: 
-
+**Decisão**: pendente
