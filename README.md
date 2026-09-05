@@ -54,9 +54,9 @@ slot registry verification).
   filtered by `flext-*`. The FLEXT cascade is encoded in the inheritance lists
   of the facade classes listed under Module Map above.
 - Public extensions exposed by this project: `FlextDbtOracleWms`,
-  `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsConfig`,
-  `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsModels`,
-  `FlextDbtOracleWmsProtocols` (+4 more).
+  `FlextDbtOracleWmsBase`, `FlextDbtOracleWmsCliService`,
+  `FlextDbtOracleWmsConfig`, `FlextDbtOracleWmsConstants`,
+  `FlextDbtOracleWmsMetadata` (+8 more).
 - Library abstraction boundaries: see AGENTS.md §2.7.
 
 ## Quality Gates
