@@ -1,45 +1,96 @@
-# AUTO-GENERATED FILE — canonical lazy tests facade. Regenerate with: make gen
-"""Test package facade exposing the project test aliases lazily."""
+# AUTO-GENERATED FILE — Regenerate with: make gen
+"""Tests package."""
 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from types import MappingProxyType
+
 from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 if TYPE_CHECKING:
-    from tests.base import (
-        TestsFlextDbtOracleWmsServiceBase as TestsFlextDbtOracleWmsServiceBase,
-        s as s,
-    )
-    from tests.constants import (
-        TestsFlextDbtOracleWmsConstants as TestsFlextDbtOracleWmsConstants,
-        c as c,
-    )
-    from tests.models import (
-        TestsFlextDbtOracleWmsModels as TestsFlextDbtOracleWmsModels,
-        m as m,
-    )
-    from tests.protocols import (
-        TestsFlextDbtOracleWmsProtocols as TestsFlextDbtOracleWmsProtocols,
-        p,
-    )
-    from tests.typings import (
-        TestsFlextDbtOracleWmsTypes as TestsFlextDbtOracleWmsTypes,
-        t as t,
-    )
-    from tests.utilities import (
-        TestsFlextDbtOracleWmsUtilities as TestsFlextDbtOracleWmsUtilities,
-        u,
-    )
+    from . import unit as unit
+    from flext_dbt_oracle_wms import FlextDbtOracleWmsConstants
+    from flext_tests import FlextTestsConstants, d, e, h, r, td, tf, tk, tm, tv, x
 
-_LAZY_IMPORTS = build_lazy_import_map({
-    ".constants": ("TestsFlextDbtOracleWmsConstants", "c"),
-    ".typings": ("TestsFlextDbtOracleWmsTypes", "t"),
-    ".protocols": ("TestsFlextDbtOracleWmsProtocols", "p"),
-    ".models": ("TestsFlextDbtOracleWmsModels", "m"),
-    ".utilities": ("TestsFlextDbtOracleWmsUtilities", "u"),
-    ".base": ("TestsFlextDbtOracleWmsServiceBase", "s"),
-})
+    from .base import (
+        TestsFlextDbtOracleWmsServiceBase,
+        TestsFlextDbtOracleWmsServiceBase as s,
+    )
+    from .constants import (
+        TestsFlextDbtOracleWmsConstants,
+        TestsFlextDbtOracleWmsConstants as c,
+    )
+    from .models import TestsFlextDbtOracleWmsModels, TestsFlextDbtOracleWmsModels as m
+    from .protocols import (
+        TestsFlextDbtOracleWmsProtocols,
+        TestsFlextDbtOracleWmsProtocols as p,
+    )
+    from .settings import TestsFlextDbtOracleWmsSettings
+    from .typings import TestsFlextDbtOracleWmsTypes, TestsFlextDbtOracleWmsTypes as t
+    from .utilities import (
+        TestsFlextDbtOracleWmsUtilities,
+        TestsFlextDbtOracleWmsUtilities as u,
+    )
+__all__: tuple[str, ...] = (
+    "FlextDbtOracleWmsConstants",
+    "FlextTestsConstants",
+    "TestsFlextDbtOracleWmsConstants",
+    "TestsFlextDbtOracleWmsModels",
+    "TestsFlextDbtOracleWmsProtocols",
+    "TestsFlextDbtOracleWmsServiceBase",
+    "TestsFlextDbtOracleWmsSettings",
+    "TestsFlextDbtOracleWmsTypes",
+    "TestsFlextDbtOracleWmsUtilities",
+    "c",
+    "d",
+    "e",
+    "h",
+    "m",
+    "p",
+    "r",
+    "s",
+    "t",
+    "td",
+    "tf",
+    "tk",
+    "tm",
+    "tv",
+    "u",
+    "unit",
+    "x",
+)
 
-install_lazy_exports(__name__, globals(), _LAZY_IMPORTS, publish_all=False)
+_LAZY_IMPORTS = MappingProxyType(
+    build_lazy_import_map(
+        MappingProxyType({
+            ".base": ("TestsFlextDbtOracleWmsServiceBase", "s"),
+            ".constants": ("TestsFlextDbtOracleWmsConstants", "c"),
+            ".models": ("TestsFlextDbtOracleWmsModels", "m"),
+            ".protocols": ("TestsFlextDbtOracleWmsProtocols", "p"),
+            ".settings": ("TestsFlextDbtOracleWmsSettings",),
+            ".typings": ("TestsFlextDbtOracleWmsTypes", "t"),
+            ".unit": ("unit",),
+            ".utilities": ("TestsFlextDbtOracleWmsUtilities", "u"),
+            "flext_dbt_oracle_wms": ("FlextDbtOracleWmsConstants",),
+            "flext_tests": (
+                "FlextTestsConstants",
+                "d",
+                "e",
+                "h",
+                "r",
+                "td",
+                "tf",
+                "tk",
+                "tm",
+                "tv",
+                "x",
+            ),
+        }),
+        alias_groups=MappingProxyType({}),
+        sort_keys=False,
+    )
+)
+
+install_lazy_exports(__name__, globals(), _LAZY_IMPORTS, public_exports=__all__)

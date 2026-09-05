@@ -1,4 +1,4 @@
 version: 1
-workspace: flext-dbt-oracle-wms
-database: flext-dbt-oracle-wms
-issue_prefix: flext-dbt-oracle-wms
+workspace: flext
+database: flext
+issue_prefix: flext
