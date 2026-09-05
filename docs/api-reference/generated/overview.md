@@ -16,18 +16,18 @@
   Database` (+2 more)
 - Project class: `integration`
 - Keywords: `data-transformation`, `dbt`, `enterprise`, `flext`, `sql`, `typed`
-- Main facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsCliService`,
-  `FlextDbtOracleWmsConfig`, `FlextDbtOracleWmsConstants`,
-  `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsProtocols`,
-  `FlextDbtOracleWmsServiceBase`, `FlextDbtOracleWmsSettings` (+2 more)
+- Main facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsBase`,
+  `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsConfig`,
+  `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsMetadata`,
+  `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsModelsApi` (+6 more)
 - Alias exports: `c`, `d`, `e`, `h`, `m`, `p`, `r`, `s`, `t`, `u`, `x`
-- Public symbol exports: `FlextDbtOracleWms`, `FlextDbtOracleWmsCliService`,
-  `FlextDbtOracleWmsConfig`, `FlextDbtOracleWmsConstants`,
-  `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsProtocols`,
-  `FlextDbtOracleWmsServiceBase`, `FlextDbtOracleWmsSettings`,
-  `FlextDbtOracleWmsTypes`, `FlextDbtOracleWmsUtilities` (+4 more)
-- Exported module shortcuts: _none_
-- Generated module pages: `8`
+- Public symbol exports: `FlextDbtOracleWms`, `FlextDbtOracleWmsBase`,
+  `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsConfig`,
+  `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsMetadata`,
+  `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsModelsApi`,
+  `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase` (+8 more)
+- Exported module shortcuts: `services`
+- Generated module pages: `13`
 
 ## Next Pages
 
