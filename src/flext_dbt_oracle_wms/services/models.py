@@ -38,25 +38,18 @@ class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):
         if entity_names is None:
             discovery_result = self.client.discover_oracle_wms_entities()
             if discovery_result.failure:
-                return r[m.DbtOracleWms.DbtModelGenerationResult].fail(
-                    discovery_result.error or "Oracle WMS entity discovery failed"
-                )
+                return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(discovery_result)
             entity_names = discovery_result.value
         generated_models_result = (
             u.DbtOracleWms.ModelBuilder.generate_wms_staging_models(entity_names)
         )
         if generated_models_result.failure:
-            return r[m.DbtOracleWms.DbtModelGenerationResult].fail(
-                generated_models_result.error or "DBT model generation failed"
-            )
+            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(generated_models_result)
         recommendations_result = self.service.generate_workflow_recommendations([
             {"entity_name": entity_name} for entity_name in entity_names
         ])
         if recommendations_result.failure:
-            return r[m.DbtOracleWms.DbtModelGenerationResult].fail(
-                recommendations_result.error
-                or "Workflow recommendation generation failed"
-            )
+            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(recommendations_result)
         generated_models = generated_models_result.value
         return r[m.DbtOracleWms.DbtModelGenerationResult].ok(
             m.DbtOracleWms.DbtModelGenerationResult(
@@ -98,9 +91,7 @@ class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):
             entity_data={}, model_names=model_names or None
         )
         if execution_result.failure:
-            return r[m.DbtOracleWms.DbtExecutionResult].fail(
-                execution_result.error or "DBT transformation monitoring failed"
-            )
+            return r[m.DbtOracleWms.DbtExecutionResult].from_failure(execution_result)
         command_result = execution_result.value
         return r[m.DbtOracleWms.DbtExecutionResult].ok(
             m.DbtOracleWms.DbtExecutionResult(
