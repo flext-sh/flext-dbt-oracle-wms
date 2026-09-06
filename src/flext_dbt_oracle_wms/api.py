@@ -33,4 +33,5 @@ class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
         """Initialize the public DBT Oracle WMS facade."""
         super().__init__(settings=settings, client=client, service=service)
 
-__all__: list[str] = ["FlextDbtOracleWms", ]
+
+__all__: list[str] = ["FlextDbtOracleWms"]

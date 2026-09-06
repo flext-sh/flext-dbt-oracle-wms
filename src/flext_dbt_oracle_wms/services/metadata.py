@@ -39,7 +39,9 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
         self.logger.info("Extracting Oracle WMS metadata")
         available_entities_result = self.client.discover_oracle_wms_entities()
         if available_entities_result.failure:
-            return r[m.DbtOracleWms.WmsMetadataResult].from_failure(available_entities_result)
+            return r[m.DbtOracleWms.WmsMetadataResult].from_failure(
+                available_entities_result
+            )
         inventory_records: Sequence[t.ConfigurationMapping] = []
         shipment_records: Sequence[t.ConfigurationMapping] = []
         if include_inventory_details:
@@ -47,7 +49,9 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
                 "items", inventory_items, ("item_id", "item_number", "id", "sku")
             )
             if inventory_result.failure:
-                return r[m.DbtOracleWms.WmsMetadataResult].from_failure(inventory_result)
+                return r[m.DbtOracleWms.WmsMetadataResult].from_failure(
+                    inventory_result
+                )
             inventory_records = inventory_result.value
         if include_shipment_tracking:
             shipment_result = self._extract_entity_records(

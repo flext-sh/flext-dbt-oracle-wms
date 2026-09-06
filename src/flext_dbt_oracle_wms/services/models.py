@@ -38,18 +38,24 @@ class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):
         if entity_names is None:
             discovery_result = self.client.discover_oracle_wms_entities()
             if discovery_result.failure:
-                return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(discovery_result)
+                return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
+                    discovery_result
+                )
             entity_names = discovery_result.value
         generated_models_result = (
             u.DbtOracleWms.ModelBuilder.generate_wms_staging_models(entity_names)
         )
         if generated_models_result.failure:
-            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(generated_models_result)
+            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
+                generated_models_result
+            )
         recommendations_result = self.service.generate_workflow_recommendations([
             {"entity_name": entity_name} for entity_name in entity_names
         ])
         if recommendations_result.failure:
-            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(recommendations_result)
+            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
+                recommendations_result
+            )
         generated_models = generated_models_result.value
         return r[m.DbtOracleWms.DbtModelGenerationResult].ok(
             m.DbtOracleWms.DbtModelGenerationResult(

@@ -50,7 +50,9 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             if model_generation_result.failure:
                 return self._log_and_return(
                     tracking_info,
-                    r[m.DbtOracleWms.WorkflowResult].from_failure(model_generation_result),
+                    r[m.DbtOracleWms.WorkflowResult].from_failure(
+                        model_generation_result
+                    ),
                 )
             generated_models = model_generation_result.value.model_names
             model_names = generated_models or None

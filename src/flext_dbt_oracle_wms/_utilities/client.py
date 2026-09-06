@@ -126,7 +126,9 @@ class FlextDbtOracleWmsClient:
             entity_data
         )
         if transformed_entities_result.failure:
-            return r[m.Meltano.CommandExecutionResult].from_failure(transformed_entities_result)
+            return r[m.Meltano.CommandExecutionResult].from_failure(
+                transformed_entities_result
+            )
         dbt_result = self._meltano_runner.run_dbt_transformation(model_names)
         if dbt_result.failure:
             return r[m.Meltano.CommandExecutionResult].from_failure(dbt_result)
