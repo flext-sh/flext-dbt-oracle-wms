@@ -98,9 +98,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         extract_result = self.client.extract_oracle_wms_data(entity_name)
         if extract_result.failure:
-            return r[Sequence[t.ConfigurationMapping]].fail(
-                extract_result.error or f"Failed to extract {entity_name}"
-            )
+            return r[Sequence[t.ConfigurationMapping]].from_failure(extract_result)
         if requested_identifiers is None:
             return r[Sequence[t.ConfigurationMapping]].ok(extract_result.value)
         requested_values = {

@@ -50,8 +50,8 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             if model_generation_result.failure:
                 return self._log_and_return(
                     tracking_info,
-                    r[m.DbtOracleWms.WorkflowResult].fail(
-                        model_generation_result.error or "DBT model generation failed"
+                    r[m.DbtOracleWms.WorkflowResult].from_failure(
+                        model_generation_result
                     ),
                 )
             generated_models = model_generation_result.value.model_names
@@ -102,9 +102,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         self.logger.info("Validating Oracle WMS connection")
         connection_result = self.client.test_oracle_wms_connection()
         if connection_result.failure:
-            return r[bool].fail(
-                connection_result.error or "Oracle WMS connection validation failed"
-            )
+            return r[bool].from_failure(connection_result)
         return r[bool].ok(True)
 
     @override
