@@ -25,7 +25,7 @@
   `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsConfig`,
   `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsMetadata`,
   `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsModelsApi`,
-  `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase` (+8 more)
+  `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase` (+7 more)
 - Exported module shortcuts: `services`
 - Generated module pages: `13`
 
