@@ -34,4 +34,6 @@ class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
         super().__init__(settings=settings, client=client, service=service)
 
 
-__all__: list[str] = ["FlextDbtOracleWms"]
+dbt_oracle_wms = FlextDbtOracleWms
+
+__all__: list[str] = ["FlextDbtOracleWms", "dbt_oracle_wms"]
