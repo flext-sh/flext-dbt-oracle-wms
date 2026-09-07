@@ -707,13 +707,13 @@ def process(data: dict) -> ProcessedData:
    from __future__ import annotations
    from flext_core import p, r
 
+
    def process_data(data: dict) -> p.Result[dict]:
        if not data:
            return r.fail("Data required")
 
        # Process data
        return r.ok(processed_data)
-
    ```
 
 1. **Use Type Hints**
@@ -722,9 +722,11 @@ def process(data: dict) -> ProcessedData:
    from __future__ import annotations
    from flext_core import p, t
 
+
    # ✅ GOOD
    def process(items: t.SequenceOf[Item]) -> p.Result[Sequence[ProcessedItem]]:
        pass
+
 
    # ❌ BAD
    def process(items):
@@ -734,8 +736,8 @@ def process(data: dict) -> ProcessedData:
 1. **Test Thoroughly**
 
    ```python
-
    from __future__ import annotations
+
 
    def test_process_data():
        # Test success case
@@ -745,7 +747,6 @@ def process(data: dict) -> ProcessedData:
        # Test failure case
        result = process_data(None)
        assert result.failure
-
    ```
 
 ## Resources
