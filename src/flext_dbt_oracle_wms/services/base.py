@@ -7,8 +7,9 @@ from typing import TYPE_CHECKING, override
 
 from flext_core import r, s
 from flext_dbt_oracle_wms import t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+
+from .._settings import FlextDbtOracleWmsSettings
+from .._utilities.client import FlextDbtOracleWmsClient
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p

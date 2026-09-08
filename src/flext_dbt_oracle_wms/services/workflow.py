@@ -6,8 +6,9 @@ from typing import TYPE_CHECKING, override
 
 from flext_core import r
 from flext_dbt_oracle_wms import m
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.services.models import FlextDbtOracleWmsModelsApi
+
+from .._settings import FlextDbtOracleWmsSettings
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, t, u

@@ -11,7 +11,8 @@ from flext_dbt_oracle_wms.services.metadata import FlextDbtOracleWmsMetadata
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, t
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+
+    from .._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):

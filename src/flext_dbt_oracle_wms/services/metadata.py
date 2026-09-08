@@ -12,7 +12,8 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
     from flext_dbt_oracle_wms import p, t, u
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+
+    from .._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):

@@ -7,9 +7,10 @@ from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
 from flext_dbt_oracle_wms import c, m, t
-from flext_dbt_oracle_wms._settings import settings
 from flext_meltano import u
 from flext_oracle_wms import FlextOracleWmsUtilities
+
+from ._settings import settings
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
