@@ -22,7 +22,7 @@ from .__version__ import (
 if TYPE_CHECKING:
     from flext_oracle_wms import FlextOracleWmsConstants, d, e, h, r, x
 
-    from . import services as services
+    from . import services
     from ._config import FlextDbtOracleWmsConfig, config
     from ._settings import FlextDbtOracleWmsSettings, settings
     from .api import FlextDbtOracleWms, dbt_oracle_wms
