@@ -50,7 +50,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     """Initialize canned boundary results and capture state."""
                     self.started: bool = False
                     self.extracted_entities: t.SequenceOf[str] = ()
-                    self._entities = (
+                    self._entities: p.Result[t.StrSequence] = (
                         entities
                         if entities is not None
                         else r[t.StrSequence].ok(("items", "shipments"))
