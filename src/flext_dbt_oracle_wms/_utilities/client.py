@@ -18,15 +18,21 @@ class FlextDbtOracleWmsClient:
 
     logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
-    def __init__(self, settings: FlextDbtOracleWmsSettings | None = None) -> None:
-        """Initialize client with explicit or global settings."""
+    def __init__(
+        self,
+        settings: FlextDbtOracleWmsSettings | None = None,
+        *,
+        wms_client: p.DbtOracleWms.WmsClient | None = None,
+        meltano_runner: p.DbtOracleWms.DbtRunner | None = None,
+    ) -> None:
+        """Initialize client with explicit settings and optional injected boundaries."""
         super().__init__()
         # NOTE (multi-agent): mro-rn88 — hold the effective settings (injected override or
         # global singleton) and read it via self.settings, never a bare module global.
         self._settings = settings or FlextDbtOracleWmsSettings.fetch_global()
-        self._meltano_runner = FlextMeltanoLibraryRunner()
+        self._meltano_runner = meltano_runner or FlextMeltanoLibraryRunner()
         self._transformer = u.DbtOracleWms.Transformer()
-        self._wms_client: oracle_wms_u.OracleWms.Client | None = None
+        self._wms_client: p.DbtOracleWms.WmsClient | None = wms_client
 
     @property
     def settings(self) -> FlextDbtOracleWmsSettings:
@@ -162,10 +168,10 @@ class FlextDbtOracleWmsClient:
             return r[Sequence[t.ConfigurationMapping]].from_failure(validation_result)
         return r[Sequence[t.ScalarMapping]].ok(records)
 
-    def _get_wms_client(self) -> p.Result[oracle_wms_u.OracleWms.Client]:
+    def _get_wms_client(self) -> p.Result[p.DbtOracleWms.WmsClient]:
         """Create and cache the real Oracle WMS client."""
         if self._wms_client is not None:
-            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
+            return r[p.DbtOracleWms.WmsClient].ok(self._wms_client)
         try:
             settings_overrides: t.ConfigurationMapping = (
                 {"base_url": self.settings.DbtOracleWms.oracle_wms_base_url}
@@ -178,9 +184,9 @@ class FlextDbtOracleWmsClient:
                 overrides=settings_overrides
             )
             self._wms_client = oracle_wms_u.OracleWms.Client(settings=wms_settings)
-            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
+            return r[p.DbtOracleWms.WmsClient].ok(self._wms_client)
         except c.EXC_VALIDATION_TYPE_VALUE as exc:
-            return r[oracle_wms_u.OracleWms.Client].fail_op(
+            return r[p.DbtOracleWms.WmsClient].fail_op(
                 "Oracle WMS client initialization", exc
             )
 
