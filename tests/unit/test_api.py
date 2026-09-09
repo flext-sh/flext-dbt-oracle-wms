@@ -6,8 +6,8 @@ import pytest
 from flext_tests import tm
 
 from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, m, r, t
-from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
+from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsClient
 from tests import u
 
 

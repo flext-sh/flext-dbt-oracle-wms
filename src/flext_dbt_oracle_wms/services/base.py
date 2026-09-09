@@ -9,7 +9,7 @@ from flext_core import r, s
 from flext_dbt_oracle_wms import t, u
 
 from .._settings import FlextDbtOracleWmsSettings
-from .._utilities.client import FlextDbtOracleWmsClient
+from .client import FlextDbtOracleWmsClient
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
