@@ -5,6 +5,8 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import override
 
+from flext_tests import tm
+
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
     FlextDbtOracleWmsCliService,
@@ -12,7 +14,6 @@ from flext_dbt_oracle_wms import (
     main,
     r,
 )
-from flext_tests import tm
 from tests import m, p, t, u
 
 

@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import pytest
+from flext_tests import tm
 
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
-from flext_tests import tm
 
 __all__: list[str] = ["TestsFlextDbtOracleWmsModuleGovernance"]
 

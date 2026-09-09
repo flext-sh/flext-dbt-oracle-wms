@@ -5,10 +5,11 @@ from __future__ import annotations
 from collections.abc import MutableSequence, Sequence
 from typing import TYPE_CHECKING, ClassVar
 
-from flext_core import r
-from flext_dbt_oracle_wms import c, m, t
 from flext_meltano import u
 from flext_oracle_wms import FlextOracleWmsUtilities
+
+from flext_core import r
+from flext_dbt_oracle_wms import c, m, t
 
 from ._settings import settings
 
