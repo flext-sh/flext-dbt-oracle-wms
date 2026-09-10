@@ -18,8 +18,7 @@ class FlextDbtOracleWmsUtilitiesTransformer(u.DbtOracleWms.Transformer):
     """Transformer for WMS entity data to DBT models."""
 
     def transform_all_entities(
-        self,
-        entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
+        self, entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]]
     ) -> p.Result[m.DbtOracleWms.EntityTransformationSet]:
         """Transform WMS entities into a typed transformation set."""
         # NOTE (multi-agent, bead mro-wfc8.3): returns a typed model (no

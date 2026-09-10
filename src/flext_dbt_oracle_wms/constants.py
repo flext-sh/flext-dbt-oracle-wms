@@ -14,10 +14,7 @@ from ._constants.enums import DbtMaterialization
 class FlextDbtOracleWmsConstants(c, FlextOracleWmsConstants):
     """Constants for DBT Oracle WMS with dual inheritance from Meltano and WMS domains."""
 
-    class DbtOracleWms(
-        FlextDbtOracleWmsConstantsBase,
-        FlextOracleWmsConstants,
-    ):
+    class DbtOracleWms(FlextDbtOracleWmsConstantsBase, FlextOracleWmsConstants):
         """DBT Oracle WMS project-specific constants."""
 
         class Dbt:
