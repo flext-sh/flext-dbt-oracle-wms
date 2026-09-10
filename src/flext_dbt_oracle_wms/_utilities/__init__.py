@@ -9,12 +9,25 @@ from typing import TYPE_CHECKING
 from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 if TYPE_CHECKING:
-    from .client import FlextDbtOracleWmsClient
-__all__: tuple[str, ...] = ("FlextDbtOracleWmsClient",)
+    from .base import FlextDbtOracleWmsUtilitiesBase
+    from .model_builder import FlextDbtOracleWmsUtilitiesModelBuilder
+    from .service import FlextDbtOracleWmsUtilitiesService
+    from .transformer import FlextDbtOracleWmsUtilitiesTransformer
+__all__: tuple[str, ...] = (
+    "FlextDbtOracleWmsUtilitiesBase",
+    "FlextDbtOracleWmsUtilitiesModelBuilder",
+    "FlextDbtOracleWmsUtilitiesService",
+    "FlextDbtOracleWmsUtilitiesTransformer",
+)
 
 _LAZY_IMPORTS = MappingProxyType(
     build_lazy_import_map(
-        MappingProxyType({".client": ("FlextDbtOracleWmsClient",)}),
+        MappingProxyType({
+            ".base": ("FlextDbtOracleWmsUtilitiesBase",),
+            ".model_builder": ("FlextDbtOracleWmsUtilitiesModelBuilder",),
+            ".service": ("FlextDbtOracleWmsUtilitiesService",),
+            ".transformer": ("FlextDbtOracleWmsUtilitiesTransformer",),
+        }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,
     )

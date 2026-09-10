@@ -33,6 +33,7 @@ if TYPE_CHECKING:
     from .models import FlextDbtOracleWmsModels, FlextDbtOracleWmsModels as m
     from .protocols import FlextDbtOracleWmsProtocols, FlextDbtOracleWmsProtocols as p
     from .services.base import FlextDbtOracleWmsBase
+    from .services.client import FlextDbtOracleWmsClient
     from .services.metadata import FlextDbtOracleWmsMetadata
     from .services.models import FlextDbtOracleWmsModelsApi
     from .services.workflow import FlextDbtOracleWmsWorkflow
@@ -42,6 +43,7 @@ __all__: tuple[str, ...] = (
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsBase",
     "FlextDbtOracleWmsCliService",
+    "FlextDbtOracleWmsClient",
     "FlextDbtOracleWmsConfig",
     "FlextDbtOracleWmsConstants",
     "FlextDbtOracleWmsMetadata",
@@ -93,6 +95,7 @@ _LAZY_IMPORTS = MappingProxyType(
             ".protocols": ("FlextDbtOracleWmsProtocols", "p"),
             ".services": ("services",),
             ".services.base": ("FlextDbtOracleWmsBase",),
+            ".services.client": ("FlextDbtOracleWmsClient",),
             ".services.metadata": ("FlextDbtOracleWmsMetadata",),
             ".services.models": ("FlextDbtOracleWmsModelsApi",),
             ".services.workflow": ("FlextDbtOracleWmsWorkflow",),
