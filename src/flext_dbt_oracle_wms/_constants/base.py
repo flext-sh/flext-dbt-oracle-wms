@@ -13,12 +13,5 @@ class FlextDbtOracleWmsConstantsBase:
 
         PROJECT_NAME: Final[str] = "flext_dbt_oracle_wms"
 
-        class Materialization:
-            """DBT materialization types."""
-
-            TABLE = "table"
-            VIEW = "view"
-            INCREMENTAL = "incremental"
-
 
 __all__: list[str] = ["FlextDbtOracleWmsConstantsBase"]
