@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsServiceBase, m
 from flext_meltano import p
+
+from flext_dbt_oracle_wms import FlextDbtOracleWmsServiceBase, m
 
 
 def test_connection_profile_returns_typed_oracle_wms_wire_shape() -> None:

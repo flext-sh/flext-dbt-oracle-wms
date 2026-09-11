@@ -13,16 +13,13 @@ from __future__ import annotations
 from flext_meltano import FlextMeltanoConfig, m
 
 
-class _DbtOracleWmsNamespace(m.BaseModel):
-    """Open, frozen namespace exposing every ``config/*.yaml`` domain model-less."""
-
-    model_config = m.ConfigDict(extra="allow", frozen=True)
-
-
 class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
     """DbtOracleWms config auto-loaded model-less from ``config/*.yaml``."""
 
-    DbtOracleWms: _DbtOracleWmsNamespace = _DbtOracleWmsNamespace()
+    class DbtOracleWms(m.BaseModel):
+        """Open, frozen namespace exposing every ``config/*.yaml`` domain model-less."""
+
+        model_config = m.ConfigDict(extra="allow", frozen=True)
 
 
 config: FlextDbtOracleWmsConfig = FlextDbtOracleWmsConfig.fetch_global()

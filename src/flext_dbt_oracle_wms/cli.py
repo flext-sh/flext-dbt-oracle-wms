@@ -58,7 +58,7 @@ class FlextDbtOracleWmsCliService:
         """Handle discover command."""
         result = self._service.discover_oracle_wms_entities()
         if result.failure:
-            return r[str].fail(result.error or "Discover failed")
+            return r[str].from_failure(result)
         return r[str].ok("Discovery completed successfully")
 
     def handle_extract(
@@ -76,7 +76,7 @@ class FlextDbtOracleWmsCliService:
                 entity = validated_entity
         result = self._service.extract_oracle_wms_data(entity, None)
         if result.failure:
-            return r[str].fail(result.error or "Extract failed")
+            return r[str].from_failure(result)
         return r[str].ok("Extraction completed successfully")
 
     def handle_info(self) -> p.Result[str]:
@@ -89,7 +89,7 @@ class FlextDbtOracleWmsCliService:
             generate_models=False, run_transformations=True
         )
         if result.failure:
-            return r[str].fail(result.error or "Pipeline failed")
+            return r[str].from_failure(result)
         return r[str].ok("Pipeline completed successfully")
 
 

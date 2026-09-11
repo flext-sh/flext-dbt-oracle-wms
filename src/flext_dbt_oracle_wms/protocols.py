@@ -9,6 +9,7 @@ from flext_oracle_wms import FlextOracleWmsProtocols
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
+    from pathlib import Path
 
     from flext_dbt_oracle_wms import m, t
 
@@ -74,6 +75,43 @@ class FlextDbtOracleWmsProtocols(p, FlextOracleWmsProtocols):
                 additional_data: t.ConfigValueMapping | None = None,
             ) -> m.DbtOracleWms.WorkflowTracking:
                 """Return a typed tracking model for workflow instrumentation."""
+                ...
+
+        @runtime_checkable
+        class WmsClient(Protocol):
+            """Protocol for the consumed Oracle WMS client boundary."""
+
+            def discover_entities(self) -> p.Result[t.StrSequence]:
+                """Discover available Oracle WMS entities."""
+                ...
+
+            def get_entity_data(
+                self,
+                entity_name: str,
+                limit: int | None = None,
+                filters: t.ConfigurationMapping | None = None,
+            ) -> p.Result[t.SequenceOf[t.StrMapping]]:
+                """Get data for a specific Oracle WMS entity."""
+                ...
+
+            def start(self) -> p.Result[bool]:
+                """Start the Oracle WMS client."""
+                ...
+
+            def health_check(self) -> p.Result[m.Api.HttpResponse]:
+                """Check Oracle WMS API health."""
+                ...
+
+        @runtime_checkable
+        class DbtRunner(Protocol):
+            """Protocol for the consumed dbt transformation runner boundary."""
+
+            def run_dbt_transformation(
+                self,
+                models: t.StrSequence | None = None,
+                project_dir: Path | None = None,
+            ) -> p.Result[m.Meltano.CommandExecutionResult]:
+                """Run DBT transformations through the configured executor."""
                 ...
 
 

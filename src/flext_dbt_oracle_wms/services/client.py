@@ -5,10 +5,12 @@ from __future__ import annotations
 from collections.abc import MutableMapping, Sequence
 from typing import ClassVar
 
-from flext_dbt_oracle_wms import c, m, p, t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 from flext_meltano import FlextMeltanoLibraryRunner
 from flext_oracle_wms import FlextOracleWmsSettings, r, u as oracle_wms_u
+
+from flext_dbt_oracle_wms import c, m, p, t, u
+
+from .._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsClient:
@@ -16,15 +18,21 @@ class FlextDbtOracleWmsClient:
 
     logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
-    def __init__(self, settings: FlextDbtOracleWmsSettings | None = None) -> None:
-        """Initialize client with explicit or global settings."""
+    def __init__(
+        self,
+        settings: FlextDbtOracleWmsSettings | None = None,
+        *,
+        wms_client: p.DbtOracleWms.WmsClient | None = None,
+        meltano_runner: p.DbtOracleWms.DbtRunner | None = None,
+    ) -> None:
+        """Initialize client with explicit settings and optional injected boundaries."""
         super().__init__()
         # NOTE (multi-agent): mro-rn88 — hold the effective settings (injected override or
         # global singleton) and read it via self.settings, never a bare module global.
         self._settings = settings or FlextDbtOracleWmsSettings.fetch_global()
-        self._meltano_runner = FlextMeltanoLibraryRunner()
+        self._meltano_runner = meltano_runner or FlextMeltanoLibraryRunner()
         self._transformer = u.DbtOracleWms.Transformer()
-        self._wms_client: oracle_wms_u.OracleWms.Client | None = None
+        self._wms_client: p.DbtOracleWms.WmsClient | None = wms_client
 
     @property
     def settings(self) -> FlextDbtOracleWmsSettings:
@@ -35,9 +43,7 @@ class FlextDbtOracleWmsClient:
         """Discover Oracle WMS entities through the owning domain client."""
         client_result = self._get_wms_client()
         if client_result.failure:
-            return r[t.StrSequence].fail(
-                client_result.error or "WMS client unavailable"
-            )
+            return r[t.StrSequence].from_failure(client_result)
         return client_result.value.discover_entities()
 
     def extract_oracle_wms_data(
@@ -46,16 +52,12 @@ class FlextDbtOracleWmsClient:
         """Extract entity records from Oracle WMS using the real domain client."""
         client_result = self._get_wms_client()
         if client_result.failure:
-            return r[Sequence[t.ConfigurationMapping]].fail(
-                client_result.error or "WMS client unavailable"
-            )
+            return r[Sequence[t.ConfigurationMapping]].from_failure(client_result)
         extract_result = client_result.value.get_entity_data(
             entity_name, filters=filters
         )
         if extract_result.failure:
-            return r[Sequence[t.ConfigurationMapping]].fail(
-                extract_result.error or "Oracle WMS extraction failed"
-            )
+            return r[Sequence[t.ConfigurationMapping]].from_failure(extract_result)
         records = [dict(record) for record in extract_result.value]
         return r[Sequence[t.ConfigurationMapping]].ok(records)
 
@@ -72,30 +74,22 @@ class FlextDbtOracleWmsClient:
             else self.discover_oracle_wms_entities()
         )
         if entities_result.failure:
-            return r[m.DbtOracleWms.PipelineResult].fail(
-                entities_result.error or "Entity discovery failed"
-            )
+            return r[m.DbtOracleWms.PipelineResult].from_failure(entities_result)
         entity_list = entities_result.value
         extracted: MutableMapping[str, t.SequenceOf[t.ConfigurationMapping]] = {}
         for entity_name in entity_list:
             extract_result = self.extract_oracle_wms_data(entity_name, filters)
             if extract_result.failure:
-                return r[m.DbtOracleWms.PipelineResult].fail(
-                    extract_result.error or "Extraction failed"
-                )
+                return r[m.DbtOracleWms.PipelineResult].from_failure(extract_result)
             validate_result = self.validate_oracle_wms_data(
                 entity_name, extract_result.value
             )
             if validate_result.failure:
-                return r[m.DbtOracleWms.PipelineResult].fail(
-                    validate_result.error or "Validation failed"
-                )
+                return r[m.DbtOracleWms.PipelineResult].from_failure(validate_result)
             extracted[entity_name] = list(validate_result.value)
         transform_result = self.transform_with_dbt(extracted, model_names)
         if transform_result.failure:
-            return r[m.DbtOracleWms.PipelineResult].fail(
-                transform_result.error or "Transformation failed"
-            )
+            return r[m.DbtOracleWms.PipelineResult].from_failure(transform_result)
         self.logger.info("Completed Oracle WMS to DBT pipeline")
         command_result = transform_result.value
         return r[m.DbtOracleWms.PipelineResult].ok(
@@ -113,19 +107,13 @@ class FlextDbtOracleWmsClient:
         """Validate Oracle WMS connectivity using the real health endpoint."""
         client_result = self._get_wms_client()
         if client_result.failure:
-            return r[m.DbtOracleWms.ConnectionStatus].fail(
-                client_result.error or "WMS client unavailable"
-            )
+            return r[m.DbtOracleWms.ConnectionStatus].from_failure(client_result)
         start_result = client_result.value.start()
         if start_result.failure:
-            return r[m.DbtOracleWms.ConnectionStatus].fail(
-                start_result.error or "Oracle WMS client startup failed"
-            )
+            return r[m.DbtOracleWms.ConnectionStatus].from_failure(start_result)
         health_result = client_result.value.health_check()
         if health_result.failure:
-            return r[m.DbtOracleWms.ConnectionStatus].fail(
-                health_result.error or "Oracle WMS health check failed"
-            )
+            return r[m.DbtOracleWms.ConnectionStatus].from_failure(health_result)
         response = health_result.value
         return r[m.DbtOracleWms.ConnectionStatus].ok(
             m.DbtOracleWms.ConnectionStatus(
@@ -146,15 +134,12 @@ class FlextDbtOracleWmsClient:
             entity_data
         )
         if transformed_entities_result.failure:
-            return r[m.Meltano.CommandExecutionResult].fail(
-                transformed_entities_result.error
-                or "Oracle WMS data transformation failed"
+            return r[m.Meltano.CommandExecutionResult].from_failure(
+                transformed_entities_result
             )
         dbt_result = self._meltano_runner.run_dbt_transformation(model_names)
         if dbt_result.failure:
-            return r[m.Meltano.CommandExecutionResult].fail(
-                dbt_result.error or "DBT transformation failed"
-            )
+            return r[m.Meltano.CommandExecutionResult].from_failure(dbt_result)
         # NOTE (multi-agent, bead mro-wfc8.3): return the typed meltano command result
         # directly (no generic wrapper, no fabricated models_run/execution_method keys).
         return dbt_result
@@ -180,15 +165,13 @@ class FlextDbtOracleWmsClient:
                 )
         validation_result = self._transformer.validate_business_rules(records)
         if validation_result.failure:
-            return r[Sequence[t.ConfigurationMapping]].fail(
-                validation_result.error or "Oracle WMS validation failed"
-            )
+            return r[Sequence[t.ConfigurationMapping]].from_failure(validation_result)
         return r[Sequence[t.ScalarMapping]].ok(records)
 
-    def _get_wms_client(self) -> p.Result[oracle_wms_u.OracleWms.Client]:
+    def _get_wms_client(self) -> p.Result[p.DbtOracleWms.WmsClient]:
         """Create and cache the real Oracle WMS client."""
         if self._wms_client is not None:
-            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
+            return r[p.DbtOracleWms.WmsClient].ok(self._wms_client)
         try:
             settings_overrides: t.ConfigurationMapping = (
                 {"base_url": self.settings.DbtOracleWms.oracle_wms_base_url}
@@ -201,9 +184,9 @@ class FlextDbtOracleWmsClient:
                 overrides=settings_overrides
             )
             self._wms_client = oracle_wms_u.OracleWms.Client(settings=wms_settings)
-            return r[oracle_wms_u.OracleWms.Client].ok(self._wms_client)
+            return r[p.DbtOracleWms.WmsClient].ok(self._wms_client)
         except c.EXC_VALIDATION_TYPE_VALUE as exc:
-            return r[oracle_wms_u.OracleWms.Client].fail_op(
+            return r[p.DbtOracleWms.WmsClient].fail_op(
                 "Oracle WMS client initialization", exc
             )
 

@@ -12,7 +12,8 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
     from flext_dbt_oracle_wms import p, t, u
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+
+    from .._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
@@ -39,8 +40,8 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
         self.logger.info("Extracting Oracle WMS metadata")
         available_entities_result = self.client.discover_oracle_wms_entities()
         if available_entities_result.failure:
-            return r[m.DbtOracleWms.WmsMetadataResult].fail(
-                available_entities_result.error or "Oracle WMS entity discovery failed"
+            return r[m.DbtOracleWms.WmsMetadataResult].from_failure(
+                available_entities_result
             )
         inventory_records: Sequence[t.ConfigurationMapping] = []
         shipment_records: Sequence[t.ConfigurationMapping] = []
@@ -49,8 +50,8 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
                 "items", inventory_items, ("item_id", "item_number", "id", "sku")
             )
             if inventory_result.failure:
-                return r[m.DbtOracleWms.WmsMetadataResult].fail(
-                    inventory_result.error or "Inventory metadata extraction failed"
+                return r[m.DbtOracleWms.WmsMetadataResult].from_failure(
+                    inventory_result
                 )
             inventory_records = inventory_result.value
         if include_shipment_tracking:
@@ -58,9 +59,7 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
                 "shipments", shipments, ("shipment_id", "tracking_number", "id")
             )
             if shipment_result.failure:
-                return r[m.DbtOracleWms.WmsMetadataResult].fail(
-                    shipment_result.error or "Shipment metadata extraction failed"
-                )
+                return r[m.DbtOracleWms.WmsMetadataResult].from_failure(shipment_result)
             shipment_records = shipment_result.value
         return r[m.DbtOracleWms.WmsMetadataResult].ok(
             m.DbtOracleWms.WmsMetadataResult(
@@ -82,9 +81,7 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
             "items", [item_id], ("item_id", "item_number", "id", "sku")
         )
         if inventory_result.failure:
-            return r[m.OracleWms.InventoryItem].fail(
-                inventory_result.error or "Inventory info retrieval failed"
-            )
+            return r[m.OracleWms.InventoryItem].from_failure(inventory_result)
         return r[m.OracleWms.InventoryItem].ok(
             m.OracleWms.InventoryItem.model_validate(inventory_result.value[0])
         )
@@ -98,9 +95,7 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
             "shipments", [shipment_id], ("shipment_id", "tracking_number", "id")
         )
         if shipment_result.failure:
-            return r[m.OracleWms.Shipment].fail(
-                shipment_result.error or "Shipment info retrieval failed"
-            )
+            return r[m.OracleWms.Shipment].from_failure(shipment_result)
         return r[m.OracleWms.Shipment].ok(
             m.OracleWms.Shipment.model_validate(shipment_result.value[0])
         )

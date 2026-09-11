@@ -18,7 +18,8 @@ from flext_dbt_oracle_wms.services.workflow import FlextDbtOracleWmsWorkflow
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, u
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+
+    from ._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
@@ -34,6 +35,7 @@ class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
         super().__init__(settings=settings, client=client, service=service)
 
 
-dbt_oracle_wms = FlextDbtOracleWms
+dbt_oracle_wms: FlextDbtOracleWms = FlextDbtOracleWms.fetch_global()
+"""Process-wide DBT Oracle WMS facade singleton resolved from the global container."""
 
 __all__: list[str] = ["FlextDbtOracleWms", "dbt_oracle_wms"]

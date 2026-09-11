@@ -8,9 +8,10 @@ from __future__ import annotations
 
 from typing import Annotated, override
 
+from flext_meltano import FlextMeltanoDbtServiceBase, p, u
+
 # NOTE (multi-agent): mro-rn88 — import `settings` singleton for strict `from <pkg> import settings` access.
 from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, settings, t
-from flext_meltano import FlextMeltanoDbtServiceBase, p, u
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):

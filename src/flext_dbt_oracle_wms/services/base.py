@@ -7,8 +7,9 @@ from typing import TYPE_CHECKING, override
 
 from flext_core import r, s
 from flext_dbt_oracle_wms import t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms._utilities.client import FlextDbtOracleWmsClient
+
+from .._settings import FlextDbtOracleWmsSettings
+from .client import FlextDbtOracleWmsClient
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
@@ -98,9 +99,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         extract_result = self.client.extract_oracle_wms_data(entity_name)
         if extract_result.failure:
-            return r[Sequence[t.ConfigurationMapping]].fail(
-                extract_result.error or f"Failed to extract {entity_name}"
-            )
+            return r[Sequence[t.ConfigurationMapping]].from_failure(extract_result)
         if requested_identifiers is None:
             return r[Sequence[t.ConfigurationMapping]].ok(extract_result.value)
         requested_values = {
