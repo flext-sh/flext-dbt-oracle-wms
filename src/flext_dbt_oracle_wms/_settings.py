@@ -26,7 +26,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         """Namespaced dbt Oracle WMS settings."""
 
         required_fields_per_entity: Annotated[
-            m.Mapping[str, tuple[str, ...]],
+            dict[str, tuple[str, ...]],
             m.Field(
                 default_factory=dict,
                 description="Required fields per WMS entity (typed mapping)",
