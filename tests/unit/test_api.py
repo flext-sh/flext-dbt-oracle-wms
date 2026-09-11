@@ -5,9 +5,14 @@ from __future__ import annotations
 import pytest
 from flext_tests import tm
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, m, r, t
-from flext_dbt_oracle_wms.api import FlextDbtOracleWms
-from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms import (
+    FlextDbtOracleWms,
+    FlextDbtOracleWmsClient,
+    FlextDbtOracleWmsSettings,
+    m,
+    r,
+    t,
+)
 from tests import u
 
 
