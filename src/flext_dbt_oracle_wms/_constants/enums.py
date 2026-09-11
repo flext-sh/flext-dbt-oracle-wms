@@ -23,4 +23,7 @@ class FlextDbtOracleWmsConstantsEnums:
         Materialization = _Materialization
 
 
-__all__: list[str] = ["FlextDbtOracleWmsConstantsEnums"]
+DbtMaterialization = _Materialization
+"""Public alias for the DBT materialization enumeration (consumed by codegen init)."""
+
+__all__: list[str] = ["DbtMaterialization", "FlextDbtOracleWmsConstantsEnums"]
