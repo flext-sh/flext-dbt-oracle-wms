@@ -16,8 +16,7 @@ class FlextDbtOracleWmsConstants(c, FlextOracleWmsConstants):
         """DBT Oracle WMS project-specific constants."""
 
         class Dbt(
-            FlextDbtOracleWmsConstantsEnums.Dbt,
-            FlextDbtOracleWmsConstantsBase.Dbt,
+            FlextDbtOracleWmsConstantsEnums.Dbt, FlextDbtOracleWmsConstantsBase.Dbt
         ):
             """Merged DBT constants combining enum values and base project metadata."""
 

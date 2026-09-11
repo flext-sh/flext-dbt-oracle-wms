@@ -31,8 +31,7 @@ class FlextDbtOracleWmsModelsDbt(m):
             str, u.Field(description="Human-readable model description")
         ] = ""
         columns: Annotated[
-            t.SequenceOf[t.StrMapping],
-            u.Field(description="Column metadata payloads"),
+            t.SequenceOf[t.StrMapping], u.Field(description="Column metadata payloads")
         ] = u.Field(default_factory=tuple)
         dependencies: Annotated[
             t.StrSequence, u.Field(description="Upstream model dependencies")
@@ -45,9 +44,7 @@ class FlextDbtOracleWmsModelsDbt(m):
         ]
         wms_business_rules: Annotated[
             t.StrSequence,
-            u.Field(
-                description="WMS-specific business rules attached to the model"
-            ),
+            u.Field(description="WMS-specific business rules attached to the model"),
         ] = u.Field(default_factory=tuple)
 
 

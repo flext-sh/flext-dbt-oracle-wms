@@ -32,8 +32,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed dbt-transformation summary composed from the meltano command result."""
 
         transformed_tables: Annotated[
-            t.StrSequence,
-            u.Field(description="Tables produced by the transformation"),
+            t.StrSequence, u.Field(description="Tables produced by the transformation")
         ]
         requested_models: Annotated[
             t.StrSequence, u.Field(description="dbt models requested for the run")
@@ -77,9 +76,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         available_entities: Annotated[
             t.StrSequence, u.Field(description="Discovered WMS entities")
         ]
-        inventory_count: Annotated[
-            int, u.Field(description="Inventory record count")
-        ]
+        inventory_count: Annotated[int, u.Field(description="Inventory record count")]
         shipment_count: Annotated[int, u.Field(description="Shipment record count")]
         include_inventory_details: Annotated[
             bool, u.Field(description="Inventory detail flag")
@@ -95,9 +92,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         model_names: Annotated[
             t.StrSequence, u.Field(description="Generated dbt model names")
         ]
-        models_generated: Annotated[
-            int, u.Field(description="Generated model count")
-        ]
+        models_generated: Annotated[int, u.Field(description="Generated model count")]
         output_dir: Annotated[str, u.Field(description="Output directory")]
         recommendation: Annotated[str, u.Field(description="Recommendation text")]
         status: Annotated[str, u.Field(description="Generation status")]
@@ -106,12 +101,8 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed end-to-end workflow result."""
 
         tracking_id: Annotated[str, u.Field(description="Tracking identifier")]
-        generate_models: Annotated[
-            bool, u.Field(description="Model generation flag")
-        ]
-        run_transformations: Annotated[
-            bool, u.Field(description="Transformation flag")
-        ]
+        generate_models: Annotated[bool, u.Field(description="Model generation flag")]
+        run_transformations: Annotated[bool, u.Field(description="Transformation flag")]
         generated_models: Annotated[
             t.StrSequence,
             u.Field(default_factory=tuple, description="Generated models"),
@@ -126,9 +117,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         transformation_status: Annotated[
             str, u.Field(default="", description="Transformation status")
         ]
-        workflow_status: Annotated[
-            str, u.Field(description="Overall workflow status")
-        ]
+        workflow_status: Annotated[str, u.Field(description="Overall workflow status")]
 
     class DbtExecutionResult(m.ImmutableValueModel):
         """Typed dbt execution monitoring result."""
