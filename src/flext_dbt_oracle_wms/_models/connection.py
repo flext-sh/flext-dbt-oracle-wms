@@ -26,15 +26,11 @@ class FlextDbtOracleWmsModelsConnection(m):
         processed_entities: Annotated[
             t.StrSequence, u.Field(description="Entities processed by the pipeline")
         ]
-        total_records: Annotated[
-            int, u.Field(description="Total records processed")
-        ]
+        total_records: Annotated[int, u.Field(description="Total records processed")]
         transformation_status: Annotated[
             str, u.Field(description="Transformation status")
         ]
-        pipeline_status: Annotated[
-            str, u.Field(description="Overall pipeline status")
-        ]
+        pipeline_status: Annotated[str, u.Field(description="Overall pipeline status")]
 
 
 __all__: list[str] = ["FlextDbtOracleWmsModelsConnection"]

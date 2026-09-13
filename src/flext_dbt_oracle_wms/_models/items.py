@@ -23,9 +23,7 @@ class FlextDbtOracleWmsModelsItems(m):
         item_id: Annotated[
             str, u.Field(default="", description="Unique item identifier")
         ]
-        item_number: Annotated[
-            str, u.Field(default="", description="Item number code")
-        ]
+        item_number: Annotated[str, u.Field(default="", description="Item number code")]
         item_description: Annotated[
             str, u.Field(default="", description="Description of the item")
         ]
