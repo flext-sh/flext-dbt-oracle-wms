@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 from flext_core import r
 from flext_dbt_oracle_wms import m, t
-from flext_dbt_oracle_wms._settings import settings
+from ._settings import settings
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
