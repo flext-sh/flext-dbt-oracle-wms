@@ -10,14 +10,18 @@ from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 if TYPE_CHECKING:
     from .base import FlextDbtOracleWmsConstantsBase
-    from .enums import DbtMaterialization
-__all__: tuple[str, ...] = ("DbtMaterialization", "FlextDbtOracleWmsConstantsBase")
+    from .enums import DbtMaterialization, FlextDbtOracleWmsConstantsEnums
+__all__: tuple[str, ...] = (
+    "DbtMaterialization",
+    "FlextDbtOracleWmsConstantsBase",
+    "FlextDbtOracleWmsConstantsEnums",
+)
 
 _LAZY_IMPORTS = MappingProxyType(
     build_lazy_import_map(
         MappingProxyType({
             ".base": ("FlextDbtOracleWmsConstantsBase",),
-            ".enums": ("DbtMaterialization",),
+            ".enums": ("DbtMaterialization", "FlextDbtOracleWmsConstantsEnums"),
         }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,
