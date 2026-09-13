@@ -9,7 +9,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import Annotated
+from typing import TYPE_CHECKING, Annotated
 
 from flext_meltano import FlextMeltanoSettings, m
 from pydantic_settings import SettingsConfigDict
@@ -22,7 +22,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         env_prefix="FLEXT_DBT_ORACLE_WMS_", env_nested_delimiter="__", extra="ignore"
     )
 
-    class DbtOracleWms(m.BaseModel):
+    class _DbtOracleWms(m.BaseModel):
         """Namespaced dbt Oracle WMS settings."""
 
         required_fields_per_entity: Annotated[
@@ -51,6 +51,14 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         dbt_target: Annotated[
             str, m.Field(default="dev", description="DBT target profile (dev/prod)")
         ]
+
+    if TYPE_CHECKING:
+        DbtOracleWms: _DbtOracleWms
+    else:
+        DbtOracleWms: _DbtOracleWms = m.Field(
+            default_factory=_DbtOracleWms,
+            description="Namespaced dbt Oracle WMS settings.",
+        )
 
 
 settings: FlextDbtOracleWmsSettings = FlextDbtOracleWmsSettings.fetch_global()
