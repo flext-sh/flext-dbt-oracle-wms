@@ -12,13 +12,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Annotated
 
 from flext_meltano import FlextMeltanoSettings, m
-from pydantic_settings import SettingsConfigDict
 
 
 class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
     """Runtime configuration for dbt Oracle WMS; fields under ``settings.DbtOracleWms.*``."""
 
-    model_config = SettingsConfigDict(
+    model_config = m.SettingsConfigDict(
         env_prefix="FLEXT_DBT_ORACLE_WMS_", env_nested_delimiter="__", extra="ignore"
     )
 
