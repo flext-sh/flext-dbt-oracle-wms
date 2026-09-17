@@ -1,6 +1,7 @@
 # Quick Start Guide
 
 <!-- TOC START -->
+
 - [🚀 Prerequisites Check](#prerequisites-check)
 - [⚡ Quick Installation](#quick-installation)
   - [1. Clone and Setup (2 minutes)](#1-clone-and-setup-2-minutes)
@@ -35,7 +36,7 @@
 - [🆘 Getting Stuck](#getting-stuck)
   - [Common Issues](#common-issues)
   - [Get Help](#get-help)
-<!-- TOC END -->
+  <!-- TOC END -->
 
 **Get FLEXT DBT Oracle WMS running in 10 minutes**
 
@@ -314,6 +315,6 @@ After completing this guide, you should have:
 - **Compile Check** - `dbt compile` for SQL issues
 - **Documentation** - [Troubleshooting Guide](../guides/troubleshooting.md)
 
-______________________________________________________________________
+---
 
 **Congratulations!** 🎉 You now have FLEXT DBT Oracle WMS running locally. Ready for the next level? Check out the [Development Guide](../development/guidelines.md).

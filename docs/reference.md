@@ -1,6 +1,7 @@
 # Model Reference
 
 <!-- TOC START -->
+
 - [📊 Model Architecture Overview](#model-architecture-overview)
 - [🔵 Staging Models](#staging-models)
   - [stg_wms\_\_allocation](#stg_wms__allocation)
@@ -28,7 +29,7 @@
 - [📚 Documentation](#documentation)
   - [Model Documentation](#model-documentation)
   - [Automated Documentation Generation](#automated-documentation-generation)
-<!-- TOC END -->
+  <!-- TOC END -->
 
 **Complete Data Model Documentation for FLEXT DBT Oracle WMS**
 
@@ -81,8 +82,8 @@ Staging models standardize and cleanse raw Oracle WMS data for downstream consum
 | Column                 | Type          | Description                    | Business Logic                     |
 | ---------------------- | ------------- | ------------------------------ | ---------------------------------- |
 | `allocation_id`        | STRING        | Primary allocation identifier  | Direct from source `id`            |
-| `company_code`         | STRING        | Company identifier             | Required field validation        |
-| `facility_code`        | STRING        | Facility/warehouse identifier  | Required field validation        |
+| `company_code`         | STRING        | Company identifier             | Required field validation          |
+| `facility_code`        | STRING        | Facility/warehouse identifier  | Required field validation          |
 | `order_dtl_id`         | STRING        | Reference to order detail      | Foreign key to order details       |
 | `from_inventory_id`    | STRING        | Source inventory location      | Pick location reference            |
 | `to_inventory_id`      | STRING        | Destination inventory location | Put-away location reference        |
@@ -97,8 +98,8 @@ Staging models standardize and cleanse raw Oracle WMS data for downstream consum
 | `pick_location_string` | STRING        | Human-readable pick location   | Location display format            |
 | `is_picking_flag`      | BOOLEAN       | Indicates if currently picking | Y/N to boolean conversion          |
 | `picked_timestamp`     | TIMESTAMP     | When allocation was picked     | Cast to timestamp                  |
-| `created_timestamp`    | TIMESTAMP     | Record creation time           | Audit field                      |
-| `modified_timestamp`   | TIMESTAMP     | Last modification time         | Audit field                      |
+| `created_timestamp`    | TIMESTAMP     | Record creation time           | Audit field                        |
+| `modified_timestamp`   | TIMESTAMP     | Last modification time         | Audit field                        |
 | `data_quality_status`  | STRING        | Data quality indicator         | Business rule validation           |
 | `business_date`        | DATE          | Business processing date       | Derived from timestamps            |
 | `allocation_sk`        | STRING        | Surrogate key for dimensions   | Generated hash key                 |
@@ -166,7 +167,7 @@ ORDER BY task_sequence_number;
 | `serial_number`       | STRING        | Serial number                | Individual item tracking    |
 | `on_hand_quantity`    | DECIMAL(15,4) | Available quantity           | Physical inventory          |
 | `allocated_quantity`  | DECIMAL(15,4) | Allocated/reserved quantity  | Committed inventory         |
-| `available_quantity`  | DECIMAL(15,4) | Available for allocation     | Calculated field          |
+| `available_quantity`  | DECIMAL(15,4) | Available for allocation     | Calculated field            |
 | `inventory_status_id` | STRING        | Status classification        | Available, damaged, etc.    |
 | `uom_id`              | STRING        | Unit of measure              | Inventory UOM               |
 | `received_timestamp`  | TIMESTAMP     | When inventory was received  | Receipt date                |
@@ -238,13 +239,13 @@ Mart models provide business-ready data for analytics and reporting.
 
 #### Key Metrics
 
-| Metric                | Description               | Calculation                                  |
-| --------------------- | ------------------------- | -------------------------------------------- |
-| `total_allocations`   | Total allocations in wave | COUNT(\*)                                    |
-| `picked_allocations`  | Completed picks           | COUNT() WHERE picked_timestamp IS NOT NULL   |
-| `pick_rate_percent`   | Pick completion rate      | picked_allocations / total_allocations * 100 |
-| `avg_pick_time`       | Average time per pick     | AVG(picked_timestamp - created_timestamp)    |
-| `pending_allocations` | Outstanding picks         | total_allocations - picked_allocations       |
+| Metric                | Description               | Calculation                                   |
+| --------------------- | ------------------------- | --------------------------------------------- |
+| `total_allocations`   | Total allocations in wave | COUNT(\*)                                     |
+| `picked_allocations`  | Completed picks           | COUNT() WHERE picked_timestamp IS NOT NULL    |
+| `pick_rate_percent`   | Pick completion rate      | picked_allocations / total_allocations \* 100 |
+| `avg_pick_time`       | Average time per pick     | AVG(picked_timestamp - created_timestamp)     |
+| `pending_allocations` | Outstanding picks         | total_allocations - picked_allocations        |
 
 #### Usage Example
 
@@ -567,6 +568,6 @@ dbt docs generate --include-sources --include-performance
 dbt docs serve --port 8080
 ```
 
-______________________________________________________________________
+---
 
 This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](development/guidelines.md).

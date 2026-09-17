@@ -1,6 +1,7 @@
 # Development Guidelines
 
 <!-- TOC START -->
+
 - [🏗️ Architecture Principles](#architecture-principles)
   - [Clean Architecture Application](#clean-architecture-application)
   - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
@@ -28,7 +29,7 @@
   - [dbt Resources](#dbt-resources)
   - [Oracle WMS Resources](#oracle-wms-resources)
   - [FLEXT Framework](#flext-framework)
-<!-- TOC END -->
+  <!-- TOC END -->
 
 **Best Practices for FLEXT DBT Oracle WMS Development**
 
@@ -858,6 +859,6 @@ perf(marts): optimize allocation summary query performance
 - **[Clean Architecture Guide](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
 - **[Domain-Driven Design](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/guides/domain-driven-design.md)** - DDD implementation patterns
 
-______________________________________________________________________
+---
 
 Following these development guidelines ensures consistent, high-quality, and maintainable dbt models for Oracle WMS analytics.

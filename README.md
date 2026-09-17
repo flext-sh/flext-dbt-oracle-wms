@@ -1,6 +1,7 @@
 # flext-dbt-oracle-wms
 
 <!-- TOC START -->
+
 - [Purpose](#purpose)
 - [Module Map](#module-map)
 - [Collection Rules](#collection-rules)
@@ -25,11 +26,11 @@ FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT
 ## Module Map
 
 ::: flext_dbt_oracle_wms
-    options:
-      members: false
-      show_root_heading: false
-      show_root_toc_entry: false
-      show_source: false
+options:
+members: false
+show_root_heading: false
+show_root_toc_entry: false
+show_source: false
 
 ## Collection Rules
 

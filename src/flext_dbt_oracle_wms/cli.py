@@ -6,7 +6,7 @@ import sys
 from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
-from flext_dbt_oracle_wms import c, t, u
+from flext_dbt_oracle_wms import t, u
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 
 if TYPE_CHECKING:
@@ -68,12 +68,13 @@ class FlextDbtOracleWmsCliService:
         entity = self._default_entity
         if args is not None:
             entity_value = args.get("entity")
-            try:
-                validated_entity = t.str_adapter().validate_python(entity_value).strip()
-            except c.ValidationError:
-                validated_entity = ""
-            if validated_entity:
-                entity = validated_entity
+            if entity_value is not None:
+                validated = u.validate_value(t.str_adapter(), entity_value)
+                if validated.failure:
+                    return r[str].from_failure(validated)
+                stripped = validated.value.strip()
+                if stripped:
+                    entity = stripped
         result = self._service.extract_oracle_wms_data(entity, None)
         if result.failure:
             return r[str].from_failure(result)

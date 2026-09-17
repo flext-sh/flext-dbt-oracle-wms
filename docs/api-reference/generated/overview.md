@@ -1,6 +1,7 @@
 # flext-dbt-oracle-wms API Overview
 
 <!-- TOC START -->
+
 - [Next Pages](#next-pages)
 <!-- TOC END -->
 
@@ -11,9 +12,9 @@
 - Description: FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT
 - Doc summary: Flext Dbt Oracle Wms package.
 - Classifiers: `Development Status :: 3 - Alpha`, `Intended Audience ::
-  Developers`, `Operating System :: OS Independent`, `Programming Language ::
-  Python :: 3 :: Only`, `Programming Language :: Python :: 3.13`, `Topic ::
-  Database` (+2 more)
+Developers`, `Operating System :: OS Independent`, `Programming Language ::
+Python :: 3 :: Only`, `Programming Language :: Python :: 3.13`, `Topic ::
+Database` (+2 more)
 - Project class: `integration`
 - Keywords: `data-transformation`, `dbt`, `enterprise`, `flext`, `sql`, `typed`
 - Main facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsBase`,
