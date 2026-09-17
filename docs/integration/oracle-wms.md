@@ -28,6 +28,7 @@
 - [🔧 Troubleshooting](#troubleshooting)
   - [Common Integration Issues](#common-integration-issues)
 - [📚 Additional Resources](#additional-resources)
+
 <!-- TOC END -->
 
 **Complete Integration Guide for Oracle Warehouse Management System**

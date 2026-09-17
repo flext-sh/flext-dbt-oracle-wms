@@ -35,6 +35,7 @@
   - [Getting Help](#getting-help)
 - [✅ Next Steps](#next-steps)
 - [📚 Additional Resources](#additional-resources)
+
 <!-- TOC END -->
 
 **Complete Installation and Configuration for FLEXT DBT Oracle WMS**
