@@ -2,7 +2,7 @@
 site_name: flext-dbt-oracle-wms Documentation
 site_description: Generated documentation for flext-dbt-oracle-wms
 site_url: https://github.com/flext-sh/flext-dbt-oracle-wms/blob/main/README.md
-repo_name: flext-sh/flext
+repo_name: flext-sh/flext-dbt-oracle-wms
 repo_url: https://github.com/flext-sh/flext-dbt-oracle-wms
 edit_uri: edit/main/flext-dbt-oracle-wms/
 docs_dir: docs
