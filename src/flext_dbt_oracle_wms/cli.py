@@ -68,10 +68,7 @@ class FlextDbtOracleWmsCliService:
         entity = self._default_entity
         if args is not None:
             entity_value = args.get("entity")
-            try:
-                validated_entity = t.str_adapter().validate_python(entity_value).strip()
-            except c.ValidationError:
-                validated_entity = ""
+            validated_entity = t.str_adapter().validate_python(entity_value).strip()
             if validated_entity:
                 entity = validated_entity
         result = self._service.extract_oracle_wms_data(entity, None)

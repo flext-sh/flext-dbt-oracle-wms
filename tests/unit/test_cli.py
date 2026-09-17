@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import pytest
 from typing import TYPE_CHECKING
 
 from flext_tests import tm
@@ -10,6 +11,7 @@ from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
     FlextDbtOracleWmsClient,
     FlextDbtOracleWmsSettings,
+    c,
     m,
     r,
 )
@@ -57,11 +59,11 @@ class TestsFlextDbtOracleWmsCli:
         tm.that(service.main(["extract", "items"]), eq=0)
         tm.that(wms.extracted_entities, eq=("items",))
 
-    def test_main_extract_without_entity_defaults_to_inventory(self) -> None:
-        facade, wms, _ = _build_public_facade()
+    def test_main_extract_without_entity_raises_validation_error(self) -> None:
+        facade, _, _ = _build_public_facade()
         service = FlextDbtOracleWmsCliService(service=facade)
-        tm.that(service.main(["extract"]), eq=0)
-        tm.that(wms.extracted_entities, eq=("inventory",))
+        with pytest.raises(c.ValidationError):
+            service.main(["extract"])
 
     def test_execute_command_pipeline_returns_failure_on_error(self) -> None:
         facade, _, _ = _build_public_facade(pipeline_should_fail=True)
