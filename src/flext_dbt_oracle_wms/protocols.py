@@ -12,8 +12,8 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from ._protocols.base import FlextDbtOracleWmsProtocolsBase
-from ._protocols.dbt_runner import DbtRunner
-from ._protocols.wms_client import WmsClient
+from ._protocols.dbt_runner import DbtRunner as DbtRunnerProtocol
+from ._protocols.wms_client import WmsClient as WmsClientProtocol
 
 
 class FlextDbtOracleWmsProtocols(FlextDbtOracleWmsProtocolsBase):
@@ -27,8 +27,8 @@ class FlextDbtOracleWmsProtocols(FlextDbtOracleWmsProtocolsBase):
     class DbtOracleWms(FlextDbtOracleWmsProtocolsBase.DbtOracleWms):
         """DBT Oracle WMS protocol namespace."""
 
-        WmsClient = WmsClient
-        DbtRunner = DbtRunner
+        WmsClient = WmsClientProtocol
+        DbtRunner = DbtRunnerProtocol
 
 
 p = FlextDbtOracleWmsProtocols
