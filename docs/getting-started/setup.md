@@ -367,7 +367,8 @@ dbt run --select stg_wms__allocation
 
 # Expected output:
 # Completed successfully
-# 1 model, 0 tests, 0 snapshots, 0 analyses, 0 macros, 0 operations, 0 seed files, 0 sources, 0 exposures, 0 metrics
+# 1 model, 0 tests, 0 snapshots, 0 analyses, 0 macros, 0 operations,
+# 0 seed files, 0 sources, 0 exposures, 0 metrics
 ```
 
 ### 2. Run Basic Tests

@@ -321,7 +321,7 @@ WHERE company_code = '001'
 ORDER BY created_timestamp DESC
 
 -- ❌ BAD: Inconsistent formatting
-SELECT allocation_id,company_code,allocated_quantity,CASE WHEN packed_quantity>=allocated_quantity THEN 'COMPLETE' ELSE 'PENDING' END pack_status FROM {{ ref('stg_wms__allocation') }} WHERE company_code='001'
+SELECT allocation_id,company_code FROM {{ ref('stg_wms__allocation') }}
 ```
 
 #### **CTE (Common Table Expression) Standards**
