@@ -9,7 +9,7 @@
 <!-- AUTO-GENERATED — DO NOT EDIT MANUALLY -->
 
 - Package: `flext_dbt_oracle_wms`
-- Version: `0.12.0rc0`
+- Version: `0.12.0`
 - Description: FLEXT DBT Oracle WMS - Oracle WMS data transformation with DBT
 - Doc summary: Flext Dbt Oracle Wms package.
 - Classifiers: `Development Status :: 3 - Alpha`, `Intended Audience :: Developers`,
