@@ -33,13 +33,15 @@
 
 **Complete Integration Guide for Oracle Warehouse Management System**
 
-This guide covers the integration between FLEXT DBT and Oracle WMS, including data sources, connection setup, and WMS-specific considerations.
+This guide covers the integration between FLEXT DBT and Oracle WMS, including data
+sources, connection setup, and WMS-specific considerations.
 
 ## 🏢 Oracle WMS Overview
 
 ### What is Oracle WMS
 
-Oracle Warehouse Management System (WMS) is a comprehensive supply chain execution solution that provides:
+Oracle Warehouse Management System (WMS) is a comprehensive supply chain execution
+solution that provides:
 
 - **Inventory Management** - Real-time inventory tracking and optimization
 - **Order Fulfillment** - Pick, pack, and ship operations
@@ -646,7 +648,7 @@ lsnrctl status
 
 # Verify user permissions
 sqlplus $ORACLE_WMS_USER/$ORACLE_WMS_PASS@$ORACLE_WMS_SERVICE
-SQL> SELECT * FROM user_tab_privs WHERE table_name = 'ALLOCATION';
+SQL > SELECT * FROM user_tab_privs WHERE table_name = 'ALLOCATION'
 ```
 
 #### **Data Type Issues**

@@ -40,7 +40,8 @@
 
 **Get FLEXT DBT Oracle WMS running in 10 minutes**
 
-This guide gets you up and running with FLEXT DBT Oracle WMS quickly. For detailed setup, see the [Setup Guide](setup.md).
+This guide gets you up and running with FLEXT DBT Oracle WMS quickly. For detailed
+setup, see the [Setup Guide](setup.md).
 
 ## 🚀 Prerequisites Check
 
@@ -272,14 +273,14 @@ dbt test --select stg_wms__allocation
 
 ```bash
 # Development workflow
-dbt run --select staging        # Build staging layer
-dbt run --select marts          # Build marts layer
-dbt test                        # Run all tests
-dbt docs generate              # Update documentation
+dbt run --select staging # Build staging layer
+dbt run --select marts   # Build marts layer
+dbt test                 # Run all tests
+dbt docs generate        # Update documentation
 
 # Production deployment
-dbt run --target prod          # Deploy to production
-dbt test --target prod         # Validate production data
+dbt run --target prod  # Deploy to production
+dbt test --target prod # Validate production data
 ```
 
 ### Configuration Files
@@ -317,4 +318,5 @@ After completing this guide, you should have:
 
 ---
 
-**Congratulations!** 🎉 You now have FLEXT DBT Oracle WMS running locally. Ready for the next level? Check out the [Development Guide](../development/guidelines.md).
+**Congratulations!** 🎉 You now have FLEXT DBT Oracle WMS running locally. Ready for the
+next level? Check out the [Development Guide](../development/guidelines.md).

@@ -33,13 +33,15 @@
 
 **Best Practices for FLEXT DBT Oracle WMS Development**
 
-This guide establishes development standards and best practices for creating and maintaining dbt models in the FLEXT DBT Oracle WMS project.
+This guide establishes development standards and best practices for creating and
+maintaining dbt models in the FLEXT DBT Oracle WMS project.
 
 ## 🏗️ Architecture Principles
 
 ### Clean Architecture Application
 
-FLEXT DBT Oracle WMS follows **Clean Architecture** principles adapted for data transformations:
+FLEXT DBT Oracle WMS follows **Clean Architecture** principles adapted for data
+transformations:
 
 #### **Layer Separation**
 
@@ -79,7 +81,8 @@ FLEXT DBT Oracle WMS follows **Clean Architecture** principles adapted for data 
 
 #### **Dependency Rule**
 
-- **Inward Dependencies Only**: Higher layers can depend on lower layers, never the reverse
+- **Inward Dependencies Only**: Higher layers can depend on lower layers, never the
+  reverse
 - **Abstraction Increases Inward**: More abstract/business-focused as you move inward
 - **Stable Dependencies**: Lower layers are more stable than higher layers
 
@@ -167,7 +170,8 @@ met_wms__kpi_dashboard.sql        -- Metrics for dashboards
 #### **File Organization Rules**
 
 - **One model per file** - Each `.sql` file contains exactly one model
-- **Consistent prefixes** - Use standard layer prefixes (`stg_`, `int_`, `opr_`, `ana_`, `met_`)
+- **Consistent prefixes** - Use standard layer prefixes (`stg_`, `int_`, `opr_`, `ana_`,
+  `met_`)
 - **Descriptive names** - Model names should clearly indicate purpose
 - **No abbreviations** - Use full words for clarity (`allocation` not `alloc`)
 
@@ -787,10 +791,10 @@ cat target/compiled/flext_dbt_oracle_wms/models/staging/stg_wms__new_entity.sql
 make val
 
 # Individual quality checks
-make lint        # SQL and Python linting
+make lint # SQL and Python linting
 make type-check
-make security    # Security scans
-make test        # All tests including dbt
+make security # Security scans
+make test     # All tests including dbt
 ```
 
 ### Git Workflow
@@ -845,20 +849,27 @@ perf(marts): optimize allocation summary query performance
 
 ### dbt Resources
 
-- **[dbt Style Guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md)** - Official dbt style guide
-- **[dbt Best Practices](https://docs.getdbt.com/guides/best-practices)** - dbt development best practices
-- **[dbt Oracle Adapter](https://github.com/oracle/dbt-oracle)** - Oracle-specific documentation
+- **[dbt Style Guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md)** -
+  Official dbt style guide
+- **[dbt Best Practices](https://docs.getdbt.com/guides/best-practices)** - dbt
+  development best practices
+- **[dbt Oracle Adapter](https://github.com/oracle/dbt-oracle)** - Oracle-specific
+  documentation
 
 ### Oracle WMS Resources
 
-- **[Oracle WMS Documentation](https://docs.oracle.com/en/industries/food-beverage/wms/)** - Official Oracle WMS docs
+- **[Oracle WMS Documentation](https://docs.oracle.com/en/industries/food-beverage/wms/)** -
+  Official Oracle WMS docs
 - **[WMS Data Model](../integration/oracle-wms.md)** - FLEXT WMS integration guide
 
 ### FLEXT Framework
 
-- **[Clean Architecture Guide](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/architecture/clean-architecture.md)** - Clean Architecture principles
-- **[Domain-Driven Design](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/guides/domain-driven-design.md)** - DDD implementation patterns
+- **[Clean Architecture Guide](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/architecture/clean-architecture.md)** -
+  Clean Architecture principles
+- **[Domain-Driven Design](https://github.com/flext-sh/flext/tree/0.12.0-dev/flext-core/docs/guides/domain-driven-design.md)** -
+  DDD implementation patterns
 
 ---
 
-Following these development guidelines ensures consistent, high-quality, and maintainable dbt models for Oracle WMS analytics.
+Following these development guidelines ensures consistent, high-quality, and
+maintainable dbt models for Oracle WMS analytics.

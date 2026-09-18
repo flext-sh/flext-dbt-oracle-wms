@@ -40,7 +40,8 @@
 
 **Complete Installation and Configuration for FLEXT DBT Oracle WMS**
 
-This guide will walk you through setting up FLEXT DBT Oracle WMS from scratch, including all prerequisites and configuration steps.
+This guide will walk you through setting up FLEXT DBT Oracle WMS from scratch, including
+all prerequisites and configuration steps.
 
 ## 📋 Prerequisites
 
@@ -94,9 +95,9 @@ poetry shell
 python -m venv venv
 
 # Activate virtual environment
-source venv/bin/activate  # Linux/Mac
+source venv/bin/activate # Linux/Mac
 # or
-venv\Scripts\activate     # Windows
+venv\Scripts\activate # Windows
 
 # Install dependencies
 pip install -e .
@@ -493,10 +494,10 @@ Create `.vscode/settings.json`:
 make val
 
 # Individual checks
-make lint          # SQL and Python linting
-make type-check    # Python type checking
-make security      # Security scanning
-make test          # All tests
+make lint       # SQL and Python linting
+make type-check # Python type checking
+make security   # Security scanning
+make test       # All tests
 ```
 
 ## 🐛 Troubleshooting
@@ -576,16 +577,20 @@ Now that you have FLEXT DBT Oracle WMS set up:
 
 1. **Explore Models** - Check the [Model Reference](../reference.md)
 1. **Run Your First Transformation** - Follow the [Quick Start Guide](quickstart.md)
-1. **Understand the Data** - Review [Oracle WMS Integration](../integration/oracle-wms.md)
+1. **Understand the Data** - Review
+   [Oracle WMS Integration](../integration/oracle-wms.md)
 1. **Set Up Development** - Read the [Development Guide](../development/guidelines.md)
 
 ## 📚 Additional Resources
 
 - **[dbt Documentation](https://docs.getdbt.com/)** - Official dbt docs
-- **[Oracle dbt Adapter](https://github.com/oracle/dbt-oracle)** - Oracle-specific documentation
+- **[Oracle dbt Adapter](https://github.com/oracle/dbt-oracle)** - Oracle-specific
+  documentation
 - **[Singer Protocol](https://hub.meltano.com/singer/spec)** - Data extraction standards
-- **[Oracle WMS Documentation](https://docs.oracle.com/en/industries/food-beverage/wms/)** - Oracle WMS reference
+- **[Oracle WMS Documentation](https://docs.oracle.com/en/industries/food-beverage/wms/)** -
+  Oracle WMS reference
 
 ---
 
-**Installation Complete!** 🎉 You're ready to start transforming Oracle WMS data with dbt.
+**Installation Complete!** 🎉 You're ready to start transforming Oracle WMS data with
+dbt.

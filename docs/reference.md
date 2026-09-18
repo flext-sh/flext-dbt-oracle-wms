@@ -33,7 +33,8 @@
 
 **Complete Data Model Documentation for FLEXT DBT Oracle WMS**
 
-This reference provides comprehensive documentation for all data models in the FLEXT DBT Oracle WMS project, including staging models, mart models, and their relationships.
+This reference provides comprehensive documentation for all data models in the FLEXT DBT
+Oracle WMS project, including staging models, mart models, and their relationships.
 
 ## 📊 Model Architecture Overview
 
@@ -570,4 +571,6 @@ dbt docs serve --port 8080
 
 ---
 
-This model reference provides the foundation for understanding and working with FLEXT DBT Oracle WMS data models. For implementation details, see the [Development Guide](development/guidelines.md).
+This model reference provides the foundation for understanding and working with FLEXT
+DBT Oracle WMS data models. For implementation details, see the
+[Development Guide](development/guidelines.md).

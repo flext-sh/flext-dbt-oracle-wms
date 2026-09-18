@@ -28,8 +28,8 @@ This section is generated from public exports and real docstrings.
 ## Surface Summary
 
 - Primary facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsBase`,
-  `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsClient`,
-  `FlextDbtOracleWmsConfig`, `FlextDbtOracleWmsConstants` (+9 more)
+  `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsConfig`,
+  `FlextDbtOracleWmsConstants` (+9 more)
 - Generated module pages: `14`
 
 Back to [project docs](../index.md).
