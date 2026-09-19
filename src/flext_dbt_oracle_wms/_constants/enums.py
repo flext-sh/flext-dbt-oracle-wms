@@ -20,7 +20,4 @@ class FlextDbtOracleWmsConstantsEnums:
             INCREMENTAL = "incremental"
 
 
-DbtMaterialization = FlextDbtOracleWmsConstantsEnums.Dbt.Materialization
-"""Public alias for the DBT materialization enumeration (consumed by codegen init)."""
-
-__all__: list[str] = ["DbtMaterialization", "FlextDbtOracleWmsConstantsEnums"]
+__all__: list[str] = ["FlextDbtOracleWmsConstantsEnums"]

@@ -12,18 +12,19 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from flext_tests import FlextTestsUtilities
+from flext_core import r
+from flext_tests import u as tests_u
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, m, r, t
+from flext_dbt_oracle_wms import m, t, u
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
 
 
-class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):
-    """Test utilities combining FlextTestsUtilities with flext-dbt-oracle-wms utilities."""
+class TestsFlextDbtOracleWmsUtilities(tests_u, u):
+    """Test utilities combining TestsFlextUtilities with flext-dbt-oracle-wms utilities."""
 
-    class DbtOracleWms(FlextDbtOracleWmsUtilities.DbtOracleWms):
+    class DbtOracleWms(u.DbtOracleWms):
         """DbtOracleWms test utilities namespace."""
 
         class Tests:
@@ -133,6 +134,9 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     _ = project_dir
                     self.calls += 1
                     return self._result
+
+    class Tests(tests_u.Tests):
+        """Test-scoped utilities facade."""
 
 
 u = TestsFlextDbtOracleWmsUtilities
