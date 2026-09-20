@@ -12,7 +12,9 @@ if TYPE_CHECKING:
     from .base import FlextDbtOracleWmsConstantsBase
     from .enums import DbtMaterialization, FlextDbtOracleWmsConstantsEnums
 __all__: tuple[str, ...] = (
-    "DbtMaterialization", "FlextDbtOracleWmsConstantsBase", "FlextDbtOracleWmsConstantsEnums",
+    "DbtMaterialization",
+    "FlextDbtOracleWmsConstantsBase",
+    "FlextDbtOracleWmsConstantsEnums",
 )
 
 _LAZY_IMPORTS = MappingProxyType(
