@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from .._settings import FlextDbtOracleWmsSettings
 
 
-class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):
+class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
     """DBT model generation and DBT command monitoring operations."""
 
     def __init__(
@@ -114,4 +114,4 @@ class FlextDbtOracleWmsModelsApi(FlextDbtOracleWmsMetadata):
         )
 
 
-__all__: list[str] = ["FlextDbtOracleWmsModelsApi"]
+__all__: list[str] = ["FlextDbtOracleWmsGeneration"]
