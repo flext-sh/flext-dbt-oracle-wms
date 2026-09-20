@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from enum import StrEnum, unique
+from typing import Final
 
 
 class FlextDbtOracleWmsConstantsEnums:
@@ -19,8 +20,12 @@ class FlextDbtOracleWmsConstantsEnums:
             VIEW = "view"
             INCREMENTAL = "incremental"
 
+        # dbt Jinja template, not executable SQL: `source()` is resolved by dbt at
+        # compile time against the project's declared sources, so the value never
+        # reaches a database driver as a literal.
+        STAGING_SELECT_TEMPLATE: Final[str] = (
+            "select * from {{{{ source('oracle_wms', '{source}') }}}}"
+        )
 
-DbtMaterialization = FlextDbtOracleWmsConstantsEnums.Dbt.Materialization
-"""Public alias for the DBT materialization enumeration (consumed by codegen init)."""
 
-__all__: list[str] = ["DbtMaterialization", "FlextDbtOracleWmsConstantsEnums"]
+__all__: list[str] = ["FlextDbtOracleWmsConstantsEnums"]

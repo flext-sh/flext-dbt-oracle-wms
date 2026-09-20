@@ -34,7 +34,7 @@ if TYPE_CHECKING:
     from .services.base import FlextDbtOracleWmsBase
     from .services.client import FlextDbtOracleWmsClient
     from .services.metadata import FlextDbtOracleWmsMetadata
-    from .services.models import FlextDbtOracleWmsModelsApi
+    from .services.model_generation import FlextDbtOracleWmsModelsApi
     from .services.workflow import FlextDbtOracleWmsWorkflow
     from .typings import FlextDbtOracleWmsTypes, FlextDbtOracleWmsTypes as t
     from .utilities import FlextDbtOracleWmsUtilities, FlextDbtOracleWmsUtilities as u
@@ -96,7 +96,7 @@ _LAZY_IMPORTS = MappingProxyType(
             ".services.base": ("FlextDbtOracleWmsBase",),
             ".services.client": ("FlextDbtOracleWmsClient",),
             ".services.metadata": ("FlextDbtOracleWmsMetadata",),
-            ".services.models": ("FlextDbtOracleWmsModelsApi",),
+            ".services.model_generation": ("FlextDbtOracleWmsModelsApi",),
             ".services.workflow": ("FlextDbtOracleWmsWorkflow",),
             ".typings": ("FlextDbtOracleWmsTypes", "t"),
             ".utilities": ("FlextDbtOracleWmsUtilities", "u"),

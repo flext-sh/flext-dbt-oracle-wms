@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from .base import FlextDbtOracleWmsBase
     from .client import FlextDbtOracleWmsClient
     from .metadata import FlextDbtOracleWmsMetadata
-    from .models import FlextDbtOracleWmsModelsApi
+    from .model_generation import FlextDbtOracleWmsModelsApi
     from .workflow import FlextDbtOracleWmsWorkflow
 __all__: tuple[str, ...] = (
     "FlextDbtOracleWmsBase",
@@ -28,7 +28,7 @@ _LAZY_IMPORTS = MappingProxyType(
             ".base": ("FlextDbtOracleWmsBase",),
             ".client": ("FlextDbtOracleWmsClient",),
             ".metadata": ("FlextDbtOracleWmsMetadata",),
-            ".models": ("FlextDbtOracleWmsModelsApi",),
+            ".model_generation": ("FlextDbtOracleWmsModelsApi",),
             ".workflow": ("FlextDbtOracleWmsWorkflow",),
         }),
         alias_groups=MappingProxyType({}),
