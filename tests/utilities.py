@@ -14,7 +14,8 @@ from typing import TYPE_CHECKING
 
 from flext_tests import FlextTestsUtilities
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, m, r, t
+from flext_core import r
+from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, m, t
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p

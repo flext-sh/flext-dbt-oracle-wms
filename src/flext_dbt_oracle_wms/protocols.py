@@ -27,8 +27,8 @@ class FlextDbtOracleWmsProtocols(FlextDbtOracleWmsProtocolsBase):
     class DbtOracleWms(FlextDbtOracleWmsProtocolsBase.DbtOracleWms):
         """DBT Oracle WMS protocol namespace."""
 
-        WmsClient = WmsClientProtocol
-        DbtRunner = DbtRunnerProtocol
+        type WmsClient = WmsClientProtocol
+        type DbtRunner = DbtRunnerProtocol
 
 
 p = FlextDbtOracleWmsProtocols
