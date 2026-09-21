@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, override
 
 from flext_core import r
 from flext_dbt_oracle_wms import m
-from flext_dbt_oracle_wms.services.model_generation import FlextDbtOracleWmsModelsApi
+from flext_dbt_oracle_wms.services.generation import FlextDbtOracleWmsGeneration
 
 from .._settings import FlextDbtOracleWmsSettings
 
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, t, u
 
 
-class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
+class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
     """Workflow execution and service lifecycle operations."""
 
     def __init__(

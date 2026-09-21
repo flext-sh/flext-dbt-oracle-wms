@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Annotated
 
 from flext_meltano import m, u
-from flext_oracle_wms import FlextOracleWmsModels
+from flext_oracle_wms import m as _oracle_wms_m
 
 
-class FlextDbtOracleWmsModelsBase(m, FlextOracleWmsModels):
+class FlextDbtOracleWmsModelsBase(m, _oracle_wms_m):
     """Pydantic model namespace for DBT Oracle WMS objects."""
 
     # NOTE (multi-agent): mro-rn88 ADR-006 thin-driver — typed connection_profile.

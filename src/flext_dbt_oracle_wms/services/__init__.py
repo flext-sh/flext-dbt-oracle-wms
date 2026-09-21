@@ -11,14 +11,14 @@ from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 if TYPE_CHECKING:
     from .base import FlextDbtOracleWmsBase
     from .client import FlextDbtOracleWmsClient
+    from .generation import FlextDbtOracleWmsGeneration
     from .metadata import FlextDbtOracleWmsMetadata
-    from .model_generation import FlextDbtOracleWmsModelsApi
     from .workflow import FlextDbtOracleWmsWorkflow
 __all__: tuple[str, ...] = (
     "FlextDbtOracleWmsBase",
     "FlextDbtOracleWmsClient",
+    "FlextDbtOracleWmsGeneration",
     "FlextDbtOracleWmsMetadata",
-    "FlextDbtOracleWmsModelsApi",
     "FlextDbtOracleWmsWorkflow",
 )
 
@@ -27,8 +27,8 @@ _LAZY_IMPORTS = MappingProxyType(
         MappingProxyType({
             ".base": ("FlextDbtOracleWmsBase",),
             ".client": ("FlextDbtOracleWmsClient",),
+            ".generation": ("FlextDbtOracleWmsGeneration",),
             ".metadata": ("FlextDbtOracleWmsMetadata",),
-            ".model_generation": ("FlextDbtOracleWmsModelsApi",),
             ".workflow": ("FlextDbtOracleWmsWorkflow",),
         }),
         alias_groups=MappingProxyType({}),
