@@ -1,9 +1,9 @@
 """Protocols for DBT Oracle WMS integration points.
 
 Composes the family-part protocols from ``_protocols/`` (base,
-``wms_client``, ``dbt_runner``) into the public ``DbtOracleWms`` namespace
-rather than re-declaring them inline, eliminating duplication of the
-contract defined in ``_protocols/base.py``.
+``contracts``) into the public ``DbtOracleWms`` namespace rather than
+re-declaring them inline, eliminating duplication of the contract defined
+in ``_protocols/base.py``.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
@@ -11,12 +11,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from flext_meltano import p
+
 from ._protocols.base import FlextDbtOracleWmsProtocolsBase
-from ._protocols.dbt_runner import DbtRunner as DbtRunnerProtocol
-from ._protocols.wms_client import WmsClient as WmsClientProtocol
+from ._protocols.contracts import FlextDbtOracleWmsProtocolsContracts
 
 
-class FlextDbtOracleWmsProtocols(FlextDbtOracleWmsProtocolsBase):
+class FlextDbtOracleWmsProtocols(p):
     """Namespace for DBT Oracle WMS protocol contracts.
 
     Extends :class:`FlextDbtOracleWmsProtocolsBase` (source of truth for
@@ -24,11 +25,10 @@ class FlextDbtOracleWmsProtocols(FlextDbtOracleWmsProtocolsBase):
     ``WmsClient`` and ``DbtRunner`` from their dedicated family-part modules.
     """
 
-    class DbtOracleWms(FlextDbtOracleWmsProtocolsBase.DbtOracleWms):
+    class DbtOracleWms(
+        FlextDbtOracleWmsProtocolsBase.DbtOracleWms, FlextDbtOracleWmsProtocolsContracts
+    ):
         """DBT Oracle WMS protocol namespace."""
-
-        type WmsClient = WmsClientProtocol
-        type DbtRunner = DbtRunnerProtocol
 
 
 p = FlextDbtOracleWmsProtocols
