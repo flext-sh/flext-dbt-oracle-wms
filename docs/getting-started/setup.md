@@ -49,7 +49,7 @@ all prerequisites and configuration steps.
 
 - **Python 3.13+** (required for modern typing and performance)
 - **Git** (for version control)
-- **Poetry** (recommended for dependency management)
+- **Make** (build toolchain)
 - **Oracle Database** access (Oracle 12c+ or Oracle Cloud)
 - **Oracle Client** libraries (Oracle Instant Client)
 
@@ -75,17 +75,11 @@ ls -la
 
 ### 2. Python Environment Setup
 
-#### Option A: Using Poetry (Recommended)
+#### Option A: Using FLEXT Make (Recommended)
 
 ```bash
-# Install Poetry if not already installed
-curl -sSL https://install.python-poetry.org | python3 -
-
-# Install project dependencies
-poetry install
-
-# Activate virtual environment
-poetry shell
+# Install dependencies and activate environment from workspace root
+make setup
 ```
 
 #### Option B: Using pip and venv
@@ -453,7 +447,7 @@ flext-tap-oracle-wms --config tap-settings.json --discover
 
 ```bash
 # Install pre-commit hooks
-poetry install --group dev
+make setup
 pre-commit install
 
 # Test pre-commit hooks
@@ -492,7 +486,7 @@ Create `.vscode/settings.json`:
 
 ```bash
 # Run all quality checks
-make val
+make check
 
 # Individual checks
 make lint       # SQL and Python linting

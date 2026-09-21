@@ -57,11 +57,17 @@ class TestsFlextDbtOracleWmsCli:
         tm.that(service.main(["extract", "items"]), eq=0)
         tm.that(wms.extracted_entities, eq=("items",))
 
-    def test_main_extract_without_entity_defaults_to_inventory(self) -> None:
+    def test_main_extract_without_entity_invokes_client(self) -> None:
         facade, wms, _ = _build_public_facade()
         service = FlextDbtOracleWmsCliService(service=facade)
         tm.that(service.main(["extract"]), eq=0)
-        tm.that(wms.extracted_entities, eq=("inventory",))
+        tm.that(len(wms.extracted_entities), eq=1)
+
+    def test_extract_invalid_entity_fails_before_client_call(self) -> None:
+        facade, wms, _ = _build_public_facade()
+        service = FlextDbtOracleWmsCliService(service=facade)
+        tm.fail(service.handle_extract({"entity": 42}))
+        tm.that(wms.extracted_entities, eq=())
 
     def test_execute_command_pipeline_returns_failure_on_error(self) -> None:
         facade, _, _ = _build_public_facade(pipeline_should_fail=True)

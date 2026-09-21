@@ -788,7 +788,7 @@ cat target/compiled/flext_dbt_oracle_wms/models/staging/stg_wms__new_entity.sql
 
 ```bash
 # Run all quality checks before committing
-make val
+make check
 
 # Individual quality checks
 make lint # SQL and Python linting
@@ -808,7 +808,7 @@ git add models/marts/operational/opr_wms__allocation_metrics.sql
 git commit -m "feat: add allocation performance metrics model"
 
 # Quality validation
-make val
+make check
 
 # Push and create PR
 git push origin feature/new-allocation-metrics
