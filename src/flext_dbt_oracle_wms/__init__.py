@@ -9,12 +9,19 @@ from typing import TYPE_CHECKING
 from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 from .__version__ import (
-    __author__ as __author__, __author_email__ as __author_email__, __description__ as __description__, __license__ as __license__,
-    __title__ as __title__, __url__ as __url__, __version__ as __version__, __version_info__ as __version_info__,
+    __author__ as __author__,
+    __author_email__ as __author_email__,
+    __description__ as __description__,
+    __license__ as __license__,
+    __title__ as __title__,
+    __url__ as __url__,
+    __version__ as __version__,
+    __version_info__ as __version_info__,
 )
 
 if TYPE_CHECKING:
-    from flext_meltano import d, e, h, r, x
+    from flext_core import d, h, r, x
+    from flext_oracle_wms import e
 
     from . import services
     from .__version__ import FlextDbtOracleWmsVersion
@@ -34,16 +41,46 @@ if TYPE_CHECKING:
     from .typings import FlextDbtOracleWmsTypes, FlextDbtOracleWmsTypes as t
     from .utilities import FlextDbtOracleWmsUtilities, FlextDbtOracleWmsUtilities as u
 __all__: tuple[str, ...] = (
-    "FlextDbtOracleWms", "FlextDbtOracleWmsBase", "FlextDbtOracleWmsCliService", "FlextDbtOracleWmsClient",
-    "FlextDbtOracleWmsConfig", "FlextDbtOracleWmsConstants", "FlextDbtOracleWmsGeneration", "FlextDbtOracleWmsMetadata",
-    "FlextDbtOracleWmsModels", "FlextDbtOracleWmsProtocols", "FlextDbtOracleWmsServiceBase", "FlextDbtOracleWmsSettings",
-    "FlextDbtOracleWmsTypes", "FlextDbtOracleWmsUtilities", "FlextDbtOracleWmsVersion", "FlextDbtOracleWmsWorkflow",
-    "__author__", "__author_email__", "__description__", "__license__",
-    "__title__", "__url__", "__version__", "__version_info__",
-    "c", "config", "d", "dbt_oracle_wms",
-    "e", "h", "m", "main",
-    "p", "r", "s", "services",
-    "settings", "t", "u", "x",
+    "FlextDbtOracleWms",
+    "FlextDbtOracleWmsBase",
+    "FlextDbtOracleWmsCliService",
+    "FlextDbtOracleWmsClient",
+    "FlextDbtOracleWmsConfig",
+    "FlextDbtOracleWmsConstants",
+    "FlextDbtOracleWmsGeneration",
+    "FlextDbtOracleWmsMetadata",
+    "FlextDbtOracleWmsModels",
+    "FlextDbtOracleWmsProtocols",
+    "FlextDbtOracleWmsServiceBase",
+    "FlextDbtOracleWmsSettings",
+    "FlextDbtOracleWmsTypes",
+    "FlextDbtOracleWmsUtilities",
+    "FlextDbtOracleWmsVersion",
+    "FlextDbtOracleWmsWorkflow",
+    "__author__",
+    "__author_email__",
+    "__description__",
+    "__license__",
+    "__title__",
+    "__url__",
+    "__version__",
+    "__version_info__",
+    "c",
+    "config",
+    "d",
+    "dbt_oracle_wms",
+    "e",
+    "h",
+    "m",
+    "main",
+    "p",
+    "r",
+    "s",
+    "services",
+    "settings",
+    "t",
+    "u",
+    "x",
 )
 
 _LAZY_IMPORTS = MappingProxyType(
@@ -66,7 +103,8 @@ _LAZY_IMPORTS = MappingProxyType(
             ".services.workflow": ("FlextDbtOracleWmsWorkflow",),
             ".typings": ("FlextDbtOracleWmsTypes", "t"),
             ".utilities": ("FlextDbtOracleWmsUtilities", "u"),
-            "flext_meltano": ("d", "e", "h", "r", "x"),
+            "flext_core": ("d", "h", "r", "x"),
+            "flext_oracle_wms": ("e",),
         }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,
