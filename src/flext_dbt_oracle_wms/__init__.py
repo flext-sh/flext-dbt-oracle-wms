@@ -20,9 +20,8 @@ from .__version__ import (
 )
 
 if TYPE_CHECKING:
-    from flext_oracle_wms import e
-
     from flext_core import d, h, r, x
+    from flext_oracle_wms import e
 
     from . import services
     from .__version__ import FlextDbtOracleWmsVersion
