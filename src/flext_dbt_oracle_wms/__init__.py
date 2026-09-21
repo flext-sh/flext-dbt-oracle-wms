@@ -23,6 +23,7 @@ if TYPE_CHECKING:
     from flext_oracle_wms import FlextOracleWmsConstants, d, e, h, r, x
 
     from . import services
+    from .__version__ import FlextDbtOracleWmsVersion
     from ._config import FlextDbtOracleWmsConfig, config
     from ._settings import FlextDbtOracleWmsSettings, settings
     from .api import FlextDbtOracleWms, dbt_oracle_wms
@@ -53,6 +54,7 @@ __all__: tuple[str, ...] = (
     "FlextDbtOracleWmsSettings",
     "FlextDbtOracleWmsTypes",
     "FlextDbtOracleWmsUtilities",
+    "FlextDbtOracleWmsVersion",
     "FlextDbtOracleWmsWorkflow",
     "FlextOracleWmsConstants",
     "__author__",
@@ -84,6 +86,7 @@ __all__: tuple[str, ...] = (
 _LAZY_IMPORTS = MappingProxyType(
     build_lazy_import_map(
         MappingProxyType({
+            ".__version__": ("FlextDbtOracleWmsVersion",),
             "._config": ("FlextDbtOracleWmsConfig", "config"),
             "._settings": ("FlextDbtOracleWmsSettings", "settings"),
             ".api": ("FlextDbtOracleWms", "dbt_oracle_wms"),

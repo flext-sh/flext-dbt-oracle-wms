@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from flext_meltano import t
-from flext_oracle_wms import FlextOracleWmsTypes
+from flext_oracle_wms import t as _oracle_wms_t
 
 
-class FlextDbtOracleWmsTypesBase(t, FlextOracleWmsTypes):
+class FlextDbtOracleWmsTypesBase(t, _oracle_wms_t):
     """MRO facade composing Meltano + OracleWms type namespaces."""
 
     # No domain-specific types are actively used via t.DbtOracleWms.*

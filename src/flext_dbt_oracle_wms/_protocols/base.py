@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
 from flext_meltano import p
-from flext_oracle_wms import FlextOracleWmsProtocols
+from flext_oracle_wms import p as _oracle_wms_p
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms import m, t
 
 
-class FlextDbtOracleWmsProtocolsBase(p, FlextOracleWmsProtocols):
+class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
     """Namespace for DBT Oracle WMS protocol contracts."""
 
     class DbtOracleWms:
