@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Annotated
 
-from flext_meltano import FlextMeltanoSettings, m
+from flext_meltano import FlextMeltanoSettings, m, t
 
 
 class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
@@ -25,7 +25,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         """Namespaced dbt Oracle WMS settings."""
 
         required_fields_per_entity: Annotated[
-            dict[str, tuple[str, ...]],
+            t.MappingKV[str, t.StrSequence],
             m.Field(
                 default_factory=dict,
                 description="Required fields per WMS entity (typed mapping)",

@@ -32,7 +32,9 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
                     table_name=f"stg_{source}",
                     columns=[],
                     materialization=c.DbtOracleWms.Dbt.Materialization.VIEW.value,
-                    sql_content=_STAGING_SELECT_TEMPLATE.format(source=source),
+                    sql_content=c.DbtOracleWms.Dbt.STAGING_SELECT_TEMPLATE.format(
+                        source=source
+                    ),
                     description=f"Staging model for {source}",
                     oracle_source=source,
                     dependencies=[],
@@ -41,13 +43,6 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
                 for source in oracle_sources
             ]
             return r[Sequence[m.DbtOracleWms.DbtModel]].ok(models)
-
-
-# dbt Jinja template, not executable SQL: `source()` is resolved by dbt at
-# compile time against the project's declared sources, so the value never
-# reaches a database driver as a literal. Named here so the model definition
-# below carries no inline query construction.
-_STAGING_SELECT_TEMPLATE = "select * from {{{{ source('oracle_wms', '{source}') }}}}"
 
 
 __all__: list[str] = ["FlextDbtOracleWmsUtilitiesModelBuilder"]

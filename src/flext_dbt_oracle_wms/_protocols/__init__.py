@@ -10,16 +10,23 @@ from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 if TYPE_CHECKING:
     from .base import FlextDbtOracleWmsProtocolsBase
-    from .dbt_runner import DbtRunner
-    from .wms_client import WmsClient
-__all__: tuple[str, ...] = ("DbtRunner", "FlextDbtOracleWmsProtocolsBase", "WmsClient")
+    from .contracts import FlextDbtOracleWmsProtocolsContracts
+    from .dbt_runner import FlextDbtOracleWmsProtocolsDbtRunner
+    from .wms_client import FlextDbtOracleWmsProtocolsWmsClient
+__all__: tuple[str, ...] = (
+    "FlextDbtOracleWmsProtocolsBase",
+    "FlextDbtOracleWmsProtocolsContracts",
+    "FlextDbtOracleWmsProtocolsDbtRunner",
+    "FlextDbtOracleWmsProtocolsWmsClient",
+)
 
 _LAZY_IMPORTS = MappingProxyType(
     build_lazy_import_map(
         MappingProxyType({
             ".base": ("FlextDbtOracleWmsProtocolsBase",),
-            ".dbt_runner": ("DbtRunner",),
-            ".wms_client": ("WmsClient",),
+            ".contracts": ("FlextDbtOracleWmsProtocolsContracts",),
+            ".dbt_runner": ("FlextDbtOracleWmsProtocolsDbtRunner",),
+            ".wms_client": ("FlextDbtOracleWmsProtocolsWmsClient",),
         }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,
