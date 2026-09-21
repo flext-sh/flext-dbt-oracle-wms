@@ -12,9 +12,17 @@ from __future__ import annotations
 
 from flext_meltano import FlextMeltanoConfig, m
 
+from flext_core import FlextSettings
 
-class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
-    """DbtOracleWms config auto-loaded model-less from ``config/*.yaml``."""
+
+class FlextDbtOracleWmsConfig(FlextSettings, FlextMeltanoConfig):
+    """DbtOracleWms config auto-loaded model-less from ``config/*.yaml``.
+
+    MRO carries ``FlextSettings`` FIRST (ENFORCE-042); unlike never-instantiated
+    namespace holders, this class IS instantiated by ``fetch_global``, so the
+    instance-inert holder contract does not apply and pydantic settings
+    construction machinery stays intact.
+    """
 
     class DbtOracleWms(m.BaseModel):
         """Open, frozen namespace exposing every ``config/*.yaml`` domain model-less."""
