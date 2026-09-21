@@ -18,13 +18,13 @@ class FlextDbtOracleWmsProtocolsWmsClient(Protocol):
         """Discover available Oracle WMS entities."""
         ...
 
-    def get_entity_data(
+    def fetch_entity_data(
         self,
         entity_name: str,
         limit: int | None = None,
         filters: t.ConfigurationMapping | None = None,
     ) -> p.Result[t.SequenceOf[t.StrMapping]]:
-        """Get data for a specific Oracle WMS entity."""
+        """Fetch data for a specific Oracle WMS entity."""
         ...
 
     def start(self) -> p.Result[bool]:
