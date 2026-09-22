@@ -18,9 +18,9 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
     class ModelBuilder:
         """DBT staging model generator for WMS entity sources."""
 
-        @staticmethod
+        @classmethod
         def generate_wms_staging_models(
-            oracle_sources: t.StrSequence,
+            cls, oracle_sources: t.StrSequence
         ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
             """Create one staging model per source name."""
             models = [

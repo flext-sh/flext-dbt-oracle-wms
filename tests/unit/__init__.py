@@ -9,51 +9,21 @@ from typing import TYPE_CHECKING
 from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 if TYPE_CHECKING:
-    from flext_tests import c, d, e, h, m, p, r, s, t, td, tf, tk, tm, tv, u, x
-
+    from .test_cli import TestsFlextDbtOracleWmsCli
+    from .test_connection_profile import TestsFlextDbtOracleWmsConnectionProfile
     from .test_module_governance import TestsFlextDbtOracleWmsModuleGovernance
 __all__: tuple[str, ...] = (
+    "TestsFlextDbtOracleWmsCli",
+    "TestsFlextDbtOracleWmsConnectionProfile",
     "TestsFlextDbtOracleWmsModuleGovernance",
-    "c",
-    "d",
-    "e",
-    "h",
-    "m",
-    "p",
-    "r",
-    "s",
-    "t",
-    "td",
-    "tf",
-    "tk",
-    "tm",
-    "tv",
-    "u",
-    "x",
 )
 
 _LAZY_IMPORTS = MappingProxyType(
     build_lazy_import_map(
         MappingProxyType({
+            ".test_cli": ("TestsFlextDbtOracleWmsCli",),
+            ".test_connection_profile": ("TestsFlextDbtOracleWmsConnectionProfile",),
             ".test_module_governance": ("TestsFlextDbtOracleWmsModuleGovernance",),
-            "flext_tests": (
-                "c",
-                "d",
-                "e",
-                "h",
-                "m",
-                "p",
-                "r",
-                "s",
-                "t",
-                "td",
-                "tf",
-                "tk",
-                "tm",
-                "tv",
-                "u",
-                "x",
-            ),
         }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,

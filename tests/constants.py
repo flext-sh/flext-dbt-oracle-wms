@@ -9,13 +9,16 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_tests import FlextTestsConstants
+from flext_tests import c as tests_c
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsConstants
+from flext_dbt_oracle_wms import c
 
 
-class TestsFlextDbtOracleWmsConstants(FlextTestsConstants, FlextDbtOracleWmsConstants):
+class TestsFlextDbtOracleWmsConstants(c, tests_c):
     """Test constants for flext-dbt-oracle-wms."""
+
+    class Tests(tests_c.Tests):
+        """Test-scoped constants facade."""
 
 
 c = TestsFlextDbtOracleWmsConstants
