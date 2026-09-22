@@ -48,7 +48,7 @@ setup, see the [Setup Guide](setup.md).
 Ensure you have:
 
 - ✅ **Python 3.13+** installed (`python --version`)
-- ✅ **Poetry** installed (`poetry --version`)
+- ✅ **Make** available (`make --version`)
 - ✅ **Oracle database** access
 - ✅ **Oracle Client** libraries installed
 
@@ -61,11 +61,8 @@ Ensure you have:
 git clone <repository-url>
 cd flext-dbt-oracle-wms
 
-# Install dependencies
-poetry install
-
-# Activate environment
-poetry shell
+# Install dependencies and activate environment
+make setup
 ```
 
 ### 2. Configure Oracle Connection (3 minutes)

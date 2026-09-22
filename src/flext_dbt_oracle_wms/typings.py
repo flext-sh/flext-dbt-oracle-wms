@@ -15,7 +15,7 @@ from flext_oracle_wms import t as oracle_wms_t
 from ._typings.base import FlextDbtOracleWmsTypesBase
 
 
-class FlextDbtOracleWmsTypes(t):
+class FlextDbtOracleWmsTypes(t, oracle_wms_t):
     """MRO facade composing Meltano + OracleWms type namespaces."""
 
     class DbtOracleWms(FlextDbtOracleWmsTypesBase, oracle_wms_t.OracleWms):
