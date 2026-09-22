@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 @runtime_checkable
-class WmsClient(Protocol):
+class FlextDbtOracleWmsProtocolsWmsClient(Protocol):
     """Protocol for the consumed Oracle WMS client boundary."""
 
     def discover_entities(self) -> p.Result[t.StrSequence]:
@@ -24,7 +24,7 @@ class WmsClient(Protocol):
         limit: int | None = None,
         filters: t.ConfigurationMapping | None = None,
     ) -> p.Result[t.SequenceOf[t.StrMapping]]:
-        """Get data for a specific Oracle WMS entity."""
+        """Fetch data for a specific Oracle WMS entity."""
         ...
 
     def start(self) -> p.Result[bool]:
@@ -36,4 +36,4 @@ class WmsClient(Protocol):
         ...
 
 
-__all__: list[str] = ["WmsClient"]
+__all__: list[str] = ["FlextDbtOracleWmsProtocolsWmsClient"]

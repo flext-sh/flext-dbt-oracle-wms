@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 @runtime_checkable
-class DbtRunner(Protocol):
+class FlextDbtOracleWmsProtocolsDbtRunner(Protocol):
     """Protocol for the consumed dbt transformation runner boundary."""
 
     def run_dbt_transformation(
@@ -22,4 +22,4 @@ class DbtRunner(Protocol):
         ...
 
 
-__all__: list[str] = ["DbtRunner"]
+__all__: list[str] = ["FlextDbtOracleWmsProtocolsDbtRunner"]
