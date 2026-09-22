@@ -29,7 +29,8 @@
 - [📚 Documentation](#documentation)
   - [Model Documentation](#model-documentation)
   - [Automated Documentation Generation](#automated-documentation-generation)
-  <!-- TOC END -->
+
+<!-- TOC END -->
 
 **Complete Data Model Documentation for FLEXT DBT Oracle WMS**
 
