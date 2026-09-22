@@ -18,7 +18,7 @@ class TestsFlextDbtOracleWmsServiceBase(tests_s):
     # pattern per flext-cli tests/base.py).
     @classmethod
     @override
-    def _runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
+    def runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
         return m.RuntimeBootstrapOptions(settings_type=TestsFlextDbtOracleWmsSettings)
 
 
