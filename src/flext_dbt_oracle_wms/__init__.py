@@ -20,7 +20,6 @@ from .__version__ import (
 )
 
 if TYPE_CHECKING:
-<<<<<<< HEAD
     from flext_api import api
     from flext_cli import cli
     from flext_meltano import meltano
@@ -29,11 +28,6 @@ if TYPE_CHECKING:
     from pydantic_core import from_json, to_json, to_jsonable_python
 
     from flext_core import core, d, h, lazy_attribute, r, x
-=======
-    from flext_oracle_wms import e
->>>>>>> origin/0.12.0-dev
-
-    from flext_core import d, h, r, x
 
     from . import services
     from ._config import FlextDbtOracleWmsConfig, config
@@ -122,7 +116,6 @@ _LAZY_IMPORTS = MappingProxyType(
             ".services.workflow": ("FlextDbtOracleWmsWorkflow",),
             ".typings": ("FlextDbtOracleWmsTypes", "t"),
             ".utilities": ("FlextDbtOracleWmsUtilities", "u"),
-<<<<<<< HEAD
             "flext_api": ("api",),
             "flext_cli": ("cli",),
             "flext_core": ("core", "d", "h", "lazy_attribute", "r", "x"),
@@ -130,10 +123,6 @@ _LAZY_IMPORTS = MappingProxyType(
             "flext_oracle_wms": ("e", "oracle_wms"),
             "flext_web": ("web",),
             "pydantic_core": ("from_json", "to_json", "to_jsonable_python"),
-=======
-            "flext_core": ("d", "h", "r", "x"),
-            "flext_oracle_wms": ("e",),
->>>>>>> origin/0.12.0-dev
         }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,
