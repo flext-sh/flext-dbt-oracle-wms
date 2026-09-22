@@ -20,8 +20,9 @@ from .__version__ import (
 )
 
 if TYPE_CHECKING:
-    from flext_meltano import d, h, r, x
     from flext_oracle_wms import e
+
+    from flext_core import d, h, r, x
 
     from . import services
     from .__version__ import FlextDbtOracleWmsVersion
@@ -103,7 +104,7 @@ _LAZY_IMPORTS = MappingProxyType(
             ".services.workflow": ("FlextDbtOracleWmsWorkflow",),
             ".typings": ("FlextDbtOracleWmsTypes", "t"),
             ".utilities": ("FlextDbtOracleWmsUtilities", "u"),
-            "flext_meltano": ("d", "h", "r", "x"),
+            "flext_core": ("d", "h", "r", "x"),
             "flext_oracle_wms": ("e",),
         }),
         alias_groups=MappingProxyType({}),
