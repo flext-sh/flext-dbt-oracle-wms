@@ -76,7 +76,7 @@ class TestsFlextDbtOracleWmsUtilities(tests_u, u):
                     """Report the canned entity catalog."""
                     return self._entities
 
-                def fetch_entity_data(
+                def get_entity_data(
                     self,
                     entity_name: str,
                     limit: int | None = None,
