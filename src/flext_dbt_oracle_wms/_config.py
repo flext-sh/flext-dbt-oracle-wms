@@ -12,10 +12,8 @@ from __future__ import annotations
 
 from flext_meltano import FlextMeltanoConfig, m
 
-from flext_core import FlextSettings
 
-
-class FlextDbtOracleWmsConfig(FlextSettings, FlextMeltanoConfig):
+class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
     """DbtOracleWms config auto-loaded model-less from ``config/*.yaml``.
 
     MRO carries ``FlextSettings`` FIRST (ENFORCE-042); unlike never-instantiated
