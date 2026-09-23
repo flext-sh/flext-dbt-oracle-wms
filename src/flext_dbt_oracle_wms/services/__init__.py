@@ -14,6 +14,8 @@ if TYPE_CHECKING:
     from .generation import FlextDbtOracleWmsGeneration
     from .metadata import FlextDbtOracleWmsMetadata
     from .workflow import FlextDbtOracleWmsWorkflow
+
+
 __all__: tuple[str, ...] = (
     "FlextDbtOracleWmsBase",
     "FlextDbtOracleWmsClient",

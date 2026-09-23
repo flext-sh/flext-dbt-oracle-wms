@@ -29,7 +29,8 @@
   - [dbt Resources](#dbt-resources)
   - [Oracle WMS Resources](#oracle-wms-resources)
   - [FLEXT Framework](#flext-framework)
-  <!-- TOC END -->
+
+<!-- TOC END -->
 
 **Best Practices for FLEXT DBT Oracle WMS Development**
 

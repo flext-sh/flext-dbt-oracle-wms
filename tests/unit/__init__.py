@@ -12,6 +12,8 @@ if TYPE_CHECKING:
     from .test_cli import TestsFlextDbtOracleWmsCli
     from .test_connection_profile import TestsFlextDbtOracleWmsConnectionProfile
     from .test_module_governance import TestsFlextDbtOracleWmsModuleGovernance
+
+
 __all__: tuple[str, ...] = (
     "TestsFlextDbtOracleWmsCli",
     "TestsFlextDbtOracleWmsConnectionProfile",

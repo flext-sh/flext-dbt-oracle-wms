@@ -44,6 +44,8 @@ if TYPE_CHECKING:
     from .services.workflow import FlextDbtOracleWmsWorkflow
     from .typings import FlextDbtOracleWmsTypes, t
     from .utilities import FlextDbtOracleWmsUtilities, u
+
+
 __all__: tuple[str, ...] = (
     "FlextDbtOracleWms",
     "FlextDbtOracleWmsBase",

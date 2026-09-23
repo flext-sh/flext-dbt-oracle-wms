@@ -38,6 +38,8 @@ if TYPE_CHECKING:
     from .settings import TestsFlextDbtOracleWmsSettings
     from .typings import TestsFlextDbtOracleWmsTypes, t
     from .utilities import TestsFlextDbtOracleWmsUtilities, u
+
+
 __all__: tuple[str, ...] = (
     "TestsFlextDbtOracleWmsConstants",
     "TestsFlextDbtOracleWmsModels",

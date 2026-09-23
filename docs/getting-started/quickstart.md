@@ -36,7 +36,8 @@
 - [🆘 Getting Stuck](#getting-stuck)
   - [Common Issues](#common-issues)
   - [Get Help](#get-help)
-  <!-- TOC END -->
+
+<!-- TOC END -->
 
 **Get FLEXT DBT Oracle WMS running in 10 minutes**
 

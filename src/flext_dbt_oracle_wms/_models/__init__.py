@@ -14,6 +14,8 @@ if TYPE_CHECKING:
     from .dbt import FlextDbtOracleWmsModelsDbt
     from .items import FlextDbtOracleWmsModelsItems
     from .workflow import FlextDbtOracleWmsModelsWorkflow
+
+
 __all__: tuple[str, ...] = (
     "FlextDbtOracleWmsModelsBase",
     "FlextDbtOracleWmsModelsConnection",
