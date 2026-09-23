@@ -9,25 +9,27 @@ from typing import TYPE_CHECKING
 from flext_core.lazy import build_lazy_import_map, install_lazy_exports
 
 if TYPE_CHECKING:
-    from flext_cli import cli
     from flext_meltano import meltano
-    from flext_oracle_wms import e, oracle_wms
+    from flext_oracle_wms import e, oracle_wms, web
     from flext_tests import (
-        active_rules,
         api,
-        discover_repository_root,
+        cli,
+        core,
+        d,
+        h,
         install_local_packages,
+        lazy_attribute,
         load_infra_report,
-        split_csv,
+        r,
+        services,
         td,
         tf,
         tk,
         tm,
         tv,
+        x,
     )
-    from flext_web import web
 
-    from flext_core import core, d, h, lazy_attribute, r, x
     from flext_dbt_oracle_wms import config, dbt_oracle_wms, main, s, settings
 
     from . import unit
@@ -48,7 +50,6 @@ __all__: tuple[str, ...] = (
     "TestsFlextDbtOracleWmsSettings",
     "TestsFlextDbtOracleWmsTypes",
     "TestsFlextDbtOracleWmsUtilities",
-    "active_rules",
     "api",
     "c",
     "cli",
@@ -56,7 +57,6 @@ __all__: tuple[str, ...] = (
     "core",
     "d",
     "dbt_oracle_wms",
-    "discover_repository_root",
     "e",
     "h",
     "install_local_packages",
@@ -69,8 +69,8 @@ __all__: tuple[str, ...] = (
     "p",
     "r",
     "s",
+    "services",
     "settings",
-    "split_csv",
     "t",
     "td",
     "tf",
@@ -94,8 +94,6 @@ _LAZY_IMPORTS = MappingProxyType(
             ".typings": ("TestsFlextDbtOracleWmsTypes", "t"),
             ".unit": ("unit",),
             ".utilities": ("TestsFlextDbtOracleWmsUtilities", "u"),
-            "flext_cli": ("cli",),
-            "flext_core": ("core", "d", "h", "lazy_attribute", "r", "x"),
             "flext_dbt_oracle_wms": (
                 "config",
                 "dbt_oracle_wms",
@@ -104,21 +102,25 @@ _LAZY_IMPORTS = MappingProxyType(
                 "settings",
             ),
             "flext_meltano": ("meltano",),
-            "flext_oracle_wms": ("e", "oracle_wms"),
+            "flext_oracle_wms": ("e", "oracle_wms", "web"),
             "flext_tests": (
-                "active_rules",
                 "api",
-                "discover_repository_root",
+                "cli",
+                "core",
+                "d",
+                "h",
                 "install_local_packages",
+                "lazy_attribute",
                 "load_infra_report",
-                "split_csv",
+                "r",
+                "services",
                 "td",
                 "tf",
                 "tk",
                 "tm",
                 "tv",
+                "x",
             ),
-            "flext_web": ("web",),
         }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,
