@@ -9,16 +9,16 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_meltano import t
-from flext_oracle_wms import t as oracle_wms_t
+from flext_meltano import FlextMeltanoTypes
+from flext_oracle_wms import FlextOracleWmsTypes
 
 from ._typings.base import FlextDbtOracleWmsTypesBase
 
 
-class FlextDbtOracleWmsTypes(t, oracle_wms_t):
+class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
     """MRO facade composing Meltano + OracleWms type namespaces."""
 
-    class DbtOracleWms(FlextDbtOracleWmsTypesBase, oracle_wms_t.OracleWms):
+    class DbtOracleWms(FlextDbtOracleWmsTypesBase, FlextOracleWmsTypes.OracleWms):
         """DBT Oracle WMS type namespace composing the parent declarations."""
 
 

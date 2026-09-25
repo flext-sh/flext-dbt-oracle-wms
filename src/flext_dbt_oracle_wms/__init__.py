@@ -20,7 +20,8 @@ from .__version__ import (
 )
 
 if TYPE_CHECKING:
-    from flext_meltano import d, e, h, r, x
+    from flext_meltano import d, h, r, x
+    from flext_oracle_wms import e
 
     from . import services
     from ._config import FlextDbtOracleWmsConfig, config
@@ -28,16 +29,16 @@ if TYPE_CHECKING:
     from .api import FlextDbtOracleWms, dbt_oracle_wms
     from .base import FlextDbtOracleWmsServiceBase, FlextDbtOracleWmsServiceBase as s
     from .cli import FlextDbtOracleWmsCliService, main
-    from .constants import FlextDbtOracleWmsConstants, c
-    from .models import FlextDbtOracleWmsModels, m
-    from .protocols import FlextDbtOracleWmsProtocols, p
+    from .constants import FlextDbtOracleWmsConstants, FlextDbtOracleWmsConstants as c
+    from .models import FlextDbtOracleWmsModels, FlextDbtOracleWmsModels as m
+    from .protocols import FlextDbtOracleWmsProtocols, FlextDbtOracleWmsProtocols as p
     from .services.base import FlextDbtOracleWmsBase
     from .services.client import FlextDbtOracleWmsClient
     from .services.generation import FlextDbtOracleWmsGeneration
     from .services.metadata import FlextDbtOracleWmsMetadata
     from .services.workflow import FlextDbtOracleWmsWorkflow
-    from .typings import FlextDbtOracleWmsTypes, t
-    from .utilities import FlextDbtOracleWmsUtilities, u
+    from .typings import FlextDbtOracleWmsTypes, FlextDbtOracleWmsTypes as t
+    from .utilities import FlextDbtOracleWmsUtilities, FlextDbtOracleWmsUtilities as u
 
 
 __all__: tuple[str, ...] = (
@@ -101,7 +102,8 @@ _LAZY_IMPORTS = MappingProxyType(
             ".services.workflow": ("FlextDbtOracleWmsWorkflow",),
             ".typings": ("FlextDbtOracleWmsTypes", "t"),
             ".utilities": ("FlextDbtOracleWmsUtilities", "u"),
-            "flext_meltano": ("d", "e", "h", "r", "x"),
+            "flext_meltano": ("d", "h", "r", "x"),
+            "flext_oracle_wms": ("e",),
         }),
         alias_groups=MappingProxyType({}),
         sort_keys=False,
