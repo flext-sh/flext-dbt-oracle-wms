@@ -9,15 +9,15 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_tests import t as tests_t
+from flext_tests import FlextTestsTypes
 
-from flext_dbt_oracle_wms import t
+from flext_dbt_oracle_wms import FlextDbtOracleWmsTypes
 
 
-class TestsFlextDbtOracleWmsTypes(tests_t, t):
+class TestsFlextDbtOracleWmsTypes(FlextTestsTypes, FlextDbtOracleWmsTypes):
     """Test types combining FlextTestsTypes with flext-dbt-oracle-wms types."""
 
-    class Tests(tests_t.Tests):
+    class Tests(FlextTestsTypes.Tests):
         """Test-scoped type aliases facade."""
 
 

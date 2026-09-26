@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from flext_meltano import c
-from flext_oracle_wms import c as _oracle_wms_c
+from flext_meltano import FlextMeltanoConstants
+from flext_oracle_wms import FlextOracleWmsConstants
 
 from ._constants.base import FlextDbtOracleWmsConstantsBase
 from ._constants.enums import FlextDbtOracleWmsConstantsEnums
 
 
-class FlextDbtOracleWmsConstants(c, _oracle_wms_c):
+class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):
     """Constants for DBT Oracle WMS with dual inheritance from Meltano and WMS domains."""
 
     class DbtOracleWms(FlextDbtOracleWmsConstantsEnums, FlextDbtOracleWmsConstantsBase):

@@ -18,7 +18,7 @@ class FlextDbtOracleWmsProtocolsWmsClient(Protocol):
         """Discover available Oracle WMS entities."""
         ...
 
-    def get_entity_data(
+    def fetch_entity_data(
         self,
         entity_name: str,
         limit: int | None = None,
