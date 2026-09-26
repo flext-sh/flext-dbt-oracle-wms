@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from flext_meltano import m
-from flext_oracle_wms import m as _oracle_wms_m
+from flext_meltano import FlextMeltanoModels
+from flext_oracle_wms import FlextOracleWmsModels
 
 from ._models.base import FlextDbtOracleWmsModelsBase
 from ._models.connection import FlextDbtOracleWmsModelsConnection
@@ -12,7 +12,7 @@ from ._models.items import FlextDbtOracleWmsModelsItems
 from ._models.workflow import FlextDbtOracleWmsModelsWorkflow
 
 
-class FlextDbtOracleWmsModels(m, _oracle_wms_m):
+class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
     """Pydantic model namespace for DBT Oracle WMS objects."""
 
     class DbtOracleWms(
