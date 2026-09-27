@@ -8,8 +8,6 @@ from flext_tests import tm
 from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
 
-__all__: list[str] = ["TestsFlextDbtOracleWmsModuleGovernance"]
-
 
 class TestsFlextDbtOracleWmsModuleGovernance:
     """Behavior contract for flext_dbt_oracle_wms package entrypoints."""

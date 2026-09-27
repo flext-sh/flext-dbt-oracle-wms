@@ -24,6 +24,3 @@ class TestsFlextDbtOracleWmsConnectionProfile:
             "threads": profile.threads,
             "project": profile.project,
         }
-
-
-__all__: list[str] = ["TestsFlextDbtOracleWmsConnectionProfile"]

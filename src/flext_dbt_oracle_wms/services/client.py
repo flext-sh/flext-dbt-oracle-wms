@@ -53,7 +53,7 @@ class FlextDbtOracleWmsClient:
         client_result = self._get_wms_client()
         if client_result.failure:
             return r[Sequence[t.ConfigurationMapping]].from_failure(client_result)
-        extract_result = client_result.value.get_entity_data(
+        extract_result = client_result.value.fetch_entity_data(
             entity_name, filters=filters
         )
         if extract_result.failure:

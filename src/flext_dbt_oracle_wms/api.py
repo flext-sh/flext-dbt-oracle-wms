@@ -11,10 +11,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from .services.workflow import FlextDbtOracleWmsWorkflow
+
 # NOTE (multi-agent): mro-wgwh.4 — canonical api.py replaces the parallel
 # simple_api branch (operator order: simple_api must not exist); behavior lives
 # in services/* mixins composed by MRO.
-from flext_dbt_oracle_wms.services.workflow import FlextDbtOracleWmsWorkflow
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, u

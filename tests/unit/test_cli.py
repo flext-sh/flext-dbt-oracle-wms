@@ -91,6 +91,3 @@ class TestsFlextDbtOracleWmsCli:
 
     def test_module_main_uses_public_cli_entrypoint(self) -> None:
         tm.that(main(["info"]), eq=0)
-
-
-__all__: list[str] = ["TestsFlextDbtOracleWmsCli"]
