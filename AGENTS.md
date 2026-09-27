@@ -46,8 +46,8 @@ src/flext_dbt_oracle_wms/
 ## Commands
 
 ```bash
-make check PROJECT=flext-dbt-oracle-wms
-make test PROJECT=flext-dbt-oracle-wms # tests/{unit,data_quality,marts,staging}
+make check
+make test # tests/{unit,data_quality,marts,staging}
 ```
 
 <!-- AIHUB-AGENTS-SCOPE-LOCAL-END -->
