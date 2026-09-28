@@ -12,10 +12,13 @@ if TYPE_CHECKING:
     from flext_oracle_wms import e
     from flext_tests import api, td, tf, tk, tm, tv
 
-    from flext_dbt_oracle_wms import d, h, r, s, x
+    from flext_dbt_oracle_wms import d, h, r, x
 
     from . import unit
-    from .base import TestsFlextDbtOracleWmsServiceBase
+    from .base import (
+        TestsFlextDbtOracleWmsServiceBase,
+        TestsFlextDbtOracleWmsServiceBase as s,
+    )
     from .constants import (
         TestsFlextDbtOracleWmsConstants,
         TestsFlextDbtOracleWmsConstants as c,
@@ -64,7 +67,7 @@ __all__: tuple[str, ...] = (
 _LAZY_IMPORTS = MappingProxyType(
     build_lazy_import_map(
         MappingProxyType({
-            ".base": ("TestsFlextDbtOracleWmsServiceBase",),
+            ".base": ("TestsFlextDbtOracleWmsServiceBase", "s"),
             ".constants": ("TestsFlextDbtOracleWmsConstants", "c"),
             ".models": ("TestsFlextDbtOracleWmsModels", "m"),
             ".protocols": ("TestsFlextDbtOracleWmsProtocols", "p"),
@@ -72,7 +75,7 @@ _LAZY_IMPORTS = MappingProxyType(
             ".typings": ("TestsFlextDbtOracleWmsTypes", "t"),
             ".unit": ("unit",),
             ".utilities": ("TestsFlextDbtOracleWmsUtilities", "u"),
-            "flext_dbt_oracle_wms": ("d", "h", "r", "s", "x"),
+            "flext_dbt_oracle_wms": ("d", "h", "r", "x"),
             "flext_oracle_wms": ("e",),
             "flext_tests": ("api", "td", "tf", "tk", "tm", "tv"),
         }),
