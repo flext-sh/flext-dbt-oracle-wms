@@ -22,7 +22,7 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
         self,
         settings: FlextDbtOracleWmsSettings | None = None,
         client: p.DbtOracleWms.Client | None = None,
-        service: u.DbtOracleWms.Service | None = None,
+        service: p.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize DBT model facade dependencies cooperatively."""
         super().__init__(settings=settings, client=client, service=service)

@@ -76,5 +76,13 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 """Return a typed tracking model for workflow instrumentation."""
                 ...
 
+            def log_workflow_completion(
+                self,
+                tracking_info: m.DbtOracleWms.WorkflowTracking,
+                result: p.Result[m.DbtOracleWms.WorkflowResult],
+            ) -> None:
+                """Record the completion outcome of a tracked workflow."""
+                ...
+
 
 __all__: list[str] = ["FlextDbtOracleWmsProtocolsBase"]

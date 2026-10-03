@@ -10,6 +10,7 @@ from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsClient,
     FlextDbtOracleWmsSettings,
     m,
+    p,
     r,
     t,
 )
@@ -44,6 +45,17 @@ class TestsFlextDbtOracleWmsApi:
             ),
         )
         return FlextDbtOracleWms(settings=settings, client=client)
+
+    def test_default_service_reads_injected_settings(self) -> None:
+        settings = FlextDbtOracleWmsSettings.model_validate({
+            "DbtOracleWms": {"dbt_target": "di-probe-target", "dbt_threads": 7}
+        })
+        facade = FlextDbtOracleWms(settings=settings)
+
+        tm.that(facade.service, is_=p.DbtOracleWms.Service)
+        recommendation = facade.service.generate_workflow_recommendations().value
+        tm.that(recommendation.target, eq=settings.DbtOracleWms.dbt_target)
+        tm.that(recommendation.dbt_threads, eq=str(settings.DbtOracleWms.dbt_threads))
 
     def test_validate_wms_connection_succeeds_when_client_reports_healthy(self) -> None:
         facade = self._facade()

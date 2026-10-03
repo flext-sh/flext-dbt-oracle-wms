@@ -163,9 +163,6 @@ class FlextDbtOracleWmsClient:
                 return r[Sequence[t.ConfigurationMapping]].fail(
                     f"{entity_name} record {index} missing required fields: {missing_fields}"
                 )
-        validation_result = self._transformer.validate_business_rules(records)
-        if validation_result.failure:
-            return r[Sequence[t.ConfigurationMapping]].from_failure(validation_result)
         return r[Sequence[t.ScalarMapping]].ok(records)
 
     def _get_wms_client(self) -> p.Result[p.DbtOracleWms.WmsClient]:

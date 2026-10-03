@@ -11,7 +11,7 @@ from flext_dbt_oracle_wms.services.generation import FlextDbtOracleWmsGeneration
 from .._settings import FlextDbtOracleWmsSettings
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p, t, u
+    from flext_dbt_oracle_wms import p, t
 
 
 class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
@@ -21,7 +21,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         self,
         settings: FlextDbtOracleWmsSettings | None = None,
         client: p.DbtOracleWms.Client | None = None,
-        service: u.DbtOracleWms.Service | None = None,
+        service: p.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize workflow facade dependencies cooperatively."""
         super().__init__(settings=settings, client=client, service=service)

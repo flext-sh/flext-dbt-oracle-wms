@@ -2,15 +2,17 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
+
+from flext_meltano import u
 
 from flext_core import r
 from flext_dbt_oracle_wms import m, t
 
-from .._settings import settings
-
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
+
+    from .._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsUtilitiesService:
@@ -20,6 +22,11 @@ class FlextDbtOracleWmsUtilitiesService:
         """Workflow and monitoring service helpers."""
 
         PERFORMANCE_RECOMMENDATION_THRESHOLD: int = 20
+        logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
+
+        def __init__(self, settings: FlextDbtOracleWmsSettings) -> None:
+            """Bind the service to the injected dbt Oracle WMS settings."""
+            self._settings = settings
 
         def generate_workflow_recommendations(
             self, entities: t.SequenceOf[t.ConfigurationMapping] | None = None
@@ -34,8 +41,8 @@ class FlextDbtOracleWmsUtilitiesService:
                 m.DbtOracleWms.WorkflowRecommendation(
                     total_entities=total,
                     recommendation=recommendation_message,
-                    dbt_threads=str(settings.DbtOracleWms.dbt_threads),
-                    target=settings.DbtOracleWms.dbt_target,
+                    dbt_threads=str(self._settings.DbtOracleWms.dbt_threads),
+                    target=self._settings.DbtOracleWms.dbt_target,
                 )
             )
 
@@ -45,9 +52,7 @@ class FlextDbtOracleWmsUtilitiesService:
             result: p.Result[m.DbtOracleWms.WorkflowResult],
         ) -> None:
             """Log workflow completion status."""
-            from flext_meltano import u
-
-            u.fetch_logger(__name__).info(
+            self.logger.info(
                 "Workflow completion",
                 tracking_id=tracking_info.tracking_id,
                 success=result.success,
@@ -61,10 +66,8 @@ class FlextDbtOracleWmsUtilitiesService:
             additional_data: t.ConfigValueMapping | None = None,
         ) -> m.DbtOracleWms.WorkflowTracking:
             """Return typed tracking model for workflow instrumentation."""
-            from flext_meltano import u
-
             _ = additional_data
-            u.fetch_logger(__name__).info("Tracking workflow execution")
+            self.logger.info("Tracking workflow execution")
             return m.DbtOracleWms.WorkflowTracking(
                 workflow_name=workflow_name,
                 workflow_type=workflow_type,
