@@ -12,7 +12,7 @@ from .base import FlextDbtOracleWmsBase
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from flext_dbt_oracle_wms import p, t, u
+    from flext_dbt_oracle_wms import p, t
 
     from .._settings import FlextDbtOracleWmsSettings
 
@@ -24,7 +24,7 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
         self,
         settings: FlextDbtOracleWmsSettings | None = None,
         client: p.DbtOracleWms.Client | None = None,
-        service: u.DbtOracleWms.Service | None = None,
+        service: p.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize metadata facade dependencies cooperatively."""
         super().__init__(settings=settings, client=client, service=service)

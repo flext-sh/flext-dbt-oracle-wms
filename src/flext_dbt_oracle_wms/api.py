@@ -18,7 +18,7 @@ from .services.workflow import FlextDbtOracleWmsWorkflow
 # in services/* mixins composed by MRO.
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p, u
+    from flext_dbt_oracle_wms import p
 
     from ._settings import FlextDbtOracleWmsSettings
 
@@ -30,7 +30,7 @@ class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
         self,
         settings: FlextDbtOracleWmsSettings | None = None,
         client: p.DbtOracleWms.Client | None = None,
-        service: u.DbtOracleWms.Service | None = None,
+        service: p.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize the public DBT Oracle WMS facade."""
         super().__init__(settings=settings, client=client, service=service)

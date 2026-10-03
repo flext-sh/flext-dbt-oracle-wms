@@ -19,7 +19,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     """Shared runtime dependencies and low-level entity access."""
 
     _client: p.DbtOracleWms.Client | None = u.PrivateAttr(default_factory=lambda: None)
-    _service: u.DbtOracleWms.Service | None = u.PrivateAttr(
+    _service: p.DbtOracleWms.Service | None = u.PrivateAttr(
         default_factory=lambda: None
     )
 
@@ -27,7 +27,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         self,
         settings: FlextDbtOracleWmsSettings | None = None,
         client: p.DbtOracleWms.Client | None = None,
-        service: u.DbtOracleWms.Service | None = None,
+        service: p.DbtOracleWms.Service | None = None,
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         # NOTE (multi-agent): mro-rn88 — pass the injected settings to the ServiceBase
@@ -60,10 +60,10 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         return FlextDbtOracleWmsSettings.fetch_global()
 
     @property
-    def service(self) -> u.DbtOracleWms.Service:
+    def service(self) -> p.DbtOracleWms.Service:
         """The workflow service instance."""
         if self._service is None:
-            self._service = u.DbtOracleWms.Service()
+            self._service = u.DbtOracleWms.Service(self.settings)
         return self._service
 
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:

@@ -45,13 +45,5 @@ class FlextDbtOracleWmsUtilitiesTransformer:
                 transformed.append(item)
             return r[Sequence[m.DbtOracleWms.WmsItem]].ok(transformed)
 
-        def validate_business_rules(
-            self, records: t.SequenceOf[t.ConfigurationMapping]
-        ) -> p.Result[bool]:
-            """Validate business rules for WMS records."""
-            if not records:
-                return r[bool].fail("No records to validate")
-            return r[bool].ok(True)
-
 
 __all__: list[str] = ["FlextDbtOracleWmsUtilitiesTransformer"]
