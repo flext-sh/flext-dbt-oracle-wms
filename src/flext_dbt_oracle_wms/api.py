@@ -11,14 +11,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from .services.workflow import FlextDbtOracleWmsWorkflow
+
 # NOTE (multi-agent): mro-wgwh.4 — canonical api.py replaces the parallel
 # simple_api branch (operator order: simple_api must not exist); behavior lives
 # in services/* mixins composed by MRO.
-from flext_dbt_oracle_wms.services.workflow import FlextDbtOracleWmsWorkflow
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, u
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+
+    from ._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
@@ -34,6 +36,7 @@ class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
         super().__init__(settings=settings, client=client, service=service)
 
 
-dbt_oracle_wms = FlextDbtOracleWms
+dbt_oracle_wms: FlextDbtOracleWms = FlextDbtOracleWms.fetch_global()
+"""Process-wide DBT Oracle WMS facade singleton resolved from the global container."""
 
 __all__: list[str] = ["FlextDbtOracleWms", "dbt_oracle_wms"]

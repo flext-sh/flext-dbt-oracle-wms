@@ -17,6 +17,9 @@ from flext_dbt_oracle_wms import FlextDbtOracleWmsTypes
 class TestsFlextDbtOracleWmsTypes(FlextTestsTypes, FlextDbtOracleWmsTypes):
     """Test types combining FlextTestsTypes with flext-dbt-oracle-wms types."""
 
+    class Tests(FlextTestsTypes.Tests):
+        """Test-scoped type aliases facade."""
+
 
 t = TestsFlextDbtOracleWmsTypes
 

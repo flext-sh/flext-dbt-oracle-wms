@@ -3,9 +3,16 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from typing import TYPE_CHECKING, override
 
-from flext_core import s
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p, r, t, u
+from flext_core import r, s
+from flext_dbt_oracle_wms import t, u
+
+from .._settings import FlextDbtOracleWmsSettings
+from .client import FlextDbtOracleWmsClient
+
+if TYPE_CHECKING:
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
@@ -24,7 +31,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         # NOTE (multi-agent): mro-rn88 — pass the injected settings to the ServiceBase
-        # runtime so settings resolves the override (not just the global singleton).
+        # runtime so self.settings resolves the override (not just the global singleton).
         super().__init__(
             runtime_settings=settings,
             settings_type=None,
@@ -38,8 +45,19 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     def client(self) -> p.DbtOracleWms.Client:
         """The DBT Oracle WMS client instance."""
         if self._client is None:
-            self._client = u.DbtOracleWms()
+            self._client = FlextDbtOracleWmsClient(self.settings)
         return self._client
+
+    @property
+    @override
+    def settings(self) -> FlextDbtOracleWmsSettings:
+        """The current configuration from the injected runtime (typed narrowing)."""
+        # NOTE (multi-agent): mro-rn88 — delegate to the ServiceBase runtime settings
+        # (was a self-recursive return self.settings); narrow to the typed subclass.
+        runtime_settings = super().settings
+        if isinstance(runtime_settings, FlextDbtOracleWmsSettings):
+            return runtime_settings
+        return FlextDbtOracleWmsSettings.fetch_global()
 
     @property
     def service(self) -> u.DbtOracleWms.Service:
@@ -81,9 +99,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         extract_result = self.client.extract_oracle_wms_data(entity_name)
         if extract_result.failure:
-            return r[Sequence[t.ConfigurationMapping]].fail(
-                extract_result.error or f"Failed to extract {entity_name}"
-            )
+            return r[Sequence[t.ConfigurationMapping]].from_failure(extract_result)
         if requested_identifiers is None:
             return r[Sequence[t.ConfigurationMapping]].ok(extract_result.value)
         requested_values = {

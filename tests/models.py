@@ -23,6 +23,9 @@ class TestsFlextDbtOracleWmsModels(FlextTestsModels, FlextDbtOracleWmsModels):
         class Tests:
             """Test-specific models."""
 
+    class Tests(FlextTestsModels.Tests):
+        """Test-scoped models facade."""
+
 
 m = TestsFlextDbtOracleWmsModels
 

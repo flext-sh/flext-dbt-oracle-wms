@@ -1,10 +1,8 @@
-"""FlextDbtOracleWmsConfig — frozen, validated config singleton for flext-dbt-oracle-wms.
+"""FlextDbtOracleWmsConfig — frozen config singleton for flext-dbt-oracle-wms (ADR-005 §7).
 
-Every ``config/*.yaml`` file is auto-discovered and deep-merged at first
-``fetch_global`` call (model-less, ``extra="allow"`` at the FlextMeltanoConfig base).
-The flat YAML is then validated into the pure-Pydantic ``_models.config``
-shapes and exposed as typed domain objects under ``config.DbtOracleWms`` — never a
-model-less dict subscript.
+Model-less: business rules live in ``config/*.yaml`` under the ``DbtOracleWms:`` key and
+are exposed through the open ``config.DbtOracleWms`` namespace (``extra="allow"``), with
+no per-domain model. Access is ``config.DbtOracleWms.<domain>[<key>...]``.
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
@@ -12,26 +10,22 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from functools import cached_property
-from pathlib import Path
-from typing import ClassVar
-
-from flext_dbt_oracle_wms._models.config import FlextDbtOracleWmsConfigModels
-from flext_meltano import FlextMeltanoConfig
+from flext_meltano import FlextMeltanoConfig, m
 
 
 class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
-    """DbtOracleWms config auto-loaded from ``config/*.yaml`` and validated via models."""
+    """DbtOracleWms config auto-loaded model-less from ``config/*.yaml``.
 
-    CONFIG_DIR: ClassVar[str] = str(Path(__file__).resolve().parents[2] / "config")
+    MRO carries ``FlextSettings`` FIRST (ENFORCE-042); unlike never-instantiated
+    namespace holders, this class IS instantiated by ``fetch_global``, so the
+    instance-inert holder contract does not apply and pydantic settings
+    construction machinery stays intact.
+    """
 
-    @cached_property
-    def DbtOracleWms(self) -> FlextDbtOracleWmsConfigModels.DbtOracleWms:
-        """Validated ``DbtOracleWms`` business-rule config namespace."""
-        root = FlextDbtOracleWmsConfigModels.Root.model_validate(
-            dict(self.model_extra or {})
-        )
-        return root.DbtOracleWms
+    class DbtOracleWms(m.BaseModel):
+        """Open, frozen namespace exposing every ``config/*.yaml`` domain model-less."""
+
+        model_config = m.ConfigDict(extra="allow", frozen=True)
 
 
 config: FlextDbtOracleWmsConfig = FlextDbtOracleWmsConfig.fetch_global()

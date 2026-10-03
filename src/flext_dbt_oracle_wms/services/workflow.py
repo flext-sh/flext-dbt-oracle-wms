@@ -2,13 +2,19 @@
 
 from __future__ import annotations
 
-from typing import override
+from typing import TYPE_CHECKING, override
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p, r, settings, t, u
-from flext_dbt_oracle_wms.services.models import FlextDbtOracleWmsModelsApi
+from flext_core import r
+from flext_dbt_oracle_wms import m
+from flext_dbt_oracle_wms.services.generation import FlextDbtOracleWmsGeneration
+
+from .._settings import FlextDbtOracleWmsSettings
+
+if TYPE_CHECKING:
+    from flext_dbt_oracle_wms import p, t, u
 
 
-class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
+class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
     """Workflow execution and service lifecycle operations."""
 
     def __init__(
@@ -27,7 +33,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
+    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients."""
         self.logger.info("Running Oracle WMS-to-DBT workflow")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -45,8 +51,8 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             if model_generation_result.failure:
                 return self._log_and_return(
                     tracking_info,
-                    r[p.DbtOracleWms.WorkflowResult].fail(
-                        model_generation_result.error or "DBT model generation failed"
+                    r[m.DbtOracleWms.WorkflowResult].from_failure(
+                        model_generation_result
                     ),
                 )
             generated_models = model_generation_result.value.model_names
@@ -57,7 +63,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             workflow_result = self.client.run_full_oracle_wms_to_dbt_pipeline(
                 entity_names=entity_names, model_names=model_names
             ).map(
-                lambda pipeline: p.DbtOracleWms.WorkflowResult(
+                lambda pipeline: m.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=True,
@@ -70,7 +76,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
             )
         else:
             workflow_result = self.extract_wms_metadata(inventory_items, shipments).map(
-                lambda metadata: p.DbtOracleWms.WorkflowResult(
+                lambda metadata: m.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=False,
@@ -85,9 +91,9 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
 
     def _log_and_return(
         self,
-        tracking_info: p.DbtOracleWms.WorkflowTracking,
-        result: p.Result[p.DbtOracleWms.WorkflowResult],
-    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
+        tracking_info: m.DbtOracleWms.WorkflowTracking,
+        result: p.Result[m.DbtOracleWms.WorkflowResult],
+    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
         """Log workflow completion and pass the result through unchanged."""
         self.service.log_workflow_completion(tracking_info, result)
         return result
@@ -97,16 +103,14 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsModelsApi):
         self.logger.info("Validating Oracle WMS connection")
         connection_result = self.client.test_oracle_wms_connection()
         if connection_result.failure:
-            return r[bool].fail(
-                connection_result.error or "Oracle WMS connection validation failed"
-            )
+            return r[bool].from_failure(connection_result)
         return r[bool].ok(True)
 
     @override
     def execute(self) -> p.Result[FlextDbtOracleWmsSettings]:
         """Execute DBT Oracle WMS domain service logic."""
         self.logger.info("Executing DBT Oracle WMS service")
-        return r[FlextDbtOracleWmsSettings].ok(settings)
+        return r[FlextDbtOracleWmsSettings].ok(self.settings)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsWorkflow"]

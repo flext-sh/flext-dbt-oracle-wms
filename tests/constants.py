@@ -14,8 +14,11 @@ from flext_tests import FlextTestsConstants
 from flext_dbt_oracle_wms import FlextDbtOracleWmsConstants
 
 
-class TestsFlextDbtOracleWmsConstants(FlextTestsConstants, FlextDbtOracleWmsConstants):
+class TestsFlextDbtOracleWmsConstants(FlextDbtOracleWmsConstants, FlextTestsConstants):
     """Test constants for flext-dbt-oracle-wms."""
+
+    class Tests(FlextTestsConstants.Tests):
+        """Test-scoped constants facade."""
 
 
 c = TestsFlextDbtOracleWmsConstants

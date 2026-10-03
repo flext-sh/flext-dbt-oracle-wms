@@ -4,13 +4,13 @@ from __future__ import annotations
 
 from typing import override
 
-from flext_tests import s as tests_s
+from flext_tests import FlextTestsServiceBase
 
-from flext_dbt_oracle_wms import m, p
+from flext_dbt_oracle_wms import m
 from tests.settings import TestsFlextDbtOracleWmsSettings
 
 
-class TestsFlextDbtOracleWmsServiceBase(tests_s):
+class TestsFlextDbtOracleWmsServiceBase(FlextTestsServiceBase):
     """DBT Oracle WMS test service base with source and test settings namespaces."""
 
     # NOTE (multi-agent): flext-tests owns fetch_settings; this project
@@ -18,7 +18,7 @@ class TestsFlextDbtOracleWmsServiceBase(tests_s):
     # pattern per flext-cli tests/base.py).
     @classmethod
     @override
-    def _runtime_bootstrap_options(cls) -> p.RuntimeBootstrapOptions:
+    def runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
         return m.RuntimeBootstrapOptions(settings_type=TestsFlextDbtOracleWmsSettings)
 
 
