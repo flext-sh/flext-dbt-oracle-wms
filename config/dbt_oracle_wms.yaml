@@ -1,0 +1,14 @@
+DbtOracleWms:
+  dbt:
+    project_name: "flext_dbt_oracle_wms"
+    threads: 4
+    target: "dev"
+    materialization: "view"
+  defaults:
+    model_type: "staging"
+    schema_name: "wms_staging"
+  oracle_wms:
+    environment: "development"
+    base_url: ""
+  runtime:
+    performance_recommendation_threshold: 20
