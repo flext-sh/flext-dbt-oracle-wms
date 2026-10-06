@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 
 class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
-    """Unified DBT Oracle WMS facade for extraction, modeling, and workflow execution."""
+    """Unified DBT Oracle WMS facade for extraction, modeling, and workflows."""
 
     def __init__(
         self,

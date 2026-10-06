@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 
 class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):
-    """Test utilities combining TestsFlextUtilities with flext-dbt-oracle-wms utilities."""
+    """Test utilities combining TestsFlextUtilities with WMS utilities."""
 
     class DbtOracleWms(FlextDbtOracleWmsUtilities.DbtOracleWms):
         """DbtOracleWms test utilities namespace."""
@@ -31,7 +31,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
             """Internal tests declarations."""
 
             class ScriptedWmsClient:
-                """Deterministic Oracle WMS boundary fake returning canned typed results.
+                """Deterministic Oracle WMS boundary fake with canned results.
 
                 Implements the p.DbtOracleWms.WmsClient boundary protocol with no
                 I/O: every method reports a canned typed result and the extract

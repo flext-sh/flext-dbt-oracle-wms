@@ -15,7 +15,10 @@ from flext_meltano import FlextMeltanoSettings, m, t
 
 
 class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
-    """Runtime configuration for dbt Oracle WMS; fields under ``settings.DbtOracleWms.*``."""
+    """Runtime configuration for dbt Oracle WMS.
+
+    Fields live under ``settings.DbtOracleWms.*``.
+    """
 
     model_config = m.SettingsConfigDict(
         env_prefix="FLEXT_DBT_ORACLE_WMS_",
@@ -66,6 +69,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
 
 
 settings: FlextDbtOracleWmsSettings = FlextDbtOracleWmsSettings.fetch_global()
-"""Pre-instantiated project settings singleton — ``from flext_dbt_oracle_wms import settings``."""
+"""Pre-instantiated project settings singleton — ``from flext_dbt_oracle_wms``
+import ``settings``."""
 
 __all__: list[str] = ["FlextDbtOracleWmsSettings", "settings"]

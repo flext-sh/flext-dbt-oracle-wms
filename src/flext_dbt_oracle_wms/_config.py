@@ -1,6 +1,7 @@
-"""FlextDbtOracleWmsConfig — frozen config singleton for flext-dbt-oracle-wms (ADR-005 §7).
+"""FlextDbtOracleWmsConfig frozen config singleton for flext-dbt-oracle-wms.
 
-Model-less: business rules live in ``config/*.yaml`` under the ``DbtOracleWms:`` key and
+Reference: ADR-005 §7. Model-less: business rules live in ``config/*.yaml`` under the
+``DbtOracleWms:`` key and
 are exposed through the open ``config.DbtOracleWms`` namespace (``extra="allow"``), with
 no per-domain model. Access is ``config.DbtOracleWms.<domain>[<key>...]``.
 
@@ -31,6 +32,7 @@ class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
 
 
 config: FlextDbtOracleWmsConfig = FlextDbtOracleWmsConfig.fetch_global()
-"""Pre-instantiated frozen config singleton — ``from flext_dbt_oracle_wms import config``."""
+"""Pre-instantiated frozen config singleton — ``from flext_dbt_oracle_wms``
+import ``config``."""
 
 __all__: list[str] = ["FlextDbtOracleWmsConfig", "config"]

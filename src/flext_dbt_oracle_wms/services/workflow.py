@@ -122,7 +122,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         connection_result = self.client.test_oracle_wms_connection()
         if connection_result.failure:
             return r[bool].from_failure(connection_result)
-        return r[bool].ok(True)
+        return r[bool].ok(value=True)
 
     @override
     def execute(self) -> p.Result[FlextDbtOracleWmsSettings]:
