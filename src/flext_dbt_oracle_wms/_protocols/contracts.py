@@ -1,9 +1,18 @@
-"""Boundary protocol aliases composed into the protocols facade."""
+"""Boundary protocol aliases composed into the protocols facade.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_protocols/contracts
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
-from .dbt_runner import FlextDbtOracleWmsProtocolsDbtRunner
-from .wms_client import FlextDbtOracleWmsProtocolsWmsClient
+from flext_dbt_oracle_wms._protocols.dbt_runner import (
+    FlextDbtOracleWmsProtocolsDbtRunner,
+)
+from flext_dbt_oracle_wms._protocols.wms_client import (
+    FlextDbtOracleWmsProtocolsWmsClient,
+)
 
 
 class FlextDbtOracleWmsProtocolsContracts:

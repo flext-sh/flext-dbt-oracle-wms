@@ -12,7 +12,7 @@ from __future__ import annotations
 from flext_meltano import FlextMeltanoTypes
 from flext_oracle_wms import FlextOracleWmsTypes
 
-from ._typings.base import FlextDbtOracleWmsTypesBase
+from flext_dbt_oracle_wms._typings.base import FlextDbtOracleWmsTypesBase
 
 
 class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):

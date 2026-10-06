@@ -1,4 +1,9 @@
-"""Connection and pipeline result models."""
+"""Connection and pipeline result models.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_models/connection
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -24,11 +29,13 @@ class FlextDbtOracleWmsModelsConnection(m):
         """Typed full pipeline result."""
 
         processed_entities: Annotated[
-            t.StrSequence, u.Field(description="Entities processed by the pipeline")
+            t.StrSequence,
+            u.Field(description="Entities processed by the pipeline"),
         ]
         total_records: Annotated[int, u.Field(description="Total records processed")]
         transformation_status: Annotated[
-            str, u.Field(description="Transformation status")
+            str,
+            u.Field(description="Transformation status"),
         ]
         pipeline_status: Annotated[str, u.Field(description="Overall pipeline status")]
 

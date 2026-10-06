@@ -1,4 +1,9 @@
-"""Base domain models for DBT Oracle WMS — connection profiles and core types."""
+"""Base domain models for DBT Oracle WMS — connection profiles and core types.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_models/base
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -23,7 +28,8 @@ class FlextDbtOracleWmsModelsBase(m, _oracle_wms_m):
         target: Annotated[str, u.Field(description="Dbt target profile")]
         threads: Annotated[int, u.Field(description="Dbt parallel threads")]
         project: Annotated[
-            str, u.Field(description="Dbt project name owning this profile")
+            str,
+            u.Field(description="Dbt project name owning this profile"),
         ]
 
 

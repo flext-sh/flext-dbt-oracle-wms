@@ -1,4 +1,9 @@
-"""DBT model generation and execution monitoring for the public facade."""
+"""DBT model generation and execution monitoring for the public facade.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/services/generation
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -11,8 +16,7 @@ from flext_dbt_oracle_wms.services.metadata import FlextDbtOracleWmsMetadata
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, t
-
-    from .._settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
@@ -33,14 +37,18 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
         shipments: t.StrSequence | None = None,
         output_dir: str | None = None,
     ) -> p.Result[m.DbtOracleWms.DbtModelGenerationResult]:
-        """Generate DBT model metadata from real entity selections."""
+        """Generate DBT model metadata from real entity selections.
+
+        Returns:
+            The resulting ``p.Result[m.DbtOracleWms.DbtModelGenerationResult]``.
+        """
         self.logger.info("Generating DBT models from Oracle WMS")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
         if entity_names is None:
             discovery_result = self.client.discover_oracle_wms_entities()
             if discovery_result.failure:
                 return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
-                    discovery_result
+                    discovery_result,
                 )
             entity_names = discovery_result.value
         generated_models_result = (
@@ -48,14 +56,14 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
         )
         if generated_models_result.failure:
             return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
-                generated_models_result
+                generated_models_result,
             )
         recommendations_result = self.service.generate_workflow_recommendations([
             {"entity_name": entity_name} for entity_name in entity_names
         ])
         if recommendations_result.failure:
             return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
-                recommendations_result
+                recommendations_result,
             )
         generated_models = generated_models_result.value
         return r[m.DbtOracleWms.DbtModelGenerationResult].ok(
@@ -65,27 +73,33 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
                 output_dir=output_dir or "",
                 recommendation=recommendations_result.value.recommendation,
                 status="models_generated",
-            )
+            ),
         )
 
     def monitor_dbt_execution(
-        self, command: str, timeout_seconds: int = 300
+        self,
+        command: str,
+        timeout_seconds: int = 300,
     ) -> p.Result[m.DbtOracleWms.DbtExecutionResult]:
-        """Run and monitor a real DBT transformation through flext-meltano."""
+        """Run and monitor a real DBT transformation through flext-meltano.
+
+        Returns:
+            The resulting ``p.Result[m.DbtOracleWms.DbtExecutionResult]``.
+        """
         self.logger.info("Monitoring DBT execution: %s", command)
         command_parts = shlex.split(command)
         if not command_parts:
             return r[m.DbtOracleWms.DbtExecutionResult].fail(
-                "DBT command cannot be empty"
+                "DBT command cannot be empty",
             )
         if command_parts[0] != "dbt":
             return r[m.DbtOracleWms.DbtExecutionResult].fail(
-                "DBT monitoring requires a command beginning with 'dbt'"
+                "DBT monitoring requires a command beginning with 'dbt'",
             )
         dbt_subcommand = command_parts[1] if len(command_parts) > 1 else "run"
         if dbt_subcommand not in {"run", "build"}:
             return r[m.DbtOracleWms.DbtExecutionResult].fail(
-                "DBT monitoring is implemented only for dbt run/build"
+                "DBT monitoring is implemented only for dbt run/build",
             )
         model_names: t.MutableSequenceOf[str] = []
         if "--models" in command_parts:
@@ -95,7 +109,8 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
             models_index = command_parts.index("-m")
             model_names = command_parts[models_index + 1 :]
         execution_result = self.client.transform_with_dbt(
-            entity_data={}, model_names=model_names or None
+            entity_data={},
+            model_names=model_names or None,
         )
         if execution_result.failure:
             return r[m.DbtOracleWms.DbtExecutionResult].from_failure(execution_result)
@@ -110,7 +125,7 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
                     requested_models=tuple(model_names),
                     command_result=command_result,
                 ),
-            )
+            ),
         )
 
 

@@ -1,4 +1,4 @@
-# flext-dbt-oracle-wms Public API
+# flext_dbt_oracle_wms.constants
 
 <!-- TOC START -->
 
@@ -6,7 +6,7 @@
 
 <!-- AUTO-GENERATED — DO NOT EDIT MANUALLY -->
 
-::: flext_dbt_oracle_wms
+::: flext_dbt_oracle_wms.constants
 
     options:
       show_root_heading: true

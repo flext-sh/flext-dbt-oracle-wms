@@ -1,4 +1,9 @@
-"""DBT Oracle WMS constant enumerations."""
+"""DBT Oracle WMS constant enumerations.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_constants/enums
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 

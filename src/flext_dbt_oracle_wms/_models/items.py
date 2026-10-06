@@ -1,4 +1,9 @@
-"""WMS item record models."""
+"""WMS item record models.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_models/items
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -19,11 +24,13 @@ class FlextDbtOracleWmsModelsItems(m):
         model_config: ClassVar[m.ConfigDict] = m.ConfigDict(extra="ignore")
 
         item_id: Annotated[
-            str, u.Field(default="", description="Unique item identifier")
+            str,
+            u.Field(default="", description="Unique item identifier"),
         ]
         item_number: Annotated[str, u.Field(default="", description="Item number code")]
         item_description: Annotated[
-            str, u.Field(default="", description="Description of the item")
+            str,
+            u.Field(default="", description="Description of the item"),
         ]
 
 

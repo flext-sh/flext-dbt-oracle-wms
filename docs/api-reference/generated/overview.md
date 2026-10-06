@@ -29,7 +29,7 @@
   `FlextDbtOracleWmsMetadata`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsProtocols`
   (+9 more)
 - Exported module shortcuts: `services`
-- Generated module pages: `14`
+- Generated module pages: `8`
 
 ## Next Pages
 
