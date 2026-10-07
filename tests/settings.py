@@ -1,4 +1,9 @@
-"""Runtime settings for flext-dbt-oracle-wms tests."""
+"""Runtime settings for flext-dbt-oracle-wms tests.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+tests/settings
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 

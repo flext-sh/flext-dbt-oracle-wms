@@ -1,4 +1,9 @@
-"""Base protocols for DBT Oracle WMS integration points."""
+"""Base protocols for DBT Oracle WMS integration points.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_protocols/base
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -28,7 +33,9 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 ...
 
             def extract_oracle_wms_data(
-                self, entity_name: str, filters: t.ConfigurationMapping | None = None
+                self,
+                entity_name: str,
+                filters: t.ConfigurationMapping | None = None,
             ) -> p.Result[Sequence[t.ConfigurationMapping]]:
                 """Extract records for a specific Oracle WMS entity."""
                 ...
@@ -61,7 +68,8 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
             """Protocol for the workflow/monitoring service surface."""
 
             def generate_workflow_recommendations(
-                self, entities: t.SequenceOf[t.ConfigurationMapping] | None = None
+                self,
+                entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
             ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
                 """Generate workflow recommendations for entity processing."""
                 ...

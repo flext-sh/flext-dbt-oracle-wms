@@ -1,4 +1,9 @@
-"""Deterministic DBT staging-model generation for WMS sources."""
+"""Deterministic DBT staging-model generation for WMS sources.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_utilities/model_builder
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -20,9 +25,14 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
 
         @classmethod
         def generate_wms_staging_models(
-            cls, oracle_sources: t.StrSequence
+            cls,
+            oracle_sources: t.StrSequence,
         ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
-            """Create one staging model per source name."""
+            """Create one staging model per source name.
+
+            Returns:
+                The resulting ``p.Result[Sequence[m.DbtOracleWms.DbtModel]]``.
+            """
             models = [
                 m.DbtOracleWms.DbtModel(
                     name=f"stg_wms_{source}",
@@ -33,7 +43,7 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
                     columns=[],
                     materialization=c.DbtOracleWms.Dbt.Materialization.VIEW.value,
                     sql_content=c.DbtOracleWms.Dbt.STAGING_SELECT_TEMPLATE.format(
-                        source=source
+                        source=source,
                     ),
                     description=f"Staging model for {source}",
                     oracle_source=source,

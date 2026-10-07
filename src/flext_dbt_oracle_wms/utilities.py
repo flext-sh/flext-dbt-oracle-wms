@@ -1,14 +1,23 @@
-"""Utility helpers for DBT Oracle WMS operations."""
+"""Utility helpers for DBT Oracle WMS operations.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/utilities
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import FlextOracleWmsUtilities
 
-from ._utilities.base import FlextDbtOracleWmsUtilitiesBase
-from ._utilities.model_builder import FlextDbtOracleWmsUtilitiesModelBuilder
-from ._utilities.service import FlextDbtOracleWmsUtilitiesService
-from ._utilities.transformer import FlextDbtOracleWmsUtilitiesTransformer
+from flext_dbt_oracle_wms._utilities.base import FlextDbtOracleWmsUtilitiesBase
+from flext_dbt_oracle_wms._utilities.model_builder import (
+    FlextDbtOracleWmsUtilitiesModelBuilder,
+)
+from flext_dbt_oracle_wms._utilities.service import FlextDbtOracleWmsUtilitiesService
+from flext_dbt_oracle_wms._utilities.transformer import (
+    FlextDbtOracleWmsUtilitiesTransformer,
+)
 
 
 class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities):

@@ -1,4 +1,9 @@
-"""Base constants for DBT Oracle WMS — project metadata and DBT constants."""
+"""Base constants for DBT Oracle WMS — project metadata and DBT constants.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_constants/base
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 

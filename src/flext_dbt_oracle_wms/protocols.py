@@ -14,8 +14,10 @@ from __future__ import annotations
 from flext_meltano import FlextMeltanoProtocols
 from flext_oracle_wms import FlextOracleWmsProtocols
 
-from ._protocols.base import FlextDbtOracleWmsProtocolsBase
-from ._protocols.contracts import FlextDbtOracleWmsProtocolsContracts
+from flext_dbt_oracle_wms._protocols.base import FlextDbtOracleWmsProtocolsBase
+from flext_dbt_oracle_wms._protocols.contracts import (
+    FlextDbtOracleWmsProtocolsContracts,
+)
 
 
 class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):
@@ -28,7 +30,8 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
     """
 
     class DbtOracleWms(
-        FlextDbtOracleWmsProtocolsBase.DbtOracleWms, FlextDbtOracleWmsProtocolsContracts
+        FlextDbtOracleWmsProtocolsBase.DbtOracleWms,
+        FlextDbtOracleWmsProtocolsContracts,
     ):
         """DBT Oracle WMS protocol namespace."""
 
