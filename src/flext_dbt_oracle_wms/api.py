@@ -5,6 +5,9 @@ structure per AGENTS.md §U15).
 
 Copyright (c) 2025 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -23,7 +26,7 @@ if TYPE_CHECKING:
 
 
 class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
-    """Unified DBT Oracle WMS facade for extraction, modeling, and workflow execution."""
+    """Unified DBT Oracle WMS facade for extraction, modeling, and workflows."""
 
     def __init__(
         self,

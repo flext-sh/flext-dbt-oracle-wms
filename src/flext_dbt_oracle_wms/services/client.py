@@ -31,7 +31,8 @@ class FlextDbtOracleWmsClient:
     ) -> None:
         """Initialize client with explicit settings and optional injected boundaries."""
         super().__init__()
-        # NOTE (multi-agent): mro-rn88 — hold the effective settings (injected override or
+        # NOTE (multi-agent): mro-rn88 — hold the effective settings (injected
+        # override or
         # global singleton) and read it via self.settings, never a bare module global.
         self._settings = settings or FlextDbtOracleWmsSettings.fetch_global()
         self._meltano_runner = meltano_runner or FlextMeltanoLibraryRunner()
@@ -196,7 +197,8 @@ class FlextDbtOracleWmsClient:
             ]
             if missing_fields:
                 return r[Sequence[t.ConfigurationMapping]].fail(
-                    f"{entity_name} record {index} missing required fields: {missing_fields}",
+                    f"{entity_name} record {index} missing required "
+                    f"fields: {missing_fields}",
                 )
         return r[Sequence[t.ScalarMapping]].ok(records)
 
@@ -214,7 +216,8 @@ class FlextDbtOracleWmsClient:
                 if self.settings.DbtOracleWms.oracle_wms_base_url
                 else {}
             )
-            # NOTE (multi-agent): mro-rn88 — fetch_global already validates via pydantic on
+            # NOTE (multi-agent): mro-rn88 — fetch_global already validates via
+            # pydantic on
             # construction; the removed validate_config() method no longer exists.
             wms_settings = FlextOracleWmsSettings.fetch_global(
                 overrides=settings_overrides,

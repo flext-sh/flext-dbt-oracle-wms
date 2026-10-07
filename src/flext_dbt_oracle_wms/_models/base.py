@@ -18,7 +18,10 @@ class FlextDbtOracleWmsModelsBase(m, _oracle_wms_m):
 
     # NOTE (multi-agent): mro-rn88 ADR-006 thin-driver — typed connection_profile.
     class DbtConnectionProfile(m.ImmutableValueModel):
-        """Typed dbt Oracle WMS connection profile (satisfies p.Meltano.DbtConnectionProfile)."""
+        """Typed dbt Oracle WMS connection profile.
+
+        Satisfies ``p.Meltano.DbtConnectionProfile``.
+        """
 
         type: Annotated[str, u.Field(description="Dbt adapter type identifier")] = (
             "oracle_wms"

@@ -35,7 +35,8 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     ) -> None:
         """Initialize the unified DBT Oracle WMS service."""
         # NOTE (multi-agent): mro-rn88 — pass the injected settings to the ServiceBase
-        # runtime so self.settings resolves the override (not just the global singleton).
+        # runtime so self.settings resolves the override (not just the global
+        # singleton).
         super().__init__(
             runtime_settings=settings,
             settings_type=None,
