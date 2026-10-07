@@ -1,12 +1,17 @@
-"""Constants used by the DBT Oracle WMS package."""
+"""Constants used by the DBT Oracle WMS package.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/constants
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
 from flext_meltano import FlextMeltanoConstants
 from flext_oracle_wms import FlextOracleWmsConstants
 
-from ._constants.base import FlextDbtOracleWmsConstantsBase
-from ._constants.enums import FlextDbtOracleWmsConstantsEnums
+from flext_dbt_oracle_wms._constants.base import FlextDbtOracleWmsConstantsBase
+from flext_dbt_oracle_wms._constants.enums import FlextDbtOracleWmsConstantsEnums
 
 
 class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):
@@ -16,7 +21,8 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants)
         """DBT Oracle WMS project-specific constants."""
 
         class Dbt(
-            FlextDbtOracleWmsConstantsEnums.Dbt, FlextDbtOracleWmsConstantsBase.Dbt
+            FlextDbtOracleWmsConstantsEnums.Dbt,
+            FlextDbtOracleWmsConstantsBase.Dbt,
         ):
             """Merged DBT constants combining enum values and base project metadata."""
 

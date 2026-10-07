@@ -1,4 +1,9 @@
-"""Workflow and transformation result models."""
+"""Workflow and transformation result models.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_models/workflow
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -7,8 +12,7 @@ from typing import Annotated
 from flext_meltano import m, u
 
 from flext_dbt_oracle_wms import t
-
-from .items import FlextDbtOracleWmsModelsItems
+from flext_dbt_oracle_wms._models.items import FlextDbtOracleWmsModelsItems
 
 
 class FlextDbtOracleWmsModelsWorkflow(m):
@@ -32,10 +36,12 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed dbt-transformation summary composed from the meltano command result."""
 
         transformed_tables: Annotated[
-            t.StrSequence, u.Field(description="Tables produced by the transformation")
+            t.StrSequence,
+            u.Field(description="Tables produced by the transformation"),
         ]
         requested_models: Annotated[
-            t.StrSequence, u.Field(description="dbt models requested for the run")
+            t.StrSequence,
+            u.Field(description="dbt models requested for the run"),
         ]
         command_result: Annotated[
             m.Meltano.CommandExecutionResult,
@@ -59,7 +65,8 @@ class FlextDbtOracleWmsModelsWorkflow(m):
             u.Field(default_factory=tuple, description="Entities in scope"),
         ]
         status: Annotated[
-            str, u.Field(default="running", description="Tracking status")
+            str,
+            u.Field(default="running", description="Tracking status"),
         ]
 
     class WorkflowRecommendation(m.ImmutableValueModel):
@@ -74,15 +81,18 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed WMS metadata extraction summary."""
 
         available_entities: Annotated[
-            t.StrSequence, u.Field(description="Discovered WMS entities")
+            t.StrSequence,
+            u.Field(description="Discovered WMS entities"),
         ]
         inventory_count: Annotated[int, u.Field(description="Inventory record count")]
         shipment_count: Annotated[int, u.Field(description="Shipment record count")]
         include_inventory_details: Annotated[
-            bool, u.Field(description="Inventory detail flag")
+            bool,
+            u.Field(description="Inventory detail flag"),
         ]
         include_shipment_tracking: Annotated[
-            bool, u.Field(description="Shipment tracking flag")
+            bool,
+            u.Field(description="Shipment tracking flag"),
         ]
         status: Annotated[str, u.Field(description="Extraction status")]
 
@@ -90,7 +100,8 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed dbt model-generation summary."""
 
         model_names: Annotated[
-            t.StrSequence, u.Field(description="Generated dbt model names")
+            t.StrSequence,
+            u.Field(description="Generated dbt model names"),
         ]
         models_generated: Annotated[int, u.Field(description="Generated model count")]
         output_dir: Annotated[str, u.Field(description="Output directory")]
@@ -112,10 +123,12 @@ class FlextDbtOracleWmsModelsWorkflow(m):
             u.Field(default_factory=tuple, description="Entities processed"),
         ]
         total_records: Annotated[
-            int, u.Field(default=0, description="Total records processed")
+            int,
+            u.Field(default=0, description="Total records processed"),
         ]
         transformation_status: Annotated[
-            str, u.Field(default="", description="Transformation status")
+            str,
+            u.Field(default="", description="Transformation status"),
         ]
         workflow_status: Annotated[str, u.Field(description="Overall workflow status")]
 
@@ -125,7 +138,8 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         command: Annotated[str, u.Field(description="dbt command")]
         dbt_subcommand: Annotated[str, u.Field(description="dbt subcommand")]
         requested_timeout_seconds: Annotated[
-            int, u.Field(description="Requested timeout in seconds")
+            int,
+            u.Field(description="Requested timeout in seconds"),
         ]
         transformation: Annotated[
             FlextDbtOracleWmsModelsWorkflow.TransformationResult,

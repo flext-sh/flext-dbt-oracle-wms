@@ -1,4 +1,9 @@
-"""Base runtime for the DBT Oracle WMS public facade."""
+"""Base runtime for the DBT Oracle WMS public facade.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/services/base
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -7,9 +12,8 @@ from typing import TYPE_CHECKING, override
 
 from flext_core import r, s
 from flext_dbt_oracle_wms import t, u
-
-from .._settings import FlextDbtOracleWmsSettings
-from .client import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms.services.client import FlextDbtOracleWmsClient
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
@@ -20,7 +24,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
 
     _client: p.DbtOracleWms.Client | None = u.PrivateAttr(default_factory=lambda: None)
     _service: p.DbtOracleWms.Service | None = u.PrivateAttr(
-        default_factory=lambda: None
+        default_factory=lambda: None,
     )
 
     def __init__(
@@ -67,14 +71,24 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         return self._service
 
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
-        """Discover Oracle WMS entities through the public domain facade."""
+        """Discover Oracle WMS entities through the public domain facade.
+
+        Returns:
+            The resulting ``p.Result[t.StrSequence]``.
+        """
         discovered: p.Result[t.StrSequence] = self.client.discover_oracle_wms_entities()
         return discovered
 
     def extract_oracle_wms_data(
-        self, entity_name: str, filters: t.ConfigurationMapping | None = None
+        self,
+        entity_name: str,
+        filters: t.ConfigurationMapping | None = None,
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
-        """Extract Oracle WMS entity records through the public domain facade."""
+        """Extract Oracle WMS entity records through the public domain facade.
+
+        Returns:
+            The resulting ``p.Result[Sequence[t.ConfigurationMapping]]``.
+        """
         extracted: p.Result[Sequence[t.ConfigurationMapping]] = (
             self.client.extract_oracle_wms_data(entity_name, filters)
         )
@@ -82,7 +96,8 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
 
     @staticmethod
     def _resolve_entity_names(
-        inventory_items: t.StrSequence | None, shipments: t.StrSequence | None
+        inventory_items: t.StrSequence | None,
+        shipments: t.StrSequence | None,
     ) -> t.StrSequence | None:
         entity_names: t.MutableSequenceOf[str] = []
         if inventory_items is not None:
@@ -117,7 +132,7 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         ]
         if not filtered_records:
             return r[Sequence[t.ConfigurationMapping]].fail(
-                f"No {entity_name} records matched the requested identifiers"
+                f"No {entity_name} records matched the requested identifiers",
             )
         return r[Sequence[t.ConfigurationMapping]].ok(filtered_records)
 

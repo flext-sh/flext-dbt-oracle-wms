@@ -1,4 +1,9 @@
-"""Behavior contract for the dbt Oracle WMS connection profile."""
+"""Behavior contract for the dbt Oracle WMS connection profile.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+tests/unit/test_connection_profile
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -10,7 +15,8 @@ from flext_dbt_oracle_wms import FlextDbtOracleWmsServiceBase, m
 class TestsFlextDbtOracleWmsConnectionProfile:
     """Public contract of the typed dbt Oracle WMS connection profile."""
 
-    def test_connection_profile_returns_typed_oracle_wms_wire_shape(self) -> None:
+    @staticmethod
+    def test_connection_profile_returns_typed_oracle_wms_wire_shape() -> None:
         """connection_profile returns the typed dbt Oracle WMS wire shape."""
         profile = FlextDbtOracleWmsServiceBase().connection_profile
 

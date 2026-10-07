@@ -1,4 +1,9 @@
-"""Service helpers for DBT Oracle WMS utilities."""
+"""Service helpers for DBT Oracle WMS utilities.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_utilities/service
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -11,8 +16,7 @@ from flext_dbt_oracle_wms import m, t
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
-
-    from .._settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsUtilitiesService:
@@ -29,9 +33,14 @@ class FlextDbtOracleWmsUtilitiesService:
             self._settings = settings
 
         def generate_workflow_recommendations(
-            self, entities: t.SequenceOf[t.ConfigurationMapping] | None = None
+            self,
+            entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
         ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
-            """Generate simple workflow recommendations for entity processing."""
+            """Generate simple workflow recommendations for entity processing.
+
+            Returns:
+                The resulting ``p.Result[m.DbtOracleWms.WorkflowRecommendation]``.
+            """
             entity_list = entities or []
             total = len(entity_list)
             recommendation_message = ""
@@ -43,7 +52,7 @@ class FlextDbtOracleWmsUtilitiesService:
                     recommendation=recommendation_message,
                     dbt_threads=str(self._settings.DbtOracleWms.dbt_threads),
                     target=self._settings.DbtOracleWms.dbt_target,
-                )
+                ),
             )
 
         def log_workflow_completion(

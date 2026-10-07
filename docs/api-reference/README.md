@@ -30,6 +30,6 @@ This section is generated from public exports and real docstrings.
 - Primary facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsBase`,
   `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsConfig`,
   `FlextDbtOracleWmsConstants` (+9 more)
-- Generated module pages: `14`
+- Generated module pages: `8`
 
 Back to [project docs](../index.md).

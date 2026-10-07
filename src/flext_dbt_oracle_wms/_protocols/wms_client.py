@@ -1,4 +1,9 @@
-"""Protocol for the consumed Oracle WMS client boundary."""
+"""Protocol for the consumed Oracle WMS client boundary.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_protocols/wms_client
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 

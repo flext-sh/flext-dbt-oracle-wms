@@ -57,23 +57,32 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                         else r[t.StrSequence].ok(("items", "shipments"))
                     )
                     self._records_by_entity: t.MappingKV[
-                        str, t.SequenceOf[t.StrMapping]
+                        str,
+                        t.SequenceOf[t.StrMapping],
                     ] = records_by_entity or {}
                     self._health = (
                         health
                         if health is not None
                         else r[m.Api.HttpResponse].ok(
-                            m.Api.HttpResponse(status_code=200)
+                            m.Api.HttpResponse(status_code=200),
                         )
                     )
 
                 def start(self) -> p.Result[bool]:
-                    """Mark the boundary started and report success."""
+                    """Mark the boundary started and report success.
+
+                    Returns:
+                        The resulting ``p.Result[bool]``.
+                    """
                     self.started = True
                     return r[bool].ok(True)
 
                 def discover_entities(self) -> p.Result[t.StrSequence]:
-                    """Report the canned entity catalog."""
+                    """Report the canned entity catalog.
+
+                    Returns:
+                        The resulting ``p.Result[t.StrSequence]``.
+                    """
                     return self._entities
 
                 def fetch_entity_data(
@@ -82,17 +91,26 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     limit: int | None = None,
                     filters: t.ConfigurationMapping | None = None,
                 ) -> p.Result[t.SequenceOf[t.StrMapping]]:
-                    """Report canned records for the requested entity and capture it."""
+                    """Report canned records for the requested entity and capture it.
+
+                    Returns:
+                        The resulting ``p.Result[t.SequenceOf[t.StrMapping]]``.
+                    """
                     _ = limit
                     _ = filters
                     self.extracted_entities = (*self.extracted_entities, entity_name)
                     records = self._records_by_entity.get(
-                        entity_name, ({"entity": entity_name},)
+                        entity_name,
+                        ({"entity": entity_name},),
                     )
                     return r[t.SequenceOf[t.StrMapping]].ok(records)
 
                 def health_check(self) -> p.Result[m.Api.HttpResponse]:
-                    """Report the canned health response."""
+                    """Report the canned health response.
+
+                    Returns:
+                        The resulting ``p.Result[m.Api.HttpResponse]``.
+                    """
                     return self._health
 
             class ScriptedDbtRunner:
@@ -120,7 +138,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                                 output="",
                                 error="",
                                 execution_time=0.0,
-                            )
+                            ),
                         )
                     )
 
@@ -129,7 +147,11 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     models: t.StrSequence | None = None,
                     project_dir: Path | None = None,
                 ) -> p.Result[m.Meltano.CommandExecutionResult]:
-                    """Count the call and report the canned command result."""
+                    """Count the call and report the canned command result.
+
+                    Returns:
+                        The resulting ``p.Result[m.Meltano.CommandExecutionResult]``.
+                    """
                     _ = models
                     _ = project_dir
                     self.calls += 1

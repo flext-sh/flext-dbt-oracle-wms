@@ -1,4 +1,9 @@
-"""Base utility helpers for DBT Oracle WMS operations."""
+"""Base utility helpers for DBT Oracle WMS operations.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_utilities/base
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 

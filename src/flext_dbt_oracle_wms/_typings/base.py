@@ -1,4 +1,9 @@
-"""Base type definitions for DBT Oracle WMS — MRO composition of parent type namespaces."""
+"""Base type definitions for DBT Oracle WMS — MRO composition of parent type namespaces.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/_typings/base
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 

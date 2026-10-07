@@ -1,4 +1,9 @@
-"""Command-line handlers for DBT Oracle WMS package."""
+"""Command-line handlers for DBT Oracle WMS package.
+
+Copyright (c) 2026 FLEXT Team. All rights reserved.
+src/flext_dbt_oracle_wms/cli
+SPDX-License-Identifier: MIT
+"""
 
 from __future__ import annotations
 
@@ -7,8 +12,7 @@ from typing import TYPE_CHECKING, ClassVar
 
 from flext_core import r
 from flext_dbt_oracle_wms import t, u
-
-from .api import FlextDbtOracleWms
+from flext_dbt_oracle_wms.api import FlextDbtOracleWms
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -30,9 +34,15 @@ class FlextDbtOracleWmsCliService:
         self._service = service if service is not None else FlextDbtOracleWms()
 
     def execute_command(
-        self, command: str, args: t.MappingKV[str, t.JsonValue | None] | None = None
+        self,
+        command: str,
+        args: t.MappingKV[str, t.JsonValue | None] | None = None,
     ) -> int:
-        """Execute a named CLI command and return an exit code."""
+        """Execute a named CLI command and return an exit code.
+
+        Returns:
+            The resulting ``int``.
+        """
         callables: t.MappingKV[str, Callable[[], p.Result[str]]] = {
             "discover": self.handle_discover,
             "extract": lambda: self.handle_extract(args),
@@ -47,7 +57,11 @@ class FlextDbtOracleWmsCliService:
         return 1 if result.failure else 0
 
     def main(self, argv: t.StrSequence | None = None) -> int:
-        """Run the package CLI from argv-like input."""
+        """Run the package CLI from argv-like input.
+
+        Returns:
+            The resulting ``int``.
+        """
         command_args = list(argv) if argv is not None else sys.argv[1:]
         command = command_args[0] if command_args else self._default_command
         command_options: t.MutableMappingKV[str, t.JsonValue | None] = {}
@@ -56,16 +70,25 @@ class FlextDbtOracleWmsCliService:
         return self.execute_command(command, command_options or None)
 
     def handle_discover(self) -> p.Result[str]:
-        """Handle discover command."""
+        """Handle discover command.
+
+        Returns:
+            The resulting ``p.Result[str]``.
+        """
         result = self._service.discover_oracle_wms_entities()
         if result.failure:
             return r[str].from_failure(result)
         return r[str].ok("Discovery completed successfully")
 
     def handle_extract(
-        self, args: t.MappingKV[str, t.JsonValue | None] | None = None
+        self,
+        args: t.MappingKV[str, t.JsonValue | None] | None = None,
     ) -> p.Result[str]:
-        """Handle extract command."""
+        """Handle extract command.
+
+        Returns:
+            The resulting ``p.Result[str]``.
+        """
         entity = self._default_entity
         if args is not None:
             entity_value = args.get("entity")
@@ -81,14 +104,24 @@ class FlextDbtOracleWmsCliService:
             return r[str].from_failure(result)
         return r[str].ok("Extraction completed successfully")
 
-    def handle_info(self) -> p.Result[str]:
-        """Handle package info command."""
+    @staticmethod
+    def handle_info() -> p.Result[str]:
+        """Handle package info command.
+
+        Returns:
+            The resulting ``p.Result[str]``.
+        """
         return r[str].ok("FLEXT DBT Oracle WMS")
 
     def handle_pipeline(self) -> p.Result[str]:
-        """Handle full pipeline command."""
+        """Handle full pipeline command.
+
+        Returns:
+            The resulting ``p.Result[str]``.
+        """
         result = self._service.run_oracle_wms_to_dbt_workflow(
-            generate_models=False, run_transformations=True
+            generate_models=False,
+            run_transformations=True,
         )
         if result.failure:
             return r[str].from_failure(result)
@@ -96,7 +129,11 @@ class FlextDbtOracleWmsCliService:
 
 
 def main(argv: t.StrSequence | None = None) -> int:
-    """Run the DBT Oracle WMS CLI entrypoint."""
+    """Run the DBT Oracle WMS CLI entrypoint.
+
+    Returns:
+        The resulting ``int``.
+    """
     return FlextDbtOracleWmsCliService().main(argv)
 
 
