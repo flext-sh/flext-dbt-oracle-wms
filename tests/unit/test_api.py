@@ -29,7 +29,9 @@ class TestsFlextDbtOracleWmsApi:
     _TRACKING_ID = "oracle_wms_to_dbt:dbt_oracle_wms"
 
     def _settings(self) -> FlextDbtOracleWmsSettings:
-        return FlextDbtOracleWmsSettings(oracle_wms_base_url=self._BASE_URL)
+        return FlextDbtOracleWmsSettings.model_validate({
+            "DbtOracleWms": {"oracle_wms_base_url": self._BASE_URL},
+        })
 
     def _facade(
         self,
