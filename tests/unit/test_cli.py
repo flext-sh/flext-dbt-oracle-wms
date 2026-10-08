@@ -37,9 +37,9 @@ class TestsFlextDbtOracleWmsCli:
         u.DbtOracleWms.Tests.ScriptedWmsClient,
         u.DbtOracleWms.Tests.ScriptedDbtRunner,
     ]:
-        settings = FlextDbtOracleWmsSettings(
-            oracle_wms_base_url="https://wms.example.com",
-        )
+        settings = FlextDbtOracleWmsSettings.model_validate({
+            "DbtOracleWms": {"oracle_wms_base_url": "https://wms.example.com"},
+        })
         wms = u.DbtOracleWms.Tests.ScriptedWmsClient()
         runner = u.DbtOracleWms.Tests.ScriptedDbtRunner(
             r[m.Meltano.CommandExecutionResult].fail("dbt run failed")

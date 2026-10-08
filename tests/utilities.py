@@ -67,7 +67,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                         health
                         if health is not None
                         else r[m.Api.HttpResponse].ok(
-                            m.Api.HttpResponse(status_code=200),
+                            m.Api.HttpResponse.model_validate({"status_code": 200}),
                         )
                     )
 
