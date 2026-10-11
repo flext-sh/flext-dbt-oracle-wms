@@ -35,32 +35,27 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         required_fields_per_entity: Annotated[
             t.MappingKV[str, t.StrSequence],
             m.Field(
-                default_factory=dict,
                 description="Required fields per WMS entity (typed mapping)",
             ),
-        ]
+        ] = m.Field(default_factory=dict)
         oracle_wms_environment: Annotated[
             str,
             m.Field(
-                default="development",
                 description="Oracle WMS environment (development/production)",
             ),
-        ]
+        ] = "development"
         oracle_wms_base_url: Annotated[
-            str,
-            m.Field(default="", description="Base URL for Oracle WMS API"),
-        ]
+            str, m.Field(description="Base URL for Oracle WMS API")
+        ] = ""
         dbt_threads: Annotated[
             int,
             m.Field(
-                default=4,
                 description="Number of DBT threads for parallel execution",
             ),
-        ]
+        ] = 4
         dbt_target: Annotated[
-            str,
-            m.Field(default="dev", description="DBT target profile (dev/prod)"),
-        ]
+            str, m.Field(description="DBT target profile (dev/prod)")
+        ] = "dev"
 
     if TYPE_CHECKING:
         DbtOracleWms: _DbtOracleWms
