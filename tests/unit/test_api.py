@@ -8,7 +8,6 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 import pytest
-from flext_tests import tm
 
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
@@ -19,7 +18,7 @@ from flext_dbt_oracle_wms import (
     r,
     t,
 )
-from tests import u
+from tests import tm, u
 
 
 class TestsFlextDbtOracleWmsApi:
