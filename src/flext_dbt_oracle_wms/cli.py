@@ -93,7 +93,7 @@ class FlextDbtOracleWmsCliService:
         if args is not None:
             entity_value = args.get("entity")
             if entity_value is not None:
-                validated = u.validate_value(t.str_adapter(), entity_value)
+                validated = u.validate_value(u.str_adapter(), entity_value)
                 if validated.failure:
                     return r[str].from_failure(validated)
                 stripped = validated.value.strip()
