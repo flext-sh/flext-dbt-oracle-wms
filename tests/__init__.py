@@ -78,7 +78,6 @@ install_lazy_exports(
         "tk": "flext_tests",
         "tm": "flext_tests",
         "u": ".utilities",
-        "unit": ".unit",
         "x": "flext_dbt_oracle_wms",
     }),
     public_exports=__all__,
