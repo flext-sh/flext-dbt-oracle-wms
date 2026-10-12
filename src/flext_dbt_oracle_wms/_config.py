@@ -11,9 +11,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_meltano import FlextMeltanoConfig
-
-from flext_dbt_oracle_wms import m
+from flext_meltano import FlextMeltanoConfig, m
 
 
 class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
