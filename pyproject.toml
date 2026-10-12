@@ -452,7 +452,6 @@ notice-rgx = "Copyright \\(c\\) \\d{4} \\S[^\\n]*\\. All rights reserved\\."
 runtime-evaluated-base-classes = [
   "flext_core.s",
   "flext_dbt_oracle_wms.FlextDbtOracleWmsSettings",
-  "flext_dbt_oracle_wms.m.BaseModel",
   "flext_dbt_oracle_wms.services.base.FlextDbtOracleWmsBase",
   "flext_dbt_oracle_wms.services.generation.FlextDbtOracleWmsGeneration",
   "flext_dbt_oracle_wms.services.metadata.FlextDbtOracleWmsMetadata",
