@@ -11,13 +11,12 @@ from typing import TYPE_CHECKING
 
 from flext_core import r
 from flext_dbt_oracle_wms import m
-from flext_dbt_oracle_wms.services.base import FlextDbtOracleWmsBase
+from flext_dbt_oracle_wms.services.service_base import FlextDbtOracleWmsBase
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
     from flext_dbt_oracle_wms import p, t
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
 
 
 class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
@@ -25,7 +24,7 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
 
     def __init__(
         self,
-        settings: FlextDbtOracleWmsSettings | None = None,
+        settings: p.Settings | None = None,
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:

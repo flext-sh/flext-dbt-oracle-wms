@@ -23,9 +23,6 @@ class TestsFlextDbtOracleWmsProtocols(FlextTestsProtocols, FlextDbtOracleWmsProt
         class Tests:
             """DbtOracleWms-specific test protocols."""
 
-    class Tests(FlextTestsProtocols.Tests):
-        """Test-scoped protocol contracts facade."""
-
 
 p = TestsFlextDbtOracleWmsProtocols
 

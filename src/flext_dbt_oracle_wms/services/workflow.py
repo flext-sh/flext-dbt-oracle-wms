@@ -23,7 +23,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
 
     def __init__(
         self,
-        settings: FlextDbtOracleWmsSettings | None = None,
+        settings: p.Settings | None = None,
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:

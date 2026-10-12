@@ -157,9 +157,6 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     self.calls += 1
                     return self._result
 
-    class Tests(FlextTestsUtilities.Tests):
-        """Test-scoped utilities facade."""
-
 
 u = TestsFlextDbtOracleWmsUtilities
 

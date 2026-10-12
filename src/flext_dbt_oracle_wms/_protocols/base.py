@@ -91,6 +91,3 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
             ) -> None:
                 """Record the completion outcome of a tracked workflow."""
                 ...
-
-
-__all__: list[str] = ["FlextDbtOracleWmsProtocolsBase"]

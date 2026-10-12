@@ -22,19 +22,27 @@ class FlextDbtOracleWmsClient:
 
     logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
+    _settings: FlextDbtOracleWmsSettings
+
     def __init__(
         self,
-        settings: FlextDbtOracleWmsSettings | None = None,
+        settings: p.Settings | None = None,
         *,
         wms_client: p.DbtOracleWms.WmsClient | None = None,
         meltano_runner: p.DbtOracleWms.DbtRunner | None = None,
     ) -> None:
         """Initialize client with explicit settings and optional injected boundaries."""
         super().__init__()
-        # NOTE (multi-agent): mro-rn88 — hold the effective settings (injected
-        # override or
-        # global singleton) and read it via self.settings, never a bare module global.
-        self._settings = settings or FlextDbtOracleWmsSettings.fetch_global()
+        # NOTE (multi-agent): mro-rn88 — resolve the concrete settings snapshot
+        # (injected override or global singleton) and read it via self.settings.
+        if settings is None:
+            self._settings = FlextDbtOracleWmsSettings.fetch_global()
+        elif isinstance(settings, FlextDbtOracleWmsSettings):
+            self._settings = settings
+        else:
+            self._settings = FlextDbtOracleWmsSettings.model_validate(
+                settings.model_dump(),
+            )
         self._meltano_runner = meltano_runner or FlextMeltanoLibraryRunner()
         self._transformer = u.DbtOracleWms.Transformer()
         self._wms_client: p.DbtOracleWms.WmsClient | None = wms_client

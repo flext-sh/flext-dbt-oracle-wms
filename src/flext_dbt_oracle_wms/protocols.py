@@ -14,10 +14,8 @@ from __future__ import annotations
 from flext_meltano import FlextMeltanoProtocols
 from flext_oracle_wms import FlextOracleWmsProtocols
 
+from flext_dbt_oracle_wms._protocols import FlextDbtOracleWmsProtocolsContracts
 from flext_dbt_oracle_wms._protocols.base import FlextDbtOracleWmsProtocolsBase
-from flext_dbt_oracle_wms._protocols.contracts import (
-    FlextDbtOracleWmsProtocolsContracts,
-)
 
 
 class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):
