@@ -11,13 +11,13 @@ import pytest
 
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
-    FlextDbtOracleWmsClient,
     FlextDbtOracleWmsSettings,
     m,
     p,
     r,
     t,
 )
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
 from tests import tm, u
 
 

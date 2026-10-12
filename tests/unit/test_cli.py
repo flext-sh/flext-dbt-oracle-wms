@@ -9,14 +9,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from flext_dbt_oracle_wms import (
-    FlextDbtOracleWms,
-    FlextDbtOracleWmsClient,
-    FlextDbtOracleWmsSettings,
-    m,
-    r,
-)
+from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsSettings, m, r
 from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
 from tests import tm, u
 
 if TYPE_CHECKING:
