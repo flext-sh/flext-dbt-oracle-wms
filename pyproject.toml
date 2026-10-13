@@ -449,12 +449,12 @@ notice-rgx = "Copyright \\(c\\) \\d{4} \\S[^\\n]*\\. All rights reserved\\."
 
 [tool.ruff.lint.flake8-type-checking]
 runtime-evaluated-base-classes = [
-  "flext_core.s",
   "flext_dbt_oracle_wms.FlextDbtOracleWmsSettings",
-  "flext_dbt_oracle_wms.services.generation.FlextDbtOracleWmsGeneration",
-  "flext_dbt_oracle_wms.services.metadata.FlextDbtOracleWmsMetadata",
-  "flext_dbt_oracle_wms.services.service_base.FlextDbtOracleWmsBase",
-  "flext_dbt_oracle_wms.services.workflow.FlextDbtOracleWmsWorkflow",
+  "flext_dbt_oracle_wms.s",
+  "flext_dbt_oracle_wms.services.FlextDbtOracleWmsBase",
+  "flext_dbt_oracle_wms.services.FlextDbtOracleWmsGeneration",
+  "flext_dbt_oracle_wms.services.FlextDbtOracleWmsMetadata",
+  "flext_dbt_oracle_wms.services.FlextDbtOracleWmsWorkflow",
   "flext_meltano.FlextMeltanoConfig",
   "flext_meltano.FlextMeltanoDbtServiceBase",
   "flext_meltano.FlextMeltanoSettings",

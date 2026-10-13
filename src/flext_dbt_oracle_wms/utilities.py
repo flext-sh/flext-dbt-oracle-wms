@@ -10,12 +10,14 @@ from __future__ import annotations
 from flext_meltano import FlextMeltanoUtilities
 from flext_oracle_wms import FlextOracleWmsUtilities
 
-from flext_dbt_oracle_wms._utilities import (
-    FlextDbtOracleWmsUtilitiesBase,
-    FlextDbtOracleWmsUtilitiesModelBuilder,
-    FlextDbtOracleWmsUtilitiesService,
+from flext_dbt_oracle_wms._utilities.transformer import (
     FlextDbtOracleWmsUtilitiesTransformer,
 )
+from flext_dbt_oracle_wms._utilities.base import FlextDbtOracleWmsUtilitiesBase
+from flext_dbt_oracle_wms._utilities.model_builder import (
+    FlextDbtOracleWmsUtilitiesModelBuilder,
+)
+from flext_dbt_oracle_wms._utilities.service import FlextDbtOracleWmsUtilitiesService
 
 
 class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities):
