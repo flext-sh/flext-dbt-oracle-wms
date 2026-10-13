@@ -9,8 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from flext_dbt_oracle_wms.api import FlextDbtOracleWms
-from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
+from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsCliService, main
 from tests import tm
 
 

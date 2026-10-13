@@ -7,16 +7,14 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
-from flext_core import r
-from flext_dbt_oracle_wms import m
-from flext_dbt_oracle_wms.services.service_base import FlextDbtOracleWmsBase
+from flext_dbt_oracle_wms import m, r, t
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsBase
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
-
-    from flext_dbt_oracle_wms import p, t
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):

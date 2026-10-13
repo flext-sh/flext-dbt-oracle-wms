@@ -6,10 +6,8 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms._protocols.dbt_runner import (
+from flext_dbt_oracle_wms._protocols import (
     FlextDbtOracleWmsProtocolsDbtRunner,
-)
-from flext_dbt_oracle_wms._protocols.wms_client import (
     FlextDbtOracleWmsProtocolsWmsClient,
 )
 

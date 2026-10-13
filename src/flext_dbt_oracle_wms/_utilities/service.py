@@ -15,8 +15,7 @@ from flext_core import r
 from flext_dbt_oracle_wms import m, t
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p
 
 
 class FlextDbtOracleWmsUtilitiesService:

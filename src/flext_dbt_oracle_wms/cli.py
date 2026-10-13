@@ -8,16 +8,10 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, ClassVar
+from collections.abc import Callable
+from typing import ClassVar
 
-from flext_core import r
-from flext_dbt_oracle_wms import t, u
-from flext_dbt_oracle_wms.api import FlextDbtOracleWms
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
-
-    from flext_dbt_oracle_wms import p
+from flext_dbt_oracle_wms import FlextDbtOracleWms, p, r, t, u
 
 
 class FlextDbtOracleWmsCliService:

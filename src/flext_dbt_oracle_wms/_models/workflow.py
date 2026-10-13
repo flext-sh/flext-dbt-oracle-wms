@@ -12,7 +12,7 @@ from typing import Annotated
 from flext_meltano import m, u
 
 from flext_dbt_oracle_wms import t
-from flext_dbt_oracle_wms._models.items import FlextDbtOracleWmsModelsItems
+from flext_dbt_oracle_wms._models import FlextDbtOracleWmsModelsItems
 
 
 class FlextDbtOracleWmsModelsWorkflow(m):
