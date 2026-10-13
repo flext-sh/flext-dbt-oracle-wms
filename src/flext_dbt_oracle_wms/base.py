@@ -10,7 +10,7 @@ from typing import Annotated, override
 
 from flext_meltano import FlextMeltanoDbtServiceBase
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, settings, t, u
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, t, u
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
@@ -21,6 +21,12 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
         u.Field(description="Canonical dbt project name for DBT Oracle WMS services"),
     ] = c.DbtOracleWms.Dbt.PROJECT_NAME
 
+    settings_type: t.SettingsClass | None = u.Field(
+        default=FlextDbtOracleWmsSettings,
+        exclude=True,
+        description="Settings class for DBT Oracle WMS services.",
+    )
+
     @classmethod
     def runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
         """Return runtime bootstrap options for DBT Oracle WMS services."""
@@ -28,10 +34,24 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
 
     @property
     @override
+    def settings(self) -> FlextDbtOracleWmsSettings:
+        """The project's runtime settings without replacement of injected values.
+
+        Raises:
+            TypeError: If the runtime settings are not FlextDbtOracleWmsSettings.
+
+        """
+        runtime_settings = super().settings
+        if not isinstance(runtime_settings, FlextDbtOracleWmsSettings):
+            msg = "DBT Oracle WMS services require FlextDbtOracleWmsSettings"
+            raise TypeError(msg)
+        return runtime_settings
+
+    @property
+    @override
     def connection_profile(self) -> p.Meltano.DbtConnectionProfile:
         """Dbt connection profile for Oracle WMS-backed workflows."""
-        # NOTE (multi-agent): mro-rn88 ADR-006 thin-driver — typed connection_profile.
-        wms = settings.DbtOracleWms
+        wms = self.settings.DbtOracleWms
         return m.DbtOracleWms.DbtConnectionProfile(
             base_url=wms.oracle_wms_base_url,
             environment=wms.oracle_wms_environment,

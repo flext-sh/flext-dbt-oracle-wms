@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, m, r, t
+from flext_dbt_oracle_wms import m, r, t
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
 
 if TYPE_CHECKING:
@@ -123,14 +123,17 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         return r[bool].ok(value=True)
 
     @override
-    def execute(self) -> p.Result[FlextDbtOracleWmsSettings]:
-        """Execute DBT Oracle WMS domain service logic.
+    def execute(self) -> p.Result[t.JsonMapping]:
+        """Return runtime settings through the inherited JSON service contract.
+
+        Domain generation and workflow operations retain their dedicated typed
+        results; this lifecycle operation serializes the injected settings only.
 
         Returns:
-            The resulting ``p.Result[FlextDbtOracleWmsSettings]``.
+            The resulting ``p.Result[t.JsonMapping]``.
         """
         self.logger.info("Executing DBT Oracle WMS service")
-        return r[FlextDbtOracleWmsSettings].ok(self.settings)
+        return r[t.JsonMapping].ok(self.settings.model_dump(mode="json"))
 
 
 __all__: list[str] = ["FlextDbtOracleWmsWorkflow"]
