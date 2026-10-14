@@ -63,8 +63,6 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         )
 
 
-settings: FlextDbtOracleWmsSettings = FlextDbtOracleWmsSettings.fetch_global()
-"""Pre-instantiated project settings singleton — ``from flext_dbt_oracle_wms``
-import ``settings``."""
+settings = FlextDbtOracleWmsSettings.fetch_global()
 
 __all__: list[str] = ["FlextDbtOracleWmsSettings", "settings"]
