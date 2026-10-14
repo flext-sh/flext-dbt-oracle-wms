@@ -25,7 +25,16 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:
-        """Initialize workflow facade dependencies cooperatively."""
+        """Initialize workflow facade dependencies cooperatively.
+
+        Args:
+            settings: Settings contract forwarded to the base runtime.
+            client: Injected WMS client boundary; created lazily when
+                omitted.
+            service: Injected workflow service boundary; created lazily
+                when omitted.
+
+        """
         super().__init__(settings=settings, client=client, service=service)
 
     def run_oracle_wms_to_dbt_workflow(
@@ -38,8 +47,20 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
     ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients.
 
+        Args:
+            inventory_items: Inventory item identifiers selecting the
+                items entity; discovery is used when neither selection
+                is given.
+            shipments: Shipment identifiers selecting the shipments
+                entity.
+            generate_models: Whether to generate DBT models first.
+            run_transformations: Whether to run the full transformation
+                pipeline instead of only extracting metadata.
+
         Returns:
-            The resulting ``p.Result[m.DbtOracleWms.WorkflowResult]``.
+            Result wrapping the workflow summary, or a failure from any
+            workflow stage.
+
         """
         self.logger.info("Running Oracle WMS-to-DBT workflow")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -104,8 +125,13 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
     ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
         """Log workflow completion and pass the result through unchanged.
 
+        Args:
+            tracking_info: Tracking payload identifying the workflow.
+            result: Workflow result to log and return.
+
         Returns:
-            The resulting ``p.Result[m.DbtOracleWms.WorkflowResult]``.
+            The given result, unchanged.
+
         """
         self.service.log_workflow_completion(tracking_info, result)
         return result
@@ -114,7 +140,9 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         """Validate the Oracle WMS connection using the real client health check.
 
         Returns:
-            The resulting ``p.Result[bool]``.
+            Ok result with ``True`` when the connection check succeeds,
+            or the connection failure.
+
         """
         self.logger.info("Validating Oracle WMS connection")
         connection_result = self.client.test_oracle_wms_connection()
@@ -130,7 +158,8 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         results; this lifecycle operation serializes the injected settings only.
 
         Returns:
-            The resulting ``p.Result[t.JsonMapping]``.
+            Result wrapping the serialized runtime settings payload.
+
         """
         self.logger.info("Executing DBT Oracle WMS service")
         return r[t.JsonMapping].ok(self.settings.model_dump(mode="json"))

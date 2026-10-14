@@ -30,8 +30,14 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
         ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
             """Create one staging model per source name.
 
+            Args:
+                oracle_sources: Oracle WMS source names to derive staging
+                    models from.
+
             Returns:
-                The resulting ``p.Result[Sequence[m.DbtOracleWms.DbtModel]]``.
+                Result wrapping one staging model per source name, in
+                input order.
+
             """
             models = [
                 m.DbtOracleWms.DbtModel(

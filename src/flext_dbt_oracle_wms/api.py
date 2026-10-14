@@ -30,7 +30,17 @@ class FlextDbtOracleWms(FlextDbtOracleWmsWorkflow):
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:
-        """Initialize the public DBT Oracle WMS facade."""
+        """Initialize the public DBT Oracle WMS facade.
+
+        Args:
+            settings: Settings contract; the global settings singleton is
+                used when omitted.
+            client: Injected WMS client boundary; a real client is created
+                lazily when omitted.
+            service: Injected workflow service boundary; a default service
+                is created lazily when omitted.
+
+        """
         super().__init__(settings=settings, client=client, service=service)
 
 

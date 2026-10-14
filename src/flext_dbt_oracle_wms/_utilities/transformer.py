@@ -27,10 +27,16 @@ class FlextDbtOracleWmsUtilitiesTransformer:
             self,
             entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
         ) -> p.Result[m.DbtOracleWms.EntityTransformationSet]:
-            """Transform WMSentities into a typed transformation set.
+            """Transform WMS entities into a typed transformation set.
+
+            Args:
+                entity_data: Mapping of entity name to raw records; only
+                    the ``items`` entry is transformed.
 
             Returns:
-                The resulting ``p.Result[m.DbtOracleWms.EntityTransformationSet]``.
+                Result wrapping the typed transformation set, or the
+                item transformation failure.
+
             """
             # NOTE (multi-agent, bead mro-wfc8.3): returns a typed model (no
             # item.model_dump() roundtrip; WmsItems are surfaced directly).
@@ -47,8 +53,13 @@ class FlextDbtOracleWmsUtilitiesTransformer:
         ) -> p.Result[Sequence[m.DbtOracleWms.WmsItem]]:
             """Transform item records to typed WmsItem models.
 
+            Args:
+                records: Raw WMS item records to validate and convert.
+
             Returns:
-                The resulting ``p.Result[Sequence[m.DbtOracleWms.WmsItem]]``.
+                Result wrapping the typed items, or a failure naming the
+                first invalid record index.
+
             """
             transformed: MutableSequence[m.DbtOracleWms.WmsItem] = []
             for index, record in enumerate(records):

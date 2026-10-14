@@ -23,7 +23,13 @@ class FlextDbtOracleWmsCliService:
     _service: FlextDbtOracleWms
 
     def __init__(self, service: FlextDbtOracleWms | None = None) -> None:
-        """Initialize CLI service with the canonical DBT Oracle WMS facade."""
+        """Initialize CLI service with the canonical DBT Oracle WMS facade.
+
+        Args:
+            service: Facade instance to dispatch commands through; a new
+                default facade is created when omitted.
+
+        """
         super().__init__()
         self._service = service if service is not None else FlextDbtOracleWms()
 
@@ -34,8 +40,16 @@ class FlextDbtOracleWmsCliService:
     ) -> int:
         """Execute a named CLI command and return an exit code.
 
+        Args:
+            command: Command name (``discover``, ``extract``,
+                ``pipeline``, or ``info``).
+            args: Optional command options, such as ``entity`` for the
+                extract command.
+
         Returns:
-            The resulting ``int``.
+            ``0`` when the command succeeds, ``1`` on unknown command or
+            failure.
+
         """
         callables: t.MappingKV[str, Callable[[], p.Result[str]]] = {
             "discover": self.handle_discover,
@@ -53,8 +67,13 @@ class FlextDbtOracleWmsCliService:
     def main(self, argv: t.StrSequence | None = None) -> int:
         """Run the package CLI from argv-like input.
 
+        Args:
+            argv: Argument sequence to parse; defaults to
+                ``sys.argv[1:]`` when omitted.
+
         Returns:
-            The resulting ``int``.
+            ``0`` when the dispatched command succeeds, ``1`` otherwise.
+
         """
         command_args = list(argv) if argv is not None else sys.argv[1:]
         command = command_args[0] if command_args else self._default_command
@@ -64,10 +83,12 @@ class FlextDbtOracleWmsCliService:
         return self.execute_command(command, command_options or None)
 
     def handle_discover(self) -> p.Result[str]:
-        """Handle discover command.
+        """Handle the discover command.
 
         Returns:
-            The resulting ``p.Result[str]``.
+            Ok result with a completion message, or the discovery
+            failure.
+
         """
         result = self._service.discover_oracle_wms_entities()
         if result.failure:
@@ -78,10 +99,16 @@ class FlextDbtOracleWmsCliService:
         self,
         args: t.MappingKV[str, t.JsonValue | None] | None = None,
     ) -> p.Result[str]:
-        """Handle extract command.
+        """Handle the extract command.
+
+        Args:
+            args: Optional command options; the ``entity`` key selects
+                the WMS entity to extract.
 
         Returns:
-            The resulting ``p.Result[str]``.
+            Ok result with a completion message, or the extraction or
+            validation failure.
+
         """
         entity = self._default_entity
         if args is not None:
@@ -100,18 +127,21 @@ class FlextDbtOracleWmsCliService:
 
     @staticmethod
     def handle_info() -> p.Result[str]:
-        """Handle package info command.
+        """Handle the package info command.
 
         Returns:
-            The resulting ``p.Result[str]``.
+            Ok result carrying the package display name.
+
         """
         return r[str].ok("FLEXT DBT Oracle WMS")
 
     def handle_pipeline(self) -> p.Result[str]:
-        """Handle full pipeline command.
+        """Handle the full pipeline command.
 
         Returns:
-            The resulting ``p.Result[str]``.
+            Ok result with a completion message, or the pipeline
+            failure.
+
         """
         result = self._service.run_oracle_wms_to_dbt_workflow(
             generate_models=False,
@@ -125,8 +155,13 @@ class FlextDbtOracleWmsCliService:
 def main(argv: t.StrSequence | None = None) -> int:
     """Run the DBT Oracle WMS CLI entrypoint.
 
+    Args:
+        argv: Argument sequence to parse; defaults to ``sys.argv[1:]``
+            when omitted.
+
     Returns:
-        The resulting ``int``.
+        ``0`` when the dispatched command succeeds, ``1`` otherwise.
+
     """
     return FlextDbtOracleWmsCliService().main(argv)
 

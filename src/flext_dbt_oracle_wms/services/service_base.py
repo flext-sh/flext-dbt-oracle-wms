@@ -27,7 +27,16 @@ class FlextDbtOracleWmsBase(s):
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:
-        """Initialize the unified DBT Oracle WMS service."""
+        """Initialize the unified DBT Oracle WMS service.
+
+        Args:
+            settings: Settings contract forwarded to the base runtime.
+            client: Injected WMS client boundary; created lazily when
+                omitted.
+            service: Injected workflow service boundary; created lazily
+                when omitted.
+
+        """
         super().__init__(settings=settings)
         self._client = client
         self._service = service
@@ -50,7 +59,9 @@ class FlextDbtOracleWmsBase(s):
         """Discover Oracle WMS entities through the public domain facade.
 
         Returns:
-            The resulting ``p.Result[t.StrSequence]``.
+            Result wrapping the discovered entity names, or the
+            discovery failure.
+
         """
         discovered: p.Result[t.StrSequence] = self.client.discover_oracle_wms_entities()
         return discovered
@@ -62,8 +73,14 @@ class FlextDbtOracleWmsBase(s):
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Extract Oracle WMS entity records through the public domain facade.
 
+        Args:
+            entity_name: WMS entity to fetch records for.
+            filters: Optional fetch filters forwarded to the client.
+
         Returns:
-            The resulting ``p.Result[Sequence[t.ConfigurationMapping]]``.
+            Result wrapping the extracted records, or the extraction
+            failure.
+
         """
         extracted: p.Result[Sequence[t.ConfigurationMapping]] = (
             self.client.extract_oracle_wms_data(entity_name, filters)
