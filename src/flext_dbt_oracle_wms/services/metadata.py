@@ -9,15 +9,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from flext_core import r
-from flext_dbt_oracle_wms import m
-from flext_dbt_oracle_wms.services.base import FlextDbtOracleWmsBase
+from flext_dbt_oracle_wms import m, r
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsBase
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from flext_dbt_oracle_wms import p, t
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p, t
 
 
 class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):

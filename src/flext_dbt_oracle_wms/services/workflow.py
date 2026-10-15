@@ -9,10 +9,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from flext_core import r
-from flext_dbt_oracle_wms import m
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms.services.generation import FlextDbtOracleWmsGeneration
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, m, r
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p, t

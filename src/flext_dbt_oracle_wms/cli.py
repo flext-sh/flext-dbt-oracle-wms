@@ -10,9 +10,7 @@ from __future__ import annotations
 import sys
 from typing import TYPE_CHECKING, ClassVar
 
-from flext_core import r
-from flext_dbt_oracle_wms import t, u
-from flext_dbt_oracle_wms.api import FlextDbtOracleWms
+from flext_dbt_oracle_wms import FlextDbtOracleWms, r, t, u
 
 if TYPE_CHECKING:
     from collections.abc import Callable

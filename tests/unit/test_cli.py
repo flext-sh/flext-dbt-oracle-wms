@@ -11,16 +11,15 @@ from typing import TYPE_CHECKING
 
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
-    FlextDbtOracleWmsClient,
+    FlextDbtOracleWmsCliService,
     FlextDbtOracleWmsSettings,
-    m,
-    r,
+    main,
 )
-from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
-from tests import tm, u
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
+from tests import m, r, tm, u
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import t
+    from tests import t
 
 
 class TestsFlextDbtOracleWmsCli:

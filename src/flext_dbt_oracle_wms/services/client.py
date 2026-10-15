@@ -11,10 +11,9 @@ from collections.abc import MutableMapping, Sequence
 from typing import ClassVar
 
 from flext_meltano import FlextMeltanoLibraryRunner
-from flext_oracle_wms import FlextOracleWmsSettings, r, u as oracle_wms_u
+from flext_oracle_wms import FlextOracleWmsSettings, u as oracle_wms_u
 
-from flext_dbt_oracle_wms import c, m, p, t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, r, t, u
 
 
 class FlextDbtOracleWmsClient:
