@@ -11,9 +11,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from flext_core import r
 from flext_tests import FlextTestsUtilities
 
-from flext_core import r
 from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, m, p, t
 
 
@@ -69,6 +69,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[bool]``.
+
                     """
                     self.started = True
                     return r[bool].ok(True)
@@ -78,6 +79,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[t.StrSequence]``.
+
                     """
                     return self._entities
 
@@ -91,6 +93,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[t.SequenceOf[t.StrMapping]]``.
+
                     """
                     _ = limit
                     _ = filters
@@ -106,6 +109,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[m.Api.HttpResponse]``.
+
                     """
                     return self._health
 
@@ -147,6 +151,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[m.Meltano.CommandExecutionResult]``.
+
                     """
                     _ = models
                     _ = project_dir

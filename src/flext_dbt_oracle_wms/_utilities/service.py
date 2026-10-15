@@ -9,9 +9,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, ClassVar
 
+from flext_core import r
 from flext_meltano import u
 
-from flext_core import r
 from flext_dbt_oracle_wms import m, t
 
 if TYPE_CHECKING:

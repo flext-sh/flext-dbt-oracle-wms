@@ -11,6 +11,7 @@ from collections.abc import MutableSequence, Sequence
 from typing import TYPE_CHECKING
 
 from flext_core import r
+
 from flext_dbt_oracle_wms import c, m, t
 
 if TYPE_CHECKING:
