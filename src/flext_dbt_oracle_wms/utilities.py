@@ -25,9 +25,9 @@ class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities)
 
     class DbtOracleWms(
         FlextDbtOracleWmsUtilitiesBase,
+        FlextDbtOracleWmsUtilitiesModelBuilder,
         FlextDbtOracleWmsUtilitiesService,
         FlextDbtOracleWmsUtilitiesTransformer,
-        FlextDbtOracleWmsUtilitiesModelBuilder,
     ):
         """Oracle WMS extraction and service helpers — u.DbtOracleWms.*."""
 

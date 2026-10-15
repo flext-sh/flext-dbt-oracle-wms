@@ -1,7 +1,6 @@
 """Protocol for the consumed Oracle WMS client boundary.
 
 Copyright (c) 2026 FLEXT Team. All rights reserved.
-src/flext_dbt_oracle_wms/_protocols/wms_client
 SPDX-License-Identifier: MIT
 """
 
@@ -15,30 +14,33 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms import m, t
 
 
-@runtime_checkable
-class FlextDbtOracleWmsProtocolsWmsClient(Protocol):
-    """Protocol for the consumed Oracle WMS client boundary."""
+class FlextDbtOracleWmsProtocolsWmsClient:
+    """Namespace for the consumed Oracle WMS client boundary protocol."""
 
-    def discover_entities(self) -> p.Result[t.StrSequence]:
-        """Discover available Oracle WMS entities."""
-        ...
+    @runtime_checkable
+    class WmsClient(Protocol):
+        """Protocol for the consumed Oracle WMS client boundary."""
 
-    def fetch_entity_data(
-        self,
-        entity_name: str,
-        limit: int | None = None,
-        filters: t.ConfigurationMapping | None = None,
-    ) -> p.Result[t.SequenceOf[t.StrMapping]]:
-        """Fetch data for a specific Oracle WMS entity."""
-        ...
+        def discover_entities(self) -> p.Result[t.StrSequence]:
+            """Discover available Oracle WMS entities."""
+            ...
 
-    def start(self) -> p.Result[bool]:
-        """Start the Oracle WMS client."""
-        ...
+        def fetch_entity_data(
+            self,
+            entity_name: str,
+            limit: int | None = None,
+            filters: t.ConfigurationMapping | None = None,
+        ) -> p.Result[t.SequenceOf[t.StrMapping]]:
+            """Fetch data for a specific Oracle WMS entity."""
+            ...
 
-    def health_check(self) -> p.Result[m.Api.HttpResponse]:
-        """Check Oracle WMS API health."""
-        ...
+        def start(self) -> p.Result[bool]:
+            """Start the Oracle WMS client."""
+            ...
+
+        def health_check(self) -> p.Result[m.Api.HttpResponse]:
+            """Check Oracle WMS API health."""
+            ...
 
 
 __all__: list[str] = ["FlextDbtOracleWmsProtocolsWmsClient"]

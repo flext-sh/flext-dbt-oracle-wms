@@ -3,9 +3,6 @@
 Provides TestsFlextDbtOracleWmsModels, combining TestsFlextModels with
 FlextDbtOracleWmsModels for test-specific model definitions.
 
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
 Copyright (c) 2026 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
@@ -25,9 +22,6 @@ class TestsFlextDbtOracleWmsModels(FlextTestsModels, FlextDbtOracleWmsModels):
 
         class Tests:
             """Test-specific models."""
-
-    class Tests(FlextTestsModels.Tests):
-        """Test-scoped models facade."""
 
 
 m = TestsFlextDbtOracleWmsModels

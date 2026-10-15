@@ -7,17 +7,14 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
-from flext_core import r
-from flext_dbt_oracle_wms import m
-from flext_dbt_oracle_wms.services.base import FlextDbtOracleWmsBase
+from flext_dbt_oracle_wms import m, r, t
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsBase
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
-
-    from flext_dbt_oracle_wms import p, t
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
@@ -25,11 +22,20 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
 
     def __init__(
         self,
-        settings: FlextDbtOracleWmsSettings | None = None,
+        settings: p.Settings | None = None,
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:
-        """Initialize metadata facade dependencies cooperatively."""
+        """Initialize metadata facade dependencies cooperatively.
+
+        Args:
+            settings: Settings contract forwarded to the base runtime.
+            client: Injected WMS client boundary; created lazily when
+                omitted.
+            service: Injected workflow service boundary; created lazily
+                when omitted.
+
+        """
         super().__init__(settings=settings, client=client, service=service)
 
     def extract_wms_metadata(
@@ -42,8 +48,20 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
     ) -> p.Result[m.DbtOracleWms.WmsMetadataResult]:
         """Extract Oracle WMS metadata from the real domain client.
 
+        Args:
+            inventory_items: Inventory item identifiers narrowing the
+                items extraction; all items are extracted when omitted.
+            shipments: Shipment identifiers narrowing the shipments
+                extraction; all shipments are extracted when omitted.
+            include_inventory_details: Whether to extract inventory
+                records.
+            include_shipment_tracking: Whether to extract shipment
+                records.
+
         Returns:
-            The resulting ``p.Result[m.DbtOracleWms.WmsMetadataResult]``.
+            Result wrapping the metadata extraction summary, or a
+            failure from discovery or extraction.
+
         """
         self.logger.info("Extracting Oracle WMS metadata")
         available_entities_result = self.client.discover_oracle_wms_entities()
@@ -90,8 +108,13 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
     ) -> p.Result[m.OracleWms.InventoryItem]:
         """Get inventory item data from the Oracle WMS domain client.
 
+        Args:
+            item_id: Identifier of the inventory item to fetch.
+
         Returns:
-            The resulting ``p.Result[m.OracleWms.InventoryItem]``.
+            Result wrapping the typed inventory item, or a failure when
+            extraction or validation fails.
+
         """
         self.logger.info("Getting WMS inventory info: %s", item_id)
         inventory_result = self._extract_entity_records(
@@ -111,8 +134,13 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
     ) -> p.Result[m.OracleWms.Shipment]:
         """Get shipment data from the Oracle WMS domain client.
 
+        Args:
+            shipment_id: Identifier of the shipment to fetch.
+
         Returns:
-            The resulting ``p.Result[m.OracleWms.Shipment]``.
+            Result wrapping the typed shipment, or a failure when
+            extraction or validation fails.
+
         """
         self.logger.info("Getting WMS shipment info: %s", shipment_id)
         shipment_result = self._extract_entity_records(

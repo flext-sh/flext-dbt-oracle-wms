@@ -1,8 +1,5 @@
 """Shared service foundation for flext-dbt-oracle-wms components.
 
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
 Copyright (c) 2026 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
@@ -11,11 +8,9 @@ from __future__ import annotations
 
 from typing import Annotated, override
 
-from flext_meltano import FlextMeltanoDbtServiceBase, p, u
+from flext_meltano import FlextMeltanoDbtServiceBase
 
-# NOTE (multi-agent): mro-rn88 — import `settings` singleton for strict
-# `from <pkg> import settings` access.
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, settings, t
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, settings, t, u
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
@@ -35,7 +30,6 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
     @override
     def connection_profile(self) -> p.Meltano.DbtConnectionProfile:
         """Dbt connection profile for Oracle WMS-backed workflows."""
-        # NOTE (multi-agent): mro-rn88 ADR-006 thin-driver — typed connection_profile.
         wms = settings.DbtOracleWms
         return m.DbtOracleWms.DbtConnectionProfile(
             base_url=wms.oracle_wms_base_url,

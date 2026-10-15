@@ -10,23 +10,32 @@ from __future__ import annotations
 from types import MappingProxyType
 from typing import TYPE_CHECKING
 
-from flext_core import install_lazy_exports
-from flext_dbt_oracle_wms.__version__ import (
-    __author__,
-    __author_email__,
-    __description__,
-    __license__,
-    __title__,
-    __url__,
-    __version__,
-    __version_info__,
-)
+from flext_core.lazy import install_lazy_exports
+
+from flext_dbt_oracle_wms.__version__ import __version__
 
 if TYPE_CHECKING:
     from flext_meltano import d, h, r, x
     from flext_oracle_wms import e
 
-    from flext_dbt_oracle_wms import services
+    from flext_dbt_oracle_wms import (
+        _constants,
+        _models,
+        _protocols,
+        _typings,
+        _utilities,
+        services,
+    )
+    from flext_dbt_oracle_wms.__version__ import (
+        FlextDbtOracleWmsVersion,
+        __author__,
+        __author_email__,
+        __description__,
+        __license__,
+        __title__,
+        __url__,
+        __version_info__,
+    )
     from flext_dbt_oracle_wms._config import FlextDbtOracleWmsConfig, config
     from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings, settings
     from flext_dbt_oracle_wms.api import FlextDbtOracleWms, dbt_oracle_wms
@@ -35,31 +44,22 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms.constants import FlextDbtOracleWmsConstants, c
     from flext_dbt_oracle_wms.models import FlextDbtOracleWmsModels, m
     from flext_dbt_oracle_wms.protocols import FlextDbtOracleWmsProtocols, p
-    from flext_dbt_oracle_wms.services.base import FlextDbtOracleWmsBase
-    from flext_dbt_oracle_wms.services.client import FlextDbtOracleWmsClient
-    from flext_dbt_oracle_wms.services.generation import FlextDbtOracleWmsGeneration
-    from flext_dbt_oracle_wms.services.metadata import FlextDbtOracleWmsMetadata
-    from flext_dbt_oracle_wms.services.workflow import FlextDbtOracleWmsWorkflow
     from flext_dbt_oracle_wms.typings import FlextDbtOracleWmsTypes, t
     from flext_dbt_oracle_wms.utilities import FlextDbtOracleWmsUtilities, u
 
 
 __all__: tuple[str, ...] = (
     "FlextDbtOracleWms",
-    "FlextDbtOracleWmsBase",
     "FlextDbtOracleWmsCliService",
-    "FlextDbtOracleWmsClient",
     "FlextDbtOracleWmsConfig",
     "FlextDbtOracleWmsConstants",
-    "FlextDbtOracleWmsGeneration",
-    "FlextDbtOracleWmsMetadata",
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsProtocols",
     "FlextDbtOracleWmsServiceBase",
     "FlextDbtOracleWmsSettings",
     "FlextDbtOracleWmsTypes",
     "FlextDbtOracleWmsUtilities",
-    "FlextDbtOracleWmsWorkflow",
+    "FlextDbtOracleWmsVersion",
     "__author__",
     "__author_email__",
     "__description__",
@@ -68,6 +68,11 @@ __all__: tuple[str, ...] = (
     "__url__",
     "__version__",
     "__version_info__",
+    "_constants",
+    "_models",
+    "_protocols",
+    "_typings",
+    "_utilities",
     "c",
     "config",
     "d",
@@ -91,20 +96,28 @@ install_lazy_exports(
     globals(),
     MappingProxyType({
         "FlextDbtOracleWms": ".api",
-        "FlextDbtOracleWmsBase": ".services.base",
         "FlextDbtOracleWmsCliService": ".cli",
-        "FlextDbtOracleWmsClient": ".services.client",
         "FlextDbtOracleWmsConfig": "._config",
         "FlextDbtOracleWmsConstants": ".constants",
-        "FlextDbtOracleWmsGeneration": ".services.generation",
-        "FlextDbtOracleWmsMetadata": ".services.metadata",
         "FlextDbtOracleWmsModels": ".models",
         "FlextDbtOracleWmsProtocols": ".protocols",
         "FlextDbtOracleWmsServiceBase": ".base",
         "FlextDbtOracleWmsSettings": "._settings",
         "FlextDbtOracleWmsTypes": ".typings",
         "FlextDbtOracleWmsUtilities": ".utilities",
-        "FlextDbtOracleWmsWorkflow": ".services.workflow",
+        "FlextDbtOracleWmsVersion": ".__version__",
+        "__author__": ".__version__",
+        "__author_email__": ".__version__",
+        "__description__": ".__version__",
+        "__license__": ".__version__",
+        "__title__": ".__version__",
+        "__url__": ".__version__",
+        "__version_info__": ".__version__",
+        "_constants": "._constants",
+        "_models": "._models",
+        "_protocols": "._protocols",
+        "_typings": "._typings",
+        "_utilities": "._utilities",
         "c": ".constants",
         "config": "._config",
         "d": "flext_meltano",

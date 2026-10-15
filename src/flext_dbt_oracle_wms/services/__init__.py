@@ -10,13 +10,13 @@ from __future__ import annotations
 from types import MappingProxyType
 from typing import TYPE_CHECKING
 
-from flext_core import install_lazy_exports
+from flext_core.lazy import install_lazy_exports
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms.services.base import FlextDbtOracleWmsBase
     from flext_dbt_oracle_wms.services.client import FlextDbtOracleWmsClient
     from flext_dbt_oracle_wms.services.generation import FlextDbtOracleWmsGeneration
     from flext_dbt_oracle_wms.services.metadata import FlextDbtOracleWmsMetadata
+    from flext_dbt_oracle_wms.services.service_base import FlextDbtOracleWmsBase
     from flext_dbt_oracle_wms.services.workflow import FlextDbtOracleWmsWorkflow
 
 
@@ -32,7 +32,7 @@ install_lazy_exports(
     __name__,
     globals(),
     MappingProxyType({
-        "FlextDbtOracleWmsBase": ".base",
+        "FlextDbtOracleWmsBase": ".service_base",
         "FlextDbtOracleWmsClient": ".client",
         "FlextDbtOracleWmsGeneration": ".generation",
         "FlextDbtOracleWmsMetadata": ".metadata",

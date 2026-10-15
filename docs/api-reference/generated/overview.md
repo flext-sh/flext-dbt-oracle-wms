@@ -18,16 +18,16 @@
   Development :: Libraries :: Python Modules, Typing :: Typed
 - Project class: `integration`
 - Keywords: `data-transformation`, `dbt`, `enterprise`, `flext`, `sql`, `typed`
-- Main facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsBase`,
-  `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsConfig`,
-  `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsGeneration`,
-  `FlextDbtOracleWmsMetadata` (+7 more)
+- Main facades: `FlextDbtOracleWms`, `FlextDbtOracleWmsCliService`,
+  `FlextDbtOracleWmsConfig`, `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsModels`,
+  `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase`,
+  `FlextDbtOracleWmsSettings` (+3 more)
 - Alias exports: `c`, `d`, `e`, `h`, `m`, `p`, `r`, `s`, `t`, `u`, `x`
-- Public symbol exports: `FlextDbtOracleWms`, `FlextDbtOracleWmsBase`,
-  `FlextDbtOracleWmsCliService`, `FlextDbtOracleWmsClient`, `FlextDbtOracleWmsConfig`,
-  `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsGeneration`,
-  `FlextDbtOracleWmsMetadata`, `FlextDbtOracleWmsModels`, `FlextDbtOracleWmsProtocols`
-  (+9 more)
+- Public symbol exports: `FlextDbtOracleWms`, `FlextDbtOracleWmsCliService`,
+  `FlextDbtOracleWmsConfig`, `FlextDbtOracleWmsConstants`, `FlextDbtOracleWmsModels`,
+  `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase`,
+  `FlextDbtOracleWmsSettings`, `FlextDbtOracleWmsTypes`, `FlextDbtOracleWmsUtilities`
+  (+5 more)
 - Exported module shortcuts: `services`
 - Generated module pages: `8`
 

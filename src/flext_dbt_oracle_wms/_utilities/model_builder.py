@@ -11,6 +11,7 @@ from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
 from flext_core import r
+
 from flext_dbt_oracle_wms import c, m, t
 
 if TYPE_CHECKING:
@@ -30,8 +31,14 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
         ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
             """Create one staging model per source name.
 
+            Args:
+                oracle_sources: Oracle WMS source names to derive staging
+                    models from.
+
             Returns:
-                The resulting ``p.Result[Sequence[m.DbtOracleWms.DbtModel]]``.
+                Result wrapping one staging model per source name, in
+                input order.
+
             """
             models = [
                 m.DbtOracleWms.DbtModel(

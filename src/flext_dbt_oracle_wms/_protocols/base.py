@@ -37,7 +37,14 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 entity_name: str,
                 filters: t.ConfigurationMapping | None = None,
             ) -> p.Result[Sequence[t.ConfigurationMapping]]:
-                """Extract records for a specific Oracle WMS entity."""
+                """Extract records for a specific Oracle WMS entity.
+
+                Args:
+                    entity_name: WMS entity to fetch records for.
+                    filters: Optional fetch filters applied by the
+                        implementation.
+
+                """
                 ...
 
             def run_full_oracle_wms_to_dbt_pipeline(
@@ -46,7 +53,16 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 filters: t.ConfigurationMapping | None = None,
                 model_names: t.StrSequence | None = None,
             ) -> p.Result[m.DbtOracleWms.PipelineResult]:
-                """Run the full Oracle WMS to DBT workflow."""
+                """Run the full Oracle WMS to DBT workflow.
+
+                Args:
+                    entity_names: Entities to process; implementations
+                        discover entities when omitted.
+                    filters: Optional fetch filters applied to every
+                        extraction.
+                    model_names: dbt models for the transformation step.
+
+                """
                 ...
 
             def test_oracle_wms_connection(
@@ -60,7 +76,14 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
                 model_names: t.StrSequence | None,
             ) -> p.Result[m.Meltano.CommandExecutionResult]:
-                """Run DBT transformations for extracted entity data."""
+                """Run DBT transformations for extracted entity data.
+
+                Args:
+                    entity_data: Extracted entity records transformed
+                        before the dbt run.
+                    model_names: dbt models to run.
+
+                """
                 ...
 
         @runtime_checkable
@@ -71,7 +94,13 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 self,
                 entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
             ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
-                """Generate workflow recommendations for entity processing."""
+                """Generate workflow recommendations for entity processing.
+
+                Args:
+                    entities: Entity records in scope for the
+                        recommendation.
+
+                """
                 ...
 
             def track_workflow_execution(
@@ -81,7 +110,16 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 entity_names: t.StrSequence | None = None,
                 additional_data: t.ConfigValueMapping | None = None,
             ) -> m.DbtOracleWms.WorkflowTracking:
-                """Return a typed tracking model for workflow instrumentation."""
+                """Return a typed tracking model for workflow instrumentation.
+
+                Args:
+                    workflow_name: Name recorded in the tracking payload.
+                    workflow_type: Type recorded in the tracking payload.
+                    entity_names: Entities in scope for the workflow.
+                    additional_data: Optional extra instrumentation
+                        context.
+
+                """
                 ...
 
             def log_workflow_completion(
@@ -89,8 +127,13 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 tracking_info: m.DbtOracleWms.WorkflowTracking,
                 result: p.Result[m.DbtOracleWms.WorkflowResult],
             ) -> None:
-                """Record the completion outcome of a tracked workflow."""
+                """Record the completion outcome of a tracked workflow.
+
+                Args:
+                    tracking_info: Tracking payload identifying the
+                        workflow.
+                    result: Final workflow result whose outcome is
+                        recorded.
+
+                """
                 ...
-
-
-__all__: list[str] = ["FlextDbtOracleWmsProtocolsBase"]

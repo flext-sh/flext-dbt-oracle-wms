@@ -10,8 +10,10 @@ from __future__ import annotations
 from flext_meltano import FlextMeltanoConstants
 from flext_oracle_wms import FlextOracleWmsConstants
 
-from flext_dbt_oracle_wms._constants.base import FlextDbtOracleWmsConstantsBase
-from flext_dbt_oracle_wms._constants.enums import FlextDbtOracleWmsConstantsEnums
+from flext_dbt_oracle_wms._constants import (
+    FlextDbtOracleWmsConstantsBase,
+    FlextDbtOracleWmsConstantsEnums,
+)
 
 
 class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):

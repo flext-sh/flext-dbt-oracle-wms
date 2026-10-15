@@ -3,9 +3,6 @@
 Provides TestsFlextDbtOracleWmsProtocols, combining TestsFlextProtocols with
 FlextDbtOracleWmsProtocols for test-specific protocol definitions.
 
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
 Copyright (c) 2026 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
@@ -25,9 +22,6 @@ class TestsFlextDbtOracleWmsProtocols(FlextTestsProtocols, FlextDbtOracleWmsProt
 
         class Tests:
             """DbtOracleWms-specific test protocols."""
-
-    class Tests(FlextTestsProtocols.Tests):
-        """Test-scoped protocol contracts facade."""
 
 
 p = TestsFlextDbtOracleWmsProtocols

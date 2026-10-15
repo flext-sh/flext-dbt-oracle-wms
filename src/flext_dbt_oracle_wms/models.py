@@ -22,10 +22,10 @@ class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
 
     class DbtOracleWms(
         FlextDbtOracleWmsModelsBase,
-        FlextDbtOracleWmsModelsItems,
-        FlextDbtOracleWmsModelsDbt,
-        FlextDbtOracleWmsModelsWorkflow,
         FlextDbtOracleWmsModelsConnection,
+        FlextDbtOracleWmsModelsDbt,
+        FlextDbtOracleWmsModelsItems,
+        FlextDbtOracleWmsModelsWorkflow,
     ):
         """DBT Oracle WMS domain namespace."""
 
