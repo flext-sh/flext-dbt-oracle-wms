@@ -1,3 +1,4 @@
+# AUTO-GENERATED FILE — Regenerate with: make gen
 """Protocols for DBT Oracle WMS integration points.
 
 Composes the family-part protocols from ``_protocols/`` (base,
