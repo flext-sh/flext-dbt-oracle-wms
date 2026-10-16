@@ -8,18 +8,10 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 import pytest
-from flext_tests import tm
 
-from flext_dbt_oracle_wms import (
-    FlextDbtOracleWms,
-    FlextDbtOracleWmsClient,
-    FlextDbtOracleWmsSettings,
-    m,
-    p,
-    r,
-    t,
-)
-from tests import u
+from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsSettings
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
+from tests import m, p, r, t, tm, u
 
 
 class TestsFlextDbtOracleWmsApi:
@@ -52,6 +44,33 @@ class TestsFlextDbtOracleWmsApi:
             ),
         )
         return FlextDbtOracleWms(settings=settings, client=client)
+
+    @staticmethod
+    def test_execute_serializes_injected_settings_without_domain_io() -> None:
+        """Lifecycle execution uses the JSON contract, not a domain result."""
+        settings = FlextDbtOracleWmsSettings.model_validate({
+            "DbtOracleWms": {"dbt_target": "execute-target", "dbt_threads": 9},
+        })
+        facade = FlextDbtOracleWms(settings=settings)
+
+        result = facade.execute()
+
+        tm.that(result.success, eq=True)
+        tm.that(result.value, eq=settings.model_dump(mode="json"))
+        tm.that(facade.settings is settings, eq=True)
+
+    @staticmethod
+    def test_generation_retains_its_domain_result_without_discovery() -> None:
+        """Explicit entity selection generates models through real local owners."""
+        settings = FlextDbtOracleWmsSettings.model_validate({})
+        facade = FlextDbtOracleWms(settings=settings)
+
+        result = facade.generate_dbt_models_from_wms(inventory_items=["item-1"])
+
+        tm.that(result.success, eq=True)
+        tm.that(result.value, is_=m.DbtOracleWms.DbtModelGenerationResult)
+        tm.that(result.value.models_generated, eq=len(result.value.model_names))
+        tm.that(bool(result.value.model_names), eq=True)
 
     @staticmethod
     def test_default_service_reads_injected_settings() -> None:

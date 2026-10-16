@@ -1,7 +1,6 @@
 """Protocol for the consumed dbt transformation runner boundary.
 
 Copyright (c) 2026 FLEXT Team. All rights reserved.
-src/flext_dbt_oracle_wms/_protocols/dbt_runner
 SPDX-License-Identifier: MIT
 """
 
@@ -16,17 +15,20 @@ if TYPE_CHECKING:
     from flext_dbt_oracle_wms import m, t
 
 
-@runtime_checkable
-class FlextDbtOracleWmsProtocolsDbtRunner(Protocol):
-    """Protocol for the consumed dbt transformation runner boundary."""
+class FlextDbtOracleWmsProtocolsDbtRunner:
+    """Namespace for the consumed dbt transformation runner boundary protocol."""
 
-    def run_dbt_transformation(
-        self,
-        models: t.StrSequence | None = None,
-        project_dir: Path | None = None,
-    ) -> p.Result[m.Meltano.CommandExecutionResult]:
-        """Run DBT transformations through the configured executor."""
-        ...
+    @runtime_checkable
+    class DbtRunner(Protocol):
+        """Protocol for the consumed dbt transformation runner boundary."""
+
+        def run_dbt_transformation(
+            self,
+            models: t.StrSequence | None = None,
+            project_dir: Path | None = None,
+        ) -> p.Result[m.Meltano.CommandExecutionResult]:
+            """Run DBT transformations through the configured executor."""
+            ...
 
 
 __all__: list[str] = ["FlextDbtOracleWmsProtocolsDbtRunner"]

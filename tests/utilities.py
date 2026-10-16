@@ -3,9 +3,6 @@
 Provides TestsFlextDbtOracleWmsUtilities, combining TestsFlextUtilities with
 FlextDbtOracleWmsUtilities for test-specific utility definitions.
 
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
 Copyright (c) 2026 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
@@ -13,15 +10,11 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING
-
-from flext_tests import FlextTestsUtilities
 
 from flext_core import r
-from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, m, t
+from flext_tests import FlextTestsUtilities
 
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
+from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, m, p, t
 
 
 class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):
@@ -76,6 +69,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[bool]``.
+
                     """
                     self.started = True
                     return r[bool].ok(True)
@@ -85,6 +79,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[t.StrSequence]``.
+
                     """
                     return self._entities
 
@@ -98,6 +93,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[t.SequenceOf[t.StrMapping]]``.
+
                     """
                     _ = limit
                     _ = filters
@@ -113,6 +109,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[m.Api.HttpResponse]``.
+
                     """
                     return self._health
 
@@ -154,14 +151,12 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     Returns:
                         The resulting ``p.Result[m.Meltano.CommandExecutionResult]``.
+
                     """
                     _ = models
                     _ = project_dir
                     self.calls += 1
                     return self._result
-
-    class Tests(FlextTestsUtilities.Tests):
-        """Test-scoped utilities facade."""
 
 
 u = TestsFlextDbtOracleWmsUtilities

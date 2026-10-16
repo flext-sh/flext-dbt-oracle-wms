@@ -3,9 +3,6 @@
 Universal fields via MRO; project fields in the ``DbtOracleWms`` group with
 simple scalar types (env-settable).
 
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
 Copyright (c) 2026 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
@@ -35,32 +32,27 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         required_fields_per_entity: Annotated[
             t.MappingKV[str, t.StrSequence],
             m.Field(
-                default_factory=dict,
                 description="Required fields per WMS entity (typed mapping)",
             ),
-        ]
+        ] = m.Field(default_factory=dict)
         oracle_wms_environment: Annotated[
             str,
             m.Field(
-                default="development",
                 description="Oracle WMS environment (development/production)",
             ),
-        ]
+        ] = "development"
         oracle_wms_base_url: Annotated[
-            str,
-            m.Field(default="", description="Base URL for Oracle WMS API"),
-        ]
+            str, m.Field(description="Base URL for Oracle WMS API")
+        ] = ""
         dbt_threads: Annotated[
             int,
             m.Field(
-                default=4,
                 description="Number of DBT threads for parallel execution",
             ),
-        ]
+        ] = 4
         dbt_target: Annotated[
-            str,
-            m.Field(default="dev", description="DBT target profile (dev/prod)"),
-        ]
+            str, m.Field(description="DBT target profile (dev/prod)")
+        ] = "dev"
 
     if TYPE_CHECKING:
         DbtOracleWms: _DbtOracleWms
@@ -71,8 +63,6 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         )
 
 
-settings: FlextDbtOracleWmsSettings = FlextDbtOracleWmsSettings.fetch_global()
-"""Pre-instantiated project settings singleton — ``from flext_dbt_oracle_wms``
-import ``settings``."""
+settings = FlextDbtOracleWmsSettings.fetch_global()
 
 __all__: list[str] = ["FlextDbtOracleWmsSettings", "settings"]

@@ -10,13 +10,11 @@ from __future__ import annotations
 import shlex
 from typing import TYPE_CHECKING
 
-from flext_core import r
-from flext_dbt_oracle_wms import m, u
-from flext_dbt_oracle_wms.services.metadata import FlextDbtOracleWmsMetadata
+from flext_dbt_oracle_wms import m, r, t, u
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsMetadata
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p, t
-    from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
@@ -24,11 +22,20 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
 
     def __init__(
         self,
-        settings: FlextDbtOracleWmsSettings | None = None,
+        settings: p.Settings | None = None,
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:
-        """Initialize DBT model facade dependencies cooperatively."""
+        """Initialize DBT model facade dependencies cooperatively.
+
+        Args:
+            settings: Settings contract forwarded to the base runtime.
+            client: Injected WMS client boundary; created lazily when
+                omitted.
+            service: Injected workflow service boundary; created lazily
+                when omitted.
+
+        """
         super().__init__(settings=settings, client=client, service=service)
 
     def generate_dbt_models_from_wms(
@@ -39,8 +46,19 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
     ) -> p.Result[m.DbtOracleWms.DbtModelGenerationResult]:
         """Generate DBT model metadata from real entity selections.
 
+        Args:
+            inventory_items: Inventory item identifiers selecting the
+                items entity; discovery is used when neither selection
+                is given.
+            shipments: Shipment identifiers selecting the shipments
+                entity.
+            output_dir: Output directory recorded in the generation
+                summary; empty when omitted.
+
         Returns:
-            The resulting ``p.Result[m.DbtOracleWms.DbtModelGenerationResult]``.
+            Result wrapping the generation summary, or a failure from
+            discovery, generation, or recommendation.
+
         """
         self.logger.info("Generating DBT models from Oracle WMS")
         entity_names = self._resolve_entity_names(inventory_items, shipments)
@@ -83,8 +101,16 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
     ) -> p.Result[m.DbtOracleWms.DbtExecutionResult]:
         """Run and monitor a real DBT transformation through flext-meltano.
 
+        Args:
+            command: Full dbt command line; must start with ``dbt`` and
+                use the ``run`` or ``build`` subcommand.
+            timeout_seconds: Requested timeout recorded in the execution
+                summary.
+
         Returns:
-            The resulting ``p.Result[m.DbtOracleWms.DbtExecutionResult]``.
+            Result wrapping the execution summary, or a failure when the
+            command is empty, unsupported, or the dbt run fails.
+
         """
         self.logger.info("Monitoring DBT execution: %s", command)
         command_parts = shlex.split(command)

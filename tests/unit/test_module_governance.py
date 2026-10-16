@@ -8,10 +8,14 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 import pytest
-from flext_tests import tm
 
-from flext_dbt_oracle_wms.api import FlextDbtOracleWms
-from flext_dbt_oracle_wms.cli import FlextDbtOracleWmsCliService, main
+from flext_dbt_oracle_wms import (
+    FlextDbtOracleWms,
+    FlextDbtOracleWmsCliService,
+    main,
+    settings,
+)
+from tests import tm
 
 
 class TestsFlextDbtOracleWmsModuleGovernance:
@@ -54,6 +58,8 @@ class TestsFlextDbtOracleWmsModuleGovernance:
     def test_public_facade_constructs_with_defaults() -> None:
         """Test public facade constructs with defaults."""
         facade = FlextDbtOracleWms()
-        # NOTE (multi-agent): mro-rn88 — project fields live under the
-        # DbtOracleWms namespace.
-        tm.that(facade.settings.DbtOracleWms.oracle_wms_environment, eq="development")
+        tm.that(facade.settings is settings, eq=True)
+        tm.that(
+            facade.settings.DbtOracleWms.oracle_wms_environment,
+            eq=settings.DbtOracleWms.oracle_wms_environment,
+        )

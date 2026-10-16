@@ -5,18 +5,13 @@ Reference: ADR-005 §7. Model-less: business rules live in ``config/*.yaml`` und
 are exposed through the open ``config.DbtOracleWms`` namespace (``extra="allow"``), with
 no per-domain model. Access is ``config.DbtOracleWms.<domain>[<key>...]``.
 
-Copyright (c) 2025 FLEXT Team. All rights reserved.
-SPDX-License-Identifier: MIT
-
 Copyright (c) 2026 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
 
-from flext_meltano import FlextMeltanoConfig
-
-from flext_dbt_oracle_wms import m
+from flext_meltano import FlextMeltanoConfig, m
 
 
 class FlextDbtOracleWmsConfig(FlextMeltanoConfig):

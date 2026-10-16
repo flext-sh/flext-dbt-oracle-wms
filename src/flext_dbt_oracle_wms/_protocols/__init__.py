@@ -10,10 +10,9 @@ from __future__ import annotations
 from types import MappingProxyType
 from typing import TYPE_CHECKING
 
-from flext_core import install_lazy_exports
+from flext_core.lazy import install_lazy_exports
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms._protocols.base import FlextDbtOracleWmsProtocolsBase
     from flext_dbt_oracle_wms._protocols.contracts import (
         FlextDbtOracleWmsProtocolsContracts,
     )
@@ -26,7 +25,6 @@ if TYPE_CHECKING:
 
 
 __all__: tuple[str, ...] = (
-    "FlextDbtOracleWmsProtocolsBase",
     "FlextDbtOracleWmsProtocolsContracts",
     "FlextDbtOracleWmsProtocolsDbtRunner",
     "FlextDbtOracleWmsProtocolsWmsClient",
@@ -36,7 +34,6 @@ install_lazy_exports(
     __name__,
     globals(),
     MappingProxyType({
-        "FlextDbtOracleWmsProtocolsBase": ".base",
         "FlextDbtOracleWmsProtocolsContracts": ".contracts",
         "FlextDbtOracleWmsProtocolsDbtRunner": ".dbt_runner",
         "FlextDbtOracleWmsProtocolsWmsClient": ".wms_client",

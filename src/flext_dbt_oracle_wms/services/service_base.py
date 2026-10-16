@@ -8,18 +8,12 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, override
 
-from flext_core import r, s
-from flext_dbt_oracle_wms import t, u
-from flext_dbt_oracle_wms._settings import FlextDbtOracleWmsSettings
-from flext_dbt_oracle_wms.services.client import FlextDbtOracleWmsClient
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
+from flext_dbt_oracle_wms import p, r, s, t, u
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
 
 
-class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
+class FlextDbtOracleWmsBase(s):
     """Shared runtime dependencies and low-level entity access."""
 
     _client: p.DbtOracleWms.Client | None = u.PrivateAttr(default_factory=lambda: None)
@@ -29,20 +23,21 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
 
     def __init__(
         self,
-        settings: FlextDbtOracleWmsSettings | None = None,
+        settings: p.Settings | None = None,
         client: p.DbtOracleWms.Client | None = None,
         service: p.DbtOracleWms.Service | None = None,
     ) -> None:
-        """Initialize the unified DBT Oracle WMS service."""
-        # NOTE (multi-agent): mro-rn88 — pass the injected settings to the ServiceBase
-        # runtime so self.settings resolves the override (not just the global
-        # singleton).
-        super().__init__(
-            runtime_settings=settings,
-            settings_type=None,
-            settings_overrides=None,
-            initial_context=None,
-        )
+        """Initialize the unified DBT Oracle WMS service.
+
+        Args:
+            settings: Settings contract forwarded to the base runtime.
+            client: Injected WMS client boundary; created lazily when
+                omitted.
+            service: Injected workflow service boundary; created lazily
+                when omitted.
+
+        """
+        super().__init__(settings=settings)
         self._client = client
         self._service = service
 
@@ -54,28 +49,19 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
         return self._client
 
     @property
-    @override
-    def settings(self) -> FlextDbtOracleWmsSettings:
-        """The current configuration from the injected runtime (typed narrowing)."""
-        # NOTE (multi-agent): mro-rn88 — delegate to the ServiceBase runtime settings
-        # (was a self-recursive return self.settings); narrow to the typed subclass.
-        runtime_settings = super().settings
-        if isinstance(runtime_settings, FlextDbtOracleWmsSettings):
-            return runtime_settings
-        return FlextDbtOracleWmsSettings.fetch_global()
-
-    @property
     def service(self) -> p.DbtOracleWms.Service:
         """The workflow service instance."""
         if self._service is None:
-            self._service = u.DbtOracleWms.Service(self.settings)
+            self._service = u.DbtOracleWms.Service(self.settings.DbtOracleWms)
         return self._service
 
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
         """Discover Oracle WMS entities through the public domain facade.
 
         Returns:
-            The resulting ``p.Result[t.StrSequence]``.
+            Result wrapping the discovered entity names, or the
+            discovery failure.
+
         """
         discovered: p.Result[t.StrSequence] = self.client.discover_oracle_wms_entities()
         return discovered
@@ -87,8 +73,14 @@ class FlextDbtOracleWmsBase(s[FlextDbtOracleWmsSettings]):
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         """Extract Oracle WMS entity records through the public domain facade.
 
+        Args:
+            entity_name: WMS entity to fetch records for.
+            filters: Optional fetch filters forwarded to the client.
+
         Returns:
-            The resulting ``p.Result[Sequence[t.ConfigurationMapping]]``.
+            Result wrapping the extracted records, or the extraction
+            failure.
+
         """
         extracted: p.Result[Sequence[t.ConfigurationMapping]] = (
             self.client.extract_oracle_wms_data(entity_name, filters)
