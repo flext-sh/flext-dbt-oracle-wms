@@ -52,7 +52,7 @@ class FlextDbtOracleWmsBase(s):
     def service(self) -> p.DbtOracleWms.Service:
         """The workflow service instance."""
         if self._service is None:
-            self._service = u.DbtOracleWms.Service(self.settings)
+            self._service = u.DbtOracleWms.Service(self.settings.DbtOracleWms)
         return self._service
 
     def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:

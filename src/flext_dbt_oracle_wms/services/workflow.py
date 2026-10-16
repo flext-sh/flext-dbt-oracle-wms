@@ -162,7 +162,11 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
 
         """
         self.logger.info("Executing DBT Oracle WMS service")
-        return r[t.JsonMapping].ok(self.settings.model_dump(mode="json"))
+        return r[t.JsonMapping].ok(
+            t.Cli.JSON_MAPPING_ADAPTER.validate_python(
+                self.settings.model_dump(mode="json")
+            )
+        )
 
 
 __all__: list[str] = ["FlextDbtOracleWmsWorkflow"]

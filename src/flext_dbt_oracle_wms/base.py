@@ -10,7 +10,7 @@ from typing import Annotated, override
 
 from flext_meltano import FlextMeltanoDbtServiceBase
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, settings, t, u
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, t, u
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
@@ -21,16 +21,32 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
         u.Field(description="Canonical dbt project name for DBT Oracle WMS services"),
     ] = c.DbtOracleWms.Dbt.PROJECT_NAME
 
-    @classmethod
-    def runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
-        """Return runtime bootstrap options for DBT Oracle WMS services."""
-        return m.RuntimeBootstrapOptions(settings_type=FlextDbtOracleWmsSettings)
+    settings_type: t.SettingsClass | None = u.Field(
+        default=FlextDbtOracleWmsSettings,
+        exclude=True,
+        description="Canonical settings owner for DBT Oracle WMS service runtimes.",
+    )
+
+    @property
+    @override
+    def settings(self) -> FlextDbtOracleWmsSettings:
+        """The same validated project settings elected by this service runtime.
+
+        Raises:
+            TypeError: If a foreign settings owner was injected.
+
+        """
+        elected = super().settings
+        if not isinstance(elected, FlextDbtOracleWmsSettings):
+            msg = "DBT Oracle WMS runtime requires its declared settings owner"
+            raise TypeError(msg)
+        return elected
 
     @property
     @override
     def connection_profile(self) -> p.Meltano.DbtConnectionProfile:
         """Dbt connection profile for Oracle WMS-backed workflows."""
-        wms = settings.DbtOracleWms
+        wms = self.settings.DbtOracleWms
         return m.DbtOracleWms.DbtConnectionProfile(
             base_url=wms.oracle_wms_base_url,
             environment=wms.oracle_wms_environment,

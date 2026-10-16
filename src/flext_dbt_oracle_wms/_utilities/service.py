@@ -15,7 +15,7 @@ from flext_meltano import u
 from flext_dbt_oracle_wms import m, t
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p
+    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsUtilitiesService:
@@ -27,7 +27,7 @@ class FlextDbtOracleWmsUtilitiesService:
         PERFORMANCE_RECOMMENDATION_THRESHOLD: int = 20
         logger: ClassVar[p.Logger] = u.fetch_logger(__name__)
 
-        def __init__(self, settings: FlextDbtOracleWmsSettings) -> None:
+        def __init__(self, settings: p.DbtOracleWms.SettingsGroup) -> None:
             """Bind the service to the injected dbt Oracle WMS settings.
 
             Args:
@@ -62,8 +62,8 @@ class FlextDbtOracleWmsUtilitiesService:
                 m.DbtOracleWms.WorkflowRecommendation(
                     total_entities=total,
                     recommendation=recommendation_message,
-                    dbt_threads=str(self._settings.DbtOracleWms.dbt_threads),
-                    target=self._settings.DbtOracleWms.dbt_target,
+                    dbt_threads=str(self._settings.dbt_threads),
+                    target=self._settings.dbt_target,
                 ),
             )
 

@@ -25,6 +25,35 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
         """DBT Oracle WMS protocol namespace."""
 
         @runtime_checkable
+        class SettingsGroup(Protocol):
+            """Runtime knobs supplied by the validated DbtOracleWms namespace."""
+
+            @property
+            def required_fields_per_entity(self) -> t.MappingKV[str, t.StrSequence]:
+                """Required fields of each configured WMS entity."""
+                ...
+
+            @property
+            def oracle_wms_environment(self) -> str:
+                """Selected Oracle WMS deployment environment."""
+                ...
+
+            @property
+            def oracle_wms_base_url(self) -> str:
+                """Selected Oracle WMS API endpoint."""
+                ...
+
+            @property
+            def dbt_threads(self) -> int:
+                """Configured dbt worker count."""
+                ...
+
+            @property
+            def dbt_target(self) -> str:
+                """Configured dbt profile target."""
+                ...
+
+        @runtime_checkable
         class Client(Protocol):
             """Protocol for the public Oracle WMS workflow client surface."""
 
