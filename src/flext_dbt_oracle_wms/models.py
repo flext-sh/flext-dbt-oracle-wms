@@ -1,3 +1,4 @@
+# AUTO-GENERATED FILE — Regenerate with: make gen
 """Domain models for DBT Oracle WMS workflows.
 
 Copyright (c) 2026 FLEXT Team. All rights reserved.
@@ -10,11 +11,13 @@ from __future__ import annotations
 from flext_meltano import FlextMeltanoModels
 from flext_oracle_wms import FlextOracleWmsModels
 
-from flext_dbt_oracle_wms._models.base import FlextDbtOracleWmsModelsBase
-from flext_dbt_oracle_wms._models.connection import FlextDbtOracleWmsModelsConnection
-from flext_dbt_oracle_wms._models.dbt import FlextDbtOracleWmsModelsDbt
-from flext_dbt_oracle_wms._models.items import FlextDbtOracleWmsModelsItems
-from flext_dbt_oracle_wms._models.workflow import FlextDbtOracleWmsModelsWorkflow
+from flext_dbt_oracle_wms._models import (
+    FlextDbtOracleWmsModelsBase,
+    FlextDbtOracleWmsModelsConnection,
+    FlextDbtOracleWmsModelsDbt,
+    FlextDbtOracleWmsModelsItems,
+    FlextDbtOracleWmsModelsWorkflow,
+)
 
 
 class FlextDbtOracleWmsModels(FlextMeltanoModels, FlextOracleWmsModels):
