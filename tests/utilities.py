@@ -72,7 +72,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     """
                     self.started = True
-                    return r[bool].ok(True)
+                    return r[bool].ok(value=True)=True)
 
                 def discover_entities(self) -> p.Result[t.StrSequence]:
                     """Report the canned entity catalog.
