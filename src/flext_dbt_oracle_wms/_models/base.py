@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from flext_meltano import m, u
+from flext_meltano import m
 from flext_oracle_wms import m as _oracle_wms_m
 
 
@@ -23,16 +23,16 @@ class FlextDbtOracleWmsModelsBase(m, _oracle_wms_m):
         Satisfies ``p.Meltano.DbtConnectionProfile``.
         """
 
-        type: Annotated[str, u.Field(description="Dbt adapter type identifier")] = (
+        type: Annotated[str, m.Field(description="Dbt adapter type identifier")] = (
             "oracle_wms"
         )
-        base_url: Annotated[str, u.Field(description="Oracle WMS base URL")]
-        environment: Annotated[str, u.Field(description="Oracle WMS environment")]
-        target: Annotated[str, u.Field(description="Dbt target profile")]
-        threads: Annotated[int, u.Field(description="Dbt parallel threads")]
+        base_url: Annotated[str, m.Field(description="Oracle WMS base URL")]
+        environment: Annotated[str, m.Field(description="Oracle WMS environment")]
+        target: Annotated[str, m.Field(description="Dbt target profile")]
+        threads: Annotated[int, m.Field(description="Dbt parallel threads")]
         project: Annotated[
             str,
-            u.Field(description="Dbt project name owning this profile"),
+            m.Field(description="Dbt project name owning this profile"),
         ]
 
 

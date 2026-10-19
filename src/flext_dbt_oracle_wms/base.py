@@ -10,7 +10,7 @@ from typing import Annotated, override
 
 from flext_meltano import FlextMeltanoDbtServiceBase
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, t, u
+from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, t
 
 
 class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
@@ -18,10 +18,10 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
 
     dbt_project_name: Annotated[
         t.NonEmptyStr,
-        u.Field(description="Canonical dbt project name for DBT Oracle WMS services"),
+        m.Field(description="Canonical dbt project name for DBT Oracle WMS services"),
     ] = c.DbtOracleWms.Dbt.PROJECT_NAME
 
-    settings_type: t.SettingsClass | None = u.Field(
+    settings_type: t.SettingsClass | None = m.Field(
         default=FlextDbtOracleWmsSettings,
         exclude=True,
         description="Canonical settings owner for DBT Oracle WMS service runtimes.",
