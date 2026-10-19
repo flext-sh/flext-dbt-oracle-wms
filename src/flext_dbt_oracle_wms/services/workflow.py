@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from flext_dbt_oracle_wms import m, r, t
+from flext_dbt_oracle_wms import m, r, t, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
 
 if TYPE_CHECKING:
@@ -163,7 +163,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         """
         self.logger.info("Executing DBT Oracle WMS service")
         return r[t.JsonMapping].ok(
-            t.Cli.JSON_MAPPING_ADAPTER.validate_python(
+            u.json_mapping_adapter().validate_python(
                 self.settings.model_dump(mode="json")
             )
         )
