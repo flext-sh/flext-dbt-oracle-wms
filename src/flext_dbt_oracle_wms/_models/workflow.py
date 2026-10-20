@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from flext_meltano import m, u
+from flext_meltano import m
 
 from flext_dbt_oracle_wms import t
 from flext_dbt_oracle_wms._models import FlextDbtOracleWmsModelsItems
@@ -48,7 +48,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
             m.Field(description="Typed meltano dbt command execution result"),
         ]
 
-        @u.computed_field
+        @m.computed_field
         @property
         def status(self) -> str:
             """Overall status derived from the command result."""
