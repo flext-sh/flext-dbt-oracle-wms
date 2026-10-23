@@ -30,7 +30,7 @@ class TestsFlextDbtOracleWmsConnectionProfile:
         profile = service.connection_profile
         payload = profile.model_dump(mode="json")
 
-        assert service.settings is settings
+        tm.that(service.settings is settings)
         tm.that(payload["base_url"], eq=settings.DbtOracleWms.oracle_wms_base_url)
         tm.that(payload["environment"], eq=settings.DbtOracleWms.oracle_wms_environment)
         tm.that(payload["target"], eq=settings.DbtOracleWms.dbt_target)
@@ -44,8 +44,8 @@ class TestsFlextDbtOracleWmsConnectionProfile:
         profile = service.connection_profile
         settings = service.settings
 
-        assert isinstance(profile, m.DbtOracleWms.DbtConnectionProfile)
-        assert isinstance(profile, p.Meltano.DbtConnectionProfile)
+        tm.that(profile, is_=m.DbtOracleWms.DbtConnectionProfile)
+        tm.that(profile, is_=p.Meltano.DbtConnectionProfile)
         tm.that(
             profile.model_dump(mode="json"),
             eq={

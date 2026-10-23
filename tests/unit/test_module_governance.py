@@ -15,7 +15,7 @@ from flext_dbt_oracle_wms import (
     main,
     settings,
 )
-from tests import tm
+from tests import c, tm
 
 
 class TestsFlextDbtOracleWmsModuleGovernance:
@@ -23,7 +23,7 @@ class TestsFlextDbtOracleWmsModuleGovernance:
 
     @staticmethod
     @pytest.mark.parametrize(
-        ("command", "expected_exit_code"),
+        (c.HandlerMode.COMMAND, "expected_exit_code"),
         [("info", 0), ("unknown", 1), ("", 1)],
     )
     def test_execute_command_maps_command_to_exit_code(
