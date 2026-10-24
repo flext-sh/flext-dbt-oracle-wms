@@ -1,3 +1,4 @@
+# AUTO-GENERATED FILE — Regenerate with: make gen
 """FLEXT Dbt Oracle WMS Types — MRO composition of parent type namespaces.
 
 No domain-specific types are actively used via t.DbtOracleWms.*.
