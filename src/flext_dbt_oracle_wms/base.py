@@ -21,7 +21,7 @@ class FlextDbtOracleWmsServiceBase(FlextMeltanoDbtServiceBase):
         m.Field(description="Canonical dbt project name for DBT Oracle WMS services"),
     ] = c.DbtOracleWms.Dbt.PROJECT_NAME
 
-    settings_type: p.SettingsType | None = m.Field(
+    settings_type: t.Port[p.SettingsType] | None = m.Field(
         default=FlextDbtOracleWmsSettings,
         exclude=True,
         description="Canonical settings owner for DBT Oracle WMS service runtimes.",
