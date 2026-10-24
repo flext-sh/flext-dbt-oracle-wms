@@ -7,8 +7,6 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
     FlextDbtOracleWmsCliService,
@@ -16,10 +14,7 @@ from flext_dbt_oracle_wms import (
     main,
 )
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, r, tm, u
-
-if TYPE_CHECKING:
-    from tests import t
+from tests import m, r, t, tm, u
 
 
 class TestsFlextDbtOracleWmsCli:

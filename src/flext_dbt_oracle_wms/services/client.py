@@ -266,7 +266,7 @@ class FlextDbtOracleWmsClient:
         if self._wms_client is not None:
             return r[p.DbtOracleWms.WmsClient].ok(self._wms_client)
         try:
-            settings_overrides: t.ConfigurationMapping = (
+            settings_overrides: t.JsonMapping = (
                 {"base_url": self.settings.DbtOracleWms.oracle_wms_base_url}
                 if self.settings.DbtOracleWms.oracle_wms_base_url
                 else {}

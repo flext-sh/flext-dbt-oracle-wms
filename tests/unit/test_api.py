@@ -55,9 +55,9 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.execute()
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, eq=settings.model_dump(mode="json"))
-        tm.that(facade.settings is settings, eq=True)
+        tm.ok(facade.settings is settings)
 
     @staticmethod
     def test_generation_retains_its_domain_result_without_discovery() -> None:
@@ -67,10 +67,10 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.generate_dbt_models_from_wms(inventory_items=["item-1"])
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, is_=m.DbtOracleWms.DbtModelGenerationResult)
         tm.that(result.value.models_generated, eq=len(result.value.model_names))
-        tm.that(bool(result.value.model_names), eq=True)
+        tm.ok(bool(result.value.model_names))
 
     @staticmethod
     def test_default_service_reads_injected_settings() -> None:
@@ -91,8 +91,8 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.validate_wms_connection()
 
-        tm.that(result.success, eq=True)
-        tm.that(result.value, eq=True)
+        tm.ok(result.success)
+        tm.ok(result.value)
 
     def test_validate_wms_connection_propagates_client_connection_failure(self) -> None:
         """Test validate wms connection propagates client connection failure."""
@@ -114,7 +114,7 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.discover_oracle_wms_entities()
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, eq=["items", "shipments"])
 
     def test_discover_entities_propagates_client_discovery_failure(self) -> None:
@@ -139,7 +139,7 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.extract_oracle_wms_data(entity_name)
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, eq=[{"entity": entity_name}])
         tm.that(wms.extracted_entities, eq=(entity_name,))
 
@@ -153,7 +153,7 @@ class TestsFlextDbtOracleWmsApi:
             run_transformations=True,
         )
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value.workflow_status, eq="completed")
         tm.that(result.value.entity_names, eq=("items",))
         tm.that(result.value.tracking_id, eq=self._TRACKING_ID)
@@ -174,7 +174,7 @@ class TestsFlextDbtOracleWmsApi:
             run_transformations=False,
         )
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value.workflow_status, eq="metadata_extracted")
         tm.that(result.value.tracking_id, eq=self._TRACKING_ID)
 

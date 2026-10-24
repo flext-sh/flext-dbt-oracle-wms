@@ -9,15 +9,15 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from flext_dbt_oracle_wms import p, r, s, t, u
+from flext_dbt_oracle_wms import m, p, r, s, t, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
 
 
 class FlextDbtOracleWmsBase(s):
     """Shared runtime dependencies and low-level entity access."""
 
-    _client: p.DbtOracleWms.Client | None = u.PrivateAttr(default_factory=lambda: None)
-    _service: p.DbtOracleWms.Service | None = u.PrivateAttr(
+    _client: p.DbtOracleWms.Client | None = m.PrivateAttr(default_factory=lambda: None)
+    _service: p.DbtOracleWms.Service | None = m.PrivateAttr(
         default_factory=lambda: None,
     )
 

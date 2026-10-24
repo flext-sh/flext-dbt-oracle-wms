@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from flext_meltano import m, u
+from flext_meltano import m
 
 from flext_dbt_oracle_wms import t
 from flext_dbt_oracle_wms._models import FlextDbtOracleWmsModelsItems
@@ -25,11 +25,11 @@ class FlextDbtOracleWmsModelsWorkflow(m):
 
         entity_names: Annotated[
             t.StrSequence,
-            u.Field(description="Entity names present in the transformed set"),
+            m.Field(description="Entity names present in the transformed set"),
         ]
         items: Annotated[
             t.SequenceOf[FlextDbtOracleWmsModelsItems.WmsItem],
-            u.Field(description="Transformed WMS item models"),
+            m.Field(description="Transformed WMS item models"),
         ]
 
     class TransformationResult(m.ImmutableValueModel):
@@ -37,18 +37,18 @@ class FlextDbtOracleWmsModelsWorkflow(m):
 
         transformed_tables: Annotated[
             t.StrSequence,
-            u.Field(description="Tables produced by the transformation"),
+            m.Field(description="Tables produced by the transformation"),
         ]
         requested_models: Annotated[
             t.StrSequence,
-            u.Field(description="dbt models requested for the run"),
+            m.Field(description="dbt models requested for the run"),
         ]
         command_result: Annotated[
             m.Meltano.CommandExecutionResult,
-            u.Field(description="Typed meltano dbt command execution result"),
+            m.Field(description="Typed meltano dbt command execution result"),
         ]
 
-        @u.computed_field
+        @m.computed_field
         @property
         def status(self) -> str:
             """Overall status derived from the command result."""
@@ -57,93 +57,93 @@ class FlextDbtOracleWmsModelsWorkflow(m):
     class WorkflowTracking(m.ImmutableValueModel):
         """Typed workflow-execution tracking payload."""
 
-        workflow_name: Annotated[str, u.Field(description="Workflow name")]
-        workflow_type: Annotated[str, u.Field(description="Workflow type")]
-        tracking_id: Annotated[str, u.Field(description="Tracking identifier")]
+        workflow_name: Annotated[str, m.Field(description="Workflow name")]
+        workflow_type: Annotated[str, m.Field(description="Workflow type")]
+        tracking_id: Annotated[str, m.Field(description="Tracking identifier")]
         entity_names: Annotated[
             t.StrSequence,
-            u.Field(default_factory=tuple, description="Entities in scope"),
+            m.Field(default_factory=tuple, description="Entities in scope"),
         ]
         status: Annotated[
             str,
-            u.Field(default="running", description="Tracking status"),
+            m.Field(default="running", description="Tracking status"),
         ]
 
     class WorkflowRecommendation(m.ImmutableValueModel):
         """Typed workflow recommendation payload."""
 
-        total_entities: Annotated[int, u.Field(description="Entity count")]
-        recommendation: Annotated[str, u.Field(description="Recommendation text")]
-        dbt_threads: Annotated[str, u.Field(description="Configured dbt threads")]
-        target: Annotated[str, u.Field(description="dbt target profile")]
+        total_entities: Annotated[int, m.Field(description="Entity count")]
+        recommendation: Annotated[str, m.Field(description="Recommendation text")]
+        dbt_threads: Annotated[str, m.Field(description="Configured dbt threads")]
+        target: Annotated[str, m.Field(description="dbt target profile")]
 
     class WmsMetadataResult(m.ImmutableValueModel):
         """Typed WMS metadata extraction summary."""
 
         available_entities: Annotated[
             t.StrSequence,
-            u.Field(description="Discovered WMS entities"),
+            m.Field(description="Discovered WMS entities"),
         ]
-        inventory_count: Annotated[int, u.Field(description="Inventory record count")]
-        shipment_count: Annotated[int, u.Field(description="Shipment record count")]
+        inventory_count: Annotated[int, m.Field(description="Inventory record count")]
+        shipment_count: Annotated[int, m.Field(description="Shipment record count")]
         include_inventory_details: Annotated[
             bool,
-            u.Field(description="Inventory detail flag"),
+            m.Field(description="Inventory detail flag"),
         ]
         include_shipment_tracking: Annotated[
             bool,
-            u.Field(description="Shipment tracking flag"),
+            m.Field(description="Shipment tracking flag"),
         ]
-        status: Annotated[str, u.Field(description="Extraction status")]
+        status: Annotated[str, m.Field(description="Extraction status")]
 
     class DbtModelGenerationResult(m.ImmutableValueModel):
         """Typed dbt model-generation summary."""
 
         model_names: Annotated[
             t.StrSequence,
-            u.Field(description="Generated dbt model names"),
+            m.Field(description="Generated dbt model names"),
         ]
-        models_generated: Annotated[int, u.Field(description="Generated model count")]
-        output_dir: Annotated[str, u.Field(description="Output directory")]
-        recommendation: Annotated[str, u.Field(description="Recommendation text")]
-        status: Annotated[str, u.Field(description="Generation status")]
+        models_generated: Annotated[int, m.Field(description="Generated model count")]
+        output_dir: Annotated[str, m.Field(description="Output directory")]
+        recommendation: Annotated[str, m.Field(description="Recommendation text")]
+        status: Annotated[str, m.Field(description="Generation status")]
 
     class WorkflowResult(m.ImmutableValueModel):
         """Typed end-to-end workflow result."""
 
-        tracking_id: Annotated[str, u.Field(description="Tracking identifier")]
-        generate_models: Annotated[bool, u.Field(description="Model generation flag")]
-        run_transformations: Annotated[bool, u.Field(description="Transformation flag")]
+        tracking_id: Annotated[str, m.Field(description="Tracking identifier")]
+        generate_models: Annotated[bool, m.Field(description="Model generation flag")]
+        run_transformations: Annotated[bool, m.Field(description="Transformation flag")]
         generated_models: Annotated[
             t.StrSequence,
-            u.Field(default_factory=tuple, description="Generated models"),
+            m.Field(default_factory=tuple, description="Generated models"),
         ]
         entity_names: Annotated[
             t.StrSequence,
-            u.Field(default_factory=tuple, description="Entities processed"),
+            m.Field(default_factory=tuple, description="Entities processed"),
         ]
         total_records: Annotated[
             int,
-            u.Field(default=0, description="Total records processed"),
+            m.Field(default=0, description="Total records processed"),
         ]
         transformation_status: Annotated[
             str,
-            u.Field(default="", description="Transformation status"),
+            m.Field(default="", description="Transformation status"),
         ]
-        workflow_status: Annotated[str, u.Field(description="Overall workflow status")]
+        workflow_status: Annotated[str, m.Field(description="Overall workflow status")]
 
     class DbtExecutionResult(m.ImmutableValueModel):
         """Typed dbt execution monitoring result."""
 
-        command: Annotated[str, u.Field(description="dbt command")]
-        dbt_subcommand: Annotated[str, u.Field(description="dbt subcommand")]
+        command: Annotated[str, m.Field(description="dbt command")]
+        dbt_subcommand: Annotated[str, m.Field(description="dbt subcommand")]
         requested_timeout_seconds: Annotated[
             int,
-            u.Field(description="Requested timeout in seconds"),
+            m.Field(description="Requested timeout in seconds"),
         ]
         transformation: Annotated[
             FlextDbtOracleWmsModelsWorkflow.TransformationResult,
-            u.Field(description="Underlying transformation result"),
+            m.Field(description="Underlying transformation result"),
         ]
 
 

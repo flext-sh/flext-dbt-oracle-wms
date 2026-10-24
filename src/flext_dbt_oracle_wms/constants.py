@@ -1,3 +1,4 @@
+# AUTO-GENERATED FILE — Regenerate with: make gen
 """Constants used by the DBT Oracle WMS package.
 
 Copyright (c) 2026 FLEXT Team. All rights reserved.
@@ -19,7 +20,7 @@ from flext_dbt_oracle_wms._constants import (
 class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):
     """Constants for DBT Oracle WMS with dual Meltano and WMS domain inheritance."""
 
-    class DbtOracleWms(FlextDbtOracleWmsConstantsEnums, FlextDbtOracleWmsConstantsBase):
+    class DbtOracleWms(FlextDbtOracleWmsConstantsBase, FlextDbtOracleWmsConstantsEnums):
         """DBT Oracle WMS project-specific constants."""
 
         class Dbt(
