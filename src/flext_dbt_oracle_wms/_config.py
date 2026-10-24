@@ -1,9 +1,8 @@
 """FlextDbtOracleWmsConfig frozen config singleton for flext-dbt-oracle-wms.
 
-Reference: ADR-005 §7. Model-less: business rules live in ``config/*.yaml`` under the
-``DbtOracleWms:`` key and
-are exposed through the open ``config.DbtOracleWms`` namespace (``extra="allow"``), with
-no per-domain model. Access is ``config.DbtOracleWms.<domain>[<key>...]``.
+Reference: ADR-005 §7. Business rules live in ``config/*.yaml`` under the
+``DbtOracleWms:`` key, validated once into the typed ``config.DbtOracleWms``
+namespace. Access is ``config.DbtOracleWms.<field>``.
 
 Copyright (c) 2026 FLEXT Team. All rights reserved.
 SPDX-License-Identifier: MIT
@@ -11,11 +10,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from typing import Annotated
+
 from flext_meltano import FlextMeltanoConfig, m
 
 
 class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
-    """DbtOracleWms config auto-loaded model-less from ``config/*.yaml``.
+    """DbtOracleWms config auto-loaded from ``config/*.yaml`` and validated.
 
     MRO carries ``FlextSettings`` FIRST (ENFORCE-042); unlike never-instantiated
     namespace holders, this class IS instantiated by ``fetch_global``, so the
@@ -23,10 +24,18 @@ class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
     construction machinery stays intact.
     """
 
-    class DbtOracleWms(m.BaseModel):
-        """Open, frozen namespace exposing every ``config/*.yaml`` domain model-less."""
+    class Identity(m.FrozenModel):
+        """Project identity metadata from ``config/dbt-oracle-wms.yaml``."""
 
-        model_config = m.ConfigDict(extra="allow", frozen=True)
+        name: str = m.Field(min_length=1, description="Configured project name.")
+        version: str = m.Field(
+            min_length=1, description="Configured project version."
+        )
+
+    DbtOracleWms: Annotated[
+        Identity,
+        m.Field(description="Project identity from ``config/dbt-oracle-wms.yaml``."),
+    ]
 
 
 config: FlextDbtOracleWmsConfig = FlextDbtOracleWmsConfig.fetch_global()
