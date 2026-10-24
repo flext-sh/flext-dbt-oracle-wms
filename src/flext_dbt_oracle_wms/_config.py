@@ -28,9 +28,7 @@ class FlextDbtOracleWmsConfig(FlextMeltanoConfig):
         """Project identity metadata from ``config/dbt-oracle-wms.yaml``."""
 
         name: str = m.Field(min_length=1, description="Configured project name.")
-        version: str = m.Field(
-            min_length=1, description="Configured project version."
-        )
+        version: str = m.Field(min_length=1, description="Configured project version.")
 
     DbtOracleWms: Annotated[
         Identity,
