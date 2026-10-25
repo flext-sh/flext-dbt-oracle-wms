@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from flext_meltano import d, h, r, x
     from flext_oracle_wms import e
 
-    from flext_dbt_oracle_wms import services as services
     from flext_dbt_oracle_wms.__version__ import (
         FlextDbtOracleWmsVersion,
         __author__,
@@ -71,7 +70,6 @@ __all__: tuple[str, ...] = (
     "p",
     "r",
     "s",
-    "services",
     "settings",
     "t",
     "u",
@@ -111,7 +109,6 @@ install_lazy_exports(
         "p": ".protocols",
         "r": "flext_meltano",
         "s": ".base",
-        "services": ".services",
         "settings": "._settings",
         "t": ".typings",
         "u": ".utilities",

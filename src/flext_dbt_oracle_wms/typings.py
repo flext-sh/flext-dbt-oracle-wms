@@ -25,5 +25,4 @@ class FlextDbtOracleWmsTypes(FlextMeltanoTypes, FlextOracleWmsTypes):
 
 # Facade assignment - enables canonical t.* consumption for consumers
 t = FlextDbtOracleWmsTypes
-
 __all__: list[str] = ["FlextDbtOracleWmsTypes", "t"]
