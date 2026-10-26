@@ -14,9 +14,20 @@ from flext_core.lazy import install_lazy_exports
 
 if TYPE_CHECKING:
     from flext_oracle_wms import e
-    from flext_tests import api, td, tf, tk, tm
+    from flext_tests import api, install_local_packages, td, tf, tk, tm
 
-    from flext_dbt_oracle_wms import d, h, r, x
+    from flext_dbt_oracle_wms import (
+        config,
+        d,
+        dbt_oracle_wms,
+        h,
+        main,
+        meltano,
+        oracle_wms,
+        r,
+        settings,
+        x,
+    )
     from tests.base import TestsFlextDbtOracleWmsServiceBase, s
     from tests.constants import TestsFlextDbtOracleWmsConstants, c
     from tests.models import TestsFlextDbtOracleWmsModels, m
@@ -36,13 +47,20 @@ __all__: tuple[str, ...] = (
     "TestsFlextDbtOracleWmsUtilities",
     "api",
     "c",
+    "config",
     "d",
+    "dbt_oracle_wms",
     "e",
     "h",
+    "install_local_packages",
     "m",
+    "main",
+    "meltano",
+    "oracle_wms",
     "p",
     "r",
     "s",
+    "settings",
     "t",
     "td",
     "tf",
@@ -65,13 +83,20 @@ install_lazy_exports(
         "TestsFlextDbtOracleWmsUtilities": ".utilities",
         "api": "flext_tests",
         "c": ".constants",
+        "config": "flext_dbt_oracle_wms",
         "d": "flext_dbt_oracle_wms",
+        "dbt_oracle_wms": "flext_dbt_oracle_wms",
         "e": "flext_oracle_wms",
         "h": "flext_dbt_oracle_wms",
+        "install_local_packages": "flext_tests",
         "m": ".models",
+        "main": "flext_dbt_oracle_wms",
+        "meltano": "flext_dbt_oracle_wms",
+        "oracle_wms": "flext_dbt_oracle_wms",
         "p": ".protocols",
         "r": "flext_dbt_oracle_wms",
         "s": ".base",
+        "settings": "flext_dbt_oracle_wms",
         "t": ".typings",
         "td": "flext_tests",
         "tf": "flext_tests",

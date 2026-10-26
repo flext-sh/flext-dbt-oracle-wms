@@ -12,14 +12,14 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_meltano import FlextMeltanoProtocols
-from flext_oracle_wms import FlextOracleWmsProtocols
+from flext_meltano import p
+from flext_oracle_wms import p as flext_oracle_wms_p
 
 from flext_dbt_oracle_wms._protocols import FlextDbtOracleWmsProtocolsContracts
 from flext_dbt_oracle_wms._protocols.base import FlextDbtOracleWmsProtocolsBase
 
 
-class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):
+class FlextDbtOracleWmsProtocols(p, flext_oracle_wms_p):
     """Namespace for DBT Oracle WMS protocol contracts.
 
     Extends :class:`FlextDbtOracleWmsProtocolsBase` (source of truth for

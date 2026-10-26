@@ -8,8 +8,8 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_meltano import FlextMeltanoUtilities
-from flext_oracle_wms import FlextOracleWmsUtilities
+from flext_meltano import u
+from flext_oracle_wms import u as flext_oracle_wms_u
 
 from flext_dbt_oracle_wms._utilities import (
     FlextDbtOracleWmsUtilitiesBase,
@@ -19,7 +19,7 @@ from flext_dbt_oracle_wms._utilities import (
 )
 
 
-class FlextDbtOracleWmsUtilities(FlextMeltanoUtilities, FlextOracleWmsUtilities):
+class FlextDbtOracleWmsUtilities(u, flext_oracle_wms_u):
     """Namespace with utility helpers for extraction and modeling."""
 
     class DbtOracleWms(
