@@ -7,11 +7,11 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import Annotated
 
 from flext_meltano import m
 
-from flext_dbt_oracle_wms import t
 from flext_dbt_oracle_wms._models import FlextDbtOracleWmsModelsItems
 
 
@@ -24,11 +24,11 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed outcome of transforming WMS entities into item models."""
 
         entity_names: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="Entity names present in the transformed set"),
         ]
         items: Annotated[
-            t.SequenceOf[FlextDbtOracleWmsModelsItems.WmsItem],
+            Sequence[FlextDbtOracleWmsModelsItems.WmsItem],
             m.Field(description="Transformed WMS item models"),
         ]
 
@@ -36,11 +36,11 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed dbt-transformation summary composed from the meltano command result."""
 
         transformed_tables: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="Tables produced by the transformation"),
         ]
         requested_models: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="dbt models requested for the run"),
         ]
         command_result: Annotated[
@@ -61,7 +61,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         workflow_type: Annotated[str, m.Field(description="Workflow type")]
         tracking_id: Annotated[str, m.Field(description="Tracking identifier")]
         entity_names: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(default_factory=tuple, description="Entities in scope"),
         ]
         status: Annotated[
@@ -81,7 +81,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed WMS metadata extraction summary."""
 
         available_entities: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="Discovered WMS entities"),
         ]
         inventory_count: Annotated[int, m.Field(description="Inventory record count")]
@@ -100,7 +100,7 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         """Typed dbt model-generation summary."""
 
         model_names: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="Generated dbt model names"),
         ]
         models_generated: Annotated[int, m.Field(description="Generated model count")]
@@ -115,11 +115,11 @@ class FlextDbtOracleWmsModelsWorkflow(m):
         generate_models: Annotated[bool, m.Field(description="Model generation flag")]
         run_transformations: Annotated[bool, m.Field(description="Transformation flag")]
         generated_models: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(default_factory=tuple, description="Generated models"),
         ]
         entity_names: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(default_factory=tuple, description="Entities processed"),
         ]
         total_records: Annotated[

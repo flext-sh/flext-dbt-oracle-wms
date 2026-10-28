@@ -7,11 +7,10 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import Annotated
 
 from flext_meltano import m
-
-from flext_dbt_oracle_wms import t
 
 
 class FlextDbtOracleWmsModelsConnection(m):
@@ -29,7 +28,7 @@ class FlextDbtOracleWmsModelsConnection(m):
         """Typed full pipeline result."""
 
         processed_entities: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="Entities processed by the pipeline"),
         ]
         total_records: Annotated[int, m.Field(description="Total records processed")]

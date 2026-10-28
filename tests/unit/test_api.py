@@ -7,11 +7,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 import pytest
 
 from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, p, r, t, tm, u
+from tests import m, p, r, tm, u
 
 
 class TestsFlextDbtOracleWmsApi:
@@ -108,7 +110,7 @@ class TestsFlextDbtOracleWmsApi:
     def test_discover_entities_returns_the_client_entity_list(self) -> None:
         """Test discover entities returns the client entity list."""
         wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
-            entities=r[t.StrSequence].ok(["items", "shipments"]),
+            entities=r[Sequence[str]].ok(["items", "shipments"]),
         )
         facade = self._facade(wms=wms)
 
@@ -120,7 +122,7 @@ class TestsFlextDbtOracleWmsApi:
     def test_discover_entities_propagates_client_discovery_failure(self) -> None:
         """Test discover entities propagates client discovery failure."""
         wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
-            entities=r[t.StrSequence].fail("entity catalog unavailable"),
+            entities=r[Sequence[str]].fail("entity catalog unavailable"),
         )
         facade = self._facade(wms=wms)
 

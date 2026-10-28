@@ -7,11 +7,12 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from typing import Annotated
 
 from flext_meltano import m
 
-from flext_dbt_oracle_wms import c, t
+from flext_dbt_oracle_wms import c
 
 
 class FlextDbtOracleWmsModelsDbt(m):
@@ -39,11 +40,11 @@ class FlextDbtOracleWmsModelsDbt(m):
             m.Field(description="Human-readable model description"),
         ] = ""
         columns: Annotated[
-            t.SequenceOf[t.StrMapping],
+            Sequence[Mapping[str, str]],
             m.Field(description="Column metadata payloads"),
         ] = m.Field(default_factory=tuple)
         dependencies: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="Upstream model dependencies"),
         ] = m.Field(default_factory=tuple)
         wms_entity_type: Annotated[
@@ -55,7 +56,7 @@ class FlextDbtOracleWmsModelsDbt(m):
             m.Field(description="Oracle source for this model"),
         ]
         wms_business_rules: Annotated[
-            t.StrSequence,
+            Sequence[str],
             m.Field(description="WMS-specific business rules attached to the model"),
         ] = m.Field(default_factory=tuple)
 

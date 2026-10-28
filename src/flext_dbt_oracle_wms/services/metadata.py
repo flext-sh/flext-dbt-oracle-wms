@@ -40,8 +40,8 @@ class FlextDbtOracleWmsMetadata(FlextDbtOracleWmsBase):
 
     def extract_wms_metadata(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
+        inventory_items: Sequence[str] | None = None,
+        shipments: Sequence[str] | None = None,
         *,
         include_inventory_details: bool = True,
         include_shipment_tracking: bool = True,

@@ -13,7 +13,7 @@ from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsSettings,
 )
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, main, r, t, tm, u
+from tests import m, main, r, tm, u
 
 
 class TestsFlextDbtOracleWmsCli:
@@ -23,7 +23,7 @@ class TestsFlextDbtOracleWmsCli:
     def _build_public_facade(
         *,
         pipeline_should_fail: bool = False,
-    ) -> t.Triple[
+    ) -> tuple[
         FlextDbtOracleWms,
         u.DbtOracleWms.Tests.ScriptedWmsClient,
         u.DbtOracleWms.Tests.ScriptedDbtRunner,

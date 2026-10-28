@@ -8,9 +8,10 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 import shlex
+from collections.abc import MutableSequence, Sequence
 from typing import TYPE_CHECKING
 
-from flext_dbt_oracle_wms import m, r, t, u
+from flext_dbt_oracle_wms import m, r, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsMetadata
 
 if TYPE_CHECKING:
@@ -40,8 +41,8 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
 
     def generate_dbt_models_from_wms(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
+        inventory_items: Sequence[str] | None = None,
+        shipments: Sequence[str] | None = None,
         output_dir: str | None = None,
     ) -> p.Result[m.DbtOracleWms.DbtModelGenerationResult]:
         """Generate DBT model metadata from real entity selections.
@@ -127,7 +128,7 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
             return r[m.DbtOracleWms.DbtExecutionResult].fail(
                 "DBT monitoring is implemented only for dbt run/build",
             )
-        model_names: t.MutableSequenceOf[str] = []
+        model_names: MutableSequence[str] = []
         if "--models" in command_parts:
             models_index = command_parts.index("--models")
             model_names = command_parts[models_index + 1 :]
