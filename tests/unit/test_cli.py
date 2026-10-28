@@ -11,10 +11,9 @@ from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
     FlextDbtOracleWmsCliService,
     FlextDbtOracleWmsSettings,
-    main,
 )
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, r, t, tm, u
+from tests import m, main, r, t, tm, u
 
 
 class TestsFlextDbtOracleWmsCli:
