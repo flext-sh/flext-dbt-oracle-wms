@@ -7,12 +7,10 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from collections.abc import MutableSequence, Sequence
+from collections.abc import Mapping, MutableSequence, Sequence
 from typing import TYPE_CHECKING
 
-from flext_core import r
-
-from flext_dbt_oracle_wms import c, m, t
+from flext_dbt_oracle_wms import c, m, r, t
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
@@ -26,7 +24,7 @@ class FlextDbtOracleWmsUtilitiesTransformer:
 
         def transform_all_entities(
             self,
-            entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
+            entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
         ) -> p.Result[m.DbtOracleWms.EntityTransformationSet]:
             """Transform WMS entities into a typed transformation set.
 
@@ -50,7 +48,7 @@ class FlextDbtOracleWmsUtilitiesTransformer:
 
         @staticmethod
         def transform_items(
-            records: t.SequenceOf[t.ConfigurationMapping],
+            records: Sequence[t.ConfigurationMapping],
         ) -> p.Result[Sequence[m.DbtOracleWms.WmsItem]]:
             """Transform item records to typed WmsItem models.
 

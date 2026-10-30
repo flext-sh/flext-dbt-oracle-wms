@@ -7,19 +7,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from flext_dbt_oracle_wms import (
     FlextDbtOracleWms,
     FlextDbtOracleWmsCliService,
     FlextDbtOracleWmsSettings,
-    main,
 )
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, r, tm, u
-
-if TYPE_CHECKING:
-    from tests import t
+from tests import m, main, r, tm, u
 
 
 class TestsFlextDbtOracleWmsCli:
@@ -29,7 +23,7 @@ class TestsFlextDbtOracleWmsCli:
     def _build_public_facade(
         *,
         pipeline_should_fail: bool = False,
-    ) -> t.Triple[
+    ) -> tuple[
         FlextDbtOracleWms,
         u.DbtOracleWms.Tests.ScriptedWmsClient,
         u.DbtOracleWms.Tests.ScriptedDbtRunner,

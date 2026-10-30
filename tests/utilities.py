@@ -9,12 +9,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from pathlib import Path
 
-from flext_core import r
 from flext_tests import FlextTestsUtilities
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, m, p, t
+from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities
+from tests import m, p, r, t
 
 
 class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):
@@ -38,23 +39,23 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                 def __init__(
                     self,
                     *,
-                    entities: p.Result[t.StrSequence] | None = None,
+                    entities: p.Result[Sequence[str]] | None = None,
                     records_by_entity: (
-                        t.MappingKV[str, t.SequenceOf[t.StrMapping]] | None
+                        Mapping[str, Sequence[Mapping[str, str]]] | None
                     ) = None,
                     health: p.Result[m.Api.HttpResponse] | None = None,
                 ) -> None:
                     """Initialize canned boundary results and capture state."""
                     self.started: bool = False
-                    self.extracted_entities: t.SequenceOf[str] = ()
-                    self._entities: p.Result[t.StrSequence] = (
+                    self.extracted_entities: Sequence[str] = ()
+                    self._entities: p.Result[Sequence[str]] = (
                         entities
                         if entities is not None
-                        else r[t.StrSequence].ok(("items", "shipments"))
+                        else r[Sequence[str]].ok(("items", "shipments"))
                     )
-                    self._records_by_entity: t.MappingKV[
+                    self._records_by_entity: Mapping[
                         str,
-                        t.SequenceOf[t.StrMapping],
+                        Sequence[Mapping[str, str]],
                     ] = records_by_entity or {}
                     self._health = (
                         health
@@ -72,13 +73,13 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                     """
                     self.started = True
-                    return r[bool].ok(True)
+                    return r[bool].ok(value=True)
 
-                def discover_entities(self) -> p.Result[t.StrSequence]:
+                def discover_entities(self) -> p.Result[Sequence[str]]:
                     """Report the canned entity catalog.
 
                     Returns:
-                        The resulting ``p.Result[t.StrSequence]``.
+                        The resulting ``p.Result[Sequence[str]]``.
 
                     """
                     return self._entities
@@ -88,11 +89,11 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     entity_name: str,
                     limit: int | None = None,
                     filters: t.ConfigurationMapping | None = None,
-                ) -> p.Result[t.SequenceOf[t.StrMapping]]:
+                ) -> p.Result[Sequence[Mapping[str, str]]]:
                     """Report canned records for the requested entity and capture it.
 
                     Returns:
-                        The resulting ``p.Result[t.SequenceOf[t.StrMapping]]``.
+                        The resulting ``p.Result[Sequence[Mapping[str, str]]]``.
 
                     """
                     _ = limit
@@ -102,7 +103,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                         entity_name,
                         ({"entity": entity_name},),
                     )
-                    return r[t.SequenceOf[t.StrMapping]].ok(records)
+                    return r[Sequence[Mapping[str, str]]].ok(records)
 
                 def health_check(self) -> p.Result[m.Api.HttpResponse]:
                     """Report the canned health response.
@@ -144,7 +145,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                 def run_dbt_transformation(
                     self,
-                    models: t.StrSequence | None = None,
+                    models: Sequence[str] | None = None,
                     project_dir: Path | None = None,
                 ) -> p.Result[m.Meltano.CommandExecutionResult]:
                     """Count the call and report the canned command result.

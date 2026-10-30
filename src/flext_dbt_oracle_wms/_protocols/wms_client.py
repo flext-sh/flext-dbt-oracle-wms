@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
 from flext_meltano import p
@@ -21,7 +22,7 @@ class FlextDbtOracleWmsProtocolsWmsClient:
     class WmsClient(Protocol):
         """Protocol for the consumed Oracle WMS client boundary."""
 
-        def discover_entities(self) -> p.Result[t.StrSequence]:
+        def discover_entities(self) -> p.Result[Sequence[str]]:
             """Discover available Oracle WMS entities."""
             ...
 
@@ -30,7 +31,7 @@ class FlextDbtOracleWmsProtocolsWmsClient:
             entity_name: str,
             limit: int | None = None,
             filters: t.ConfigurationMapping | None = None,
-        ) -> p.Result[t.SequenceOf[t.StrMapping]]:
+        ) -> p.Result[Sequence[Mapping[str, str]]]:
             """Fetch data for a specific Oracle WMS entity."""
             ...
 

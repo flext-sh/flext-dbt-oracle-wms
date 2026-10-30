@@ -7,12 +7,12 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, ClassVar
 
-from flext_core import r
 from flext_meltano import u
 
-from flext_dbt_oracle_wms import m, t
+from flext_dbt_oracle_wms import m, r, t
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
@@ -39,7 +39,7 @@ class FlextDbtOracleWmsUtilitiesService:
 
         def generate_workflow_recommendations(
             self,
-            entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
+            entities: Sequence[t.ConfigurationMapping] | None = None,
         ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
             """Generate simple workflow recommendations for entity processing.
 
@@ -90,7 +90,7 @@ class FlextDbtOracleWmsUtilitiesService:
             self,
             workflow_name: str,
             workflow_type: str,
-            entity_names: t.StrSequence | None = None,
+            entity_names: Sequence[str] | None = None,
             additional_data: t.ConfigValueMapping | None = None,
         ) -> m.DbtOracleWms.WorkflowTracking:
             """Return typed tracking model for workflow instrumentation.

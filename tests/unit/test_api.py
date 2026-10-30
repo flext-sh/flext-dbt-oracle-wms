@@ -7,11 +7,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 import pytest
 
 from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, p, r, t, tm, u
+from tests import m, p, r, tm, u
 
 
 class TestsFlextDbtOracleWmsApi:
@@ -55,9 +57,9 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.execute()
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, eq=settings.model_dump(mode="json"))
-        tm.that(facade.settings is settings, eq=True)
+        tm.ok(facade.settings is settings)
 
     @staticmethod
     def test_generation_retains_its_domain_result_without_discovery() -> None:
@@ -67,10 +69,10 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.generate_dbt_models_from_wms(inventory_items=["item-1"])
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, is_=m.DbtOracleWms.DbtModelGenerationResult)
         tm.that(result.value.models_generated, eq=len(result.value.model_names))
-        tm.that(bool(result.value.model_names), eq=True)
+        tm.ok(bool(result.value.model_names))
 
     @staticmethod
     def test_default_service_reads_injected_settings() -> None:
@@ -91,8 +93,8 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.validate_wms_connection()
 
-        tm.that(result.success, eq=True)
-        tm.that(result.value, eq=True)
+        tm.ok(result.success)
+        tm.ok(result.value)
 
     def test_validate_wms_connection_propagates_client_connection_failure(self) -> None:
         """Test validate wms connection propagates client connection failure."""
@@ -108,19 +110,19 @@ class TestsFlextDbtOracleWmsApi:
     def test_discover_entities_returns_the_client_entity_list(self) -> None:
         """Test discover entities returns the client entity list."""
         wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
-            entities=r[t.StrSequence].ok(["items", "shipments"]),
+            entities=r[Sequence[str]].ok(["items", "shipments"]),
         )
         facade = self._facade(wms=wms)
 
         result = facade.discover_oracle_wms_entities()
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, eq=["items", "shipments"])
 
     def test_discover_entities_propagates_client_discovery_failure(self) -> None:
         """Test discover entities propagates client discovery failure."""
         wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
-            entities=r[t.StrSequence].fail("entity catalog unavailable"),
+            entities=r[Sequence[str]].fail("entity catalog unavailable"),
         )
         facade = self._facade(wms=wms)
 
@@ -139,7 +141,7 @@ class TestsFlextDbtOracleWmsApi:
 
         result = facade.extract_oracle_wms_data(entity_name)
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, eq=[{"entity": entity_name}])
         tm.that(wms.extracted_entities, eq=(entity_name,))
 
@@ -153,7 +155,7 @@ class TestsFlextDbtOracleWmsApi:
             run_transformations=True,
         )
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value.workflow_status, eq="completed")
         tm.that(result.value.entity_names, eq=("items",))
         tm.that(result.value.tracking_id, eq=self._TRACKING_ID)
@@ -174,7 +176,7 @@ class TestsFlextDbtOracleWmsApi:
             run_transformations=False,
         )
 
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value.workflow_status, eq="metadata_extracted")
         tm.that(result.value.tracking_id, eq=self._TRACKING_ID)
 

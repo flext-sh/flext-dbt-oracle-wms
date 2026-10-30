@@ -9,13 +9,8 @@ from __future__ import annotations
 
 import pytest
 
-from flext_dbt_oracle_wms import (
-    FlextDbtOracleWms,
-    FlextDbtOracleWmsCliService,
-    main,
-    settings,
-)
-from tests import tm
+from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsCliService
+from tests import c, main, settings, tm
 
 
 class TestsFlextDbtOracleWmsModuleGovernance:
@@ -23,7 +18,7 @@ class TestsFlextDbtOracleWmsModuleGovernance:
 
     @staticmethod
     @pytest.mark.parametrize(
-        ("command", "expected_exit_code"),
+        (c.HandlerMode.COMMAND, "expected_exit_code"),
         [("info", 0), ("unknown", 1), ("", 1)],
     )
     def test_execute_command_maps_command_to_exit_code(
@@ -39,7 +34,7 @@ class TestsFlextDbtOracleWmsModuleGovernance:
         """Test handle info returns success with package label."""
         service = FlextDbtOracleWmsCliService()
         result = service.handle_info()
-        tm.that(result.success, eq=True)
+        tm.ok(result.success)
         tm.that(result.value, eq="FLEXT DBT Oracle WMS")
 
     @staticmethod
@@ -58,7 +53,7 @@ class TestsFlextDbtOracleWmsModuleGovernance:
     def test_public_facade_constructs_with_defaults() -> None:
         """Test public facade constructs with defaults."""
         facade = FlextDbtOracleWms()
-        tm.that(facade.settings is settings, eq=True)
+        tm.ok(facade.settings is settings)
         tm.that(
             facade.settings.DbtOracleWms.oracle_wms_environment,
             eq=settings.DbtOracleWms.oracle_wms_environment,

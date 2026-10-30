@@ -10,9 +10,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
-from flext_core import r
-
-from flext_dbt_oracle_wms import c, m, t
+from flext_dbt_oracle_wms import c, m, r
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
@@ -27,7 +25,7 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
         @classmethod
         def generate_wms_staging_models(
             cls,
-            oracle_sources: t.StrSequence,
+            oracle_sources: Sequence[str],
         ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
             """Create one staging model per source name.
 

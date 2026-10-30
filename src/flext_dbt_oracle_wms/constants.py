@@ -1,3 +1,4 @@
+# AUTO-GENERATED FILE — Regenerate with: make gen
 """Constants used by the DBT Oracle WMS package.
 
 Copyright (c) 2026 FLEXT Team. All rights reserved.
@@ -7,8 +8,8 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_meltano import FlextMeltanoConstants
-from flext_oracle_wms import FlextOracleWmsConstants
+from flext_meltano import c as flext_meltano_c
+from flext_oracle_wms import c as flext_oracle_wms_c
 
 from flext_dbt_oracle_wms._constants import (
     FlextDbtOracleWmsConstantsBase,
@@ -16,10 +17,10 @@ from flext_dbt_oracle_wms._constants import (
 )
 
 
-class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):
+class FlextDbtOracleWmsConstants(flext_meltano_c, flext_oracle_wms_c):
     """Constants for DBT Oracle WMS with dual Meltano and WMS domain inheritance."""
 
-    class DbtOracleWms(FlextDbtOracleWmsConstantsEnums, FlextDbtOracleWmsConstantsBase):
+    class DbtOracleWms(FlextDbtOracleWmsConstantsBase, FlextDbtOracleWmsConstantsEnums):
         """DBT Oracle WMS project-specific constants."""
 
         class Dbt(
@@ -30,5 +31,4 @@ class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants)
 
 
 c = FlextDbtOracleWmsConstants
-
 __all__: list[str] = ["FlextDbtOracleWmsConstants", "c"]

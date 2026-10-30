@@ -7,9 +7,10 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, override
 
-from flext_dbt_oracle_wms import m, r, t
+from flext_dbt_oracle_wms import m, r, t, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
 
 if TYPE_CHECKING:
@@ -39,8 +40,8 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
 
     def run_oracle_wms_to_dbt_workflow(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
+        inventory_items: Sequence[str] | None = None,
+        shipments: Sequence[str] | None = None,
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
@@ -69,8 +70,8 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
             workflow_type="dbt_oracle_wms",
             entity_names=entity_names,
         )
-        generated_models: t.StrSequence = ()
-        model_names: t.StrSequence | None = None
+        generated_models: Sequence[str] = ()
+        model_names: Sequence[str] | None = None
         if generate_models:
             model_generation_result = self.generate_dbt_models_from_wms(
                 inventory_items,
@@ -163,7 +164,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         """
         self.logger.info("Executing DBT Oracle WMS service")
         return r[t.JsonMapping].ok(
-            t.Cli.JSON_MAPPING_ADAPTER.validate_python(
+            u.json_mapping_adapter().validate_python(
                 self.settings.model_dump(mode="json")
             )
         )
