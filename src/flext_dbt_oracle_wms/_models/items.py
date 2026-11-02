@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Annotated, ClassVar
 
-from flext_meltano import m
+from flext_meltano import m, p
 
 
 class FlextDbtOracleWmsModelsItems(m):
