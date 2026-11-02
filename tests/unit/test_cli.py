@@ -13,7 +13,7 @@ from flext_dbt_oracle_wms import (
     FlextDbtOracleWmsSettings,
 )
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, main, r, tm, u
+from tests import main, r, tm, u
 
 
 class TestsFlextDbtOracleWmsCli:
@@ -33,7 +33,7 @@ class TestsFlextDbtOracleWmsCli:
         })
         wms = u.DbtOracleWms.Tests.ScriptedWmsClient()
         runner = u.DbtOracleWms.Tests.ScriptedDbtRunner(
-            r[m.Meltano.CommandExecutionResult].fail("dbt run failed")
+            r[p.Meltano.CommandExecutionResult].fail("dbt run failed")
             if pipeline_should_fail
             else None,
         )

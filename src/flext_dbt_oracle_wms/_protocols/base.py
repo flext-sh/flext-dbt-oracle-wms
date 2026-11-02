@@ -14,7 +14,7 @@ from flext_meltano import p
 from flext_oracle_wms import p as _oracle_wms_p
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import m, t
+    from flext_dbt_oracle_wms import t
 
 
 class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
@@ -80,7 +80,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 entity_names: Sequence[str] | None = None,
                 filters: t.ConfigurationMapping | None = None,
                 model_names: Sequence[str] | None = None,
-            ) -> p.Result[m.DbtOracleWms.PipelineResult]:
+            ) -> p.Result[p.DbtOracleWms.PipelineResult]:
                 """Run the full Oracle WMS to DBT workflow.
 
                 Args:
@@ -95,7 +95,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
 
             def test_oracle_wms_connection(
                 self,
-            ) -> p.Result[m.DbtOracleWms.ConnectionStatus]:
+            ) -> p.Result[p.DbtOracleWms.ConnectionStatus]:
                 """Validate Oracle WMS connectivity."""
                 ...
 
@@ -103,7 +103,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 self,
                 entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
                 model_names: Sequence[str] | None,
-            ) -> p.Result[m.Meltano.CommandExecutionResult]:
+            ) -> p.Result[p.Meltano.CommandExecutionResult]:
                 """Run DBT transformations for extracted entity data.
 
                 Args:
@@ -121,7 +121,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
             def generate_workflow_recommendations(
                 self,
                 entities: Sequence[t.ConfigurationMapping] | None = None,
-            ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
+            ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
                 """Generate workflow recommendations for entity processing.
 
                 Args:
@@ -137,7 +137,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 workflow_type: str,
                 entity_names: Sequence[str] | None = None,
                 additional_data: t.ConfigValueMapping | None = None,
-            ) -> m.DbtOracleWms.WorkflowTracking:
+            ) -> p.DbtOracleWms.WorkflowTracking:
                 """Return a typed tracking model for workflow instrumentation.
 
                 Args:
@@ -152,8 +152,8 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
 
             def log_workflow_completion(
                 self,
-                tracking_info: m.DbtOracleWms.WorkflowTracking,
-                result: p.Result[m.DbtOracleWms.WorkflowResult],
+                tracking_info: p.DbtOracleWms.WorkflowTracking,
+                result: p.Result[p.DbtOracleWms.WorkflowResult],
             ) -> None:
                 """Record the completion outcome of a tracked workflow.
 

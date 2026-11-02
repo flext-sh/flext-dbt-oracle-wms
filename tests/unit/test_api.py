@@ -99,7 +99,7 @@ class TestsFlextDbtOracleWmsApi:
     def test_validate_wms_connection_propagates_client_connection_failure(self) -> None:
         """Test validate wms connection propagates client connection failure."""
         wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
-            health=r[m.Api.HttpResponse].fail("Oracle WMS endpoint unreachable"),
+            health=r[p.Api.HttpResponse].fail("Oracle WMS endpoint unreachable"),
         )
         facade = self._facade(wms=wms)
 
@@ -183,7 +183,7 @@ class TestsFlextDbtOracleWmsApi:
     def test_run_workflow_propagates_pipeline_failure(self) -> None:
         """Test run workflow propagates pipeline failure."""
         runner = u.DbtOracleWms.Tests.ScriptedDbtRunner(
-            r[m.Meltano.CommandExecutionResult].fail("pipeline transformation aborted"),
+            r[p.Meltano.CommandExecutionResult].fail("pipeline transformation aborted"),
         )
         facade = self._facade(runner=runner)
 

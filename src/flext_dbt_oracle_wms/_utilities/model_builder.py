@@ -26,7 +26,7 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
         def generate_wms_staging_models(
             cls,
             oracle_sources: Sequence[str],
-        ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
+        ) -> p.Result[Sequence[p.DbtOracleWms.DbtModel]]:
             """Create one staging model per source name.
 
             Args:
@@ -57,7 +57,7 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
                 )
                 for source in oracle_sources
             ]
-            return r[Sequence[m.DbtOracleWms.DbtModel]].ok(models)
+            return r[Sequence[p.DbtOracleWms.DbtModel]].ok(models)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsUtilitiesModelBuilder"]

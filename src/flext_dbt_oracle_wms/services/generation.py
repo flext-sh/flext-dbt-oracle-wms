@@ -44,7 +44,7 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
         inventory_items: Sequence[str] | None = None,
         shipments: Sequence[str] | None = None,
         output_dir: str | None = None,
-    ) -> p.Result[m.DbtOracleWms.DbtModelGenerationResult]:
+    ) -> p.Result[p.DbtOracleWms.DbtModelGenerationResult]:
         """Generate DBT model metadata from real entity selections.
 
         Args:
@@ -66,7 +66,7 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
         if entity_names is None:
             discovery_result = self.client.discover_oracle_wms_entities()
             if discovery_result.failure:
-                return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
+                return r[p.DbtOracleWms.DbtModelGenerationResult].from_failure(
                     discovery_result,
                 )
             entity_names = discovery_result.value
@@ -74,18 +74,18 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
             u.DbtOracleWms.ModelBuilder.generate_wms_staging_models(entity_names)
         )
         if generated_models_result.failure:
-            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
+            return r[p.DbtOracleWms.DbtModelGenerationResult].from_failure(
                 generated_models_result,
             )
         recommendations_result = self.service.generate_workflow_recommendations([
             {"entity_name": entity_name} for entity_name in entity_names
         ])
         if recommendations_result.failure:
-            return r[m.DbtOracleWms.DbtModelGenerationResult].from_failure(
+            return r[p.DbtOracleWms.DbtModelGenerationResult].from_failure(
                 recommendations_result,
             )
         generated_models = generated_models_result.value
-        return r[m.DbtOracleWms.DbtModelGenerationResult].ok(
+        return r[p.DbtOracleWms.DbtModelGenerationResult].ok(
             m.DbtOracleWms.DbtModelGenerationResult(
                 model_names=tuple(model.name for model in generated_models),
                 models_generated=len(generated_models),
@@ -99,7 +99,7 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
         self,
         command: str,
         timeout_seconds: int = 300,
-    ) -> p.Result[m.DbtOracleWms.DbtExecutionResult]:
+    ) -> p.Result[p.DbtOracleWms.DbtExecutionResult]:
         """Run and monitor a real DBT transformation through flext-meltano.
 
         Args:
@@ -116,16 +116,16 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
         self.logger.info("Monitoring DBT execution: %s", command)
         command_parts = shlex.split(command)
         if not command_parts:
-            return r[m.DbtOracleWms.DbtExecutionResult].fail(
+            return r[p.DbtOracleWms.DbtExecutionResult].fail(
                 "DBT command cannot be empty",
             )
         if command_parts[0] != "dbt":
-            return r[m.DbtOracleWms.DbtExecutionResult].fail(
+            return r[p.DbtOracleWms.DbtExecutionResult].fail(
                 "DBT monitoring requires a command beginning with 'dbt'",
             )
         dbt_subcommand = command_parts[1] if len(command_parts) > 1 else "run"
         if dbt_subcommand not in {"run", "build"}:
-            return r[m.DbtOracleWms.DbtExecutionResult].fail(
+            return r[p.DbtOracleWms.DbtExecutionResult].fail(
                 "DBT monitoring is implemented only for dbt run/build",
             )
         model_names: MutableSequence[str] = []
@@ -140,9 +140,9 @@ class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):
             model_names=model_names or None,
         )
         if execution_result.failure:
-            return r[m.DbtOracleWms.DbtExecutionResult].from_failure(execution_result)
+            return r[p.DbtOracleWms.DbtExecutionResult].from_failure(execution_result)
         command_result = execution_result.value
-        return r[m.DbtOracleWms.DbtExecutionResult].ok(
+        return r[p.DbtOracleWms.DbtExecutionResult].ok(
             m.DbtOracleWms.DbtExecutionResult(
                 command=command,
                 dbt_subcommand=dbt_subcommand,

@@ -8,12 +8,9 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from pathlib import Path
-from typing import TYPE_CHECKING, Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable
 
 from flext_meltano import p
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import m
 
 
 class FlextDbtOracleWmsProtocolsDbtRunner:
@@ -27,7 +24,7 @@ class FlextDbtOracleWmsProtocolsDbtRunner:
             self,
             models: Sequence[str] | None = None,
             project_dir: Path | None = None,
-        ) -> p.Result[m.Meltano.CommandExecutionResult]:
+        ) -> p.Result[p.Meltano.CommandExecutionResult]:
             """Run DBT transformations through the configured executor."""
             ...
 

@@ -43,7 +43,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     records_by_entity: (
                         Mapping[str, Sequence[Mapping[str, str]]] | None
                     ) = None,
-                    health: p.Result[m.Api.HttpResponse] | None = None,
+                    health: p.Result[p.Api.HttpResponse] | None = None,
                 ) -> None:
                     """Initialize canned boundary results and capture state."""
                     self.started: bool = False
@@ -60,7 +60,7 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     self._health = (
                         health
                         if health is not None
-                        else r[m.Api.HttpResponse].ok(
+                        else r[p.Api.HttpResponse].ok(
                             m.Api.HttpResponse.model_validate({"status_code": 200}),
                         )
                     )
@@ -105,11 +105,11 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     )
                     return r[Sequence[Mapping[str, str]]].ok(records)
 
-                def health_check(self) -> p.Result[m.Api.HttpResponse]:
+                def health_check(self) -> p.Result[p.Api.HttpResponse]:
                     """Report the canned health response.
 
                     Returns:
-                        The resulting ``p.Result[m.Api.HttpResponse]``.
+                        The resulting ``p.Result[p.Api.HttpResponse]``.
 
                     """
                     return self._health
@@ -124,14 +124,14 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
 
                 def __init__(
                     self,
-                    result: p.Result[m.Meltano.CommandExecutionResult] | None = None,
+                    result: p.Result[p.Meltano.CommandExecutionResult] | None = None,
                 ) -> None:
                     """Initialize the canned command result and call counter."""
                     self.calls: int = 0
                     self._result = (
                         result
                         if result is not None
-                        else r[m.Meltano.CommandExecutionResult].ok(
+                        else r[p.Meltano.CommandExecutionResult].ok(
                             m.Meltano.CommandExecutionResult(
                                 command=("dbt", "run"),
                                 success=True,
@@ -147,11 +147,11 @@ class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtil
                     self,
                     models: Sequence[str] | None = None,
                     project_dir: Path | None = None,
-                ) -> p.Result[m.Meltano.CommandExecutionResult]:
+                ) -> p.Result[p.Meltano.CommandExecutionResult]:
                     """Count the call and report the canned command result.
 
                     Returns:
-                        The resulting ``p.Result[m.Meltano.CommandExecutionResult]``.
+                        The resulting ``p.Result[p.Meltano.CommandExecutionResult]``.
 
                     """
                     _ = models

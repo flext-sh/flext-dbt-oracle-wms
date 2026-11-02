@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Protocol, runtime_checkable
 from flext_meltano import p
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import m, t
+    from flext_dbt_oracle_wms import t
 
 
 class FlextDbtOracleWmsProtocolsWmsClient:
@@ -39,7 +39,7 @@ class FlextDbtOracleWmsProtocolsWmsClient:
             """Start the Oracle WMS client."""
             ...
 
-        def health_check(self) -> p.Result[m.Api.HttpResponse]:
+        def health_check(self) -> p.Result[p.Api.HttpResponse]:
             """Check Oracle WMS API health."""
             ...
 

@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, override
 
-from flext_dbt_oracle_wms import m, r, t, u
+from flext_dbt_oracle_wms import r, t, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
 
 if TYPE_CHECKING:
@@ -45,7 +45,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
+    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients.
 
         Args:
@@ -80,7 +80,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
             if model_generation_result.failure:
                 return self._log_and_return(
                     tracking_info,
-                    r[m.DbtOracleWms.WorkflowResult].from_failure(
+                    r[p.DbtOracleWms.WorkflowResult].from_failure(
                         model_generation_result,
                     ),
                 )
@@ -93,7 +93,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
                 entity_names=entity_names,
                 model_names=model_names,
             ).map(
-                lambda pipeline: m.DbtOracleWms.WorkflowResult(
+                lambda pipeline: p.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=True,
@@ -106,7 +106,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
             )
         else:
             workflow_result = self.extract_wms_metadata(inventory_items, shipments).map(
-                lambda metadata: m.DbtOracleWms.WorkflowResult(
+                lambda metadata: p.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=False,
@@ -121,9 +121,9 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
 
     def _log_and_return(
         self,
-        tracking_info: m.DbtOracleWms.WorkflowTracking,
-        result: p.Result[m.DbtOracleWms.WorkflowResult],
-    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
+        tracking_info: p.DbtOracleWms.WorkflowTracking,
+        result: p.Result[p.DbtOracleWms.WorkflowResult],
+    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
         """Log workflow completion and pass the result through unchanged.
 
         Args:
