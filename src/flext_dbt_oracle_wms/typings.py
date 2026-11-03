@@ -19,7 +19,10 @@ from flext_dbt_oracle_wms._typings import FlextDbtOracleWmsTypesBase
 class FlextDbtOracleWmsTypes(flext_meltano_t, flext_oracle_wms_t):
     """MRO facade composing Meltano + OracleWms type namespaces."""
 
-    class DbtOracleWms(FlextDbtOracleWmsTypesBase, flext_oracle_wms_t.OracleWms):
+    class DbtOracleWms(
+        flext_oracle_wms_t.OracleWms,
+        FlextDbtOracleWmsTypesBase,
+    ):
         """DBT Oracle WMS type namespace composing the parent declarations."""
 
 

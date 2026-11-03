@@ -10,11 +10,15 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from flext_meltano import p
+from flext_meltano import FlextMeltanoProtocols, p
 from flext_oracle_wms import p as _oracle_wms_p
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import t
+    from flext_dbt_oracle_wms._protocols import (
+        FlextDbtOracleWmsProtocolsConnection,
+        FlextDbtOracleWmsProtocolsWorkflow,
+    )
 
 
 class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
@@ -80,7 +84,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 entity_names: Sequence[str] | None = None,
                 filters: t.ConfigurationMapping | None = None,
                 model_names: Sequence[str] | None = None,
-            ) -> p.Result[p.DbtOracleWms.PipelineResult]:
+            ) -> p.Result[FlextDbtOracleWmsProtocolsConnection.PipelineResult]:
                 """Run the full Oracle WMS to DBT workflow.
 
                 Args:
@@ -95,7 +99,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
 
             def test_oracle_wms_connection(
                 self,
-            ) -> p.Result[p.DbtOracleWms.ConnectionStatus]:
+            ) -> p.Result[FlextDbtOracleWmsProtocolsConnection.ConnectionStatus]:
                 """Validate Oracle WMS connectivity."""
                 ...
 
@@ -121,7 +125,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
             def generate_workflow_recommendations(
                 self,
                 entities: Sequence[t.ConfigurationMapping] | None = None,
-            ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
+            ) -> p.Result[FlextDbtOracleWmsProtocolsWorkflow.WorkflowRecommendation]:
                 """Generate workflow recommendations for entity processing.
 
                 Args:
@@ -137,7 +141,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 workflow_type: str,
                 entity_names: Sequence[str] | None = None,
                 additional_data: t.ConfigValueMapping | None = None,
-            ) -> p.DbtOracleWms.WorkflowTracking:
+            ) -> FlextDbtOracleWmsProtocolsWorkflow.WorkflowTracking:
                 """Return a typed tracking model for workflow instrumentation.
 
                 Args:
@@ -152,8 +156,8 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
 
             def log_workflow_completion(
                 self,
-                tracking_info: p.DbtOracleWms.WorkflowTracking,
-                result: p.Result[p.DbtOracleWms.WorkflowResult],
+                tracking_info: FlextDbtOracleWmsProtocolsWorkflow.WorkflowTracking,
+                result: p.Result[FlextDbtOracleWmsProtocolsWorkflow.WorkflowResult],
             ) -> None:
                 """Record the completion outcome of a tracked workflow.
 
@@ -165,3 +169,40 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
 
                 """
                 ...
+
+    @runtime_checkable
+    class DbtConnectionProfile(FlextMeltanoProtocols.Model, Protocol):
+        """Structural data contract projected from the owning model."""
+
+        @property
+        def type(self) -> str:
+            """Dbt adapter type identifier."""
+            ...
+
+        @property
+        def base_url(self) -> str:
+            """Oracle WMS base URL."""
+            ...
+
+        @property
+        def environment(self) -> str:
+            """Oracle WMS environment."""
+            ...
+
+        @property
+        def target(self) -> str:
+            """Dbt target profile."""
+            ...
+
+        @property
+        def threads(self) -> int:
+            """Dbt parallel threads."""
+            ...
+
+        @property
+        def project(self) -> str:
+            """Dbt project name owning this profile."""
+            ...
+
+
+__all__: list[str] = ["FlextDbtOracleWmsProtocolsBase"]
