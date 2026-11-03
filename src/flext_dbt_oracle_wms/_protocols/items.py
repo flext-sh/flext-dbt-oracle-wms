@@ -17,7 +17,7 @@ class FlextDbtOracleWmsProtocolsItems:
     """Own the structural contracts declared by its model source."""
 
     @runtime_checkable
-    class WmsItem(FlextMeltanoProtocols.Model, Protocol):
+    class WmsItem(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property

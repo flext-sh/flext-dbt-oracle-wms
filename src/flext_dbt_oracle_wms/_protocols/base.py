@@ -171,7 +171,7 @@ class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
                 ...
 
     @runtime_checkable
-    class DbtConnectionProfile(FlextMeltanoProtocols.Model, Protocol):
+    class DbtConnectionProfile(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property

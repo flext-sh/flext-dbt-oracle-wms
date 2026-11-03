@@ -18,7 +18,7 @@ class FlextDbtOracleWmsProtocolsConnection:
     """Own the structural contracts declared by its model source."""
 
     @runtime_checkable
-    class ConnectionStatus(FlextMeltanoProtocols.Model, Protocol):
+    class ConnectionStatus(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -42,7 +42,7 @@ class FlextDbtOracleWmsProtocolsConnection:
             ...
 
     @runtime_checkable
-    class PipelineResult(FlextMeltanoProtocols.Model, Protocol):
+    class PipelineResult(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property

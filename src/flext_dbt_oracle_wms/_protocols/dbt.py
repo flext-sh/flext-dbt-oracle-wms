@@ -18,68 +18,21 @@ class FlextDbtOracleWmsProtocolsDbt:
     """Own the structural contracts declared by its model source."""
 
     @runtime_checkable
-    class DbtModel(FlextMeltanoProtocols.Model, Protocol):
+    class DbtModel(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
-        @property
-        def name(self) -> str:
-            """DBT model name."""
-            ...
-
-        @property
-        def dbt_model_type(self) -> str:
-            """DBT model classification."""
-            ...
-
-        @property
-        def schema_name(self) -> str:
-            """Target schema name."""
-            ...
-
-        @property
-        def table_name(self) -> str:
-            """Target table name."""
-            ...
-
-        @property
-        def materialization(self) -> str:
-            """DBT materialization strategy."""
-            ...
-
-        @property
-        def sql_content(self) -> str:
-            """Model SQL body."""
-            ...
-
-        @property
-        def description(self) -> str:
-            """Human-readable model description."""
-            ...
-
-        @property
-        def columns(self) -> Sequence[Mapping[str, str]]:
-            """Column metadata payloads."""
-            ...
-
-        @property
-        def dependencies(self) -> Sequence[str]:
-            """Upstream model dependencies."""
-            ...
-
-        @property
-        def wms_entity_type(self) -> str:
-            """Oracle WMS entity represented by this model."""
-            ...
-
-        @property
-        def oracle_source(self) -> str:
-            """Oracle source for this model."""
-            ...
-
-        @property
-        def wms_business_rules(self) -> Sequence[str]:
-            """WMS-specific business rules attached to the model."""
-            ...
+        name: str
+        dbt_model_type: str
+        schema_name: str
+        table_name: str
+        materialization: str
+        sql_content: str
+        description: str
+        columns: Sequence[Mapping[str, str]]
+        dependencies: Sequence[str]
+        wms_entity_type: str
+        oracle_source: str
+        wms_business_rules: Sequence[str]
 
 
 __all__: list[str] = [

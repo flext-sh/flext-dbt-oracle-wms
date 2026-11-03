@@ -23,7 +23,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
     """Own the structural contracts declared by its model source."""
 
     @runtime_checkable
-    class EntityTransformationSet(FlextMeltanoProtocols.Model, Protocol):
+    class EntityTransformationSet(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -37,7 +37,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
             ...
 
     @runtime_checkable
-    class TransformationResult(FlextMeltanoProtocols.Model, Protocol):
+    class TransformationResult(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -61,7 +61,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
             ...
 
     @runtime_checkable
-    class WorkflowTracking(FlextMeltanoProtocols.Model, Protocol):
+    class WorkflowTracking(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -90,7 +90,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
             ...
 
     @runtime_checkable
-    class WorkflowRecommendation(FlextMeltanoProtocols.Model, Protocol):
+    class WorkflowRecommendation(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -114,7 +114,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
             ...
 
     @runtime_checkable
-    class WmsMetadataResult(FlextMeltanoProtocols.Model, Protocol):
+    class WmsMetadataResult(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -148,7 +148,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
             ...
 
     @runtime_checkable
-    class DbtModelGenerationResult(FlextMeltanoProtocols.Model, Protocol):
+    class DbtModelGenerationResult(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -177,7 +177,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
             ...
 
     @runtime_checkable
-    class WorkflowResult(FlextMeltanoProtocols.Model, Protocol):
+    class WorkflowResult(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
@@ -221,7 +221,7 @@ class FlextDbtOracleWmsProtocolsWorkflow:
             ...
 
     @runtime_checkable
-    class DbtExecutionResult(FlextMeltanoProtocols.Model, Protocol):
+    class DbtExecutionResult(FlextMeltanoProtocols.BaseModel, Protocol):
         """Structural data contract projected from the owning model."""
 
         @property
