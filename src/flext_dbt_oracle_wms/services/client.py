@@ -11,7 +11,7 @@ from collections.abc import Mapping, MutableMapping, Sequence
 from typing import ClassVar
 
 from flext_meltano import FlextMeltanoLibraryRunner
-from flext_oracle_wms import FlextOracleWmsSettings, u as oracle_wms_u
+from flext_oracle_wms import FlextOracleWmsSettings
 
 from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, c, m, p, r, t, u
 
@@ -277,7 +277,7 @@ class FlextDbtOracleWmsClient:
             wms_settings = FlextOracleWmsSettings.fetch_global(
                 overrides=settings_overrides,
             )
-            self._wms_client = oracle_wms_u.OracleWms.Client(settings=wms_settings)
+            self._wms_client = u.OracleWms.Client(settings=wms_settings)
             return r[p.DbtOracleWms.WmsClient].ok(self._wms_client)
         except c.EXC_VALIDATION_TYPE_VALUE as exc:
             return r[p.DbtOracleWms.WmsClient].fail_op(

@@ -8,13 +8,10 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, override
+from typing import override
 
-from flext_dbt_oracle_wms import r, t, u
+from flext_dbt_oracle_wms import m, p, r, t, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
@@ -93,7 +90,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
                 entity_names=entity_names,
                 model_names=model_names,
             ).map(
-                lambda pipeline: p.DbtOracleWms.WorkflowResult(
+                lambda pipeline: m.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=True,
@@ -106,7 +103,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
             )
         else:
             workflow_result = self.extract_wms_metadata(inventory_items, shipments).map(
-                lambda metadata: p.DbtOracleWms.WorkflowResult(
+                lambda metadata: m.DbtOracleWms.WorkflowResult(
                     tracking_id=tracking_info.tracking_id,
                     generate_models=generate_models,
                     run_transformations=False,

@@ -9,13 +9,9 @@ from __future__ import annotations
 
 import shlex
 from collections.abc import MutableSequence, Sequence
-from typing import TYPE_CHECKING
 
-from flext_dbt_oracle_wms import m, r, u
+from flext_dbt_oracle_wms import m, p, r, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsMetadata
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsGeneration(FlextDbtOracleWmsMetadata):

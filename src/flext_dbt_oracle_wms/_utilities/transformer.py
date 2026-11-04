@@ -40,7 +40,7 @@ class FlextDbtOracleWmsUtilitiesTransformer:
             # NOTE (multi-agent, bead mro-wfc8.3): returns a typed model (no
             # item.model_dump() roundtrip; WmsItems are surfaced directly).
             return self.transform_items(entity_data.get("items", [])).map(
-                lambda items: p.DbtOracleWms.EntityTransformationSet(
+                lambda items: m.DbtOracleWms.EntityTransformationSet(
                     entity_names=("items",),
                     items=tuple(items),
                 ),
