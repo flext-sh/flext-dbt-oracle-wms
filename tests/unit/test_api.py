@@ -9,11 +9,9 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-import pytest
-
 from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import m, p, r, tm, u
+from tests import c, m, p, r, tm, u
 
 
 class TestsFlextDbtOracleWmsApi:
@@ -130,7 +128,7 @@ class TestsFlextDbtOracleWmsApi:
 
         tm.fail(result, has="catalog")
 
-    @pytest.mark.parametrize("entity_name", ["items", "shipments"])
+    @c.Tests.MARK.parametrize("entity_name", ["items", "shipments"])
     def test_extract_returns_records_for_the_requested_entity(
         self,
         entity_name: str,
