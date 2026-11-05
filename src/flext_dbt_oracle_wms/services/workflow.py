@@ -10,8 +10,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import override
 
-from flext_dbt_oracle_wms import m, p, r, t, u
+from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms.protocols import p
+from flext_dbt_oracle_wms.result import r
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
+from flext_dbt_oracle_wms.typings import t
+from flext_dbt_oracle_wms.utilities import u
 
 
 class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):

@@ -9,8 +9,13 @@ from __future__ import annotations
 
 from collections.abc import MutableSequence, Sequence
 
-from flext_dbt_oracle_wms import m, p, r, s, t, u
+from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms.protocols import p
+from flext_dbt_oracle_wms.result import r
+from flext_dbt_oracle_wms.service import s
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
+from flext_dbt_oracle_wms.typings import t
+from flext_dbt_oracle_wms.utilities import u
 
 
 class FlextDbtOracleWmsBase(s):

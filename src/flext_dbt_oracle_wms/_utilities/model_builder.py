@@ -10,7 +10,9 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
-from flext_dbt_oracle_wms import c, m, r
+from flext_dbt_oracle_wms.constants import c
+from flext_dbt_oracle_wms.models import m
+from flext_dbt_oracle_wms.result import r
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import p
