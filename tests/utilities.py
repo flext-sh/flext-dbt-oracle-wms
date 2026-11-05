@@ -14,8 +14,8 @@ from pathlib import Path
 
 from flext_tests import FlextTestsUtilities
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities
-from tests import m, p, r, t
+from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, r
+from tests import m, p, t
 
 
 class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):

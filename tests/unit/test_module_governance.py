@@ -7,8 +7,6 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-import pytest
-
 from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsCliService
 from tests import c, main, settings, tm
 
@@ -17,7 +15,7 @@ class TestsFlextDbtOracleWmsModuleGovernance:
     """Behavior contract for flext_dbt_oracle_wms package entrypoints."""
 
     @staticmethod
-    @pytest.mark.parametrize(
+    @c.Tests.MARK.parametrize(
         (c.HandlerMode.COMMAND, "expected_exit_code"),
         [("info", 0), ("unknown", 1), ("", 1)],
     )
@@ -38,7 +36,7 @@ class TestsFlextDbtOracleWmsModuleGovernance:
         tm.that(result.value, eq="FLEXT DBT Oracle WMS")
 
     @staticmethod
-    @pytest.mark.parametrize("argv", [[], ["info"]])
+    @c.Tests.MARK.parametrize("argv", [[], ["info"]])
     def test_main_entrypoint_defaults_to_info_success(argv: list[str]) -> None:
         """Test main entrypoint defaults to info success."""
         tm.that(main(argv), eq=0)
