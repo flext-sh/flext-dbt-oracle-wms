@@ -11,7 +11,7 @@ from typing import override
 
 from flext_tests import FlextTestsServiceBase
 
-from tests import TestsFlextDbtOracleWmsSettings, m
+from tests import TestsFlextDbtOracleWmsSettings, m, p
 
 
 class TestsFlextDbtOracleWmsServiceBase(FlextTestsServiceBase):
@@ -22,7 +22,7 @@ class TestsFlextDbtOracleWmsServiceBase(FlextTestsServiceBase):
     # pattern per flext-cli tests/base.py).
     @classmethod
     @override
-    def runtime_bootstrap_options(cls) -> m.RuntimeBootstrapOptions:
+    def runtime_bootstrap_options(cls) -> p.RuntimeBootstrapOptions:
         return m.RuntimeBootstrapOptions(settings_type=TestsFlextDbtOracleWmsSettings)
 
 

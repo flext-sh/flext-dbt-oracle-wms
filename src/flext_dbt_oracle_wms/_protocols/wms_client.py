@@ -6,12 +6,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
 from flext_meltano import p
 
 if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import m, t
+    from flext_dbt_oracle_wms import t
 
 
 class FlextDbtOracleWmsProtocolsWmsClient:
@@ -21,7 +22,7 @@ class FlextDbtOracleWmsProtocolsWmsClient:
     class WmsClient(Protocol):
         """Protocol for the consumed Oracle WMS client boundary."""
 
-        def discover_entities(self) -> p.Result[t.StrSequence]:
+        def discover_entities(self) -> p.Result[Sequence[str]]:
             """Discover available Oracle WMS entities."""
             ...
 
@@ -30,7 +31,7 @@ class FlextDbtOracleWmsProtocolsWmsClient:
             entity_name: str,
             limit: int | None = None,
             filters: t.ConfigurationMapping | None = None,
-        ) -> p.Result[t.SequenceOf[t.StrMapping]]:
+        ) -> p.Result[Sequence[Mapping[str, str]]]:
             """Fetch data for a specific Oracle WMS entity."""
             ...
 
@@ -38,7 +39,7 @@ class FlextDbtOracleWmsProtocolsWmsClient:
             """Start the Oracle WMS client."""
             ...
 
-        def health_check(self) -> p.Result[m.Api.HttpResponse]:
+        def health_check(self) -> p.Result[p.Api.HttpResponse]:
             """Check Oracle WMS API health."""
             ...
 

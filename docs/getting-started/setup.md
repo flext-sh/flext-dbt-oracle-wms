@@ -430,7 +430,7 @@ cat > tap-settings.json << 'EOF'
   "host": "your-oracle-host.com",
   "port": 1521,
   "service": "XEPDB1",
-  "user": "tap_user",
+  c.ContextScope.USER: "tap_user",
   "password": "tap-password",
   "default_replication_method": "INCREMENTAL",
   "filter_schemas": ["WMS"]

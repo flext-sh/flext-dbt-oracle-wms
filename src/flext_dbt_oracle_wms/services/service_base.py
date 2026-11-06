@@ -7,17 +7,17 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import MutableSequence, Sequence
 
-from flext_dbt_oracle_wms import p, r, s, t, u
+from flext_dbt_oracle_wms import m, p, r, s, t, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
 
 
 class FlextDbtOracleWmsBase(s):
     """Shared runtime dependencies and low-level entity access."""
 
-    _client: p.DbtOracleWms.Client | None = u.PrivateAttr(default_factory=lambda: None)
-    _service: p.DbtOracleWms.Service | None = u.PrivateAttr(
+    _client: p.DbtOracleWms.Client | None = m.PrivateAttr(default_factory=lambda: None)
+    _service: p.DbtOracleWms.Service | None = m.PrivateAttr(
         default_factory=lambda: None,
     )
 
@@ -55,7 +55,7 @@ class FlextDbtOracleWmsBase(s):
             self._service = u.DbtOracleWms.Service(self.settings.DbtOracleWms)
         return self._service
 
-    def discover_oracle_wms_entities(self) -> p.Result[t.StrSequence]:
+    def discover_oracle_wms_entities(self) -> p.Result[Sequence[str]]:
         """Discover Oracle WMS entities through the public domain facade.
 
         Returns:
@@ -63,7 +63,7 @@ class FlextDbtOracleWmsBase(s):
             discovery failure.
 
         """
-        discovered: p.Result[t.StrSequence] = self.client.discover_oracle_wms_entities()
+        discovered: p.Result[Sequence[str]] = self.client.discover_oracle_wms_entities()
         return discovered
 
     def extract_oracle_wms_data(
@@ -89,10 +89,10 @@ class FlextDbtOracleWmsBase(s):
 
     @staticmethod
     def _resolve_entity_names(
-        inventory_items: t.StrSequence | None,
-        shipments: t.StrSequence | None,
-    ) -> t.StrSequence | None:
-        entity_names: t.MutableSequenceOf[str] = []
+        inventory_items: Sequence[str] | None,
+        shipments: Sequence[str] | None,
+    ) -> Sequence[str] | None:
+        entity_names: MutableSequence[str] = []
         if inventory_items is not None:
             entity_names.append("items")
         if shipments is not None:
@@ -102,8 +102,8 @@ class FlextDbtOracleWmsBase(s):
     def _extract_entity_records(
         self,
         entity_name: str,
-        requested_identifiers: t.StrSequence | None,
-        identifier_fields: t.StrSequence,
+        requested_identifiers: Sequence[str] | None,
+        identifier_fields: Sequence[str],
     ) -> p.Result[Sequence[t.ConfigurationMapping]]:
         extract_result = self.client.extract_oracle_wms_data(entity_name)
         if extract_result.failure:

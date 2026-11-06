@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 import sys
-from collections.abc import Callable
+from collections.abc import Callable, Mapping, MutableMapping, Sequence
 from typing import ClassVar
 
 from flext_dbt_oracle_wms import FlextDbtOracleWms, p, r, t, u
@@ -36,7 +36,7 @@ class FlextDbtOracleWmsCliService:
     def execute_command(
         self,
         command: str,
-        args: t.MappingKV[str, t.JsonValue | None] | None = None,
+        args: Mapping[str, t.JsonValue | None] | None = None,
     ) -> int:
         """Execute a named CLI command and return an exit code.
 
@@ -51,7 +51,7 @@ class FlextDbtOracleWmsCliService:
             failure.
 
         """
-        callables: t.MappingKV[str, Callable[[], p.Result[str]]] = {
+        callables: Mapping[str, Callable[[], p.Result[str]]] = {
             "discover": self.handle_discover,
             "extract": lambda: self.handle_extract(args),
             "pipeline": self.handle_pipeline,
@@ -64,7 +64,7 @@ class FlextDbtOracleWmsCliService:
         result = func()
         return 1 if result.failure else 0
 
-    def main(self, argv: t.StrSequence | None = None) -> int:
+    def main(self, argv: Sequence[str] | None = None) -> int:
         """Run the package CLI from argv-like input.
 
         Args:
@@ -77,7 +77,7 @@ class FlextDbtOracleWmsCliService:
         """
         command_args = list(argv) if argv is not None else sys.argv[1:]
         command = command_args[0] if command_args else self._default_command
-        command_options: t.MutableMappingKV[str, t.JsonValue | None] = {}
+        command_options: MutableMapping[str, t.JsonValue | None] = {}
         if command == "extract" and len(command_args) > 1:
             command_options["entity"] = command_args[1]
         return self.execute_command(command, command_options or None)
@@ -97,7 +97,7 @@ class FlextDbtOracleWmsCliService:
 
     def handle_extract(
         self,
-        args: t.MappingKV[str, t.JsonValue | None] | None = None,
+        args: Mapping[str, t.JsonValue | None] | None = None,
     ) -> p.Result[str]:
         """Handle the extract command.
 
@@ -152,7 +152,7 @@ class FlextDbtOracleWmsCliService:
         return r[str].ok("Pipeline completed successfully")
 
 
-def main(argv: t.StrSequence | None = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     """Run the DBT Oracle WMS CLI entrypoint.
 
     Args:

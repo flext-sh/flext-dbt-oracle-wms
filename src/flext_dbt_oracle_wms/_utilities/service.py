@@ -7,15 +7,12 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, ClassVar
+from collections.abc import Sequence
+from typing import ClassVar
 
-from flext_core import r
-from flext_meltano import u
+from flext_meltano import r, u
 
-from flext_dbt_oracle_wms import m, t
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
+from flext_dbt_oracle_wms import m, p, t
 
 
 class FlextDbtOracleWmsUtilitiesService:
@@ -39,8 +36,8 @@ class FlextDbtOracleWmsUtilitiesService:
 
         def generate_workflow_recommendations(
             self,
-            entities: t.SequenceOf[t.ConfigurationMapping] | None = None,
-        ) -> p.Result[m.DbtOracleWms.WorkflowRecommendation]:
+            entities: Sequence[t.ConfigurationMapping] | None = None,
+        ) -> p.Result[p.DbtOracleWms.WorkflowRecommendation]:
             """Generate simple workflow recommendations for entity processing.
 
             Args:
@@ -58,7 +55,7 @@ class FlextDbtOracleWmsUtilitiesService:
             recommendation_message = ""
             if total > self.PERFORMANCE_RECOMMENDATION_THRESHOLD:
                 recommendation_message = "Process entities in smaller batches"
-            return r[m.DbtOracleWms.WorkflowRecommendation].ok(
+            return r[p.DbtOracleWms.WorkflowRecommendation].ok(
                 m.DbtOracleWms.WorkflowRecommendation(
                     total_entities=total,
                     recommendation=recommendation_message,
@@ -69,8 +66,8 @@ class FlextDbtOracleWmsUtilitiesService:
 
         def log_workflow_completion(
             self,
-            tracking_info: m.DbtOracleWms.WorkflowTracking,
-            result: p.Result[m.DbtOracleWms.WorkflowResult],
+            tracking_info: p.DbtOracleWms.WorkflowTracking,
+            result: p.Result[p.DbtOracleWms.WorkflowResult],
         ) -> None:
             """Log workflow completion status.
 
@@ -90,9 +87,9 @@ class FlextDbtOracleWmsUtilitiesService:
             self,
             workflow_name: str,
             workflow_type: str,
-            entity_names: t.StrSequence | None = None,
+            entity_names: Sequence[str] | None = None,
             additional_data: t.ConfigValueMapping | None = None,
-        ) -> m.DbtOracleWms.WorkflowTracking:
+        ) -> p.DbtOracleWms.WorkflowTracking:
             """Return typed tracking model for workflow instrumentation.
 
             Args:

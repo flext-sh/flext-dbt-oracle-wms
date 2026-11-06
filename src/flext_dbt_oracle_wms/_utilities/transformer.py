@@ -7,15 +7,11 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from collections.abc import MutableSequence, Sequence
-from typing import TYPE_CHECKING
+from collections.abc import Mapping, MutableSequence, Sequence
 
-from flext_core import r
+from flext_meltano import r
 
-from flext_dbt_oracle_wms import c, m, t
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
+from flext_dbt_oracle_wms import c, m, p, t
 
 
 class FlextDbtOracleWmsUtilitiesTransformer:
@@ -26,8 +22,8 @@ class FlextDbtOracleWmsUtilitiesTransformer:
 
         def transform_all_entities(
             self,
-            entity_data: t.MappingKV[str, t.SequenceOf[t.ConfigurationMapping]],
-        ) -> p.Result[m.DbtOracleWms.EntityTransformationSet]:
+            entity_data: Mapping[str, Sequence[t.ConfigurationMapping]],
+        ) -> p.Result[p.DbtOracleWms.EntityTransformationSet]:
             """Transform WMS entities into a typed transformation set.
 
             Args:
@@ -50,8 +46,8 @@ class FlextDbtOracleWmsUtilitiesTransformer:
 
         @staticmethod
         def transform_items(
-            records: t.SequenceOf[t.ConfigurationMapping],
-        ) -> p.Result[Sequence[m.DbtOracleWms.WmsItem]]:
+            records: Sequence[t.ConfigurationMapping],
+        ) -> p.Result[Sequence[p.DbtOracleWms.WmsItem]]:
             """Transform item records to typed WmsItem models.
 
             Args:
@@ -62,16 +58,16 @@ class FlextDbtOracleWmsUtilitiesTransformer:
                 first invalid record index.
 
             """
-            transformed: MutableSequence[m.DbtOracleWms.WmsItem] = []
+            transformed: MutableSequence[p.DbtOracleWms.WmsItem] = []
             for index, record in enumerate(records):
                 try:
                     item = m.DbtOracleWms.WmsItem.model_validate(record)
                 except c.ValidationError as exc:
-                    return r[Sequence[m.DbtOracleWms.WmsItem]].fail(
+                    return r[Sequence[p.DbtOracleWms.WmsItem]].fail(
                         f"Invalid item record at index {index}: {exc}",
                     )
                 transformed.append(item)
-            return r[Sequence[m.DbtOracleWms.WmsItem]].ok(transformed)
+            return r[Sequence[p.DbtOracleWms.WmsItem]].ok(transformed)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsUtilitiesTransformer"]

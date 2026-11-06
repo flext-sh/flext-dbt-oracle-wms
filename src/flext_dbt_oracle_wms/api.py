@@ -13,10 +13,6 @@ from typing import TYPE_CHECKING
 
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsWorkflow
 
-# NOTE (multi-agent): mro-wgwh.4 — canonical api.py replaces the parallel
-# simple_api branch (operator order: simple_api must not exist); behavior lives
-# in services/* mixins composed by MRO.
-
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import FlextDbtOracleWmsSettings, p
 

@@ -105,7 +105,7 @@ WMS Analytics Domain
 Use WMS-specific business terms consistently:
 
 - **Allocation** (not "assignment" or "reservation")
-- **Wave** (not "batch" or "group")
+- **Wave** (not c.ProcessingMode.BATCH or "group")
 - **Pick Location** (not "source location")
 - **On-Hand Quantity** (not "available quantity")
 

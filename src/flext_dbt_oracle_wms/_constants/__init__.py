@@ -7,27 +7,19 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from types import MappingProxyType
 from typing import TYPE_CHECKING
 
 from flext_core.lazy import install_lazy_exports
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms._constants.base import FlextDbtOracleWmsConstantsBase
-    from flext_dbt_oracle_wms._constants.enums import FlextDbtOracleWmsConstantsEnums
 
 
-__all__: tuple[str, ...] = (
-    "FlextDbtOracleWmsConstantsBase",
-    "FlextDbtOracleWmsConstantsEnums",
-)
+__all__: tuple[str, ...] = ("FlextDbtOracleWmsConstantsBase",)
 
 install_lazy_exports(
     __name__,
     globals(),
-    MappingProxyType({
-        "FlextDbtOracleWmsConstantsBase": ".base",
-        "FlextDbtOracleWmsConstantsEnums": ".enums",
-    }),
+    {"FlextDbtOracleWmsConstantsBase": ".base"},
     public_exports=__all__,
 )

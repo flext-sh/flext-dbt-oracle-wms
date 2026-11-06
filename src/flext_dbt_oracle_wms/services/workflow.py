@@ -7,13 +7,11 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override
+from collections.abc import Sequence
+from typing import override
 
-from flext_dbt_oracle_wms import m, r, t
+from flext_dbt_oracle_wms import m, p, r, t, u
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsGeneration
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
 
 
 class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
@@ -39,12 +37,12 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
 
     def run_oracle_wms_to_dbt_workflow(
         self,
-        inventory_items: t.StrSequence | None = None,
-        shipments: t.StrSequence | None = None,
+        inventory_items: Sequence[str] | None = None,
+        shipments: Sequence[str] | None = None,
         *,
         generate_models: bool = True,
         run_transformations: bool = False,
-    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
+    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
         """Run the real Oracle WMS-to-DBT workflow using domain-backed clients.
 
         Args:
@@ -69,8 +67,8 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
             workflow_type="dbt_oracle_wms",
             entity_names=entity_names,
         )
-        generated_models: t.StrSequence = ()
-        model_names: t.StrSequence | None = None
+        generated_models: Sequence[str] = ()
+        model_names: Sequence[str] | None = None
         if generate_models:
             model_generation_result = self.generate_dbt_models_from_wms(
                 inventory_items,
@@ -79,7 +77,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
             if model_generation_result.failure:
                 return self._log_and_return(
                     tracking_info,
-                    r[m.DbtOracleWms.WorkflowResult].from_failure(
+                    r[p.DbtOracleWms.WorkflowResult].from_failure(
                         model_generation_result,
                     ),
                 )
@@ -120,9 +118,9 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
 
     def _log_and_return(
         self,
-        tracking_info: m.DbtOracleWms.WorkflowTracking,
-        result: p.Result[m.DbtOracleWms.WorkflowResult],
-    ) -> p.Result[m.DbtOracleWms.WorkflowResult]:
+        tracking_info: p.DbtOracleWms.WorkflowTracking,
+        result: p.Result[p.DbtOracleWms.WorkflowResult],
+    ) -> p.Result[p.DbtOracleWms.WorkflowResult]:
         """Log workflow completion and pass the result through unchanged.
 
         Args:
@@ -163,7 +161,7 @@ class FlextDbtOracleWmsWorkflow(FlextDbtOracleWmsGeneration):
         """
         self.logger.info("Executing DBT Oracle WMS service")
         return r[t.JsonMapping].ok(
-            t.Cli.JSON_MAPPING_ADAPTER.validate_python(
+            u.json_mapping_adapter().validate_python(
                 self.settings.model_dump(mode="json")
             )
         )

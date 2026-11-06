@@ -8,14 +8,10 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import TYPE_CHECKING
 
-from flext_core import r
+from flext_meltano import r
 
-from flext_dbt_oracle_wms import c, m, t
-
-if TYPE_CHECKING:
-    from flext_dbt_oracle_wms import p
+from flext_dbt_oracle_wms import c, m, p
 
 
 class FlextDbtOracleWmsUtilitiesModelBuilder:
@@ -27,8 +23,8 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
         @classmethod
         def generate_wms_staging_models(
             cls,
-            oracle_sources: t.StrSequence,
-        ) -> p.Result[Sequence[m.DbtOracleWms.DbtModel]]:
+            oracle_sources: Sequence[str],
+        ) -> p.Result[Sequence[p.DbtOracleWms.DbtModel]]:
             """Create one staging model per source name.
 
             Args:
@@ -59,7 +55,7 @@ class FlextDbtOracleWmsUtilitiesModelBuilder:
                 )
                 for source in oracle_sources
             ]
-            return r[Sequence[m.DbtOracleWms.DbtModel]].ok(models)
+            return r[Sequence[p.DbtOracleWms.DbtModel]].ok(models)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsUtilitiesModelBuilder"]

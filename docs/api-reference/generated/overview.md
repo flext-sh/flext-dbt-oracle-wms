@@ -28,7 +28,7 @@
   `FlextDbtOracleWmsProtocols`, `FlextDbtOracleWmsServiceBase`,
   `FlextDbtOracleWmsSettings`, `FlextDbtOracleWmsTypes`, `FlextDbtOracleWmsUtilities`
   (+5 more)
-- Exported module shortcuts: `services`
+- Exported module shortcuts: _none_
 - Generated module pages: `8`
 
 ## Next Pages

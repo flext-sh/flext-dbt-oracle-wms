@@ -7,11 +7,12 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from typing import Annotated
 
-from flext_meltano import m, u
+from flext_meltano import m
 
-from flext_dbt_oracle_wms import c, t
+from flext_dbt_oracle_wms import c
 
 
 class FlextDbtOracleWmsModelsDbt(m):
@@ -20,44 +21,44 @@ class FlextDbtOracleWmsModelsDbt(m):
     class DbtModel(m.ArbitraryTypesModel):
         """WMS-specific DBT model metadata."""
 
-        name: Annotated[str, u.Field(description="DBT model name")]
+        name: Annotated[str, m.Field(description="DBT model name")]
         dbt_model_type: Annotated[
             str,
-            u.Field(description="DBT model classification"),
+            m.Field(description="DBT model classification"),
         ] = "staging"
-        schema_name: Annotated[str, u.Field(description="Target schema name")] = (
+        schema_name: Annotated[str, m.Field(description="Target schema name")] = (
             "wms_staging"
         )
-        table_name: Annotated[str, u.Field(description="Target table name")]
+        table_name: Annotated[str, m.Field(description="Target table name")]
         materialization: Annotated[
             str,
-            u.Field(description="DBT materialization strategy"),
+            m.Field(description="DBT materialization strategy"),
         ] = c.DbtOracleWms.Dbt.Materialization.VIEW.value
-        sql_content: Annotated[str, u.Field(description="Model SQL body")]
+        sql_content: Annotated[str, m.Field(description="Model SQL body")]
         description: Annotated[
             str,
-            u.Field(description="Human-readable model description"),
+            m.Field(description="Human-readable model description"),
         ] = ""
         columns: Annotated[
-            t.SequenceOf[t.StrMapping],
-            u.Field(description="Column metadata payloads"),
-        ] = u.Field(default_factory=tuple)
+            Sequence[Mapping[str, str]],
+            m.Field(description="Column metadata payloads"),
+        ] = m.Field(default_factory=tuple)
         dependencies: Annotated[
-            t.StrSequence,
-            u.Field(description="Upstream model dependencies"),
-        ] = u.Field(default_factory=tuple)
+            Sequence[str],
+            m.Field(description="Upstream model dependencies"),
+        ] = m.Field(default_factory=tuple)
         wms_entity_type: Annotated[
             str,
-            u.Field(description="Oracle WMS entity represented by this model"),
+            m.Field(description="Oracle WMS entity represented by this model"),
         ]
         oracle_source: Annotated[
             str,
-            u.Field(description="Oracle source for this model"),
+            m.Field(description="Oracle source for this model"),
         ]
         wms_business_rules: Annotated[
-            t.StrSequence,
-            u.Field(description="WMS-specific business rules attached to the model"),
-        ] = u.Field(default_factory=tuple)
+            Sequence[str],
+            m.Field(description="WMS-specific business rules attached to the model"),
+        ] = m.Field(default_factory=tuple)
 
 
 __all__: list[str] = ["FlextDbtOracleWmsModelsDbt"]

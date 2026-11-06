@@ -352,7 +352,7 @@ cat > tap-oracle-wms-settings.json << 'EOF'
   "host": "wms-prod.company.com",
   "port": 1521,
   "service": "WMSPROD",
-  "user": "tap_user",
+  c.ContextScope.USER: "tap_user",
   "password": "tap_password",
   "filter_schemas": ["WMS"],
   "default_replication_method": "INCREMENTAL",

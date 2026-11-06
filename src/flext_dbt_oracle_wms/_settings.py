@@ -9,9 +9,10 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, Annotated
 
-from flext_meltano import FlextMeltanoSettings, m, t
+from flext_meltano import FlextMeltanoSettings, m
 
 
 class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
@@ -30,7 +31,7 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
         """Namespaced dbt Oracle WMS settings."""
 
         required_fields_per_entity: Annotated[
-            t.MappingKV[str, t.StrSequence],
+            Mapping[str, Sequence[str]],
             m.Field(
                 description="Required fields per WMS entity (typed mapping)",
             ),

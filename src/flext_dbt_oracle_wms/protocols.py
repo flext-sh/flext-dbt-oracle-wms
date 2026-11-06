@@ -1,3 +1,4 @@
+# AUTO-GENERATED FILE — Regenerate with: make gen
 """Protocols for DBT Oracle WMS integration points.
 
 Composes the family-part protocols from ``_protocols/`` (base,
@@ -11,14 +12,20 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_meltano import FlextMeltanoProtocols
-from flext_oracle_wms import FlextOracleWmsProtocols
+from flext_meltano import p as flext_meltano_p
+from flext_oracle_wms import p as flext_oracle_wms_p
 
-from flext_dbt_oracle_wms._protocols import FlextDbtOracleWmsProtocolsContracts
-from flext_dbt_oracle_wms._protocols.base import FlextDbtOracleWmsProtocolsBase
+from flext_dbt_oracle_wms._protocols import (
+    FlextDbtOracleWmsProtocolsBase,
+    FlextDbtOracleWmsProtocolsConnection,
+    FlextDbtOracleWmsProtocolsContracts,
+    FlextDbtOracleWmsProtocolsDbt,
+    FlextDbtOracleWmsProtocolsItems,
+    FlextDbtOracleWmsProtocolsWorkflow,
+)
 
 
-class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols):
+class FlextDbtOracleWmsProtocols(flext_meltano_p, flext_oracle_wms_p):
     """Namespace for DBT Oracle WMS protocol contracts.
 
     Extends :class:`FlextDbtOracleWmsProtocolsBase` (source of truth for
@@ -29,11 +36,15 @@ class FlextDbtOracleWmsProtocols(FlextMeltanoProtocols, FlextOracleWmsProtocols)
 
     class DbtOracleWms(
         FlextDbtOracleWmsProtocolsBase.DbtOracleWms,
+        FlextDbtOracleWmsProtocolsBase,
+        FlextDbtOracleWmsProtocolsConnection,
         FlextDbtOracleWmsProtocolsContracts,
+        FlextDbtOracleWmsProtocolsDbt,
+        FlextDbtOracleWmsProtocolsItems,
+        FlextDbtOracleWmsProtocolsWorkflow,
     ):
         """DBT Oracle WMS protocol namespace."""
 
 
 p = FlextDbtOracleWmsProtocols
-
 __all__: list[str] = ["FlextDbtOracleWmsProtocols", "p"]

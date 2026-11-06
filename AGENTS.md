@@ -41,7 +41,7 @@ src/flext_dbt_oracle_wms/
 - Workflow branches between model generation and optional transformations, returning a
   typed `WorkflowResult`. Connection profile is a typed `m.DbtOracleWms.*` model.
 - WMS access via `flext-oracle-wms`.
-- Config/settings canonical pattern: ADR-012.
+- Config/settings canonical pattern: ADR-005 (SSOT) and ADR-024 (DI config contract).
 - Codemod governance (ast-grep + make mod): ADR-014.
 
 ## Commands
