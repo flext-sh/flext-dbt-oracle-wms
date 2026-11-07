@@ -375,7 +375,7 @@ flext-tap-oracle-wms --config tap-oracle-wms-settings.json --discover
 
 #### **Data Pipeline Flow**
 
-```
+```text
 Oracle WMS Database
         ↓
 Singer Tap (flext-tap-oracle-wms)

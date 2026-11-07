@@ -46,7 +46,7 @@ transformations:
 
 #### **Layer Separation**
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │                    Business Intelligence                │
 │     (External - Tableau, Power BI, Custom Apps)       │
@@ -91,7 +91,7 @@ transformations:
 
 #### **Bounded Contexts**
 
-```
+```text
 WMS Analytics Domain
 ├── Allocation Context     # Pick/pack operations
 ├── Inventory Context      # Stock management
@@ -113,7 +113,7 @@ Use WMS-specific business terms consistently:
 
 ### Directory Organization
 
-```
+```text
 models/
 ├── staging/                    # 🔵 Domain Layer
 │   ├── _sources.yml           # Source definitions
