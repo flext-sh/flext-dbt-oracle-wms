@@ -39,7 +39,7 @@ Oracle WMS project, including staging models, mart models, and their relationshi
 
 ## 📊 Model Architecture Overview
 
-```
+```text
 Data Flow Architecture:
 Oracle WMS Raw → Staging Models → Mart Models → Business Intelligence
 
@@ -312,7 +312,7 @@ ORDER BY pick_rate_percent ASC;
 
 ### Dependency Graph
 
-```
+```text
 Staging Layer:
 ├── stg_wms__allocation
 ├── stg_wms__inventory
