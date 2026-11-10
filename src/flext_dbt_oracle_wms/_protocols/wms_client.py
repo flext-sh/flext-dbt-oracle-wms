@@ -9,8 +9,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from flext_api import p as api_p
-from flext_meltano import p
+from flext_oracle_wms import p
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms import t
@@ -40,7 +39,7 @@ class FlextDbtOracleWmsProtocolsWmsClient:
             """Start the Oracle WMS client."""
             ...
 
-        def health_check(self) -> p.Result[api_p.Api.HttpResponse]:
+        def health_check(self) -> p.Result[p.Api.HttpResponse]:
             """Check Oracle WMS API health."""
             ...
 
