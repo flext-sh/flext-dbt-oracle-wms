@@ -8,13 +8,13 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_meltano import c as flext_meltano_c
-from flext_oracle_wms import c as flext_oracle_wms_c
+from flext_meltano import FlextMeltanoConstants
+from flext_oracle_wms import FlextOracleWmsConstants
 
 from flext_dbt_oracle_wms._constants import FlextDbtOracleWmsConstantsBase
 
 
-class FlextDbtOracleWmsConstants(flext_meltano_c, flext_oracle_wms_c):
+class FlextDbtOracleWmsConstants(FlextMeltanoConstants, FlextOracleWmsConstants):
     """Constants for DBT Oracle WMS with dual Meltano and WMS domain inheritance."""
 
     class DbtOracleWms(
