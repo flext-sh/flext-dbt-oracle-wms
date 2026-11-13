@@ -10,10 +10,11 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from flext_meltano import FlextMeltanoProtocols, p
-from flext_oracle_wms import p as _oracle_wms_p
+from flext_meltano import FlextMeltanoProtocols
 
 if TYPE_CHECKING:
+    from flext_meltano import p
+
     from flext_dbt_oracle_wms import t
     from flext_dbt_oracle_wms._protocols import (
         FlextDbtOracleWmsProtocolsConnection,
@@ -21,7 +22,7 @@ if TYPE_CHECKING:
     )
 
 
-class FlextDbtOracleWmsProtocolsBase(p, _oracle_wms_p):
+class FlextDbtOracleWmsProtocolsBase:
     """Namespace for DBT Oracle WMS protocol contracts."""
 
     class DbtOracleWms:
