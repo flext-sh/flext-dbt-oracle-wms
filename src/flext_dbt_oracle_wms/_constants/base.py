@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from enum import StrEnum, unique
-from typing import Final
+from typing import ClassVar
 
 
 class FlextDbtOracleWmsConstantsBase:
@@ -17,7 +17,7 @@ class FlextDbtOracleWmsConstantsBase:
     class Dbt:
         """DBT project metadata, materializations and model templates."""
 
-        PROJECT_NAME: Final[str] = "flext_dbt_oracle_wms"
+        PROJECT_NAME: ClassVar[str] = "flext_dbt_oracle_wms"
 
         @unique
         class Materialization(StrEnum):
@@ -30,7 +30,7 @@ class FlextDbtOracleWmsConstantsBase:
         # dbt Jinja template, not executable SQL: `source()` is resolved by dbt at
         # compile time against the project's declared sources, so the value never
         # reaches a database driver as a literal.
-        STAGING_SELECT_TEMPLATE: Final[str] = (
+        STAGING_SELECT_TEMPLATE: ClassVar[str] = (
             "select * from {{{{ source('oracle_wms', '{source}') }}}}"
         )
 
