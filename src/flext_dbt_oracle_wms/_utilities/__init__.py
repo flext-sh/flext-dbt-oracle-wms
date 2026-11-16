@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from flext_core.lazy import install_lazy_exports
+from flext_core.lazy import defer_lazy_bases, install_lazy_exports
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms._utilities.base import FlextDbtOracleWmsUtilitiesBase
@@ -41,4 +41,20 @@ install_lazy_exports(
         "FlextDbtOracleWmsUtilitiesTransformer": ".transformer",
     },
     public_exports=__all__,
+    deferred_members={
+        "FlextDbtOracleWmsUtilitiesBase": (),
+        "FlextDbtOracleWmsUtilitiesModelBuilder": ("ModelBuilder",),
+        "FlextDbtOracleWmsUtilitiesService": ("Service",),
+        "FlextDbtOracleWmsUtilitiesTransformer": ("Transformer",),
+    },
+)
+
+defer_lazy_bases(
+    __name__,
+    {
+        "FlextDbtOracleWmsUtilitiesBase": (
+            ("flext_meltano", "u"),
+            ("flext_oracle_wms", "u"),
+        ),
+    },
 )

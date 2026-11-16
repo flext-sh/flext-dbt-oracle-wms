@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from flext_core.lazy import install_lazy_exports
+from flext_core.lazy import defer_lazy_bases, install_lazy_exports
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms._protocols.base import FlextDbtOracleWmsProtocolsBase
@@ -57,4 +57,39 @@ install_lazy_exports(
         "FlextDbtOracleWmsProtocolsWorkflow": ".workflow",
     },
     public_exports=__all__,
+    deferred_members={
+        "FlextDbtOracleWmsProtocolsBase": (
+            "DbtOracleWms",
+            "DbtConnectionProfile",
+        ),
+        "FlextDbtOracleWmsProtocolsConnection": (
+            "ConnectionStatus",
+            "PipelineResult",
+        ),
+        "FlextDbtOracleWmsProtocolsContracts": (),
+        "FlextDbtOracleWmsProtocolsDbt": ("DbtModel",),
+        "FlextDbtOracleWmsProtocolsDbtRunner": ("DbtRunner",),
+        "FlextDbtOracleWmsProtocolsItems": ("WmsItem",),
+        "FlextDbtOracleWmsProtocolsWmsClient": ("WmsClient",),
+        "FlextDbtOracleWmsProtocolsWorkflow": (
+            "EntityTransformationSet",
+            "TransformationResult",
+            "WorkflowTracking",
+            "WorkflowRecommendation",
+            "WmsMetadataResult",
+            "DbtModelGenerationResult",
+            "WorkflowResult",
+            "DbtExecutionResult",
+        ),
+    },
+)
+
+defer_lazy_bases(
+    __name__,
+    {
+        "FlextDbtOracleWmsProtocolsContracts": (
+            (".", "FlextDbtOracleWmsProtocolsDbtRunner"),
+            (".", "FlextDbtOracleWmsProtocolsWmsClient"),
+        ),
+    },
 )
