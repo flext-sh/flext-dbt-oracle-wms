@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from flext_core.lazy import install_lazy_exports
+from flext_core.lazy import defer_lazy_bases, install_lazy_exports
 
 if TYPE_CHECKING:
     from flext_dbt_oracle_wms._models.base import FlextDbtOracleWmsModelsBase
@@ -40,4 +40,37 @@ install_lazy_exports(
         "FlextDbtOracleWmsModelsWorkflow": ".workflow",
     },
     public_exports=__all__,
+    deferred_members={
+        "FlextDbtOracleWmsModelsBase": ("DbtConnectionProfile",),
+        "FlextDbtOracleWmsModelsConnection": (
+            "ConnectionStatus",
+            "PipelineResult",
+        ),
+        "FlextDbtOracleWmsModelsDbt": ("DbtModel",),
+        "FlextDbtOracleWmsModelsItems": ("WmsItem",),
+        "FlextDbtOracleWmsModelsWorkflow": (
+            "EntityTransformationSet",
+            "TransformationResult",
+            "WorkflowTracking",
+            "WorkflowRecommendation",
+            "WmsMetadataResult",
+            "DbtModelGenerationResult",
+            "WorkflowResult",
+            "DbtExecutionResult",
+        ),
+    },
+)
+
+defer_lazy_bases(
+    __name__,
+    {
+        "FlextDbtOracleWmsModelsBase": (
+            ("flext_meltano", "m"),
+            ("flext_oracle_wms", "m"),
+        ),
+        "FlextDbtOracleWmsModelsConnection": (("flext_meltano", "m"),),
+        "FlextDbtOracleWmsModelsDbt": (("flext_meltano", "m"),),
+        "FlextDbtOracleWmsModelsItems": (("flext_meltano", "m"),),
+        "FlextDbtOracleWmsModelsWorkflow": (("flext_meltano", "m"),),
+    },
 )
