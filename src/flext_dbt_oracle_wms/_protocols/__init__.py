@@ -57,4 +57,14 @@ install_lazy_exports(
         "FlextDbtOracleWmsProtocolsWorkflow": ".workflow",
     },
     public_exports=__all__,
+    deferred_members=(
+        "FlextDbtOracleWmsProtocolsBase",
+        "FlextDbtOracleWmsProtocolsConnection",
+        "FlextDbtOracleWmsProtocolsContracts",
+        "FlextDbtOracleWmsProtocolsDbt",
+        "FlextDbtOracleWmsProtocolsDbtRunner",
+        "FlextDbtOracleWmsProtocolsItems",
+        "FlextDbtOracleWmsProtocolsWmsClient",
+        "FlextDbtOracleWmsProtocolsWorkflow",
+    ),
 )

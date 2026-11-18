@@ -41,4 +41,10 @@ install_lazy_exports(
         "FlextDbtOracleWmsUtilitiesTransformer": ".transformer",
     },
     public_exports=__all__,
+    deferred_members=(
+        "FlextDbtOracleWmsUtilitiesBase",
+        "FlextDbtOracleWmsUtilitiesModelBuilder",
+        "FlextDbtOracleWmsUtilitiesService",
+        "FlextDbtOracleWmsUtilitiesTransformer",
+    ),
 )

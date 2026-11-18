@@ -40,4 +40,11 @@ install_lazy_exports(
         "FlextDbtOracleWmsModelsWorkflow": ".workflow",
     },
     public_exports=__all__,
+    deferred_members=(
+        "FlextDbtOracleWmsModelsBase",
+        "FlextDbtOracleWmsModelsConnection",
+        "FlextDbtOracleWmsModelsDbt",
+        "FlextDbtOracleWmsModelsItems",
+        "FlextDbtOracleWmsModelsWorkflow",
+    ),
 )

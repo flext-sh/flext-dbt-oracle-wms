@@ -22,4 +22,5 @@ install_lazy_exports(
     globals(),
     {"FlextDbtOracleWmsTypesBase": ".base"},
     public_exports=__all__,
+    deferred_members=("FlextDbtOracleWmsTypesBase",),
 )
