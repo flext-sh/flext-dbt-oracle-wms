@@ -7,13 +7,17 @@ SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 
-from flext_dbt_oracle_wms import (
+from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
+from tests import (
     FlextDbtOracleWms,
     FlextDbtOracleWmsCliService,
     FlextDbtOracleWmsSettings,
+    main,
+    p,
+    r,
+    tm,
+    u,
 )
-from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import main, p, r, tm, u
 
 
 class TestsFlextDbtOracleWmsCli:
@@ -25,14 +29,14 @@ class TestsFlextDbtOracleWmsCli:
         pipeline_should_fail: bool = False,
     ) -> tuple[
         FlextDbtOracleWms,
-        u.DbtOracleWms.Tests.ScriptedWmsClient,
-        u.DbtOracleWms.Tests.ScriptedDbtRunner,
+        u.Tests.ScriptedWmsClient,
+        u.Tests.ScriptedDbtRunner,
     ]:
         settings = FlextDbtOracleWmsSettings.model_validate({
             "DbtOracleWms": {"oracle_wms_base_url": "https://wms.example.com"},
         })
-        wms = u.DbtOracleWms.Tests.ScriptedWmsClient()
-        runner = u.DbtOracleWms.Tests.ScriptedDbtRunner(
+        wms = u.Tests.ScriptedWmsClient()
+        runner = u.Tests.ScriptedDbtRunner(
             r[p.Meltano.CommandExecutionResult].fail("dbt run failed")
             if pipeline_should_fail
             else None,
