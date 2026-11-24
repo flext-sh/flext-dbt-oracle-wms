@@ -14,150 +14,146 @@ from pathlib import Path
 
 from flext_tests import FlextTestsUtilities
 
-from flext_dbt_oracle_wms import FlextDbtOracleWmsUtilities, r
-from tests import m, p, t
+from tests import FlextDbtOracleWmsUtilities, m, p, r, t
 
 
 class TestsFlextDbtOracleWmsUtilities(FlextTestsUtilities, FlextDbtOracleWmsUtilities):
     """Test utilities combining TestsFlextUtilities with WMS utilities."""
 
-    class DbtOracleWms(FlextDbtOracleWmsUtilities.DbtOracleWms):
-        """DbtOracleWms test utilities namespace."""
+    class Tests(FlextTestsUtilities.Tests):
+        """Internal tests declarations."""
 
-        class Tests:
-            """Internal tests declarations."""
+        class ScriptedWmsClient:
+            """Deterministic Oracle WMS boundary fake with canned results.
 
-            class ScriptedWmsClient:
-                """Deterministic Oracle WMS boundary fake with canned results.
+            Implements the p.DbtOracleWms.WmsClient boundary protocol with no
+            I/O: every method reports a canned typed result and the extract
+            boundary captures the requested entity names for observable
+            forwarding assertions.
+            """
 
-                Implements the p.DbtOracleWms.WmsClient boundary protocol with no
-                I/O: every method reports a canned typed result and the extract
-                boundary captures the requested entity names for observable
-                forwarding assertions.
+            def __init__(
+                self,
+                *,
+                entities: p.Result[Sequence[str]] | None = None,
+                records_by_entity: (
+                    Mapping[str, Sequence[Mapping[str, str]]] | None
+                ) = None,
+                health: p.Result[p.Api.HttpResponse] | None = None,
+            ) -> None:
+                """Initialize canned boundary results and capture state."""
+                self.started: bool = False
+                self.extracted_entities: Sequence[str] = ()
+                self._entities: p.Result[Sequence[str]] = (
+                    entities
+                    if entities is not None
+                    else r[Sequence[str]].ok(("items", "shipments"))
+                )
+                self._records_by_entity: Mapping[
+                    str,
+                    Sequence[Mapping[str, str]],
+                ] = records_by_entity or {}
+                self._health = (
+                    health
+                    if health is not None
+                    else r[p.Api.HttpResponse].ok(
+                        m.Api.HttpResponse.model_validate({"status_code": 200}),
+                    )
+                )
+
+            def start(self) -> p.Result[bool]:
+                """Mark the boundary started and report success.
+
+                Returns:
+                    The resulting ``p.Result[bool]``.
+
                 """
+                self.started = True
+                return r[bool].ok(value=True)
 
-                def __init__(
-                    self,
-                    *,
-                    entities: p.Result[Sequence[str]] | None = None,
-                    records_by_entity: (
-                        Mapping[str, Sequence[Mapping[str, str]]] | None
-                    ) = None,
-                    health: p.Result[p.Api.HttpResponse] | None = None,
-                ) -> None:
-                    """Initialize canned boundary results and capture state."""
-                    self.started: bool = False
-                    self.extracted_entities: Sequence[str] = ()
-                    self._entities: p.Result[Sequence[str]] = (
-                        entities
-                        if entities is not None
-                        else r[Sequence[str]].ok(("items", "shipments"))
-                    )
-                    self._records_by_entity: Mapping[
-                        str,
-                        Sequence[Mapping[str, str]],
-                    ] = records_by_entity or {}
-                    self._health = (
-                        health
-                        if health is not None
-                        else r[p.Api.HttpResponse].ok(
-                            m.Api.HttpResponse.model_validate({"status_code": 200}),
-                        )
-                    )
+            def discover_entities(self) -> p.Result[Sequence[str]]:
+                """Report the canned entity catalog.
 
-                def start(self) -> p.Result[bool]:
-                    """Mark the boundary started and report success.
+                Returns:
+                    The resulting ``p.Result[Sequence[str]]``.
 
-                    Returns:
-                        The resulting ``p.Result[bool]``.
-
-                    """
-                    self.started = True
-                    return r[bool].ok(value=True)
-
-                def discover_entities(self) -> p.Result[Sequence[str]]:
-                    """Report the canned entity catalog.
-
-                    Returns:
-                        The resulting ``p.Result[Sequence[str]]``.
-
-                    """
-                    return self._entities
-
-                def fetch_entity_data(
-                    self,
-                    entity_name: str,
-                    limit: int | None = None,
-                    filters: t.ConfigurationMapping | None = None,
-                ) -> p.Result[Sequence[Mapping[str, str]]]:
-                    """Report canned records for the requested entity and capture it.
-
-                    Returns:
-                        The resulting ``p.Result[Sequence[Mapping[str, str]]]``.
-
-                    """
-                    _ = limit
-                    _ = filters
-                    self.extracted_entities = (*self.extracted_entities, entity_name)
-                    records = self._records_by_entity.get(
-                        entity_name,
-                        ({"entity": entity_name},),
-                    )
-                    return r[Sequence[Mapping[str, str]]].ok(records)
-
-                def health_check(self) -> p.Result[p.Api.HttpResponse]:
-                    """Report the canned health response.
-
-                    Returns:
-                        The resulting ``p.Result[p.Api.HttpResponse]``.
-
-                    """
-                    return self._health
-
-            class ScriptedDbtRunner:
-                """Deterministic dbt runner boundary fake with call capture.
-
-                Implements the p.DbtOracleWms.DbtRunner boundary protocol: the
-                canned typed command result is reported verbatim and every
-                invocation is counted for observable forwarding assertions.
                 """
+                return self._entities
 
-                def __init__(
-                    self,
-                    result: p.Result[p.Meltano.CommandExecutionResult] | None = None,
-                ) -> None:
-                    """Initialize the canned command result and call counter."""
-                    self.calls: int = 0
-                    self._result = (
-                        result
-                        if result is not None
-                        else r[p.Meltano.CommandExecutionResult].ok(
-                            m.Meltano.CommandExecutionResult(
-                                command=("dbt", "run"),
-                                success=True,
-                                exit_code=0,
-                                output="",
-                                error="",
-                                execution_time=0.0,
-                            ),
-                        )
+            def fetch_entity_data(
+                self,
+                entity_name: str,
+                limit: int | None = None,
+                filters: t.ConfigurationMapping | None = None,
+            ) -> p.Result[Sequence[Mapping[str, str]]]:
+                """Report canned records for the requested entity and capture it.
+
+                Returns:
+                    The resulting ``p.Result[Sequence[Mapping[str, str]]]``.
+
+                """
+                _ = limit
+                _ = filters
+                self.extracted_entities = (*self.extracted_entities, entity_name)
+                records = self._records_by_entity.get(
+                    entity_name,
+                    ({"entity": entity_name},),
+                )
+                return r[Sequence[Mapping[str, str]]].ok(records)
+
+            def health_check(self) -> p.Result[p.Api.HttpResponse]:
+                """Report the canned health response.
+
+                Returns:
+                    The resulting ``p.Result[p.Api.HttpResponse]``.
+
+                """
+                return self._health
+
+        class ScriptedDbtRunner:
+            """Deterministic dbt runner boundary fake with call capture.
+
+            Implements the p.DbtOracleWms.DbtRunner boundary protocol: the
+            canned typed command result is reported verbatim and every
+            invocation is counted for observable forwarding assertions.
+            """
+
+            def __init__(
+                self,
+                result: p.Result[p.Meltano.CommandExecutionResult] | None = None,
+            ) -> None:
+                """Initialize the canned command result and call counter."""
+                self.calls: int = 0
+                self._result = (
+                    result
+                    if result is not None
+                    else r[p.Meltano.CommandExecutionResult].ok(
+                        m.Meltano.CommandExecutionResult(
+                            command=("dbt", "run"),
+                            success=True,
+                            exit_code=0,
+                            output="",
+                            error="",
+                            execution_time=0.0,
+                        ),
                     )
+                )
 
-                def run_dbt_transformation(
-                    self,
-                    models: Sequence[str] | None = None,
-                    project_dir: Path | None = None,
-                ) -> p.Result[p.Meltano.CommandExecutionResult]:
-                    """Count the call and report the canned command result.
+            def run_dbt_transformation(
+                self,
+                models: Sequence[str] | None = None,
+                project_dir: Path | None = None,
+            ) -> p.Result[p.Meltano.CommandExecutionResult]:
+                """Count the call and report the canned command result.
 
-                    Returns:
-                        The resulting ``p.Result[p.Meltano.CommandExecutionResult]``.
+                Returns:
+                    The resulting ``p.Result[p.Meltano.CommandExecutionResult]``.
 
-                    """
-                    _ = models
-                    _ = project_dir
-                    self.calls += 1
-                    return self._result
+                """
+                _ = models
+                _ = project_dir
+                self.calls += 1
+                return self._result
 
 
 u = TestsFlextDbtOracleWmsUtilities

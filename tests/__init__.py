@@ -36,6 +36,13 @@ if TYPE_CHECKING:
         settings,
         x,
     )
+    from flext_dbt_oracle_wms.services import (
+        FlextDbtOracleWmsBase,
+        FlextDbtOracleWmsClient,
+        FlextDbtOracleWmsGeneration,
+        FlextDbtOracleWmsMetadata,
+        FlextDbtOracleWmsWorkflow,
+    )
     from tests.base import TestsFlextDbtOracleWmsServiceBase, s
     from tests.constants import TestsFlextDbtOracleWmsConstants, c
     from tests.models import TestsFlextDbtOracleWmsModels, m
@@ -47,9 +54,13 @@ if TYPE_CHECKING:
 
 __all__: tuple[str, ...] = (
     "FlextDbtOracleWms",
+    "FlextDbtOracleWmsBase",
     "FlextDbtOracleWmsCliService",
+    "FlextDbtOracleWmsClient",
     "FlextDbtOracleWmsConfig",
     "FlextDbtOracleWmsConstants",
+    "FlextDbtOracleWmsGeneration",
+    "FlextDbtOracleWmsMetadata",
     "FlextDbtOracleWmsModels",
     "FlextDbtOracleWmsProtocols",
     "FlextDbtOracleWmsServiceBase",
@@ -57,6 +68,7 @@ __all__: tuple[str, ...] = (
     "FlextDbtOracleWmsTypes",
     "FlextDbtOracleWmsUtilities",
     "FlextDbtOracleWmsVersion",
+    "FlextDbtOracleWmsWorkflow",
     "TestsFlextDbtOracleWmsConstants",
     "TestsFlextDbtOracleWmsModels",
     "TestsFlextDbtOracleWmsProtocols",
@@ -91,9 +103,13 @@ install_lazy_exports(
     globals(),
     {
         "FlextDbtOracleWms": "flext_dbt_oracle_wms",
+        "FlextDbtOracleWmsBase": "flext_dbt_oracle_wms.services",
         "FlextDbtOracleWmsCliService": "flext_dbt_oracle_wms",
+        "FlextDbtOracleWmsClient": "flext_dbt_oracle_wms.services",
         "FlextDbtOracleWmsConfig": "flext_dbt_oracle_wms",
         "FlextDbtOracleWmsConstants": "flext_dbt_oracle_wms",
+        "FlextDbtOracleWmsGeneration": "flext_dbt_oracle_wms.services",
+        "FlextDbtOracleWmsMetadata": "flext_dbt_oracle_wms.services",
         "FlextDbtOracleWmsModels": "flext_dbt_oracle_wms",
         "FlextDbtOracleWmsProtocols": "flext_dbt_oracle_wms",
         "FlextDbtOracleWmsServiceBase": "flext_dbt_oracle_wms",
@@ -101,6 +117,7 @@ install_lazy_exports(
         "FlextDbtOracleWmsTypes": "flext_dbt_oracle_wms",
         "FlextDbtOracleWmsUtilities": "flext_dbt_oracle_wms",
         "FlextDbtOracleWmsVersion": "flext_dbt_oracle_wms",
+        "FlextDbtOracleWmsWorkflow": "flext_dbt_oracle_wms.services",
         "TestsFlextDbtOracleWmsConstants": ".constants",
         "TestsFlextDbtOracleWmsModels": ".models",
         "TestsFlextDbtOracleWmsProtocols": ".protocols",

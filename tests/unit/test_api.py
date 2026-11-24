@@ -9,9 +9,8 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from flext_dbt_oracle_wms import FlextDbtOracleWms, FlextDbtOracleWmsSettings
 from flext_dbt_oracle_wms.services import FlextDbtOracleWmsClient
-from tests import c, m, p, r, tm, u
+from tests import FlextDbtOracleWms, FlextDbtOracleWmsSettings, c, m, p, r, tm, u
 
 
 class TestsFlextDbtOracleWmsApi:
@@ -28,19 +27,15 @@ class TestsFlextDbtOracleWmsApi:
     def _facade(
         self,
         *,
-        wms: u.DbtOracleWms.Tests.ScriptedWmsClient | None = None,
-        runner: u.DbtOracleWms.Tests.ScriptedDbtRunner | None = None,
+        wms: u.Tests.ScriptedWmsClient | None = None,
+        runner: u.Tests.ScriptedDbtRunner | None = None,
     ) -> FlextDbtOracleWms:
         settings = self._settings()
         client = FlextDbtOracleWmsClient(
             settings,
-            wms_client=(
-                wms if wms is not None else u.DbtOracleWms.Tests.ScriptedWmsClient()
-            ),
+            wms_client=(wms if wms is not None else u.Tests.ScriptedWmsClient()),
             meltano_runner=(
-                runner
-                if runner is not None
-                else u.DbtOracleWms.Tests.ScriptedDbtRunner()
+                runner if runner is not None else u.Tests.ScriptedDbtRunner()
             ),
         )
         return FlextDbtOracleWms(settings=settings, client=client)
@@ -96,7 +91,7 @@ class TestsFlextDbtOracleWmsApi:
 
     def test_validate_wms_connection_propagates_client_connection_failure(self) -> None:
         """Test validate wms connection propagates client connection failure."""
-        wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
+        wms = u.Tests.ScriptedWmsClient(
             health=r[p.Api.HttpResponse].fail("Oracle WMS endpoint unreachable"),
         )
         facade = self._facade(wms=wms)
@@ -107,7 +102,7 @@ class TestsFlextDbtOracleWmsApi:
 
     def test_discover_entities_returns_the_client_entity_list(self) -> None:
         """Test discover entities returns the client entity list."""
-        wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
+        wms = u.Tests.ScriptedWmsClient(
             entities=r[Sequence[str]].ok(["items", "shipments"]),
         )
         facade = self._facade(wms=wms)
@@ -119,7 +114,7 @@ class TestsFlextDbtOracleWmsApi:
 
     def test_discover_entities_propagates_client_discovery_failure(self) -> None:
         """Test discover entities propagates client discovery failure."""
-        wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
+        wms = u.Tests.ScriptedWmsClient(
             entities=r[Sequence[str]].fail("entity catalog unavailable"),
         )
         facade = self._facade(wms=wms)
@@ -134,7 +129,7 @@ class TestsFlextDbtOracleWmsApi:
         entity_name: str,
     ) -> None:
         """Test extract returns records for the requested entity."""
-        wms = u.DbtOracleWms.Tests.ScriptedWmsClient()
+        wms = u.Tests.ScriptedWmsClient()
         facade = self._facade(wms=wms)
 
         result = facade.extract_oracle_wms_data(entity_name)
@@ -160,7 +155,7 @@ class TestsFlextDbtOracleWmsApi:
 
     def test_run_workflow_default_path_extracts_metadata(self) -> None:
         """Test run workflow default path extracts metadata."""
-        wms = u.DbtOracleWms.Tests.ScriptedWmsClient(
+        wms = u.Tests.ScriptedWmsClient(
             records_by_entity={
                 "items": ({"item_id": "item-1"},),
                 "shipments": ({"shipment_id": "shp-1"},),
@@ -180,7 +175,7 @@ class TestsFlextDbtOracleWmsApi:
 
     def test_run_workflow_propagates_pipeline_failure(self) -> None:
         """Test run workflow propagates pipeline failure."""
-        runner = u.DbtOracleWms.Tests.ScriptedDbtRunner(
+        runner = u.Tests.ScriptedDbtRunner(
             r[p.Meltano.CommandExecutionResult].fail("pipeline transformation aborted"),
         )
         facade = self._facade(runner=runner)

@@ -1,0 +1,1 @@
+{"id":"exports--flext_dbt_oracle_wms.services","language":"Python","rule":{"regex":"^(?:FlextDbtOracleWmsBase|FlextDbtOracleWmsClient|FlextDbtOracleWmsGeneration|FlextDbtOracleWmsMetadata|FlextDbtOracleWmsWorkflow)$"}}
