@@ -65,5 +65,6 @@ class FlextDbtOracleWmsSettings(FlextMeltanoSettings):
 
 
 settings = FlextDbtOracleWmsSettings.fetch_global()
+"""Shared runtime settings for dbt transformations of Oracle WMS data."""
 
 __all__: list[str] = ["FlextDbtOracleWmsSettings", "settings"]
